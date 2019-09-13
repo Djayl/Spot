@@ -11,7 +11,7 @@ import CoreLocation
 
 
 
-class CreateSpotViewController: UIViewController, UITextFieldDelegate {
+class CreateSpotViewController: UIViewController, UITextFieldDelegate, UITextViewDelegate {
     
 //    var spot: Spot?
 //    var location = [CLLocationCoordinate2D]()
@@ -22,10 +22,10 @@ class CreateSpotViewController: UIViewController, UITextFieldDelegate {
     
 
     @IBOutlet weak var titleTextfield: UITextField!
-    
     @IBOutlet weak var subtitleTextfield: UITextField!
-    
     @IBOutlet weak var creationButton: UIButton!
+    @IBOutlet weak var pictureView: UIImageView!
+    @IBOutlet weak var descriptionTextView: UITextView!
     
     
     override func viewDidLoad() {
@@ -33,10 +33,21 @@ class CreateSpotViewController: UIViewController, UITextFieldDelegate {
         print("success")
         titleTextfield.delegate = self
         subtitleTextfield.delegate = self
+        descriptionTextView.delegate = self
         creationButton.layer.cornerRadius = 10
+        descriptionTextView.text = "Type your description"
+        
+        descriptionTextView.layer.cornerRadius = 5
+        descriptionTextView.layer.borderColor = UIColor.gray.withAlphaComponent(0.5).cgColor
+        descriptionTextView.layer.borderWidth = 0.5
+        
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
+        view.addGestureRecognizer(tapGesture)
     }
     
-
+    override func viewWillDisappear(_ animated: Bool) {
+        self.navigationController?.isNavigationBarHidden = false
+    }
     
 //    func createSpot(from coordinate: CLLocation) {
 //        let geopoint = CLGeocoder()
@@ -109,6 +120,7 @@ class CreateSpotViewController: UIViewController, UITextFieldDelegate {
                 print(annotation.coordinate)
                 annotation.title = self.titleTextfield.text
                 annotation.subtitle = self.subtitleTextfield.text
+                annotation.info = self.descriptionTextView.text
                 self.delegate.addSpotToMapView(annotation: annotation)
                 print(annotation)
                 self.goToMapView()
@@ -129,10 +141,25 @@ class CreateSpotViewController: UIViewController, UITextFieldDelegate {
        
     }
  
+
+
+@objc private func hideKeyboard() {
+    titleTextfield.resignFirstResponder()
+    subtitleTextfield.resignFirstResponder()
+    descriptionTextView.resignFirstResponder()
 }
 
+func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+    textField.resignFirstResponder()
+    return true
+}
+
+
+}
 extension CLLocation {
     func geocode(completion: @escaping (_ placemark: [CLPlacemark]?, _ error: Error?) -> Void)  {
         CLGeocoder().reverseGeocodeLocation(self, completionHandler: completion)
     }
 }
+
+
