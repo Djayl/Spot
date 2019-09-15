@@ -27,7 +27,7 @@ class CreateSpotViewController: UIViewController, UITextFieldDelegate, UITextVie
     @IBOutlet weak var pictureImageView: UIImageView!
     @IBOutlet weak var descriptionTextView: UITextView!
     @IBOutlet weak var addPictureButton: UIButton!
-    @IBOutlet weak var pictureView: UIView!
+
     
     
     override func viewDidLoad() {
@@ -42,9 +42,9 @@ class CreateSpotViewController: UIViewController, UITextFieldDelegate, UITextVie
         descriptionTextView.layer.cornerRadius = 5
         descriptionTextView.layer.borderColor = UIColor.gray.withAlphaComponent(0.5).cgColor
         descriptionTextView.layer.borderWidth = 0.5
-        pictureView.layer.cornerRadius = 10
-        pictureView.clipsToBounds = true
-        pictureImageView.clipsToBounds = true
+       
+        pictureImageView.layer.cornerRadius = 10
+        pictureImageView.layer.masksToBounds = true
         addPictureButton.layer.masksToBounds = true
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
         view.addGestureRecognizer(tapGesture)
@@ -185,8 +185,8 @@ func textFieldShouldReturn(_ textField: UITextField) -> Bool {
 }
 
     @IBAction func takePicture(_ sender: Any) {
-        addPictureButton.isHidden = true
-        showImagePickerController()
+        addPictureButton.backgroundColor = .clear
+        showImagePicckerControllerActionSheet()
     }
     
 }
@@ -196,16 +196,29 @@ extension CLLocation {
     }
 }
 extension CreateSpotViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
-    func showImagePickerController() {
+    
+    func showImagePicckerControllerActionSheet() {
+        let photoLibraryAction = UIAlertAction(title: "Choose from Library", style: .default) { (action) in
+            self.showImagePickerController(sourceType: .photoLibrary)
+        }
+        let cameraAction = UIAlertAction(title: "Take from camera", style: .default) { (action) in
+            self.showImagePickerController(sourceType: .camera)
+        }
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        
+        AlertService.showAlert(style: .actionSheet, title: "Choose your image", message: nil, actions: [photoLibraryAction, cameraAction, cancelAction], completion: nil)
+    }
+    
+    func showImagePickerController(sourceType: UIImagePickerController.SourceType) {
         let imagePickerController = UIImagePickerController()
         imagePickerController.delegate = self
         imagePickerController.allowsEditing = true
-        imagePickerController.sourceType = .photoLibrary
+        imagePickerController.sourceType = sourceType
         present(imagePickerController, animated: true, completion: nil)
     }
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         if let editedImage = info[UIImagePickerController.InfoKey.editedImage] as? UIImage {
-            
+           
             pictureImageView.image = editedImage
         } else if let originalImage = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
             
@@ -215,3 +228,11 @@ extension CreateSpotViewController: UIImagePickerControllerDelegate, UINavigatio
     }
 }
 
+class AlertService {
+    static func showAlert(style: UIAlertController.Style, title: String?, message: String?, actions: [UIAlertAction] = [UIAlertAction(title: "OK", style: .cancel, handler: nil)], completion: (() -> Swift.Void)? = nil) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: style)
+        for action in actions {
+            alert.addAction(action)
+        }
+    }
+}

@@ -71,7 +71,7 @@ class SpotViewController: UIViewController, AddSpotDelegate {
 //            vc.location = locationOnMap
             vc.delegate = self
             vc.location = location
-            self.present(nc, animated: false, completion: nil)
+            self.present(nc, animated: true, completion: nil)
         }
     }
     
