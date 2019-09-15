@@ -24,8 +24,10 @@ class CreateSpotViewController: UIViewController, UITextFieldDelegate, UITextVie
     @IBOutlet weak var titleTextfield: UITextField!
     @IBOutlet weak var subtitleTextfield: UITextField!
     @IBOutlet weak var creationButton: UIButton!
-    @IBOutlet weak var pictureView: UIImageView!
+    @IBOutlet weak var pictureImageView: UIImageView!
     @IBOutlet weak var descriptionTextView: UITextView!
+    @IBOutlet weak var addPictureButton: UIButton!
+    @IBOutlet weak var pictureView: UIView!
     
     
     override func viewDidLoad() {
@@ -36,11 +38,14 @@ class CreateSpotViewController: UIViewController, UITextFieldDelegate, UITextVie
         descriptionTextView.delegate = self
         creationButton.layer.cornerRadius = 10
         descriptionTextView.text = "Type your description"
-        
+        addPictureButton.layer.cornerRadius = 10
         descriptionTextView.layer.cornerRadius = 5
         descriptionTextView.layer.borderColor = UIColor.gray.withAlphaComponent(0.5).cgColor
         descriptionTextView.layer.borderWidth = 0.5
-        
+        pictureView.layer.cornerRadius = 10
+        pictureView.clipsToBounds = true
+        pictureImageView.clipsToBounds = true
+        addPictureButton.layer.masksToBounds = true
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
         view.addGestureRecognizer(tapGesture)
         
@@ -179,12 +184,34 @@ func textFieldShouldReturn(_ textField: UITextField) -> Bool {
     return true
 }
 
-
+    @IBAction func takePicture(_ sender: Any) {
+        addPictureButton.isHidden = true
+        showImagePickerController()
+    }
+    
 }
 extension CLLocation {
     func geocode(completion: @escaping (_ placemark: [CLPlacemark]?, _ error: Error?) -> Void)  {
         CLGeocoder().reverseGeocodeLocation(self, completionHandler: completion)
     }
 }
-
+extension CreateSpotViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    func showImagePickerController() {
+        let imagePickerController = UIImagePickerController()
+        imagePickerController.delegate = self
+        imagePickerController.allowsEditing = true
+        imagePickerController.sourceType = .photoLibrary
+        present(imagePickerController, animated: true, completion: nil)
+    }
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        if let editedImage = info[UIImagePickerController.InfoKey.editedImage] as? UIImage {
+            
+            pictureImageView.image = editedImage
+        } else if let originalImage = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
+            
+            pictureImageView.image = originalImage
+        }
+        dismiss(animated: true, completion: nil)
+    }
+}
 
