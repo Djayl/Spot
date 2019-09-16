@@ -48,12 +48,16 @@ class CreateSpotViewController: UIViewController, UITextFieldDelegate, UITextVie
         addPictureButton.layer.masksToBounds = true
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
         view.addGestureRecognizer(tapGesture)
-        
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Back", style: .done, target: self, action: #selector(goBack))
         setUpKeyboard()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         self.navigationController?.isNavigationBarHidden = false
+    }
+    
+    @objc func goBack() {
+        dismiss(animated: true, completion: nil)
     }
     
 //    func createSpot(from coordinate: CLLocation) {
@@ -228,11 +232,4 @@ extension CreateSpotViewController: UIImagePickerControllerDelegate, UINavigatio
     }
 }
 
-class AlertService {
-    static func showAlert(style: UIAlertController.Style, title: String?, message: String?, actions: [UIAlertAction] = [UIAlertAction(title: "OK", style: .cancel, handler: nil)], completion: (() -> Swift.Void)? = nil) {
-        let alert = UIAlertController(title: title, message: message, preferredStyle: style)
-        for action in actions {
-            alert.addAction(action)
-        }
-    }
-}
+
