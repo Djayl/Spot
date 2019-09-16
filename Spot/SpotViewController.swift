@@ -138,27 +138,45 @@ extension SpotViewController: MKMapViewDelegate {
         mapView.setRegion(region, animated: true)
     }
     
-    
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-        guard let annotation = annotation as? Spot else { return nil }
-        let identifier = "spot"
-        var view: MKMarkerAnnotationView
-        if let dequeuedView = mapView.dequeueReusableAnnotationView(withIdentifier: identifier)
-            as? MKMarkerAnnotationView {
-            dequeuedView.annotation = annotation
-            view = dequeuedView
-        } else {
-            view = MKMarkerAnnotationView(annotation: annotation,reuseIdentifier: identifier)
-            view.canShowCallout = true
-            view.calloutOffset = CGPoint(x: -5, y: 5)
-            view.rightCalloutAccessoryView = UIButton(type: .detailDisclosure)
-            let reviewButton = UIButton(type: .detailDisclosure)
-            view.rightCalloutAccessoryView = reviewButton
-//            reviewButton.addTarget(self, action: #selector(self.addReview), for: .touchUpInside)
-            
+        let reuseIdentifier = "reuseID"
+        if annotation.isKind(of: MKUserLocation.self) {
+            return nil
         }
-        return view
+        if let anno = annotation as? Spot {
+            var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: reuseIdentifier)
+            if annotationView == nil {
+                annotationView = SpotView(controller: self, annotation: anno, reuseIdentifier: reuseIdentifier)
+                
+                return annotationView
+            } else {
+                return annotationView
+            }
+        }
+        return nil
     }
+    
+    
+//    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+//        guard let annotation = annotation as? Spot else { return nil }
+//        let identifier = "spot"
+//        var view: MKMarkerAnnotationView
+//        if let dequeuedView = mapView.dequeueReusableAnnotationView(withIdentifier: identifier)
+//            as? MKMarkerAnnotationView {
+//            dequeuedView.annotation = annotation
+//            view = dequeuedView
+//        } else {
+//            view = MKMarkerAnnotationView(annotation: annotation,reuseIdentifier: identifier)
+//            view.canShowCallout = true
+//            view.calloutOffset = CGPoint(x: -5, y: 5)
+//            view.rightCalloutAccessoryView = UIButton(type: .detailDisclosure)
+//            let reviewButton = UIButton(type: .detailDisclosure)
+//            view.rightCalloutAccessoryView = reviewButton
+////            reviewButton.addTarget(self, action: #selector(self.addReview), for: .touchUpInside)
+//
+//        }
+//        return view
+//    }
     
     func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
         guard let spot = view.annotation as? Spot else { return }

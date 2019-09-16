@@ -15,12 +15,14 @@ class Spot: NSObject, MKAnnotation {
     var title: String?
     var subtitle: String?
     var info: String
+    var image: UIImage
     
-    init(title: String, subtitle: String, coordinate: CLLocationCoordinate2D, info: String) {
+    init(title: String, subtitle: String, coordinate: CLLocationCoordinate2D, info: String, image: UIImage) {
         
         self.title = title
         self.subtitle = subtitle
         self.coordinate = coordinate
         self.info = info
+        self.image = image
     }
 }

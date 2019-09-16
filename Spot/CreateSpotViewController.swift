@@ -18,8 +18,8 @@ class CreateSpotViewController: UIViewController, UITextFieldDelegate, UITextVie
 //    var Thelocation: CLLocationCoordinate2D!
     var location: CLLocation!
     weak var delegate: AddSpotDelegate!
-    
-    
+    var myImage: UIImage?
+    var spots = [Spot]()
 
     @IBOutlet weak var titleTextfield: UITextField!
     @IBOutlet weak var subtitleTextfield: UITextField!
@@ -38,7 +38,7 @@ class CreateSpotViewController: UIViewController, UITextFieldDelegate, UITextVie
         descriptionTextView.delegate = self
         creationButton.layer.cornerRadius = 10
         descriptionTextView.text = "Type your description"
-       
+        
         descriptionTextView.layer.cornerRadius = 5
         descriptionTextView.layer.borderColor = UIColor.gray.withAlphaComponent(0.5).cgColor
         descriptionTextView.layer.borderWidth = 0.5
@@ -130,11 +130,13 @@ class CreateSpotViewController: UIViewController, UITextFieldDelegate, UITextVie
                 print(error!)
             }
             if let coor = placemarks?.first?.location?.coordinate {
-                let annotation = Spot(title: "", subtitle: "", coordinate: coor, info: "")
+                let annotation = Spot(title: "", subtitle: "", coordinate: coor, info: "", image: UIImage())
                 print(annotation.coordinate)
                 annotation.title = self.titleTextfield.text
                 annotation.subtitle = self.subtitleTextfield.text
                 annotation.info = self.descriptionTextView.text
+                annotation.image = self.myImage!
+                self.spots.append(annotation)
                 self.delegate.addSpotToMapView(annotation: annotation)
                 print(annotation)
                 self.goToMapView()
@@ -227,9 +229,9 @@ extension CreateSpotViewController: UIImagePickerControllerDelegate, UINavigatio
         if let editedImage = info[UIImagePickerController.InfoKey.editedImage] as? UIImage {
             
             pictureImageView.image = editedImage
-            
+            myImage = editedImage
         } else if let originalImage = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
-           
+            myImage = originalImage
             pictureImageView.image = originalImage
         }
         dismiss(animated: true, completion: nil)
