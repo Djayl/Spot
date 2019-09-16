@@ -119,8 +119,9 @@
                                     <action selector="sendData:" destination="K06-px-yNI" eventType="touchUpInside" id="pQA-SJ-t9Y"/>
                                 </connections>
                             </button>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="L3e-aV-XtQ">
+                            <imageView clipsSubviews="YES" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="L3e-aV-XtQ">
                                 <rect key="frame" x="30" y="70" width="260" height="195"/>
+                                <color key="backgroundColor" red="0.73708409070000003" green="0.92098706959999999" blue="0.72154021260000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="L3e-aV-XtQ" secondAttribute="height" multiplier="4:3" id="Ehp-nP-OLI"/>
                                 </constraints>
@@ -143,20 +144,6 @@
                                     <outlet property="delegate" destination="K06-px-yNI" id="L1F-7Y-mrj"/>
                                 </connections>
                             </textField>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="m20-kc-qrV">
-                                <rect key="frame" x="115" y="122.5" width="90" height="90"/>
-                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" secondItem="m20-kc-qrV" secondAttribute="height" multiplier="1:1" id="4Vw-U4-2Dp"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" name="Futura-Bold" family="Futura" pointSize="60"/>
-                                <state key="normal" title="+">
-                                    <color key="titleColor" red="0.63583433629999997" green="0.86580711600000004" blue="0.68232828379999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                </state>
-                                <connections>
-                                    <action selector="takePicture:" destination="K06-px-yNI" eventType="touchUpInside" id="N2F-j8-3vS"/>
-                                </connections>
-                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
@@ -169,8 +156,6 @@
                             <constraint firstItem="L3e-aV-XtQ" firstAttribute="leading" secondItem="fEV-DR-6iG" secondAttribute="leading" constant="30" id="RlR-39-8KK"/>
                             <constraint firstItem="efA-Ki-fd5" firstAttribute="leading" secondItem="fEV-DR-6iG" secondAttribute="leading" constant="20" id="SKG-F8-UVD"/>
                             <constraint firstItem="fEV-DR-6iG" firstAttribute="trailing" secondItem="s62-Cm-ycZ" secondAttribute="trailing" constant="20" id="TrE-fd-AgH"/>
-                            <constraint firstItem="m20-kc-qrV" firstAttribute="centerX" secondItem="L3e-aV-XtQ" secondAttribute="centerX" id="etA-PI-dZF"/>
-                            <constraint firstItem="m20-kc-qrV" firstAttribute="centerY" secondItem="L3e-aV-XtQ" secondAttribute="centerY" id="lP4-jj-IUM"/>
                             <constraint firstItem="h6f-YZ-qhd" firstAttribute="leading" secondItem="fEV-DR-6iG" secondAttribute="leading" constant="20" id="pmA-Gh-cbB"/>
                             <constraint firstItem="s62-Cm-ycZ" firstAttribute="leading" secondItem="fEV-DR-6iG" secondAttribute="leading" constant="20" id="rxy-CN-iVz"/>
                             <constraint firstItem="fEV-DR-6iG" firstAttribute="trailing" secondItem="L3e-aV-XtQ" secondAttribute="trailing" constant="30" id="tnc-6b-WVH"/>
@@ -182,8 +167,6 @@
                     </view>
                     <navigationItem key="navigationItem" title="Title" id="7cE-8f-QyS"/>
                     <connections>
-                        <outlet property="DescriptionTextView" destination="h6f-YZ-qhd" id="tmu-Qt-zu9"/>
-                        <outlet property="addPictureButton" destination="m20-kc-qrV" id="Chg-vV-c7s"/>
                         <outlet property="creationButton" destination="hnm-he-RsY" id="iMX-dx-mtY"/>
                         <outlet property="descriptionTextView" destination="h6f-YZ-qhd" id="zrq-m3-mwm"/>
                         <outlet property="pictureImageView" destination="L3e-aV-XtQ" id="NOR-hO-bGt"/>
