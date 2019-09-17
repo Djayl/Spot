@@ -37,7 +37,8 @@ class SpotViewController: UIViewController, AddSpotDelegate {
         localizationButton.layer.cornerRadius = 10
         setup()
         setupLocationManager()
-        
+        localizationButton.layer.cornerRadius = 10
+        addButton.layer.cornerRadius = 10
         
     }
     
@@ -50,8 +51,10 @@ class SpotViewController: UIViewController, AddSpotDelegate {
     }
     
     @IBAction func addMark(_ sender: Any) {
-//        createAnnotation()
-//        performSegue(withIdentifier: "createSegue", sender: nil)
+        let vc = storyboard?.instantiateViewController(withIdentifier: "CreateAnnotationAddress") as! CreateSpotAddressViewController
+        let nc = UINavigationController(rootViewController: vc)
+        vc.delegate = self
+        self.present(nc, animated: true, completion: nil)
     }
     
     @IBAction func getPosition(_ sender: Any) {

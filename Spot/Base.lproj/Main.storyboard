@@ -41,24 +41,25 @@
                                 </connections>
                             </mapView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="g8O-cG-FbX">
-                                <rect key="frame" x="130" y="513" width="60" height="40"/>
+                                <rect key="frame" x="80" y="523" width="160" height="30"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="40" id="UPU-sd-ItL"/>
+                                    <constraint firstAttribute="height" constant="30" id="Np2-jh-rBs"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" name="Futura-Bold" family="Futura" pointSize="15"/>
-                                <state key="normal" title="Where am I ?"/>
+                                <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="15"/>
+                                <state key="normal" title="Localisez-moi"/>
                                 <connections>
                                     <action selector="getPosition:" destination="7bO-ZB-YfT" eventType="touchUpInside" id="QSx-C3-kF1"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="46U-5g-zW6">
-                                <rect key="frame" x="130" y="433" width="60" height="40"/>
+                                <rect key="frame" x="30" y="473" width="260" height="30"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="40" id="efs-hQ-Rgx"/>
+                                    <constraint firstAttribute="height" constant="30" id="efs-hQ-Rgx"/>
                                 </constraints>
-                                <state key="normal" title="Add"/>
+                                <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="15"/>
+                                <state key="normal" title="Ajouter un Spot avec une adresse"/>
                                 <connections>
                                     <action selector="addMark:" destination="7bO-ZB-YfT" eventType="touchUpInside" id="Qzt-qw-c6j"/>
                                 </connections>
@@ -71,6 +72,7 @@
                                 <items>
                                     <navigationItem title="Title" id="JRL-ln-aBG">
                                         <barButtonItem key="rightBarButtonItem" title="Déconnexion" id="XMK-Bh-5eC">
+                                            <color key="tintColor" red="1" green="0.14913141730000001" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <connections>
                                                 <action selector="logOut" destination="7bO-ZB-YfT" id="isS-xe-dpS"/>
                                             </connections>
@@ -84,15 +86,15 @@
                             <constraint firstItem="l0M-Lq-iPf" firstAttribute="bottom" secondItem="g8O-cG-FbX" secondAttribute="bottom" constant="15" id="2bz-be-u1R"/>
                             <constraint firstItem="j2S-4p-tt7" firstAttribute="leading" secondItem="l0M-Lq-iPf" secondAttribute="leading" id="85Q-Lo-Khc"/>
                             <constraint firstItem="j2S-4p-tt7" firstAttribute="top" secondItem="l0M-Lq-iPf" secondAttribute="top" id="8u7-RP-7ct"/>
-                            <constraint firstItem="46U-5g-zW6" firstAttribute="leading" secondItem="l0M-Lq-iPf" secondAttribute="leading" constant="130" id="AAc-JY-wfx"/>
-                            <constraint firstItem="g8O-cG-FbX" firstAttribute="leading" secondItem="l0M-Lq-iPf" secondAttribute="leading" constant="130" id="HOv-SF-dYL"/>
+                            <constraint firstItem="46U-5g-zW6" firstAttribute="leading" secondItem="l0M-Lq-iPf" secondAttribute="leading" constant="30" id="AAc-JY-wfx"/>
                             <constraint firstItem="l0M-Lq-iPf" firstAttribute="trailing" secondItem="j2S-4p-tt7" secondAttribute="trailing" id="NJX-W6-75Q"/>
                             <constraint firstItem="l0M-Lq-iPf" firstAttribute="bottom" secondItem="j2S-4p-tt7" secondAttribute="bottom" id="SbG-I7-Zfo"/>
-                            <constraint firstItem="l0M-Lq-iPf" firstAttribute="trailing" secondItem="g8O-cG-FbX" secondAttribute="trailing" constant="130" id="TXL-Ra-Lbu"/>
                             <constraint firstItem="fgm-nf-qRF" firstAttribute="leading" secondItem="l0M-Lq-iPf" secondAttribute="leading" id="ZXX-QH-2py"/>
-                            <constraint firstItem="l0M-Lq-iPf" firstAttribute="trailing" secondItem="46U-5g-zW6" secondAttribute="trailing" constant="130" id="lJX-yh-fPH"/>
+                            <constraint firstItem="l0M-Lq-iPf" firstAttribute="trailing" secondItem="g8O-cG-FbX" secondAttribute="trailing" constant="80" id="cYH-mE-Osj"/>
+                            <constraint firstItem="l0M-Lq-iPf" firstAttribute="trailing" secondItem="46U-5g-zW6" secondAttribute="trailing" constant="30" id="lJX-yh-fPH"/>
+                            <constraint firstItem="g8O-cG-FbX" firstAttribute="leading" secondItem="l0M-Lq-iPf" secondAttribute="leading" constant="80" id="oF6-Lp-sE9"/>
                             <constraint firstItem="fgm-nf-qRF" firstAttribute="top" secondItem="l0M-Lq-iPf" secondAttribute="top" id="pzN-hh-aY7"/>
-                            <constraint firstItem="g8O-cG-FbX" firstAttribute="top" secondItem="46U-5g-zW6" secondAttribute="bottom" constant="40" id="s5h-fs-Jcl"/>
+                            <constraint firstItem="g8O-cG-FbX" firstAttribute="top" secondItem="46U-5g-zW6" secondAttribute="bottom" constant="20" id="s5h-fs-Jcl"/>
                             <constraint firstItem="fgm-nf-qRF" firstAttribute="trailing" secondItem="l0M-Lq-iPf" secondAttribute="trailing" id="swQ-SM-MI5"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="l0M-Lq-iPf"/>
@@ -321,7 +323,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Type a subtitle" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="efA-Ki-fd5">
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Donnez un sous-titre " textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="efA-Ki-fd5">
                                 <rect key="frame" x="20" y="375" width="280" height="30"/>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -337,7 +339,7 @@
                                     <constraint firstAttribute="height" constant="40" id="NXW-Uc-jBR"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="Futura-Bold" family="Futura" pointSize="17"/>
-                                <state key="normal" title="Create Spot"/>
+                                <state key="normal" title="Créer mon Spot"/>
                                 <connections>
                                     <action selector="sendData:" destination="K06-px-yNI" eventType="touchUpInside" id="pQA-SJ-t9Y"/>
                                 </connections>
@@ -358,7 +360,7 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
-                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Type a title" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="s62-Cm-ycZ">
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Donnez un titre à votre Spot" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="s62-Cm-ycZ">
                                 <rect key="frame" x="20" y="335" width="280" height="30"/>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -399,7 +401,108 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4Eg-t6-v3L" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2867" y="821"/>
+            <point key="canvasLocation" x="2867" y="363"/>
+        </scene>
+        <!--Title-->
+        <scene sceneID="EsM-Kw-e3m">
+            <objects>
+                <viewController storyboardIdentifier="CreateAnnotationAddress" id="cVn-Zk-85I" customClass="CreateSpotAddressViewController" customModule="Spot" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="oMF-10-zVV">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Donnez un sous-titre " textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="E5B-b4-6CQ">
+                                <rect key="frame" x="20" y="375" width="280" height="30"/>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <outlet property="delegate" destination="cVn-Zk-85I" id="97C-AV-Ifl"/>
+                                </connections>
+                            </textField>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2O2-v6-L03">
+                                <rect key="frame" x="50" y="508" width="220" height="40"/>
+                                <color key="backgroundColor" red="0.73708409070000003" green="0.92098706959999999" blue="0.72154021260000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="ihV-TN-T7v"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="Futura-Bold" family="Futura" pointSize="17"/>
+                                <state key="normal" title="Créer mon Spot"/>
+                                <connections>
+                                    <action selector="createSpot:" destination="cVn-Zk-85I" eventType="touchUpInside" id="uJx-yX-Pxq"/>
+                                </connections>
+                            </button>
+                            <imageView clipsSubviews="YES" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="D9U-4e-csT">
+                                <rect key="frame" x="30" y="50" width="260" height="195"/>
+                                <color key="backgroundColor" red="0.75294117650000003" green="0.76862745099999996" blue="0.78823529410000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="D9U-4e-csT" secondAttribute="height" multiplier="4:3" id="EGS-n4-BSe"/>
+                                </constraints>
+                            </imageView>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="okB-8g-iGx">
+                                <rect key="frame" x="20" y="425" width="280" height="60"/>
+                                <color key="backgroundColor" red="0.75294117650000003" green="0.76862745099999996" blue="0.78823529410000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="60" id="p3J-tm-pkc"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Donnez un titre à votre Spot" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="CjI-nZ-sad">
+                                <rect key="frame" x="20" y="335" width="280" height="30"/>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <outlet property="delegate" destination="cVn-Zk-85I" id="vrP-bR-0fY"/>
+                                </connections>
+                            </textField>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Tapez une adresse" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="rrn-v1-wMD">
+                                <rect key="frame" x="20" y="295" width="280" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="W3F-Sw-bQv"/>
+                                </constraints>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="j8b-Lw-OX4" firstAttribute="trailing" secondItem="D9U-4e-csT" secondAttribute="trailing" constant="30" id="98K-1t-XqB"/>
+                            <constraint firstItem="CjI-nZ-sad" firstAttribute="top" secondItem="rrn-v1-wMD" secondAttribute="bottom" constant="10" id="CYY-c0-bNs"/>
+                            <constraint firstItem="j8b-Lw-OX4" firstAttribute="trailing" secondItem="CjI-nZ-sad" secondAttribute="trailing" constant="20" id="Dbe-Kn-CDV"/>
+                            <constraint firstItem="E5B-b4-6CQ" firstAttribute="leading" secondItem="j8b-Lw-OX4" secondAttribute="leading" constant="20" id="Gsd-ta-efW"/>
+                            <constraint firstItem="okB-8g-iGx" firstAttribute="top" secondItem="E5B-b4-6CQ" secondAttribute="bottom" constant="20" id="Khp-Dw-m9N"/>
+                            <constraint firstItem="2O2-v6-L03" firstAttribute="leading" secondItem="j8b-Lw-OX4" secondAttribute="leading" constant="50" id="O0j-Zm-01G"/>
+                            <constraint firstItem="rrn-v1-wMD" firstAttribute="leading" secondItem="j8b-Lw-OX4" secondAttribute="leading" constant="20" id="Qhv-hP-fcN"/>
+                            <constraint firstItem="E5B-b4-6CQ" firstAttribute="top" secondItem="CjI-nZ-sad" secondAttribute="bottom" constant="10" id="RGD-Zk-r3c"/>
+                            <constraint firstItem="okB-8g-iGx" firstAttribute="leading" secondItem="j8b-Lw-OX4" secondAttribute="leading" constant="20" id="bhP-bT-MHc"/>
+                            <constraint firstItem="D9U-4e-csT" firstAttribute="leading" secondItem="j8b-Lw-OX4" secondAttribute="leading" constant="30" id="d61-MU-O8d"/>
+                            <constraint firstItem="j8b-Lw-OX4" firstAttribute="trailing" secondItem="rrn-v1-wMD" secondAttribute="trailing" constant="20" id="eTb-E1-uMr"/>
+                            <constraint firstItem="rrn-v1-wMD" firstAttribute="top" secondItem="D9U-4e-csT" secondAttribute="bottom" constant="50" id="jS4-nz-0K0"/>
+                            <constraint firstItem="D9U-4e-csT" firstAttribute="top" secondItem="j8b-Lw-OX4" secondAttribute="top" constant="30" id="kXY-V6-OLf"/>
+                            <constraint firstItem="j8b-Lw-OX4" firstAttribute="trailing" secondItem="okB-8g-iGx" secondAttribute="trailing" constant="20" id="lpH-SW-GUA"/>
+                            <constraint firstItem="CjI-nZ-sad" firstAttribute="leading" secondItem="j8b-Lw-OX4" secondAttribute="leading" constant="20" id="p9R-1i-Ff2"/>
+                            <constraint firstItem="j8b-Lw-OX4" firstAttribute="trailing" secondItem="2O2-v6-L03" secondAttribute="trailing" constant="50" id="y7M-h0-z3f"/>
+                            <constraint firstItem="j8b-Lw-OX4" firstAttribute="bottom" secondItem="2O2-v6-L03" secondAttribute="bottom" constant="20" id="zLQ-53-eX8"/>
+                            <constraint firstItem="j8b-Lw-OX4" firstAttribute="trailing" secondItem="E5B-b4-6CQ" secondAttribute="trailing" constant="20" id="zLi-LE-fnZ"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="j8b-Lw-OX4"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="Title" id="N0Y-3Z-yr6"/>
+                    <connections>
+                        <outlet property="addSpotButton" destination="2O2-v6-L03" id="AsD-0k-lGA"/>
+                        <outlet property="addressTextField" destination="rrn-v1-wMD" id="e3f-Hi-w9b"/>
+                        <outlet property="descriptionTextView" destination="okB-8g-iGx" id="tse-Lk-xba"/>
+                        <outlet property="pictureImageView" destination="D9U-4e-csT" id="L95-Sr-lS4"/>
+                        <outlet property="subtitleTextField" destination="E5B-b4-6CQ" id="yDV-3c-a6g"/>
+                        <outlet property="titleTextField" destination="CjI-nZ-sad" id="PxO-Mf-YAV"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="uXg-FO-ZOB" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2867" y="1244"/>
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
