@@ -25,4 +25,6 @@ class Spot: NSObject, MKAnnotation {
         self.info = info
         self.image = image
     }
+    
+  
 }

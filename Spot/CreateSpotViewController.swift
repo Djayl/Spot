@@ -20,7 +20,8 @@ class CreateSpotViewController: UIViewController, UITextFieldDelegate, UITextVie
     weak var delegate: AddSpotDelegate!
     var myImage: UIImage?
     var spots = [Spot]()
-
+    
+    
     @IBOutlet weak var titleTextfield: UITextField!
     @IBOutlet weak var subtitleTextfield: UITextField!
     @IBOutlet weak var creationButton: UIButton!
@@ -144,6 +145,9 @@ class CreateSpotViewController: UIViewController, UITextFieldDelegate, UITextVie
         }
     }
     
+    fileprivate func saveData() {
+        
+    }
 
     
     @objc func goToMapView() {

@@ -8,8 +8,14 @@
 
 /* Begin PBXBuildFile section */
 		0484491BBCC92E3E18A37759 /* Pods_Spot.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 69D45E66E98844E453A429FB /* Pods_Spot.framework */; };
+		F016E9FA2330CDD400214C4E /* FirestoreReferenceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F016E9F92330CDD400214C4E /* FirestoreReferenceManager.swift */; };
+		F016E9FC2330D46A00214C4E /* FirebaseKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = F016E9FB2330D46A00214C4E /* FirebaseKeys.swift */; };
+		F016E9FE2330E39D00214C4E /* StartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F016E9FD2330E39D00214C4E /* StartViewController.swift */; };
+		F016EA002330E58200214C4E /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F016E9FF2330E58200214C4E /* LoginViewController.swift */; };
+		F016EA022330E5A400214C4E /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F016EA012330E5A400214C4E /* SignUpViewController.swift */; };
 		F01B3AC8232F8F4800B62D88 /* AlertService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F01B3AC7232F8F4800B62D88 /* AlertService.swift */; };
 		F01B3ACA232FAF5800B62D88 /* SpotView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F01B3AC9232FAF5800B62D88 /* SpotView.swift */; };
+		F01B3ACC232FB57D00B62D88 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F01B3ACB232FB57D00B62D88 /* DetailViewController.swift */; };
 		F0CDE0A123278C6A007126DE /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F0CDE0A023278C6A007126DE /* GoogleService-Info.plist */; };
 		F0CDE0A723279709007126DE /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0CDE0A623279709007126DE /* User.swift */; };
 		F0CDE0A923279719007126DE /* Spot.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0CDE0A823279719007126DE /* Spot.swift */; };
@@ -25,8 +31,14 @@
 		156F5639327E14F2FCEF3D89 /* Pods-Spot.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Spot.release.xcconfig"; path = "Target Support Files/Pods-Spot/Pods-Spot.release.xcconfig"; sourceTree = "<group>"; };
 		69D45E66E98844E453A429FB /* Pods_Spot.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Spot.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BDC02235817325F6A3E1ECAE /* Pods-Spot.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Spot.debug.xcconfig"; path = "Target Support Files/Pods-Spot/Pods-Spot.debug.xcconfig"; sourceTree = "<group>"; };
+		F016E9F92330CDD400214C4E /* FirestoreReferenceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreReferenceManager.swift; sourceTree = "<group>"; };
+		F016E9FB2330D46A00214C4E /* FirebaseKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseKeys.swift; sourceTree = "<group>"; };
+		F016E9FD2330E39D00214C4E /* StartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartViewController.swift; sourceTree = "<group>"; };
+		F016E9FF2330E58200214C4E /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		F016EA012330E5A400214C4E /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 		F01B3AC7232F8F4800B62D88 /* AlertService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertService.swift; sourceTree = "<group>"; };
 		F01B3AC9232FAF5800B62D88 /* SpotView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpotView.swift; sourceTree = "<group>"; };
+		F01B3ACB232FB57D00B62D88 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		F0CDE0A023278C6A007126DE /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = SOURCE_ROOT; };
 		F0CDE0A623279709007126DE /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		F0CDE0A823279719007126DE /* Spot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Spot.swift; sourceTree = "<group>"; };
@@ -93,6 +105,12 @@
 				F0CDE0AA2327A99C007126DE /* CreateSpotViewController.swift */,
 				F01B3AC7232F8F4800B62D88 /* AlertService.swift */,
 				F01B3AC9232FAF5800B62D88 /* SpotView.swift */,
+				F01B3ACB232FB57D00B62D88 /* DetailViewController.swift */,
+				F016E9F92330CDD400214C4E /* FirestoreReferenceManager.swift */,
+				F016E9FB2330D46A00214C4E /* FirebaseKeys.swift */,
+				F016E9FD2330E39D00214C4E /* StartViewController.swift */,
+				F016E9FF2330E58200214C4E /* LoginViewController.swift */,
+				F016EA012330E5A400214C4E /* SignUpViewController.swift */,
 			);
 			path = Spot;
 			sourceTree = "<group>";
@@ -222,13 +240,19 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F016EA002330E58200214C4E /* LoginViewController.swift in Sources */,
 				F0D5280B232786770023B226 /* SpotViewController.swift in Sources */,
+				F016E9FA2330CDD400214C4E /* FirestoreReferenceManager.swift in Sources */,
+				F016E9FC2330D46A00214C4E /* FirebaseKeys.swift in Sources */,
 				F0CDE0AB2327A99C007126DE /* CreateSpotViewController.swift in Sources */,
 				F0D52809232786770023B226 /* AppDelegate.swift in Sources */,
+				F016E9FE2330E39D00214C4E /* StartViewController.swift in Sources */,
 				F0CDE0A723279709007126DE /* User.swift in Sources */,
 				F01B3ACA232FAF5800B62D88 /* SpotView.swift in Sources */,
 				F01B3AC8232F8F4800B62D88 /* AlertService.swift in Sources */,
 				F0CDE0A923279719007126DE /* Spot.swift in Sources */,
+				F016EA022330E5A400214C4E /* SignUpViewController.swift in Sources */,
+				F01B3ACC232FB57D00B62D88 /* DetailViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -41,6 +41,10 @@ class SpotViewController: UIViewController, AddSpotDelegate {
         
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        self.navigationController?.isNavigationBarHidden = false
+    }
+    
     func addSpotToMapView(annotation: Spot) {
         self.mapView.addAnnotation(annotation)
     }
@@ -74,6 +78,20 @@ class SpotViewController: UIViewController, AddSpotDelegate {
             self.present(nc, animated: true, completion: nil)
         }
     }
+    
+    @IBAction func logOut() {
+        let firebaseAuth = Auth.auth()
+        do {
+            try firebaseAuth.signOut()
+        } catch let signOutError as NSError {
+            print ("Error signing out: %@", signOutError)
+        }
+        
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let initial = storyboard.instantiateInitialViewController()
+        UIApplication.shared.keyWindow?.rootViewController = initial
+    }
+    
     
 
 //    func createAnnotation() {
