@@ -412,7 +412,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Donnez un sous-titre " textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="E5B-b4-6CQ">
-                                <rect key="frame" x="20" y="375" width="280" height="30"/>
+                                <rect key="frame" x="20" y="390" width="280" height="30"/>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
@@ -440,7 +440,7 @@
                                 </constraints>
                             </imageView>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="okB-8g-iGx">
-                                <rect key="frame" x="20" y="425" width="280" height="60"/>
+                                <rect key="frame" x="20" y="440" width="280" height="60"/>
                                 <color key="backgroundColor" red="0.75294117650000003" green="0.76862745099999996" blue="0.78823529410000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="60" id="p3J-tm-pkc"/>
@@ -449,7 +449,7 @@
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Donnez un titre à votre Spot" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="CjI-nZ-sad">
-                                <rect key="frame" x="20" y="335" width="280" height="30"/>
+                                <rect key="frame" x="20" y="350" width="280" height="30"/>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
@@ -458,7 +458,7 @@
                                 </connections>
                             </textField>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Tapez une adresse" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="rrn-v1-wMD">
-                                <rect key="frame" x="20" y="295" width="280" height="30"/>
+                                <rect key="frame" x="20" y="310" width="280" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="W3F-Sw-bQv"/>
                                 </constraints>
@@ -480,7 +480,7 @@
                             <constraint firstItem="okB-8g-iGx" firstAttribute="leading" secondItem="j8b-Lw-OX4" secondAttribute="leading" constant="20" id="bhP-bT-MHc"/>
                             <constraint firstItem="D9U-4e-csT" firstAttribute="leading" secondItem="j8b-Lw-OX4" secondAttribute="leading" constant="30" id="d61-MU-O8d"/>
                             <constraint firstItem="j8b-Lw-OX4" firstAttribute="trailing" secondItem="rrn-v1-wMD" secondAttribute="trailing" constant="20" id="eTb-E1-uMr"/>
-                            <constraint firstItem="rrn-v1-wMD" firstAttribute="top" secondItem="D9U-4e-csT" secondAttribute="bottom" constant="50" id="jS4-nz-0K0"/>
+                            <constraint firstItem="rrn-v1-wMD" firstAttribute="top" secondItem="D9U-4e-csT" secondAttribute="bottom" constant="65" id="jS4-nz-0K0"/>
                             <constraint firstItem="D9U-4e-csT" firstAttribute="top" secondItem="j8b-Lw-OX4" secondAttribute="top" constant="30" id="kXY-V6-OLf"/>
                             <constraint firstItem="j8b-Lw-OX4" firstAttribute="trailing" secondItem="okB-8g-iGx" secondAttribute="trailing" constant="20" id="lpH-SW-GUA"/>
                             <constraint firstItem="CjI-nZ-sad" firstAttribute="leading" secondItem="j8b-Lw-OX4" secondAttribute="leading" constant="20" id="p9R-1i-Ff2"/>
