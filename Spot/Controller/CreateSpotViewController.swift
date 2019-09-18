@@ -46,9 +46,8 @@ class CreateSpotViewController: UIViewController, UITextFieldDelegate, UITextVie
        
         pictureImageView.layer.cornerRadius = 10
         pictureImageView.layer.masksToBounds = true
-  
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
-        view.addGestureRecognizer(tapGesture)
+        hideKeyboardWhenTappedAround()
+
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Back", style: .done, target: self, action: #selector(goBack))
         setUpKeyboard()
         pictureImageView.isUserInteractionEnabled = true
@@ -161,12 +160,12 @@ class CreateSpotViewController: UIViewController, UITextFieldDelegate, UITextVie
        
     }
  
-    fileprivate func setUpKeyboard() {
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillChange), name: UIResponder.keyboardWillShowNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillChange), name: UIResponder.keyboardWillHideNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillChange), name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
-
-    }
+//    fileprivate func setUpKeyboard() {
+//        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillChange), name: UIResponder.keyboardWillShowNotification, object: nil)
+//        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillChange), name: UIResponder.keyboardWillHideNotification, object: nil)
+//        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillChange), name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
+//
+//    }
     
     deinit {
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
@@ -175,27 +174,27 @@ class CreateSpotViewController: UIViewController, UITextFieldDelegate, UITextVie
 
     }
     
-    @objc func keyboardWillChange(notification: Notification){
-        guard let keyboardRect = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue else {return}
-        if notification.name == UIResponder.keyboardWillShowNotification || notification.name == UIResponder.keyboardWillChangeFrameNotification {
-            view.frame.origin.y = -keyboardRect.height
-        } else {
-            view.frame.origin.y = 0
-        }
-        
-    }
+//    @objc func keyboardWillChange(notification: Notification){
+//        guard let keyboardRect = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue else {return}
+//        if notification.name == UIResponder.keyboardWillShowNotification || notification.name == UIResponder.keyboardWillChangeFrameNotification {
+//            view.frame.origin.y = -keyboardRect.height
+//        } else {
+//            view.frame.origin.y = 0
+//        }
+//
+//    }
     
-
-@objc private func hideKeyboard() {
-    titleTextfield.resignFirstResponder()
-    subtitleTextfield.resignFirstResponder()
-    descriptionTextView.resignFirstResponder()
-}
-
-func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-    textField.resignFirstResponder()
-    return true
-}
+//
+//@objc private func hideKeyboard() {
+//    titleTextfield.resignFirstResponder()
+//    subtitleTextfield.resignFirstResponder()
+//    descriptionTextView.resignFirstResponder()
+//}
+//
+//func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+//    textField.resignFirstResponder()
+//    return true
+//}
 
     
     @objc func addPhoto() {
