@@ -18,6 +18,8 @@
 		F01B3AC8232F8F4800B62D88 /* AlertService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F01B3AC7232F8F4800B62D88 /* AlertService.swift */; };
 		F01B3ACA232FAF5800B62D88 /* SpotView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F01B3AC9232FAF5800B62D88 /* SpotView.swift */; };
 		F01B3ACC232FB57D00B62D88 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F01B3ACB232FB57D00B62D88 /* DetailViewController.swift */; };
+		F01E4C0323338BB500F7ADB6 /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = F01E4C0223338BB500F7ADB6 /* CustomButton.swift */; };
+		F01E4C0523338BD700F7ADB6 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = F01E4C0423338BD700F7ADB6 /* Colors.swift */; };
 		F0CDE0A123278C6A007126DE /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F0CDE0A023278C6A007126DE /* GoogleService-Info.plist */; };
 		F0CDE0A723279709007126DE /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0CDE0A623279709007126DE /* User.swift */; };
 		F0CDE0A923279719007126DE /* Spot.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0CDE0A823279719007126DE /* Spot.swift */; };
@@ -43,6 +45,8 @@
 		F01B3AC7232F8F4800B62D88 /* AlertService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertService.swift; sourceTree = "<group>"; };
 		F01B3AC9232FAF5800B62D88 /* SpotView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpotView.swift; sourceTree = "<group>"; };
 		F01B3ACB232FB57D00B62D88 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
+		F01E4C0223338BB500F7ADB6 /* CustomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButton.swift; sourceTree = "<group>"; };
+		F01E4C0423338BD700F7ADB6 /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		F0CDE0A023278C6A007126DE /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = SOURCE_ROOT; };
 		F0CDE0A623279709007126DE /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		F0CDE0A823279719007126DE /* Spot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Spot.swift; sourceTree = "<group>"; };
@@ -104,6 +108,8 @@
 				F01B3AC9232FAF5800B62D88 /* SpotView.swift */,
 				F0D5280C232786770023B226 /* Main.storyboard */,
 				F0D52811232786780023B226 /* LaunchScreen.storyboard */,
+				F01E4C0223338BB500F7ADB6 /* CustomButton.swift */,
+				F01E4C0423338BD700F7ADB6 /* Colors.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -273,7 +279,9 @@
 				F016EA002330E58200214C4E /* LoginViewController.swift in Sources */,
 				F0D5280B232786770023B226 /* SpotViewController.swift in Sources */,
 				F016E9FA2330CDD400214C4E /* FirestoreReferenceManager.swift in Sources */,
+				F01E4C0523338BD700F7ADB6 /* Colors.swift in Sources */,
 				F016E9FC2330D46A00214C4E /* FirebaseKeys.swift in Sources */,
+				F01E4C0323338BB500F7ADB6 /* CustomButton.swift in Sources */,
 				F0CDE0AB2327A99C007126DE /* CreateSpotViewController.swift in Sources */,
 				F0D52809232786770023B226 /* AppDelegate.swift in Sources */,
 				F016E9FE2330E39D00214C4E /* StartViewController.swift in Sources */,

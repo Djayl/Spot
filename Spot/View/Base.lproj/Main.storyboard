@@ -118,22 +118,22 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="E0X-i4-42i">
-                                <rect key="frame" x="100" y="498" width="120" height="30"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="E0X-i4-42i" customClass="CustomButton" customModule="Spot" customModuleProvider="target">
+                                <rect key="frame" x="100" y="478" width="120" height="50"/>
                                 <color key="backgroundColor" red="0.73708409070000003" green="0.92098706959999999" blue="0.72154021260000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="30" id="Nmk-f4-pYE"/>
+                                    <constraint firstAttribute="height" constant="50" id="Nmk-f4-pYE"/>
                                 </constraints>
-                                <state key="normal" title="SignUP"/>
+                                <state key="normal" title="Sign Up"/>
                                 <connections>
                                     <segue destination="iXz-oc-wbf" kind="show" id="ITc-xh-sBe"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JyT-ze-FDx">
-                                <rect key="frame" x="100" y="438" width="120" height="30"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JyT-ze-FDx" customClass="CustomButton" customModule="Spot" customModuleProvider="target">
+                                <rect key="frame" x="100" y="398" width="120" height="50"/>
                                 <color key="backgroundColor" red="0.73708409070000003" green="0.92098706959999999" blue="0.72154021260000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="30" id="Zm2-5W-qep"/>
+                                    <constraint firstAttribute="height" constant="50" id="Zm2-5W-qep"/>
                                 </constraints>
                                 <state key="normal" title="Login"/>
                                 <connections>
@@ -154,6 +154,8 @@
                     </view>
                     <navigationItem key="navigationItem" id="lwu-WW-QJ9"/>
                     <connections>
+                        <outlet property="loginButton" destination="JyT-ze-FDx" id="nyd-Je-tf7"/>
+                        <outlet property="signupButton" destination="E0X-i4-42i" id="clO-dh-LvY"/>
                         <segue destination="7bO-ZB-YfT" kind="presentation" identifier="alreadyLoggedIn" id="CTq-PZ-wgc"/>
                     </connections>
                 </viewController>
@@ -169,11 +171,11 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BOh-vS-HTj">
-                                <rect key="frame" x="100" y="438" width="120" height="30"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BOh-vS-HTj" customClass="CustomButton" customModule="Spot" customModuleProvider="target">
+                                <rect key="frame" x="100" y="418" width="120" height="50"/>
                                 <color key="backgroundColor" red="0.73708409070000003" green="0.92098706959999999" blue="0.72154021260000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="30" id="iha-Yd-KHN"/>
+                                    <constraint firstAttribute="height" constant="50" id="iha-Yd-KHN"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="Futura-Bold" family="Futura" pointSize="17"/>
                                 <state key="normal" title="Login"/>
@@ -233,11 +235,11 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="asC-cw-MCD">
-                                <rect key="frame" x="100" y="438" width="120" height="30"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="asC-cw-MCD" customClass="CustomButton" customModule="Spot" customModuleProvider="target">
+                                <rect key="frame" x="100" y="418" width="120" height="50"/>
                                 <color key="backgroundColor" red="0.73708409070000003" green="0.92098706959999999" blue="0.72154021260000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="30" id="hfE-42-ykT"/>
+                                    <constraint firstAttribute="height" constant="50" id="hfE-42-ykT"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="Futura-Bold" family="Futura" pointSize="17"/>
                                 <state key="normal" title="Sign Up"/>
@@ -506,6 +508,6 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="Hb4-iB-PGO"/>
+        <segue reference="CTq-PZ-wgc"/>
     </inferredMetricsTieBreakers>
 </document>

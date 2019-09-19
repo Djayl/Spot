@@ -11,17 +11,17 @@ import Firebase
 
 class SignUpViewController: UIViewController, UITextFieldDelegate {
  
-    @IBOutlet weak var signUpButton: UIButton!
+    @IBOutlet weak var signUpButton: CustomButton!
     @IBOutlet weak var userNameTextField: UITextField!
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
     @IBOutlet weak var passwordConfirmTextField: UITextField!
     
+    var gradient: CAGradientLayer?
     
     override func viewDidLoad() {
         super.viewDidLoad()
- 
-        signUpButton.layer.cornerRadius = 10
+        addGradient()
         emailTextField.delegate = self
         passwordTextField.delegate = self
         passwordConfirmTextField.delegate = self
@@ -54,6 +54,17 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {   //delegate method
         textField.resignFirstResponder()
         return true
+    }
+    
+    func addGradient() {
+        gradient = CAGradientLayer()
+        //        let startColor = UIColor(red: 3/255, green: 196/255, blue: 190/255, alpha: 1)
+        //        let endColor = UIColor(red: 0, green: 0, blue: 0, alpha: 1)
+        gradient?.colors = [UIColor.blue.cgColor,UIColor.cyan.cgColor]
+        gradient?.startPoint = CGPoint(x: 0, y: 0)
+        gradient?.endPoint = CGPoint(x: 0, y:1)
+        gradient?.frame = view.frame
+        self.view.layer.insertSublayer(gradient!, at: 0)
     }
 
 }
