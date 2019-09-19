@@ -17,7 +17,7 @@ class CreateSpotAddressViewController: UIViewController, UITextFieldDelegate, UI
     @IBOutlet weak var titleTextField: UITextField!
     @IBOutlet weak var subtitleTextField: UITextField!
     @IBOutlet weak var descriptionTextView: UITextView!
-    @IBOutlet weak var addSpotButton: UIButton!
+    @IBOutlet weak var addSpotButton: CustomButton!
     
     
     weak var delegate: AddSpotDelegate!
@@ -37,7 +37,7 @@ class CreateSpotAddressViewController: UIViewController, UITextFieldDelegate, UI
     }
     
     fileprivate func setupView() {
-        addSpotButton.layer.cornerRadius = 10
+        
         descriptionTextView.text = "Type your description"
         descriptionTextView.layer.cornerRadius = 5
         pictureImageView.isUserInteractionEnabled = true

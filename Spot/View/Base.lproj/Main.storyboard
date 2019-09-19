@@ -334,11 +334,11 @@
                                     <outlet property="delegate" destination="K06-px-yNI" id="Ir6-MO-fgy"/>
                                 </connections>
                             </textField>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hnm-he-RsY">
-                                <rect key="frame" x="50" y="508" width="220" height="40"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hnm-he-RsY" customClass="CustomButton" customModule="Spot" customModuleProvider="target">
+                                <rect key="frame" x="50" y="498" width="220" height="50"/>
                                 <color key="backgroundColor" red="0.73708409070000003" green="0.92098706959999999" blue="0.72154021260000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="40" id="NXW-Uc-jBR"/>
+                                    <constraint firstAttribute="height" constant="50" id="NXW-Uc-jBR"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="Futura-Bold" family="Futura" pointSize="17"/>
                                 <state key="normal" title="Créer mon Spot"/>
@@ -422,11 +422,11 @@
                                     <outlet property="delegate" destination="cVn-Zk-85I" id="97C-AV-Ifl"/>
                                 </connections>
                             </textField>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2O2-v6-L03">
-                                <rect key="frame" x="50" y="508" width="220" height="40"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2O2-v6-L03" customClass="CustomButton" customModule="Spot" customModuleProvider="target">
+                                <rect key="frame" x="50" y="508" width="220" height="50"/>
                                 <color key="backgroundColor" red="0.73708409070000003" green="0.92098706959999999" blue="0.72154021260000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="40" id="ihV-TN-T7v"/>
+                                    <constraint firstAttribute="height" constant="50" id="ihV-TN-T7v"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="Futura-Bold" family="Futura" pointSize="17"/>
                                 <state key="normal" title="Créer mon Spot"/>
@@ -487,7 +487,7 @@
                             <constraint firstItem="j8b-Lw-OX4" firstAttribute="trailing" secondItem="okB-8g-iGx" secondAttribute="trailing" constant="20" id="lpH-SW-GUA"/>
                             <constraint firstItem="CjI-nZ-sad" firstAttribute="leading" secondItem="j8b-Lw-OX4" secondAttribute="leading" constant="20" id="p9R-1i-Ff2"/>
                             <constraint firstItem="j8b-Lw-OX4" firstAttribute="trailing" secondItem="2O2-v6-L03" secondAttribute="trailing" constant="50" id="y7M-h0-z3f"/>
-                            <constraint firstItem="j8b-Lw-OX4" firstAttribute="bottom" secondItem="2O2-v6-L03" secondAttribute="bottom" constant="20" id="zLQ-53-eX8"/>
+                            <constraint firstItem="j8b-Lw-OX4" firstAttribute="bottom" secondItem="2O2-v6-L03" secondAttribute="bottom" constant="10" id="zLQ-53-eX8"/>
                             <constraint firstItem="j8b-Lw-OX4" firstAttribute="trailing" secondItem="E5B-b4-6CQ" secondAttribute="trailing" constant="20" id="zLi-LE-fnZ"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="j8b-Lw-OX4"/>
