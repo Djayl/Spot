@@ -41,18 +41,18 @@ extension UIViewController {
     
     /// Method that displays an alert with a custom message
     func presentAlert(with message: String) {
-        let alertVC = UIAlertController(title: "Oops", message: message, preferredStyle: .alert)
+        let alertVC = UIAlertController(title: "Pas si vite!", message: message, preferredStyle: .alert)
         alertVC.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
         present(alertVC, animated: true, completion: nil)
     }
     
     /// Method that presents an alert with an action
     func presentAlertWithAction(message: String, actionHandler: @escaping () -> Void) {
-        let alertVC = UIAlertController(title: "Watch out!", message: message, preferredStyle: .alert)
-        alertVC.addAction(UIAlertAction(title: "Yes", style: .default, handler: { _ in
+        let alertVC = UIAlertController(title: "Attention!", message: message, preferredStyle: .alert)
+        alertVC.addAction(UIAlertAction(title: "Oui", style: .default, handler: { _ in
             actionHandler()
         }))
-        alertVC.addAction(UIAlertAction(title: "No", style: .cancel, handler: nil))
+        alertVC.addAction(UIAlertAction(title: "Non", style: .cancel, handler: nil))
         present(alertVC, animated: true, completion: nil)
     }
     

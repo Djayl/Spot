@@ -19,7 +19,9 @@ class StartViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         addGradient()
+       
     }
+
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
@@ -32,7 +34,7 @@ class StartViewController: UIViewController {
         gradient = CAGradientLayer()
 //        let startColor = UIColor(red: 3/255, green: 196/255, blue: 190/255, alpha: 1)
 //        let endColor = UIColor(red: 0, green: 0, blue: 0, alpha: 1)
-        gradient?.colors = [UIColor.blue.cgColor,UIColor.cyan.cgColor]
+        gradient?.colors = [Colors.coolGreen.cgColor,Colors.coolRed.cgColor]
         gradient?.startPoint = CGPoint(x: 0, y: 0)
         gradient?.endPoint = CGPoint(x: 0, y:1)
         gradient?.frame = view.frame

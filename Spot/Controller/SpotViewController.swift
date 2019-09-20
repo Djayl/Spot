@@ -18,8 +18,7 @@ protocol AddSpotDelegate: class {
 class SpotViewController: UIViewController, AddSpotDelegate {
     
     @IBOutlet weak var mapView: MKMapView!
-    @IBOutlet weak var localizationButton: UIButton!
-    @IBOutlet weak var addButton: UIButton!
+    @IBOutlet weak var addButton: CustomButton!
     
     var latitudeInit: Double = 48.853506
     var longitudeInit: Double = 2.348784
@@ -34,12 +33,9 @@ class SpotViewController: UIViewController, AddSpotDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        localizationButton.layer.cornerRadius = 10
         setup()
         setupLocationManager()
-        localizationButton.layer.cornerRadius = 10
-        addButton.layer.cornerRadius = 10
-        
+      
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -57,7 +53,7 @@ class SpotViewController: UIViewController, AddSpotDelegate {
         self.present(nc, animated: true, completion: nil)
     }
     
-    @IBAction func getPosition(_ sender: Any) {
+@IBAction func getPosition() {
         print("getPosition")
         if userPosition != nil {
             setupMap(coordonnees: userPosition!.coordinate, myLat: 1, myLong: 1)
@@ -128,9 +124,29 @@ class SpotViewController: UIViewController, AddSpotDelegate {
         
         navigationController?.pushViewController(createSpotVC, animated: false)
     }
-    
-
-    
+//    
+//        func queryData() {
+//            let uid = Auth.auth().currentUser?.uid
+//            FirestoreReferenceManager.referenceForUserPublicData(uid: uid!).collection("Spots").getDocuments { (querySnapshot, err) in
+//                if let err = err {
+//                    print("Error getting documents: \(err)")
+//                } else {
+//    
+//                    for document in querySnapshot!.documents {
+//                        if let coordinate = document.get("coordinate") {
+//                            let point = coordinate as! GeoPoint
+//                            let lat = point.latitude
+//                            let lon = point.longitude
+//                            let title = document.get("title")
+//                            let annotation = Spot(title: (title as? String)!, subtitle: "", coordinate: CLLocationCoordinate2D(latitude: lat, longitude: lon), info: "", image: nil)
+//                            
+//                            self.mapView.addAnnotation(annotation)
+//    //                        print(lat, lon) //here you can let coor = CLLocation(latitude: longitude:)
+//                        }
+//                    }
+//                }
+//            }
+//        }
 
 }
 

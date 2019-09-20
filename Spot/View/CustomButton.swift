@@ -26,7 +26,7 @@ class CustomButton: UIButton {
         setShadow()
         setTitleColor(.white, for: .normal)
         
-        backgroundColor      = Colors.coolBlue
+        backgroundColor      = Colors.coolGreen
         titleLabel?.font     = UIFont(name: "Futura-Bold", size: 17)
         layer.cornerRadius   = 25
         layer.borderWidth    = 3.0

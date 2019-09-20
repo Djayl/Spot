@@ -8,5 +8,7 @@ target 'Spot' do
   pod 'Firebase/Core'
   pod 'Firebase/Firestore'
   pod 'Firebase/Auth'
+  pod 'Kingfisher', '~> 5.0'
+  pod 'Firebase/Storage'
 
 end
