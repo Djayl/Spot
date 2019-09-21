@@ -212,7 +212,7 @@ class CreateSpotViewController: UIViewController, UITextFieldDelegate, UITextVie
                     let data = [MyKeys.uid: documentUid,
                                 MyKeys.imageUrl: urlString
                     ]
-                dataReference.setData(data, completion: { (err) in
+                dataReference.setData(data, merge: true) { (err) in
                     if let err = err {
                         self.presentAlert(with: err.localizedDescription)
                         return
@@ -220,7 +220,7 @@ class CreateSpotViewController: UIViewController, UITextFieldDelegate, UITextVie
                     
                     UserDefaults.standard.setValue(documentUid, forKey: MyKeys.uid)
                     self.presentAlert(with: "Image successfully upload")
-                })
+                }
                 })
             }
         }

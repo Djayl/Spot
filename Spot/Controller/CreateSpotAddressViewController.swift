@@ -23,6 +23,7 @@ class CreateSpotAddressViewController: UIViewController, UITextFieldDelegate, UI
     
     weak var delegate: AddSpotDelegate!
     var myImage: UIImage?
+//    var myAnnotation = [String:Any]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -75,14 +76,18 @@ class CreateSpotAddressViewController: UIViewController, UITextFieldDelegate, UI
                 let annotation = Spot(title: title, subtitle: "", coordinate: coor, info: "", image: image)
                 let ref = FirestoreReferenceManager.referenceForUserPublicData(uid: uid!).collection("Spots").document()
                 let documentId = ref.documentID
-                let myAnnotation = ["title": title as Any, "coordinate": GeoPoint(latitude: coor.latitude, longitude: coor.longitude), "uid": documentId]
-                ref.setData(myAnnotation) { (err) in
+                let documentUid = ""
+                let urlString = ""
+                self.uploadImage()
+                let data = ["title": title as Any, "coordinate": GeoPoint(latitude: coor.latitude, longitude: coor.longitude), "uid": documentId, "imageUid": documentUid, MyKeys.imageUrl: urlString]
+                ref.setData(data) { (err) in
                     if let err = err {
                         print(err.localizedDescription)
                     }
+                    
                     print("very successfull")
                 }
-                self.uploadImage()
+                
                 
                 
                 //                FirestoreReferenceManager.root.document("New Point").setData(myAnnotation) { (err) in
@@ -97,6 +102,8 @@ class CreateSpotAddressViewController: UIViewController, UITextFieldDelegate, UI
         }
     }
     
+
+    
     @IBAction func createSpot(_ sender: Any) {
         
         guard let address = addressTextField.text, addressTextField.text?.isEmpty == false else {
@@ -106,6 +113,7 @@ class CreateSpotAddressViewController: UIViewController, UITextFieldDelegate, UI
         }
         
         getCoordinate(from: address)
+       
     }
     
     @objc func goToMapView() {
@@ -124,7 +132,7 @@ class CreateSpotAddressViewController: UIViewController, UITextFieldDelegate, UI
         showImagePicckerControllerActionSheet()
     }
     
-    fileprivate func uploadImage() {
+     func uploadImage() {
         guard let image = myImage, let data = image.jpegData(compressionQuality: 1.0) else {
             presentAlert(with: "Il semble y avoir une erreur")
             return
@@ -147,14 +155,19 @@ class CreateSpotAddressViewController: UIViewController, UITextFieldDelegate, UI
                     self.presentAlert(with: "Il semble y avoir une erreur")
                     return
                 }
-                let dataReference = Firestore.firestore().collection(MyKeys.imagesCollections).document()
+                let uid = Auth.auth().currentUser?.uid
+                let ref = FirestoreReferenceManager.referenceForUserPublicData(uid: uid!).collection("Spots").document()
+                let documentId = ref.documentID
+//                let dataReference = Firestore.firestore().collection(MyKeys.imagesCollections).document()
+                let dataReference = FirestoreReferenceManager.referenceForUserPublicData(uid: uid!).collection("Spots").document(documentId)
                 let documentUid = dataReference.documentID
                 let urlString = url.absoluteString
                 
-                let data = [MyKeys.uid: documentUid,
+                let data = ["imageUid": documentUid,
                             MyKeys.imageUrl: urlString
                 ]
-                dataReference.setData(data, completion: { (err) in
+                
+                dataReference.updateData(data) { (err) in
                     if let err = err {
                         self.presentAlert(with: err.localizedDescription)
                         return
@@ -162,44 +175,68 @@ class CreateSpotAddressViewController: UIViewController, UITextFieldDelegate, UI
                     
                     UserDefaults.standard.setValue(documentUid, forKey: MyKeys.uid)
                     self.presentAlert(with: "Image successfully upload")
-                })
-            })
-        }
-    }
-    
-    fileprivate func downloadImage() {
-        guard let uid = UserDefaults.standard.value(forKey: MyKeys.uid) else {
-            presentAlert(with: "Il semble y avoir un problème")
-            return
-        }
-        let query = Firestore.firestore().collection(MyKeys.imagesCollections).whereField(MyKeys.uid, isEqualTo: uid)
-        query.getDocuments { (snapshot, err) in
-            if let err = err {
-                self.presentAlert(with: err.localizedDescription)
-                return
-            }
-            guard let snapshot = snapshot,
-                let data = snapshot.documents.first?.data(),
-                let urlString = data[MyKeys.imageUrl] as? String,
-                let url = URL(string: urlString) else {
-                self.presentAlert(with: "Il semble y avoir un problème")
-                return
-            }
-            let resource = ImageResource(downloadURL: url)
-            self.pictureImageView.kf.setImage(with: resource, completionHandler: { (result) in
-                switch result {
-                    
-                case .success(_):
-                    self.pictureImageView.image = self.myImage
-                    self.presentAlert(with: "BIG SUCCESS")
-                case .failure(_):
-                    self.presentAlert(with: "BIG ERREUR")
                 }
             })
         }
     }
+    
+    func uploadAndSet(){
+        
+        guard let image = myImage, let data = image.jpegData(compressionQuality: 1.0) else {
+            presentAlert(with: "Il semble y avoir une erreur")
+            return
+        }
+      
+        // Create a storage reference from our storage service
+        let imageName = UUID().uuidString
+        let storageRef = Storage.storage().reference().child(MyKeys.imagesFolder).child(imageName)
+        
+        _ = storageRef.putData(data, metadata: nil, completion: { (metadata,error ) in
+            guard let metadata = metadata else {
+                print("Erreur")
+                return
+            }
+           storageRef.downloadURL { (url, error) in
+                guard let downloadURL = url else {
+                    return
+        }
+            print(downloadURL)
+        }
+    })
+    }
+//   func downloadImage() {
+//        guard let uid = UserDefaults.standard.value(forKey: MyKeys.uid) else {
+//            presentAlert(with: "Il semble y avoir un problème")
+//            return
+//        }
+//        let query = Firestore.firestore().collection(MyKeys.imagesCollections).whereField(MyKeys.uid, isEqualTo: uid)
+//        query.getDocuments { (snapshot, err) in
+//            if let err = err {
+//                self.presentAlert(with: err.localizedDescription)
+//                return
+//            }
+//            guard let snapshot = snapshot,
+//                let data = snapshot.documents.first?.data(),
+//                let urlString = data[MyKeys.imageUrl] as? String,
+//                let url = URL(string: urlString) else {
+//                self.presentAlert(with: "Il semble y avoir un problème")
+//                return
+//            }
+//            let resource = ImageResource(downloadURL: url)
+//            self.pictureImageView.kf.setImage(with: resource, completionHandler: { (result) in
+//                switch result {
+//                    
+//                case .success(_):
+//                    self.pictureImageView.image = self.myImage
+//                    self.presentAlert(with: "BIG SUCCESS")
+//                case .failure(_):
+//                    self.presentAlert(with: "BIG ERREUR")
+//                }
+//            })
+//        }
+//    }
+//}
 }
-
 extension CreateSpotAddressViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     func showImagePicckerControllerActionSheet() {

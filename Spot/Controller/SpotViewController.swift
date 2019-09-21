@@ -10,6 +10,7 @@ import UIKit
 import CoreLocation
 import MapKit
 import Firebase
+import Kingfisher
 
 protocol AddSpotDelegate: class {
     func addSpotToMapView(annotation: Spot)
@@ -29,13 +30,14 @@ class SpotViewController: UIViewController, AddSpotDelegate {
     let locationManager = CLLocationManager()
     var userPosition: CLLocation?
 //    var annotation: Spot?
+    var myImage: UIImageView?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setup()
         setupLocationManager()
-      
+//      queryData()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -125,30 +127,66 @@ class SpotViewController: UIViewController, AddSpotDelegate {
         navigationController?.pushViewController(createSpotVC, animated: false)
     }
 //    
-//        func queryData() {
-//            let uid = Auth.auth().currentUser?.uid
-//            FirestoreReferenceManager.referenceForUserPublicData(uid: uid!).collection("Spots").getDocuments { (querySnapshot, err) in
-//                if let err = err {
-//                    print("Error getting documents: \(err)")
-//                } else {
-//    
-//                    for document in querySnapshot!.documents {
-//                        if let coordinate = document.get("coordinate") {
-//                            let point = coordinate as! GeoPoint
-//                            let lat = point.latitude
-//                            let lon = point.longitude
-//                            let title = document.get("title")
-//                            let annotation = Spot(title: (title as? String)!, subtitle: "", coordinate: CLLocationCoordinate2D(latitude: lat, longitude: lon), info: "", image: nil)
-//                            
-//                            self.mapView.addAnnotation(annotation)
-//    //                        print(lat, lon) //here you can let coor = CLLocation(latitude: longitude:)
-//                        }
-//                    }
-//                }
-//            }
-//        }
-
+        func queryData() {
+            let uid = Auth.auth().currentUser?.uid
+            FirestoreReferenceManager.referenceForUserPublicData(uid: uid!).collection("Spots").getDocuments { (querySnapshot, err) in
+                if let err = err {
+                    print("Error getting documents: \(err)")
+                } else {
+    
+                    for document in querySnapshot!.documents {
+                        if let coordinate = document.get("coordinate") {
+                            let point = coordinate as! GeoPoint
+                            let lat = point.latitude
+                            let lon = point.longitude
+                            let title = document.get("title")
+                            self.downloadImage()
+                            let image = self.myImage?.image
+                            let annotation = Spot(title: (title as? String)!, subtitle: "", coordinate: CLLocationCoordinate2D(latitude: lat, longitude: lon), info: "", image: image!)
+                            
+                            self.mapView.addAnnotation(annotation)
+    //                        print(lat, lon) //here you can let coor = CLLocation(latitude: longitude:)
+                        }
+                    }
+                }
+            }
+        }
+    
+    func downloadImage() {
+        guard let uid = UserDefaults.standard.value(forKey: MyKeys.uid) else {
+            presentAlert(with: "Il semble y avoir un problème")
+            return
+        }
+        let userUid = Auth.auth().currentUser?.uid
+        let query = FirestoreReferenceManager.referenceForUserPublicData(uid: userUid!).collection("Spots").whereField(MyKeys.uid, isEqualTo: uid)
+        query.getDocuments { (snapshot, err) in
+            if let err = err {
+                self.presentAlert(with: err.localizedDescription)
+                return
+            }
+            guard let snapshot = snapshot,
+                let data = snapshot.documents.first?.data(),
+                let urlString = data[MyKeys.imageUrl] as? String,
+                let url = URL(string: urlString) else {
+                    self.presentAlert(with: "Il semble y avoir un problème")
+                    return
+            }
+            let resource = ImageResource(downloadURL: url)
+            self.myImage?.kf.setImage(with: resource, completionHandler: { (result) in
+                switch result {
+                    
+                case .success(_):
+                   
+                    self.presentAlert(with: "BIG SUCCESS")
+                case .failure(_):
+                    self.presentAlert(with: "BIG ERREUR")
+                }
+            })
+        }
+    }
 }
+
+
 
 extension SpotViewController: MKMapViewDelegate {
     
