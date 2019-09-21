@@ -24,7 +24,8 @@ class CreateSpotAddressViewController: UIViewController, UITextFieldDelegate, UI
     weak var delegate: AddSpotDelegate!
     var myImage: UIImage?
 //    var myAnnotation = [String:Any]()
-    
+    var myImageUrl = ""
+        
     override func viewDidLoad() {
         super.viewDidLoad()
         hideKeyboardWhenTappedAround()
@@ -52,50 +53,52 @@ class CreateSpotAddressViewController: UIViewController, UITextFieldDelegate, UI
     }
     
     func getCoordinate(from address: String) {
-        
         let geocoder = CLGeocoder()
-        
-        
         geocoder.geocodeAddressString(address) { (placemarks, error) in
             if error != nil {
                 print(error!)
             }
-            
             if let coor = placemarks?.first?.location?.coordinate {
                 guard let image = self.myImage else {
                     self.addSpotButton.shake()
                     self.presentAlert(with: "Un Spot doit avoir une image")
-                    return
-                }
+                    return }
                 guard let title = self.titleTextField.text, self.titleTextField.text?.isEmpty == false else {
                     self.addSpotButton.shake()
                     self.presentAlert(with: "Un Spot doit avoir un titre")
-                    return
-                }
+                    return }
                 let uid = Auth.auth().currentUser?.uid
                 let annotation = Spot(title: title, subtitle: "", coordinate: coor, info: "", image: image)
                 let ref = FirestoreReferenceManager.referenceForUserPublicData(uid: uid!).collection("Spots").document()
                 let documentId = ref.documentID
-                let documentUid = ""
-                let urlString = ""
-                self.uploadImage()
-                let data = ["title": title as Any, "coordinate": GeoPoint(latitude: coor.latitude, longitude: coor.longitude), "uid": documentId, "imageUid": documentUid, MyKeys.imageUrl: urlString]
-                ref.setData(data) { (err) in
+                
+                guard let imageData = image.jpegData(compressionQuality: 1.0) else {
+                    self.presentAlert(with: "Il semble y avoir une erreur")
+                    return }
+                let imageName = UUID().uuidString
+                let imageReference = Storage.storage().reference().child(MyKeys.imagesFolder).child(imageName)
+                
+                imageReference.putData(imageData, metadata: nil) { (metadata, err) in
                     if let err = err {
-                        print(err.localizedDescription)
-                    }
-                    
-                    print("very successfull")
+                        self.presentAlert(with: err.localizedDescription)
+                        return }
+                    imageReference.downloadURL(completion: { (url, err) in
+                        if let err = err {
+                            self.presentAlert(with: err.localizedDescription)
+                            return }
+                        guard let url = url else {
+                            self.presentAlert(with: "Il semble y avoir une erreur")
+                            return }
+                        let urlString = url.absoluteString
+                        let data = ["title": title as Any, "coordinate": GeoPoint(latitude: coor.latitude, longitude: coor.longitude), "uid": documentId, MyKeys.imageUrl: urlString]
+                        ref.setData(data) { (err) in
+                            if let err = err {
+                                print(err.localizedDescription)
+                            }
+                            print("very successfull")
+                        }
+                    })
                 }
-                
-                
-                
-                //                FirestoreReferenceManager.root.document("New Point").setData(myAnnotation) { (err) in
-                //                    if let err = err {
-                //                        print(err.localizedDescription)
-                //                    }
-                //                    print("successfull")
-                //                }
                 self.delegate.addSpotToMapView(annotation: annotation)
                 self.goToMapView()
             }
@@ -105,7 +108,7 @@ class CreateSpotAddressViewController: UIViewController, UITextFieldDelegate, UI
 
     
     @IBAction func createSpot(_ sender: Any) {
-        
+
         guard let address = addressTextField.text, addressTextField.text?.isEmpty == false else {
             addSpotButton.shake()
             presentAlert(with: "Merci de renseigner une adresse")
@@ -132,78 +135,80 @@ class CreateSpotAddressViewController: UIViewController, UITextFieldDelegate, UI
         showImagePicckerControllerActionSheet()
     }
     
-     func uploadImage() {
-        guard let image = myImage, let data = image.jpegData(compressionQuality: 1.0) else {
-            presentAlert(with: "Il semble y avoir une erreur")
-            return
-        }
-        let imageName = UUID().uuidString
-        let imageReference = Storage.storage().reference().child(MyKeys.imagesFolder).child(imageName)
-        
-        imageReference.putData(data, metadata: nil) { (metadata, err) in
-            if let err = err {
-                self.presentAlert(with: err.localizedDescription)
-                return
-            }
-            imageReference.downloadURL(completion: { (url, err) in
-                if let err = err {
-                    self.presentAlert(with: err.localizedDescription)
-                    return
-                }
-                
-                guard let url = url else {
-                    self.presentAlert(with: "Il semble y avoir une erreur")
-                    return
-                }
-                let uid = Auth.auth().currentUser?.uid
-                let ref = FirestoreReferenceManager.referenceForUserPublicData(uid: uid!).collection("Spots").document()
-                let documentId = ref.documentID
-//                let dataReference = Firestore.firestore().collection(MyKeys.imagesCollections).document()
-                let dataReference = FirestoreReferenceManager.referenceForUserPublicData(uid: uid!).collection("Spots").document(documentId)
-                let documentUid = dataReference.documentID
-                let urlString = url.absoluteString
-                
-                let data = ["imageUid": documentUid,
-                            MyKeys.imageUrl: urlString
-                ]
-                
-                dataReference.updateData(data) { (err) in
-                    if let err = err {
-                        self.presentAlert(with: err.localizedDescription)
-                        return
-                    }
-                    
-                    UserDefaults.standard.setValue(documentUid, forKey: MyKeys.uid)
-                    self.presentAlert(with: "Image successfully upload")
-                }
-            })
-        }
-    }
+//     func uploadImage() {
+//        guard let image = myImage, let data = image.jpegData(compressionQuality: 1.0) else {
+//            presentAlert(with: "Il semble y avoir une erreur")
+//            return
+//        }
+//        let imageName = UUID().uuidString
+//        let imageReference = Storage.storage().reference().child(MyKeys.imagesFolder).child(imageName)
+//
+//        imageReference.putData(data, metadata: nil) { (metadata, err) in
+//            if let err = err {
+//                self.presentAlert(with: err.localizedDescription)
+//                return
+//            }
+//            imageReference.downloadURL(completion: { (url, err) in
+//                if let err = err {
+//                    self.presentAlert(with: err.localizedDescription)
+//                    return
+//                }
+//
+//                guard let url = url else {
+//                    self.presentAlert(with: "Il semble y avoir une erreur")
+//                    return
+//                }
+////                let uid = Auth.auth().currentUser?.uid
+////                let ref = FirestoreReferenceManager.referenceForUserPublicData(uid: uid!).collection("Spots").document()
+////                let documentId = ref.documentID
+//////                let dataReference = Firestore.firestore().collection(MyKeys.imagesCollections).document()
+////                let dataReference = FirestoreReferenceManager.referenceForUserPublicData(uid: uid!).collection("Spots").document(documentId)
+////                let documentUid = dataReference.documentID
+//                let urlString = url.absoluteString
+//
+//                self.myImageUrl = urlString
+//                print(self.myImageUrl)
+////                let data = ["imageUid": documentUid,
+////                            MyKeys.imageUrl: urlString
+////                ]
+////
+////                dataReference.updateData(data) { (err) in
+////                    if let err = err {
+////                        self.presentAlert(with: err.localizedDescription)
+////                        return
+////                    }
+////
+////                    UserDefaults.standard.setValue(documentUid, forKey: MyKeys.uid)
+////                    self.presentAlert(with: "Image successfully upload")
+////                }
+//            })
+//        }
+//    }
     
-    func uploadAndSet(){
-        
-        guard let image = myImage, let data = image.jpegData(compressionQuality: 1.0) else {
-            presentAlert(with: "Il semble y avoir une erreur")
-            return
-        }
-      
-        // Create a storage reference from our storage service
-        let imageName = UUID().uuidString
-        let storageRef = Storage.storage().reference().child(MyKeys.imagesFolder).child(imageName)
-        
-        _ = storageRef.putData(data, metadata: nil, completion: { (metadata,error ) in
-            guard let metadata = metadata else {
-                print("Erreur")
-                return
-            }
-           storageRef.downloadURL { (url, error) in
-                guard let downloadURL = url else {
-                    return
-        }
-            print(downloadURL)
-        }
-    })
-    }
+//    func uploadAndSet(){
+//
+//        guard let image = myImage, let data = image.jpegData(compressionQuality: 1.0) else {
+//            presentAlert(with: "Il semble y avoir une erreur")
+//            return
+//        }
+//
+//        // Create a storage reference from our storage service
+//        let imageName = UUID().uuidString
+//        let storageRef = Storage.storage().reference().child(MyKeys.imagesFolder).child(imageName)
+//
+//        _ = storageRef.putData(data, metadata: nil, completion: { (metadata,error ) in
+//            guard let metadata = metadata else {
+//                print("Erreur")
+//                return
+//            }
+//           storageRef.downloadURL { (url, error) in
+//                guard let downloadURL = url else {
+//                    return
+//        }
+//            print(downloadURL)
+//        }
+//    })
+//    }
 //   func downloadImage() {
 //        guard let uid = UserDefaults.standard.value(forKey: MyKeys.uid) else {
 //            presentAlert(with: "Il semble y avoir un problème")
