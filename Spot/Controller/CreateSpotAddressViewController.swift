@@ -149,24 +149,28 @@ class CreateSpotAddressViewController: UIViewController, UITextFieldDelegate, UI
                 let urlString = url.absoluteString
                 self.myImageUrl = urlString
                 print(self.myImageUrl as Any)
-                                
                 
-//                                    UserDefaults.standard.setValue(documentUid, forKey: MyKeys.uid)
-//                                    self.presentAlert(with: "Image successfully upload")
-                                
+                
+                //                                    UserDefaults.standard.setValue(documentUid, forKey: MyKeys.uid)
+                //                                    self.presentAlert(with: "Image successfully upload")
+                
                 completion(urlString)
             })
-            
         }
-        
+    }
     
-
-       func downloadImage() {
-            guard let uid = UserDefaults.standard.value(forKey: MyKeys.uid) else {
+        
+        func downloadImage() {
+            guard let uid = Auth.auth().currentUser?.uid else {
                 presentAlert(with: "Il semble y avoir un problème")
                 return
             }
-            let query = Firestore.firestore().collection(MyKeys.imagesCollections).whereField(MyKeys.uid, isEqualTo: uid)
+            let ref = FirestoreReferenceManager.referenceForUserPublicData(uid: uid).collection("Spots").document()
+            let documentUid = ref.documentID
+            
+            
+            let query = FirestoreReferenceManager.referenceForUserPublicData(uid: uid).collection("Spots").whereField(MyKeys.uid, isEqualTo: documentUid)
+            //            let query = Firestore.firestore().collection(MyKeys.imagesCollections).whereField(MyKeys.uid, isEqualTo: uid)
             query.getDocuments { (snapshot, err) in
                 if let err = err {
                     self.presentAlert(with: err.localizedDescription)
@@ -176,13 +180,13 @@ class CreateSpotAddressViewController: UIViewController, UITextFieldDelegate, UI
                     let data = snapshot.documents.first?.data(),
                     let urlString = data[MyKeys.imageUrl] as? String,
                     let url = URL(string: urlString) else {
-                    self.presentAlert(with: "Il semble y avoir un problème")
-                    return
+                        self.presentAlert(with: "Il semble y avoir un problème")
+                        return
                 }
                 let resource = ImageResource(downloadURL: url)
                 self.pictureImageView.kf.setImage(with: resource, completionHandler: { (result) in
                     switch result {
-    
+                        
                     case .success(_):
                         self.pictureImageView.image = self.myImage
                         self.presentAlert(with: "BIG SUCCESS")
@@ -193,7 +197,7 @@ class CreateSpotAddressViewController: UIViewController, UITextFieldDelegate, UI
             }
         }
     }
-}
+
 extension CreateSpotAddressViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     func showImagePicckerControllerActionSheet() {
