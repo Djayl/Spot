@@ -23,7 +23,6 @@ class CreateSpotAddressViewController: UIViewController, UITextFieldDelegate, UI
     
     weak var delegate: AddSpotDelegate!
     var myImage: UIImage?
-    //    var myAnnotation = [String:Any]()
     var myImageUrl: String = ""
     
     override func viewDidLoad() {
@@ -40,7 +39,6 @@ class CreateSpotAddressViewController: UIViewController, UITextFieldDelegate, UI
     }
     
     fileprivate func setupView() {
-        
         descriptionTextView.text = "Type your description"
         descriptionTextView.layer.cornerRadius = 5
         pictureImageView.isUserInteractionEnabled = true
@@ -53,40 +51,40 @@ class CreateSpotAddressViewController: UIViewController, UITextFieldDelegate, UI
     }
     
     
-    func getCoordinate(from address: String) {
-        let geocoder = CLGeocoder()
-        geocoder.geocodeAddressString(address) { (placemarks, error) in
-            if error != nil {
-                print(error!)
-            }
-            if let coor = placemarks?.first?.location?.coordinate {
-                guard let image = self.myImage else {
-                    self.addSpotButton.shake()
-                    self.presentAlert(with: "Un Spot doit avoir une image")
-                    return }
-                guard let title = self.titleTextField.text, self.titleTextField.text?.isEmpty == false else {
-                    self.addSpotButton.shake()
-                    self.presentAlert(with: "Un Spot doit avoir un titre")
-                    return }
-                let uid = Auth.auth().currentUser?.uid
-                let annotation = Spot(title: title, subtitle: "", coordinate: coor, info: "", image: image)
-                let ref = FirestoreReferenceManager.referenceForUserPublicData(uid: uid!).collection("Spots").document()
-                let documentId = ref.documentID
-                self.uploadImage { (myImageUrl) in
-                    let data = ["title": title as Any, "coordinate": GeoPoint(latitude: coor.latitude, longitude: coor.longitude), "uid": documentId, MyKeys.imageUrl: self.myImageUrl]
-                    ref.setData(data) { (err) in
-                        if let err = err {
-                            print(err.localizedDescription)
-                        }
-                        print("very successfull")
-                    }
-                }
-                self.delegate.addSpotToMapView(annotation: annotation)
-                self.goToMapView()
-                
-            }
-        }
-    }
+//    func getCoordinate(from address: String) {
+//        let geocoder = CLGeocoder()
+//        geocoder.geocodeAddressString(address) { (placemarks, error) in
+//            if error != nil {
+//                print(error!)
+//            }
+//            if let coor = placemarks?.first?.location?.coordinate {
+//                guard let image = self.myImage else {
+//                    self.addSpotButton.shake()
+//                    self.presentAlert(with: "Un Spot doit avoir une image")
+//                    return }
+//                guard let title = self.titleTextField.text, self.titleTextField.text?.isEmpty == false else {
+//                    self.addSpotButton.shake()
+//                    self.presentAlert(with: "Un Spot doit avoir un titre")
+//                    return }
+//                let uid = Auth.auth().currentUser?.uid
+//                let annotation = Spot(title: title, subtitle: "", coordinate: coor, info: "", image: image, imageUrl: "")
+//                let ref = FirestoreReferenceManager.referenceForUserPublicData(uid: uid!).collection("Spots").document()
+//                let documentId = ref.documentID
+//                self.uploadImage { (imageUrl) in
+//                    let data = ["title": title as Any, "coordinate": GeoPoint(latitude: coor.latitude, longitude: coor.longitude), "uid": documentId, MyKeys.imageUrl: imageUrl]
+//                    ref.setData(data) { (err) in
+//                        if let err = err {
+//                            print(err.localizedDescription)
+//                        }
+//                        print("very successfull")
+//                    }
+//                }
+//                self.delegate.addSpotToMapView(annotation: annotation)
+//                self.goToMapView()
+//
+//            }
+//        }
+//    }
     
     
     @IBAction func createSpot(_ sender: Any) {
@@ -97,7 +95,7 @@ class CreateSpotAddressViewController: UIViewController, UITextFieldDelegate, UI
             return
         }
         
-        getCoordinate(from: address)
+//        getCoordinate(from: address)
         
     }
     
@@ -147,13 +145,7 @@ class CreateSpotAddressViewController: UIViewController, UITextFieldDelegate, UI
                 //                let dataReference = FirestoreReferenceManager.referenceForUserPublicData(uid: uid!).collection("Spots").document(documentId)
                 //                let documentUid = dataReference.documentID
                 let urlString = url.absoluteString
-                self.myImageUrl = urlString
-                print(self.myImageUrl as Any)
-                
-                
-                //                                    UserDefaults.standard.setValue(documentUid, forKey: MyKeys.uid)
-                //                                    self.presentAlert(with: "Image successfully upload")
-                
+//                self.myImageUrl = urlString
                 completion(urlString)
             })
         }
@@ -187,8 +179,9 @@ class CreateSpotAddressViewController: UIViewController, UITextFieldDelegate, UI
                 self.pictureImageView.kf.setImage(with: resource, completionHandler: { (result) in
                     switch result {
                         
-                    case .success(_):
-                        self.pictureImageView.image = self.myImage
+                    case .success(let value):
+                        self.myImage = value.image
+                        
                         self.presentAlert(with: "BIG SUCCESS")
                     case .failure(_):
                         self.presentAlert(with: "BIG ERREUR")

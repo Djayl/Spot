@@ -15,7 +15,9 @@ class Spot: NSObject, MKAnnotation {
     var title: String?
     var subtitle: String?
     var info: String
+//    var imageUrl: String
     var image: UIImage
+//    var imageView: UIImageView
     
     init(title: String, subtitle: String, coordinate: CLLocationCoordinate2D, info: String, image: UIImage) {
         
@@ -24,6 +26,10 @@ class Spot: NSObject, MKAnnotation {
         self.coordinate = coordinate
         self.info = info
         self.image = image
+//        self.imageUrl = imageUrl
+//        self.imageView = imageView
+       
+        super.init()
     }
     
   

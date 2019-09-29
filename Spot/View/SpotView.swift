@@ -10,9 +10,11 @@ import Foundation
 import MapKit
 
 
+
 class SpotView: MKAnnotationView {
     
     var controller: SpotViewController?
+
     
     init(controller: SpotViewController, annotation: MKAnnotation?, reuseIdentifier: String?) {
         self.controller = controller
@@ -40,20 +42,25 @@ class SpotView: MKAnnotationView {
     
     
     func setupCenter() -> UIView? {
-        guard let anno = annotation as? Spot else { return nil}
+        guard let anno = annotation as? Spot else {return nil}
         let view = UIView(frame: CGRect(x: 0, y: 0, width: 125, height: 125))
         view.translatesAutoresizingMaskIntoConstraints = false
         view.widthAnchor.constraint(equalToConstant: 125).isActive = true
         view.heightAnchor.constraint(equalToConstant: 125).isActive = true
         
+        
         let imageView = UIImageView(frame: view.bounds)
+        
         imageView.image = anno.image
+        
         imageView.clipsToBounds = true
         imageView.contentMode = .scaleAspectFill
+        
+        
         view.addSubview(imageView)
+        
         
         return view
     }
-    
     
 }

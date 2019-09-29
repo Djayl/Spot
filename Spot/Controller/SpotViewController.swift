@@ -12,6 +12,7 @@ import MapKit
 import Firebase
 import Kingfisher
 
+
 protocol AddSpotDelegate: class {
     func addSpotToMapView(annotation: Spot)
 }
@@ -30,7 +31,10 @@ class SpotViewController: UIViewController, AddSpotDelegate {
     let locationManager = CLLocationManager()
     var userPosition: CLLocation?
     //    var annotation: Spot?
-    var myImage: UIImageView?
+    var myImage: UIImage?
+    var spots = [Spot]()
+    var spotView = SpotView()
+   
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,7 +42,21 @@ class SpotViewController: UIViewController, AddSpotDelegate {
         setup()
         setupLocationManager()
         queryData()
+        
+//        mapView.reloadInputViews()
+ 
     }
+    
+//    override func viewWillAppear(_ animated: Bool) {
+//        super.viewWillAppear(animated)
+//
+//        queryData()
+//    }
+    
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+    }
+  
     
     override func viewWillDisappear(_ animated: Bool) {
         self.navigationController?.isNavigationBarHidden = false
@@ -126,140 +144,235 @@ class SpotViewController: UIViewController, AddSpotDelegate {
         
         navigationController?.pushViewController(createSpotVC, animated: false)
     }
-    //
+    
+    // APPELER LA METHODE DOWNLOADIMAGE DANS SPOTVIEW
+    
+//
     func queryData() {
-        let uid = Auth.auth().currentUser?.uid
-        FirestoreReferenceManager.referenceForUserPublicData(uid: uid!).collection("Spots").getDocuments { (querySnapshot, err) in
+        
+        guard let uid = Auth.auth().currentUser?.uid else {return}
+        FirestoreReferenceManager.referenceForUserPublicData(uid: uid).collection("Spots").getDocuments { (querySnapshot, err) in
             if let err = err {
                 print("Error getting documents: \(err)")
             } else {
                 
                 for document in querySnapshot!.documents {
-                    if let coordinate = document.get("coordinate") {
+                 
+                    let coordinate = document.get("coordinate")
+
                         let point = coordinate as! GeoPoint
                         let lat = point.latitude
                         let lon = point.longitude
                         let title = document.get("title") as? String
                         print(title as Any)
                         let imageUrl = document.get("imageUrl") as? String
-                        let url = URL(string: imageUrl!)
-                        let resource = ImageResource(downloadURL: url!)
-                        
-                        KingfisherManager.shared.retrieveImage(with: resource, options: nil, progressBlock: nil) { result in
-                            switch result {
-                            case .success(let value):
-                                let annotation = Spot(title: title!, subtitle: "", coordinate: CLLocationCoordinate2D(latitude: lat, longitude: lon), info: "", image: value.image)
-                                print(annotation)
-                                self.mapView.addAnnotation(annotation)
-                                print("Image: \(value.image). Got from: \(value.cacheType)")
-                            case .failure(let error):
-                                print("Error: \(error)")
-                            }
+                        guard let imageUrl2 = imageUrl else {return}
+                        guard let url = URL.init(string: imageUrl2) else {
+                            return
                         }
-                        //                            self.downloadImage { (image) in
-                        
-                        
-                        
-                        //                            }
-                        
-                        
-                        //                            let image = self.myImage?.image
-                        //                            let annotation = Spot(title: (title as? String)!, subtitle: "", coordinate: CLLocationCoordinate2D(latitude: lat, longitude: lon), info: "", image: image!)
-                        //
-                        //                            self.mapView.addAnnotation(annotation)
-                        //                        print(lat, lon) //here you can let coor = CLLocation(latitude: longitude:)
-                    }
+//                        let url = URL(string: imageUrl2)
+//                        let resource = ImageResource(downloadURL: url)
+                     
+                    
+                        KingfisherManager.shared.retrieveImage(with: url, options: [.cacheMemoryOnly]) { result in
+
+                          
+                                
+                            
+                        let image = try? result.get().image
+                            
+                        if let image = image {
+                            DispatchQueue.main.async {
+                            let annotation = Spot(title: title!, subtitle: "", coordinate: CLLocationCoordinate2D(latitude: lat, longitude: lon), info: "", image: image)
+                            
+//                            print(image)
+//                            print(annotation.imageUrl)
+//                            self.spots.append(annotation)
+                            
+//                            self.spots.append(annotation)
+                           
+                                
+                                
+                            
+                                self.mapView.addAnnotation(annotation)
+//                                self.mapView.removeAnnotation(annotation)
+                                
+                                }
+                              
+                            }
+                            
+                        }
+            }
                 }
             }
-        }
     }
     
-    //    func downloadImage() -> UIImage {
-    //        guard let uid = Auth.auth().currentUser?.uid else {
-    //            presentAlert(with: "Erreur 1")
-    //            return
-    //        }
-    //
-    //        FirestoreReferenceManager.referenceForUserPublicData(uid: uid).collection("Spots").getDocuments { (querySnapshot, error) in
-    //            if let error = error {
-    //                print(error.localizedDescription)
-    //            } else {
-    //                for document in querySnapshot!.documents {
-    //                   let documentUid = document.documentID
-    //                    print(documentUid)
-    //                    let query = FirestoreReferenceManager.referenceForUserPublicData(uid: uid).collection("Spots").whereField(MyKeys.uid, isEqualTo: documentUid)
-    //                        //            let query = Firestore.firestore().collection(MyKeys.imagesCollections).whereField(MyKeys.uid, isEqualTo: uid)
-    //
-    //                        query.getDocuments { (snapshot, err) in
-    //                            if let err = err {
-    //                                self.presentAlert(with: err.localizedDescription)
-    //                                return
-    //                            }
-    //                            guard let snapshot = snapshot,
-    //                                let data = snapshot.documents.first?.data(),
-    //                                let urlString = data[MyKeys.imageUrl] as? String,
-    //                                let url = URL(string: urlString) else {
-    //                                    self.presentAlert(with: "Erreur 2")
-    //                                    return
-    //                            }
-    //                            let resource = ImageResource(downloadURL: url)
-    //                            print(url)
-    //                            KingfisherManager.shared.retrieveImage(with: resource, options: nil, progressBlock: nil) { result in
-    //                                   switch result {
-    //                                   case .success(let value):
-    //
-    //                                       print("Image: \(value.image). Got from: \(value.cacheType)")
-    //                                   case .failure(let error):
-    //                                       print("Error: \(error)")
-    //
-    ////                            self.myImage?.kf.setImage(with: resource, completionHandler: { (result) in
-    ////                                switch result {
-    ////
-    ////                                case .success(_):
-    ////                                    completion(self.myImage!.image!)
-    ////                                    self.presentAlert(with: "BIG SUCCESS")
-    ////                                case .failure(_):
-    ////                                    self.presentAlert(with: "BIG ERREUR")
-    ////                                }
-    ////
-    ////                            })
-    //                        }
-    //                    }
-    //
-    //                }
-    //            }
-    //
-    ////        func getImage() {
-    ////
-    ////        logoRef.getData(maxSize: 1 * 1024 * 1024) { data, error in
-    ////          if let error = error {
-    ////            print("Error \(error)")
-    ////          } else {
-    ////            let logoImage = UIImage(data: data!)
-    ////          }
-    ////        }
-    ////        }
-    //        }
-    //        }
-    
-    //        func downloadImage(with url : URL) -> UIImage? {
-    ////            guard let url = URL.init(string: urlString) else {
-    ////                return
-    ////            }
-    //            let resource = ImageResource(downloadURL: url)
-    //
-    //            KingfisherManager.shared.retrieveImage(with: resource, options: nil, progressBlock: nil) { result in
-    //                switch result {
-    //                case .success(let value):
-    //
-    //                    print("Image: \(value.image). Got from: \(value.cacheType)")
-    //                case .failure(let error):
-    //                    print("Error: \(error)")
-    //                }
-    //            }
-    //        }
-}
+//    func getAll(spots: @escaping ([Spot]) -> ()) {
+//        guard let uid = Auth.auth().currentUser?.uid else {return}
+//
+//        let spotCollection = FirestoreReferenceManager.referenceForUserPublicData(uid: uid).collection("Spots")
+//
+//        spotCollection.addSnapshotListener { query, error in
+//            guard let query = query else {
+//                if let error = error {
+//                    print(error.localizedDescription)
+//                }
+//                return
+//            }
+//            let spotList = query.documents.map { Spot(title: <#T##String#>, subtitle: <#T##String#>, coordinate: <#T##CLLocationCoordinate2D#>, info: <#T##String#>, imageUrl: <#T##String#>, imageView: <#T##UIImageView#>) }
+//        }
+//    }
+        
 
+    
+//    func getImage() {
+//        let imageView = UIImageView()
+//        getImageUrl { (url) in
+//
+//        imageView.pin_setImage(from: url)  { result in
+//
+//            guard let image = result.image else { return}
+//            print(url)
+//            print(image)
+//
+//            }
+//        }
+//    }
+    
+//    func loadAnnotations() {
+//        for item in spots {
+//            DispatchQueue.main.async {
+//                
+//                let request = NSMutableURLRequest(url: URL(string: item.imageUrl)!)
+//                request.httpMethod = "GET"
+//                let session = URLSession(configuration: URLSessionConfiguration.default)
+//                let dataTask = session.dataTask(with: request as URLRequest) { (data, response, error) in
+//                    if error == nil {
+//                        let annotation = Spot(title: item.title!, subtitle: "", coordinate: CLLocationCoordinate2D(latitude: item.coordinate.latitude, longitude: item.coordinate.longitude), info: "", image: UIImage(data: data!)!, imageUrl: "")
+//                        print(annotation.coordinate.latitude)
+//                        print(annotation.coordinate.longitude)
+//                        DispatchQueue.main.async {
+//                            self.mapView.addAnnotation(annotation)
+//                        }
+//                    }
+//                    
+//                }
+//                dataTask.resume()
+//            }
+//        }
+//        
+//    }
+    
+    func getImageUrl(completion: @escaping (_ url: [URL?])->()) {
+        guard let uid = Auth.auth().currentUser?.uid else {return}
+        let query = FirestoreReferenceManager.referenceForUserPublicData(uid: uid).collection("Spots")
+            
+        query.getDocuments { (snapshot, err) in
+            if let err = err {
+                self.presentAlert(with: err.localizedDescription)
+                return
+            }
+            
+            for document in snapshot!.documents {
+                
+                let urlString = document.get("imageUrl") as? String
+                
+                let url = [URL(string: urlString!)]
+              completion(url)
+    }
+        }
+        
+    }
+}
+//        func queryData2() {
+//            guard let uid = Auth.auth().currentUser?.uid else {return}
+//            let query = FirestoreReferenceManager.referenceForUserPublicData(uid: uid).collection("Spots")
+//
+//            query.getDocuments { (snapshot, err) in
+//                if let err = err {
+//                    self.presentAlert(with: err.localizedDescription)
+//                    return
+//                }
+//
+//                for document in snapshot!.documents {
+//
+//                    let urlString = document.get("imageUrl") as? String
+//
+//                    let point = document.get("coordinate") as! GeoPoint
+//
+//                    let url = URL(string: urlString!)
+//
+//                let lat = point.latitude
+//                let long = point.longitude
+//                let title = document.get("title") as? String
+//                    let annotation = Spot(title: title!, subtitle: "", coordinate: CLLocationCoordinate2D(latitude: lat, longitude: long), info: "", image: urlString!)
+////                let resource = ImageResource(downloadURL: url!)
+////                    ImageService.getImage(withURL: url!) { (image) in
+////                        let annotation = Spot(title: title!, subtitle: "", coordinate: CLLocationCoordinate2D(latitude: lat, longitude: long), info: "", image: image!)
+//                    self.mapView.addAnnotation(annotation)
+////                    }
+////                KingfisherManager.shared.retrieveImage(with: resource, options: nil, progressBlock: nil) { result in
+////                    switch result {
+////                    case .success(let value):
+////
+////                        let annotation = Spot(title: title!, subtitle: "", coordinate: CLLocationCoordinate2D(latitude: lat, longitude: long), info: "", image: value.image)
+////
+////                        print(annotation)
+////                        self.mapView.addAnnotation(annotation)
+////
+////
+////                        print("Image: \(value.image). Got from: \(value.cacheType)")
+////                    case .failure(let error):
+////                        print("Error: \(error)")
+////                    }
+////                }
+//                }
+//            }
+//        }
+//    }
+    
+//    func loadAnnotations() {
+//
+//        let uid = Auth.auth().currentUser?.uid
+//        FirestoreReferenceManager.referenceForUserPublicData(uid: uid!).collection("Spots").getDocuments { (querySnapshot, err) in
+//            if let err = err {
+//                print("Error getting documents: \(err)")
+//            } else {
+//                for document in querySnapshot!.documents {
+//                    DispatchQueue.main.async {
+//
+//                    if let coordinate = document.get("coordinate") {
+//                        let point = coordinate as! GeoPoint
+//                        let lat = point.latitude
+//                        let lon = point.longitude
+//                        let title = document.get("title") as? String
+//                        print(title as Any)
+//                        let imageUrl = document.get("imageUrl") as? String
+//
+//            DispatchQueue.main.async {
+//
+//                let request = NSMutableURLRequest(url: URL(string: imageUrl!)!)
+//                request.httpMethod = "GET"
+//                let session = URLSession(configuration: URLSessionConfiguration.default)
+//                let dataTask = session.dataTask(with: request as URLRequest) { (data, response, error) in
+//                    if error == nil {
+//
+//                        let annotation = Spot(title: title!, subtitle: "", coordinate: CLLocationCoordinate2D(latitude: lat, longitude: lon), info: "", image: UIImage(data: data!)!)
+//                        DispatchQueue.main.async {
+//                            self.mapView.addAnnotation(annotation)
+//                        }
+//                    }
+//                }
+//
+//                dataTask.resume()
+//            }
+//                        }
+//    }
+//                    }
+//}
+//
+//        }
+//    }
 
 //    func downloadImage() {
 //        guard let uid = UserDefaults.standard.value(forKey: MyKeys.uid) else {
@@ -303,11 +416,14 @@ extension SpotViewController: MKMapViewDelegate {
     //        self.mapView.addAnnotation(annotation)
     //    }
     
+    
+    
     func setup() {
         setupMap(coordonnees: coordinateInit, myLat: 3, myLong: 3)
         mapView.showsUserLocation = true
         mapView.delegate = self
         mapView.isRotateEnabled = true
+       
         let longTapGesture = UILongPressGestureRecognizer(target: self, action: #selector(longTap))
         mapView.addGestureRecognizer(longTapGesture)
         let capitalArea = MKCircle(center: coordinateInit, radius: 5000) // rayon de 5 km
@@ -340,27 +456,65 @@ extension SpotViewController: MKMapViewDelegate {
         return nil
     }
     
+//    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+//        // Don't want to show a custom image if the annotation is the user's location.
+//        guard !(annotation is MKUserLocation) else {
+//            return nil
+//        }
+//
+//        // Better to make this class property
+//        let annotationIdentifier = "AnnotationIdentifier"
+//
+//        var annotationView: MKAnnotationView?
+//        if let dequeuedAnnotationView = mapView.dequeueReusableAnnotationView(withIdentifier: annotationIdentifier) {
+//            annotationView = dequeuedAnnotationView
+//            annotationView?.annotation = annotation
+//        }
+//        else {
+//            let av = MKAnnotationView(annotation: annotation, reuseIdentifier: annotationIdentifier)
+//            av.rightCalloutAccessoryView = UIButton(type: .detailDisclosure)
+//            annotationView = av
+//        }
+//
+//        if let annotationView = annotationView {
+//            // Configure your annotation view here
+//            let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 35, height: 42))
+//            imageView.image = myImage
+//            annotationView.addSubview(imageView)
+//            annotationView.canShowCallout = true
+//
+//        }
+//
+//        return annotationView
+//    }
     
-    //    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-    //        guard let annotation = annotation as? Spot else { return nil }
-    //        let identifier = "spot"
-    //        var view: MKMarkerAnnotationView
-    //        if let dequeuedView = mapView.dequeueReusableAnnotationView(withIdentifier: identifier)
-    //            as? MKMarkerAnnotationView {
-    //            dequeuedView.annotation = annotation
-    //            view = dequeuedView
-    //        } else {
-    //            view = MKMarkerAnnotationView(annotation: annotation,reuseIdentifier: identifier)
-    //            view.canShowCallout = true
-    //            view.calloutOffset = CGPoint(x: -5, y: 5)
-    //            view.rightCalloutAccessoryView = UIButton(type: .detailDisclosure)
-    //            let reviewButton = UIButton(type: .detailDisclosure)
-    //            view.rightCalloutAccessoryView = reviewButton
-    ////            reviewButton.addTarget(self, action: #selector(self.addReview), for: .touchUpInside)
-    //
-    //        }
-    //        return view
-    //    }
+    
+//        func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+//            guard let annotation = annotation as? Spot else { return nil }
+//            let identifier = "spot"
+//            var view: MKMarkerAnnotationView
+//            if let dequeuedView = mapView.dequeueReusableAnnotationView(withIdentifier: identifier)
+//                as? MKMarkerAnnotationView {
+//                dequeuedView.annotation = annotation
+//                view = dequeuedView
+//            } else {
+//                view = MKMarkerAnnotationView(annotation: annotation,reuseIdentifier: identifier)
+//                view.canShowCallout = true
+//                view.calloutOffset = CGPoint(x: -5, y: 5)
+//                view.rightCalloutAccessoryView = UIButton(type: .detailDisclosure)
+//                let reviewButton = UIButton(type: .detailDisclosure)
+//                view.rightCalloutAccessoryView = reviewButton
+//                getImageUrl { (url) in
+//                let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 35, height: 42))
+//                    let imageResource = ImageResource(downloadURL: url!)
+//                    imageView.kf.setImage(with: imageResource)
+//                    view.addSubview(imageView)
+//                }
+//    //            reviewButton.addTarget(self, action: #selector(self.addReview), for: .touchUpInside)
+//
+//            }
+//            return view
+//        }
     
     func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
         guard let spot = view.annotation as? Spot else { return }

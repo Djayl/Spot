@@ -122,38 +122,36 @@ class CreateSpotViewController: UIViewController, UITextFieldDelegate, UITextVie
     //    }
     //    }
     
-    func getSpot() {
-        let geocoder = CLGeocoder()
-        
-        geocoder.reverseGeocodeLocation(location) { (placemarks, error) in
-            if error != nil {
-                print(error!)
-            }
-            if let coor = placemarks?.first?.location?.coordinate {
-                guard let image = self.myImage else {
-                    self.creationButton.shake()
-                    self.presentAlert(with: "Un Spot doit avoir une image")
-                    return
-                }
-                guard let title = self.titleTextfield.text, self.titleTextfield.text?.isEmpty == false else {
-                    self.creationButton.shake()
-                    self.presentAlert(with: "Un Spot doit avoir un titre")
-                    return
-                }
-                let annotation = Spot(title: title, subtitle: "", coordinate: coor, info: "", image: image)
-                print(annotation.coordinate)
-                //                annotation.title = self.titleTextfield.text
-                annotation.subtitle = self.subtitleTextfield.text
-                annotation.info = self.descriptionTextView.text
-                
-                //                annotation.image = image
-                self.spots.append(annotation)
-                self.delegate.addSpotToMapView(annotation: annotation)
-                print(annotation)
-                self.goToMapView()
-            }
-        }
-    }
+//    func getSpot() {
+//        let geocoder = CLGeocoder()
+//        geocoder.reverseGeocodeLocation(location) { (placemarks, error) in
+//            if error != nil {
+//                print(error!)
+//            }
+//            if let coor = placemarks?.first?.location?.coordinate {
+//                guard let image = self.myImage else {
+//                    self.creationButton.shake()
+//                    self.presentAlert(with: "Un Spot doit avoir une image")
+//                    return
+//                }
+//                guard let title = self.titleTextfield.text, self.titleTextfield.text?.isEmpty == false else {
+//                    self.creationButton.shake()
+//                    self.presentAlert(with: "Un Spot doit avoir un titre")
+//                    return
+//                }
+//                let annotation = Spot(title: title, subtitle: "", coordinate: coor, info: "", image: image)
+//                print(annotation.coordinate)
+//                annotation.subtitle = self.subtitleTextfield.text
+//                annotation.info = self.descriptionTextView.text
+//                
+//                //                annotation.image = image
+//                self.spots.append(annotation)
+//                self.delegate.addSpotToMapView(annotation: annotation)
+//                print(annotation)
+//                self.goToMapView()
+//            }
+//        }
+//    }
     
     func saveData() {
         
@@ -165,10 +163,8 @@ class CreateSpotViewController: UIViewController, UITextFieldDelegate, UITextVie
     }
     
     @IBAction func sendData(_ sender: Any) {
-        //        presentAlertWithAction(message: "Vous allez créer un Spot, êtes-vous sûr ?") {
-        //            self.getSpot()
-        //        }
-        getSpot()
+     
+//        getSpot()
     }
     
     deinit {
@@ -202,30 +198,28 @@ class CreateSpotViewController: UIViewController, UITextFieldDelegate, UITextVie
                 }
                 
                 guard let url = url else {
-                        self.presentAlert(with: "Il semble y avoir une erreur")
-                        return
+                    self.presentAlert(with: "Il semble y avoir une erreur")
+                    return
                 }
-                    let dataReference = Firestore.firestore().collection(MyKeys.imagesCollections).document()
-                    let documentUid = dataReference.documentID
-                    let urlString = url.absoluteString
-                    
-                    let data = [MyKeys.uid: documentUid,
-                                MyKeys.imageUrl: urlString
-                    ]
+                let dataReference = Firestore.firestore().collection(MyKeys.imagesCollections).document()
+                let documentUid = dataReference.documentID
+                let urlString = url.absoluteString
+                
+                let data = [MyKeys.uid: documentUid,
+                            MyKeys.imageUrl: urlString
+                ]
                 dataReference.setData(data, merge: true) { (err) in
                     if let err = err {
                         self.presentAlert(with: err.localizedDescription)
                         return
                     }
-                    
                     UserDefaults.standard.setValue(documentUid, forKey: MyKeys.uid)
                     self.presentAlert(with: "Image successfully upload")
                 }
-                })
-            }
+            })
         }
-        
     }
+}
 
 
 extension CreateSpotViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {

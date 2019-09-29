@@ -15,6 +15,7 @@
 		F016EA022330E5A400214C4E /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F016EA012330E5A400214C4E /* SignUpViewController.swift */; };
 		F016EA0423311C5F00214C4E /* CreateSpotAddressViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F016EA0323311C5F00214C4E /* CreateSpotAddressViewController.swift */; };
 		F017F36F233250480093603E /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F017F36E233250480093603E /* Extensions.swift */; };
+		F0198B19233B6DC3004BF277 /* ImageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0198B18233B6DC3004BF277 /* ImageService.swift */; };
 		F01B3AC8232F8F4800B62D88 /* AlertService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F01B3AC7232F8F4800B62D88 /* AlertService.swift */; };
 		F01B3ACA232FAF5800B62D88 /* SpotView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F01B3AC9232FAF5800B62D88 /* SpotView.swift */; };
 		F01B3ACC232FB57D00B62D88 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F01B3ACB232FB57D00B62D88 /* DetailViewController.swift */; };
@@ -42,6 +43,7 @@
 		F016EA012330E5A400214C4E /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 		F016EA0323311C5F00214C4E /* CreateSpotAddressViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateSpotAddressViewController.swift; sourceTree = "<group>"; };
 		F017F36E233250480093603E /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		F0198B18233B6DC3004BF277 /* ImageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageService.swift; sourceTree = "<group>"; };
 		F01B3AC7232F8F4800B62D88 /* AlertService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertService.swift; sourceTree = "<group>"; };
 		F01B3AC9232FAF5800B62D88 /* SpotView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpotView.swift; sourceTree = "<group>"; };
 		F01B3ACB232FB57D00B62D88 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
@@ -147,6 +149,7 @@
 				F016E9F92330CDD400214C4E /* FirestoreReferenceManager.swift */,
 				F016E9FB2330D46A00214C4E /* FirebaseKeys.swift */,
 				F017F36E233250480093603E /* Extensions.swift */,
+				F0198B18233B6DC3004BF277 /* ImageService.swift */,
 			);
 			path = Spot;
 			sourceTree = "<group>";
@@ -287,6 +290,7 @@
 				F016E9FE2330E39D00214C4E /* StartViewController.swift in Sources */,
 				F0CDE0A723279709007126DE /* User.swift in Sources */,
 				F01B3ACA232FAF5800B62D88 /* SpotView.swift in Sources */,
+				F0198B19233B6DC3004BF277 /* ImageService.swift in Sources */,
 				F01B3AC8232F8F4800B62D88 /* AlertService.swift in Sources */,
 				F017F36F233250480093603E /* Extensions.swift in Sources */,
 				F0CDE0A923279719007126DE /* Spot.swift in Sources */,
