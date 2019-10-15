@@ -8,7 +8,7 @@
 
 import Foundation
 import MapKit
-
+import Firebase
 
 
 class SpotView: MKAnnotationView {
@@ -56,11 +56,14 @@ class SpotView: MKAnnotationView {
         imageView.clipsToBounds = true
         imageView.contentMode = .scaleAspectFill
         
-        
         view.addSubview(imageView)
         
         
         return view
     }
+    
+    
+    
+    
     
 }

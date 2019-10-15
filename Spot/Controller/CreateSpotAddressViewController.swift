@@ -27,6 +27,7 @@ class CreateSpotAddressViewController: UIViewController, UITextFieldDelegate, UI
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        handleTextView()
         hideKeyboardWhenTappedAround()
         setUpKeyboard()
         setupView()
@@ -38,8 +39,10 @@ class CreateSpotAddressViewController: UIViewController, UITextFieldDelegate, UI
         self.navigationController?.isNavigationBarHidden = false
     }
     
+   
+    
     fileprivate func setupView() {
-        descriptionTextView.text = "Type your description"
+        
         descriptionTextView.layer.cornerRadius = 5
         pictureImageView.isUserInteractionEnabled = true
         pictureImageView.layer.cornerRadius = 10
@@ -51,40 +54,40 @@ class CreateSpotAddressViewController: UIViewController, UITextFieldDelegate, UI
     }
     
     
-//    func getCoordinate(from address: String) {
-//        let geocoder = CLGeocoder()
-//        geocoder.geocodeAddressString(address) { (placemarks, error) in
-//            if error != nil {
-//                print(error!)
-//            }
-//            if let coor = placemarks?.first?.location?.coordinate {
-//                guard let image = self.myImage else {
-//                    self.addSpotButton.shake()
-//                    self.presentAlert(with: "Un Spot doit avoir une image")
-//                    return }
-//                guard let title = self.titleTextField.text, self.titleTextField.text?.isEmpty == false else {
-//                    self.addSpotButton.shake()
-//                    self.presentAlert(with: "Un Spot doit avoir un titre")
-//                    return }
-//                let uid = Auth.auth().currentUser?.uid
-//                let annotation = Spot(title: title, subtitle: "", coordinate: coor, info: "", image: image, imageUrl: "")
-//                let ref = FirestoreReferenceManager.referenceForUserPublicData(uid: uid!).collection("Spots").document()
-//                let documentId = ref.documentID
-//                self.uploadImage { (imageUrl) in
-//                    let data = ["title": title as Any, "coordinate": GeoPoint(latitude: coor.latitude, longitude: coor.longitude), "uid": documentId, MyKeys.imageUrl: imageUrl]
-//                    ref.setData(data) { (err) in
-//                        if let err = err {
-//                            print(err.localizedDescription)
-//                        }
-//                        print("very successfull")
-//                    }
-//                }
-//                self.delegate.addSpotToMapView(annotation: annotation)
-//                self.goToMapView()
-//
-//            }
-//        }
-//    }
+    func getCoordinate(from address: String) {
+        let geocoder = CLGeocoder()
+        geocoder.geocodeAddressString(address) { (placemarks, error) in
+            if error != nil {
+                print(error!)
+            }
+            if let coor = placemarks?.first?.location?.coordinate {
+                guard let image = self.myImage else {
+                    self.addSpotButton.shake()
+                    self.presentAlert(with: "Un Spot doit avoir une image")
+                    return }
+                guard let title = self.titleTextField.text, self.titleTextField.text?.isEmpty == false else {
+                    self.addSpotButton.shake()
+                    self.presentAlert(with: "Un Spot doit avoir un titre")
+                    return }
+                let uid = Auth.auth().currentUser?.uid
+                let annotation = Spot(title: title, subtitle: "", coordinate: coor, info: "", image: image)
+                let ref = FirestoreReferenceManager.referenceForUserPublicData(uid: uid!).collection("Spots").document()
+                let documentId = ref.documentID
+                self.uploadImage { (imageUrl) in
+                    let data = ["title": title as Any, "coordinate": GeoPoint(latitude: coor.latitude, longitude: coor.longitude), "uid": documentId, MyKeys.imageUrl: imageUrl]
+                    ref.setData(data) { (err) in
+                        if let err = err {
+                            print(err.localizedDescription)
+                        }
+                        print("very successfull")
+                    }
+                }
+                self.delegate.addSpotToMapView(annotation: annotation)
+                self.goToMapView()
+
+            }
+        }
+    }
     
     
     @IBAction func createSpot(_ sender: Any) {
@@ -95,7 +98,7 @@ class CreateSpotAddressViewController: UIViewController, UITextFieldDelegate, UI
             return
         }
         
-//        getCoordinate(from: address)
+        getCoordinate(from: address)
         
     }
     
@@ -189,8 +192,64 @@ class CreateSpotAddressViewController: UIViewController, UITextFieldDelegate, UI
                 })
             }
         }
-    }
+    
 
+func handleTextView() {
+    descriptionTextView.text = "Décrivez votre Spot"
+    descriptionTextView.textColor = UIColor.lightGray
+    descriptionTextView.font = UIFont(name: "futura", size: 14.0)
+    descriptionTextView.returnKeyType = .done
+    descriptionTextView.delegate = self
+}
+
+func textViewDidBeginEditing(_ textView: UITextView) {
+       if textView.text == "Décrivez votre Spot" {
+           textView.text = ""
+           textView.textColor = UIColor.black
+           textView.font = UIFont(name: "futura", size: 14.0)
+       }
+   }
+   
+//   func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+//       if text == "\n" {
+//           textView.resignFirstResponder()
+//       }
+//       return true
+//   }
+   
+   func textViewDidEndEditing(_ textView: UITextView) {
+       if textView.text == "" {
+           textView.text = "Décrivez votre Spot"
+           textView.textColor = UIColor.lightGray
+           textView.font = UIFont(name: "futura", size: 14.0)
+       }
+   }
+    
+    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+        // get the current text, or use an empty string if that failed
+        let currentText = textView.text ?? ""
+
+        // attempt to read the range they are trying to change, or exit if we can't
+        guard let stringRange = Range(range, in: currentText) else { return false }
+
+        // add their new text to the existing text
+        let updatedText = currentText.replacingCharacters(in: stringRange, with: text)
+
+        // make sure the result is under 16 characters
+        return updatedText.count <= 140
+    }
+    
+    
+//    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+//        var newText = textView.text!
+//        newText.removeAll { (character) -> Bool in
+//            return character == " " || character == "\n"
+//        }
+//
+//        return (newText.count + text.count) <= 40
+//    }
+
+}
 extension CreateSpotAddressViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     func showImagePicckerControllerActionSheet() {

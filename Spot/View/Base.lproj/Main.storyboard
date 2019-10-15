@@ -193,6 +193,14 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" enablesReturnKeyAutomatically="YES" secureTextEntry="YES" textContentType="password"/>
                             </textField>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eC9-4d-VOW">
+                                <rect key="frame" x="30" y="344" width="260" height="30"/>
+                                <fontDescription key="fontDescription" type="system" weight="thin" pointSize="15"/>
+                                <state key="normal" title="J'ai oublié mon mot de passe"/>
+                                <connections>
+                                    <action selector="resetPassword" destination="dZb-P3-DcI" eventType="touchUpInside" id="coy-GG-Pig"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
@@ -203,8 +211,11 @@
                             <constraint firstItem="OoD-gw-aZs" firstAttribute="top" secondItem="9yS-dr-9cb" secondAttribute="bottom" constant="30" id="Mkc-YC-1VZ"/>
                             <constraint firstItem="RHL-WU-AP9" firstAttribute="trailing" secondItem="OoD-gw-aZs" secondAttribute="trailing" constant="30" id="QM9-km-Bog"/>
                             <constraint firstItem="BOh-vS-HTj" firstAttribute="leading" secondItem="RHL-WU-AP9" secondAttribute="leading" constant="100" id="Rsx-4i-Rk6"/>
+                            <constraint firstItem="eC9-4d-VOW" firstAttribute="top" secondItem="OoD-gw-aZs" secondAttribute="bottom" constant="10" id="SR3-MO-a6i"/>
+                            <constraint firstItem="eC9-4d-VOW" firstAttribute="leading" secondItem="RHL-WU-AP9" secondAttribute="leading" constant="30" id="VF7-IB-ipa"/>
                             <constraint firstItem="RHL-WU-AP9" firstAttribute="trailing" secondItem="9yS-dr-9cb" secondAttribute="trailing" constant="30" id="ZAY-xf-37E"/>
                             <constraint firstItem="RHL-WU-AP9" firstAttribute="bottom" secondItem="BOh-vS-HTj" secondAttribute="bottom" constant="100" id="eS7-ly-Drn"/>
+                            <constraint firstItem="RHL-WU-AP9" firstAttribute="trailing" secondItem="eC9-4d-VOW" secondAttribute="trailing" constant="30" id="mZU-BA-rCa"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="RHL-WU-AP9"/>
                     </view>

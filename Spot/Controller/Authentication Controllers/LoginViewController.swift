@@ -42,9 +42,15 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         
     }
     
-    func resetPassword() {
-        Auth.auth().sendPasswordReset(withEmail: emailTextField.text!) { (error) in
+    @IBAction func resetPassword() {
+        
+        guard let email = emailTextField.text, emailTextField.text?.isEmpty == false else {
+            presentAlert(with: "Il vous faut renseigner une addresse email")
+            return
+        }
+        Auth.auth().sendPasswordReset(withEmail: email) { (error) in
             if error == nil {
+                self.showSimpleAlert()
                print("password send")
             } else {
                 print("thers is an error")

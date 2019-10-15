@@ -56,6 +56,20 @@ extension UIViewController {
         present(alertVC, animated: true, completion: nil)
     }
     
+    func showSimpleAlert() {
+        let alert = UIAlertController(title: "Email oublié", message: "Un mail vient de vous être transmis",preferredStyle: UIAlertController.Style.alert)
+
+//        alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertAction.Style.default, handler: { _ in
+//               //Cancel Action
+//           }))
+           alert.addAction(UIAlertAction(title: "OK",
+                                         style: UIAlertAction.Style.default,
+                                         handler: {(_: UIAlertAction!) in
+                                           //Sign out action
+           }))
+           self.present(alert, animated: true, completion: nil)
+       }
+    
 }
 
 extension CLLocation {
@@ -64,16 +78,16 @@ extension CLLocation {
     }
 }
 
-extension UIImageView {
-    func load(url: URL) {
-        DispatchQueue.global().async { [weak self] in
-            if let data = try? Data(contentsOf: url) {
-                if let image = UIImage(data: data) {
-                    DispatchQueue.main.async {
-                        self?.image = image
-                    }
-                }
-            }
-        }
-    }
-}
+//extension UIImageView {
+//    func load(url: URL) {
+//        DispatchQueue.global().async { [weak self] in
+//            if let data = try? Data(contentsOf: url) {
+//                if let image = UIImage(data: data) {
+//                    DispatchQueue.main.async {
+//                        self?.image = image
+//                    }
+//                }
+//            }
+//        }
+//    }
+//}

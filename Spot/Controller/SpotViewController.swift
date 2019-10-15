@@ -42,17 +42,47 @@ class SpotViewController: UIViewController, AddSpotDelegate {
         setup()
         setupLocationManager()
         queryData()
-        
+//        DispatchQueue.main.async {
+//            self.queryData { (spots) in
+//            print(spots)
+//            self.mapView.addAnnotations(spots)
+//        }
+//        }
 //        mapView.reloadInputViews()
  
     }
     
+    
 //    override func viewWillAppear(_ animated: Bool) {
 //        super.viewWillAppear(animated)
-//
-//        queryData()
+//        DispatchQueue.main.async {
+//            self.queryData { (spots) in
+//                   print(spots)
+//                    for spot in spots {
+//                    self.mapView.removeAnnotation(spot)
+//                   self.mapView.addAnnotation(spot)
+//                    }
+//               }
+//        }
 //    }
     
+    private func downloadImage(at url: URL, completion: @escaping (UIImage?) -> Void) {
+        
+        let ref = Storage.storage().reference(forURL: url.absoluteString)
+       
+      let megaByte = Int64(1 * 1024 * 1024)
+      
+      ref.getData(maxSize: megaByte) { data, error in
+        
+        guard let imageData = data else {
+          completion(nil)
+          return
+        }
+        
+        completion(UIImage(data: imageData))
+      }
+    
+    }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
@@ -158,70 +188,61 @@ class SpotViewController: UIViewController, AddSpotDelegate {
                 
                 for document in querySnapshot!.documents {
                  
-                    let coordinate = document.get("coordinate")
-
+               
+                    if  let coordinate = document.get("coordinate") {
                         let point = coordinate as! GeoPoint
                         let lat = point.latitude
                         let lon = point.longitude
                         let title = document.get("title") as? String
                         print(title as Any)
-                        let imageUrl = document.get("imageUrl") as? String
-                        guard let imageUrl2 = imageUrl else {return}
-                        guard let url = URL.init(string: imageUrl2) else {
-                            return
-                        }
+                        let imageUrl = document.get("imageUrl")
+                        let imageUrl2 = imageUrl
+//                        guard let url = URL.init(string: imageUrl2 as! String) else {
+//                            return
+//                        }
+                        
+                    if let url = URL(string: imageUrl2 as! String) {
+                        
+                        
 //                        let url = URL(string: imageUrl2)
 //                        let resource = ImageResource(downloadURL: url)
                      
                     
-                        KingfisherManager.shared.retrieveImage(with: url, options: [.cacheMemoryOnly]) { result in
-
-                          
-                                
+//                    KingfisherManager.shared.retrieveImage(with: url, options: [.cacheMemoryOnly]) { result in
+//
+//                        let image = try? result.get().image
+//
+//                        if let image = image {
+//                            DispatchQueue.main.async {
+                             
+                    self.downloadImage(at: url) { [weak self] image in
+                                   guard let self = self else {
+                                    print(url)
+                                     return
+                                   }
+                        
+                                   guard let image = image else {
+                                     return
+                                   }
+                        
+                                     let annotation = Spot(title: title!, subtitle: "", coordinate: CLLocationCoordinate2D(latitude: lat, longitude: lon), info: "", image: image)
+                                   self.mapView.addAnnotation(annotation)
+                                 }
+                        
+ 
+                    }
+//                                }
                             
-                        let image = try? result.get().image
-                            
-                        if let image = image {
-                            DispatchQueue.main.async {
-                            let annotation = Spot(title: title!, subtitle: "", coordinate: CLLocationCoordinate2D(latitude: lat, longitude: lon), info: "", image: image)
-                            
-//                            print(image)
-//                            print(annotation.imageUrl)
-//                            self.spots.append(annotation)
-                            
-//                            self.spots.append(annotation)
-                           
-                                
-                                
-                            
-                                self.mapView.addAnnotation(annotation)
-//                                self.mapView.removeAnnotation(annotation)
-                                
-                                }
-                              
-                            }
+//                            }
                             
                         }
             }
                 }
             }
     }
+}
     
-//    func getAll(spots: @escaping ([Spot]) -> ()) {
-//        guard let uid = Auth.auth().currentUser?.uid else {return}
-//
-//        let spotCollection = FirestoreReferenceManager.referenceForUserPublicData(uid: uid).collection("Spots")
-//
-//        spotCollection.addSnapshotListener { query, error in
-//            guard let query = query else {
-//                if let error = error {
-//                    print(error.localizedDescription)
-//                }
-//                return
-//            }
-//            let spotList = query.documents.map { Spot(title: <#T##String#>, subtitle: <#T##String#>, coordinate: <#T##CLLocationCoordinate2D#>, info: <#T##String#>, imageUrl: <#T##String#>, imageView: <#T##UIImageView#>) }
-//        }
-//    }
+
         
 
     
@@ -263,27 +284,27 @@ class SpotViewController: UIViewController, AddSpotDelegate {
 //        
 //    }
     
-    func getImageUrl(completion: @escaping (_ url: [URL?])->()) {
-        guard let uid = Auth.auth().currentUser?.uid else {return}
-        let query = FirestoreReferenceManager.referenceForUserPublicData(uid: uid).collection("Spots")
-            
-        query.getDocuments { (snapshot, err) in
-            if let err = err {
-                self.presentAlert(with: err.localizedDescription)
-                return
-            }
-            
-            for document in snapshot!.documents {
-                
-                let urlString = document.get("imageUrl") as? String
-                
-                let url = [URL(string: urlString!)]
-              completion(url)
-    }
-        }
-        
-    }
-}
+//    func getImageUrl(completion: @escaping (_ url: URL?)->()) {
+//        guard let uid = Auth.auth().currentUser?.uid else {return}
+//        let query = FirestoreReferenceManager.referenceForUserPublicData(uid: uid).collection("Spots")
+//            
+//        query.getDocuments { (snapshot, err) in
+//            if let err = err {
+//                self.presentAlert(with: err.localizedDescription)
+//                return
+//            }
+//            
+//            for document in snapshot!.documents {
+//                
+//                let urlString = document.get("imageUrl") as? String
+//                
+//                let url = URL(string: urlString!)
+//              completion(url)
+//    }
+//        }
+//        
+//    }
+
 //        func queryData2() {
 //            guard let uid = Auth.auth().currentUser?.uid else {return}
 //            let query = FirestoreReferenceManager.referenceForUserPublicData(uid: uid).collection("Spots")
@@ -416,6 +437,16 @@ extension SpotViewController: MKMapViewDelegate {
     //        self.mapView.addAnnotation(annotation)
     //    }
     
+//    func mapViewDidChangeVisibleRegion(_ mapView: MKMapView) {
+//            queryData { (spots) in
+//
+//                        for spot in spots {
+////                        self.mapView.removeAnnotation(spot)
+//                            self.mapView.addAnnotation(spot)
+//                        }
+//                   }
+//    }
+    
     
     
     func setup() {
@@ -437,7 +468,7 @@ extension SpotViewController: MKMapViewDelegate {
         let region = MKCoordinateRegion(center: coordonnees, span: span)
         mapView.setRegion(region, animated: true)
     }
-    
+//
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         let reuseIdentifier = "reuseID"
         if annotation.isKind(of: MKUserLocation.self) {
@@ -487,7 +518,28 @@ extension SpotViewController: MKMapViewDelegate {
 //
 //        return annotationView
 //    }
-    
+//    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+//        guard let annotation = annotation as? Spot else {
+//            return nil
+//        }
+//
+//        let reuseId = "Pin"
+//        var pinView = mapView.dequeueReusableAnnotationView(withIdentifier: reuseId)
+//        if pinView == nil {
+//            pinView = MKAnnotationView(annotation: annotation, reuseIdentifier: reuseId)
+//            pinView?.canShowCallout = true
+//            getImageUrl { (url) in
+//                print(url as Any)
+//            let data = NSData(contentsOf: url!)
+//            pinView?.image = UIImage(data: data! as Data)
+//            }
+//        }
+//        else {
+//            pinView?.annotation = annotation
+//        }
+//
+//        return pinView
+//    }
     
 //        func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
 //            guard let annotation = annotation as? Spot else { return nil }
@@ -505,10 +557,8 @@ extension SpotViewController: MKMapViewDelegate {
 //                let reviewButton = UIButton(type: .detailDisclosure)
 //                view.rightCalloutAccessoryView = reviewButton
 //                getImageUrl { (url) in
-//                let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 35, height: 42))
-//                    let imageResource = ImageResource(downloadURL: url!)
-//                    imageView.kf.setImage(with: imageResource)
-//                    view.addSubview(imageView)
+//                    let data = NSData(contentsOf: url!)
+//                    view.image = UIImage(data: data! as Data)!
 //                }
 //    //            reviewButton.addTarget(self, action: #selector(self.addReview), for: .touchUpInside)
 //

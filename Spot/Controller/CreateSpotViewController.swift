@@ -122,36 +122,36 @@ class CreateSpotViewController: UIViewController, UITextFieldDelegate, UITextVie
     //    }
     //    }
     
-//    func getSpot() {
-//        let geocoder = CLGeocoder()
-//        geocoder.reverseGeocodeLocation(location) { (placemarks, error) in
-//            if error != nil {
-//                print(error!)
-//            }
-//            if let coor = placemarks?.first?.location?.coordinate {
-//                guard let image = self.myImage else {
-//                    self.creationButton.shake()
-//                    self.presentAlert(with: "Un Spot doit avoir une image")
-//                    return
-//                }
-//                guard let title = self.titleTextfield.text, self.titleTextfield.text?.isEmpty == false else {
-//                    self.creationButton.shake()
-//                    self.presentAlert(with: "Un Spot doit avoir un titre")
-//                    return
-//                }
-//                let annotation = Spot(title: title, subtitle: "", coordinate: coor, info: "", image: image)
-//                print(annotation.coordinate)
-//                annotation.subtitle = self.subtitleTextfield.text
-//                annotation.info = self.descriptionTextView.text
-//                
-//                //                annotation.image = image
-//                self.spots.append(annotation)
-//                self.delegate.addSpotToMapView(annotation: annotation)
-//                print(annotation)
-//                self.goToMapView()
-//            }
-//        }
-//    }
+    func getSpot() {
+        let geocoder = CLGeocoder()
+        geocoder.reverseGeocodeLocation(location) { (placemarks, error) in
+            if error != nil {
+                print(error!)
+            }
+            if let coor = placemarks?.first?.location?.coordinate {
+                guard let image = self.myImage else {
+                    self.creationButton.shake()
+                    self.presentAlert(with: "Un Spot doit avoir une image")
+                    return
+                }
+                guard let title = self.titleTextfield.text, self.titleTextfield.text?.isEmpty == false else {
+                    self.creationButton.shake()
+                    self.presentAlert(with: "Un Spot doit avoir un titre")
+                    return
+                }
+                let annotation = Spot(title: title, subtitle: "", coordinate: coor, info: "", image: image)
+                print(annotation.coordinate)
+                annotation.subtitle = self.subtitleTextfield.text
+                annotation.info = self.descriptionTextView.text
+                
+                //                annotation.image = image
+                self.spots.append(annotation)
+                self.delegate.addSpotToMapView(annotation: annotation)
+                print(annotation)
+                self.goToMapView()
+            }
+        }
+    }
     
     func saveData() {
         
@@ -164,7 +164,7 @@ class CreateSpotViewController: UIViewController, UITextFieldDelegate, UITextVie
     
     @IBAction func sendData(_ sender: Any) {
      
-//        getSpot()
+        getSpot()
     }
     
     deinit {

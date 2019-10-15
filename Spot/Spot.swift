@@ -8,15 +8,15 @@
 
 import Foundation
 import MapKit
-import Firebase
+
 
 class Spot: NSObject, MKAnnotation {
     var coordinate: CLLocationCoordinate2D
     var title: String?
     var subtitle: String?
-    var info: String
+    var info: String?
 //    var imageUrl: String
-    var image: UIImage
+    var image: UIImage?
 //    var imageView: UIImageView
     
     init(title: String, subtitle: String, coordinate: CLLocationCoordinate2D, info: String, image: UIImage) {
