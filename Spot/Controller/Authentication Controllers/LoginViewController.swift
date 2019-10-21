@@ -32,7 +32,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
             }
             else{
                 self.loginButton.shake()
-                let alertController = UIAlertController(title: "Error", message: error?.localizedDescription, preferredStyle: .alert)
+                let alertController = UIAlertController(title: "Pas si vite!", message: error?.localizedDescription, preferredStyle: .alert)
                 let defaultAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
                 
                 alertController.addAction(defaultAction)

@@ -13,7 +13,6 @@
 		F016E9FE2330E39D00214C4E /* StartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F016E9FD2330E39D00214C4E /* StartViewController.swift */; };
 		F016EA002330E58200214C4E /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F016E9FF2330E58200214C4E /* LoginViewController.swift */; };
 		F016EA022330E5A400214C4E /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F016EA012330E5A400214C4E /* SignUpViewController.swift */; };
-		F016EA0423311C5F00214C4E /* CreateSpotAddressViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F016EA0323311C5F00214C4E /* CreateSpotAddressViewController.swift */; };
 		F017F36F233250480093603E /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F017F36E233250480093603E /* Extensions.swift */; };
 		F0198B19233B6DC3004BF277 /* ImageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0198B18233B6DC3004BF277 /* ImageService.swift */; };
 		F01B3AC8232F8F4800B62D88 /* AlertService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F01B3AC7232F8F4800B62D88 /* AlertService.swift */; };
@@ -21,12 +20,14 @@
 		F01B3ACC232FB57D00B62D88 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F01B3ACB232FB57D00B62D88 /* DetailViewController.swift */; };
 		F01E4C0323338BB500F7ADB6 /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = F01E4C0223338BB500F7ADB6 /* CustomButton.swift */; };
 		F01E4C0523338BD700F7ADB6 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = F01E4C0423338BD700F7ADB6 /* Colors.swift */; };
+		F04E3CF6235DAB4F0048D18A /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F04E3CF5235DAB4F0048D18A /* MapViewController.swift */; };
+		F04E3CF8235DB06E0048D18A /* CustomMarkerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F04E3CF7235DB06E0048D18A /* CustomMarkerView.swift */; };
+		F04E3CFA235DB2F70048D18A /* DetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F04E3CF9235DB2F70048D18A /* DetailsViewController.swift */; };
 		F0CDE0A123278C6A007126DE /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F0CDE0A023278C6A007126DE /* GoogleService-Info.plist */; };
 		F0CDE0A723279709007126DE /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0CDE0A623279709007126DE /* User.swift */; };
 		F0CDE0A923279719007126DE /* Spot.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0CDE0A823279719007126DE /* Spot.swift */; };
 		F0CDE0AB2327A99C007126DE /* CreateSpotViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0CDE0AA2327A99C007126DE /* CreateSpotViewController.swift */; };
 		F0D52809232786770023B226 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0D52808232786770023B226 /* AppDelegate.swift */; };
-		F0D5280B232786770023B226 /* SpotViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0D5280A232786770023B226 /* SpotViewController.swift */; };
 		F0D5280E232786770023B226 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F0D5280C232786770023B226 /* Main.storyboard */; };
 		F0D52810232786780023B226 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F0D5280F232786780023B226 /* Assets.xcassets */; };
 		F0D52813232786780023B226 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F0D52811232786780023B226 /* LaunchScreen.storyboard */; };
@@ -41,7 +42,6 @@
 		F016E9FD2330E39D00214C4E /* StartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartViewController.swift; sourceTree = "<group>"; };
 		F016E9FF2330E58200214C4E /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		F016EA012330E5A400214C4E /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
-		F016EA0323311C5F00214C4E /* CreateSpotAddressViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateSpotAddressViewController.swift; sourceTree = "<group>"; };
 		F017F36E233250480093603E /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		F0198B18233B6DC3004BF277 /* ImageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageService.swift; sourceTree = "<group>"; };
 		F01B3AC7232F8F4800B62D88 /* AlertService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertService.swift; sourceTree = "<group>"; };
@@ -49,13 +49,15 @@
 		F01B3ACB232FB57D00B62D88 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		F01E4C0223338BB500F7ADB6 /* CustomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButton.swift; sourceTree = "<group>"; };
 		F01E4C0423338BD700F7ADB6 /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
+		F04E3CF5235DAB4F0048D18A /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
+		F04E3CF7235DB06E0048D18A /* CustomMarkerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomMarkerView.swift; sourceTree = "<group>"; };
+		F04E3CF9235DB2F70048D18A /* DetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsViewController.swift; sourceTree = "<group>"; };
 		F0CDE0A023278C6A007126DE /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = SOURCE_ROOT; };
 		F0CDE0A623279709007126DE /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		F0CDE0A823279719007126DE /* Spot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Spot.swift; sourceTree = "<group>"; };
 		F0CDE0AA2327A99C007126DE /* CreateSpotViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateSpotViewController.swift; sourceTree = "<group>"; };
 		F0D52805232786770023B226 /* Spot.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Spot.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F0D52808232786770023B226 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		F0D5280A232786770023B226 /* SpotViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpotViewController.swift; sourceTree = "<group>"; };
 		F0D5280D232786770023B226 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		F0D5280F232786780023B226 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		F0D52812232786780023B226 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -86,10 +88,10 @@
 			isa = PBXGroup;
 			children = (
 				F016EA06233120AD00214C4E /* Authentication Controllers */,
-				F0D5280A232786770023B226 /* SpotViewController.swift */,
 				F0CDE0AA2327A99C007126DE /* CreateSpotViewController.swift */,
-				F016EA0323311C5F00214C4E /* CreateSpotAddressViewController.swift */,
 				F01B3ACB232FB57D00B62D88 /* DetailViewController.swift */,
+				F04E3CF5235DAB4F0048D18A /* MapViewController.swift */,
+				F04E3CF9235DB2F70048D18A /* DetailsViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -107,6 +109,7 @@
 		F017F36D233235B10093603E /* View */ = {
 			isa = PBXGroup;
 			children = (
+				F04E3CF7235DB06E0048D18A /* CustomMarkerView.swift */,
 				F01B3AC9232FAF5800B62D88 /* SpotView.swift */,
 				F0D5280C232786770023B226 /* Main.storyboard */,
 				F0D52811232786780023B226 /* LaunchScreen.storyboard */,
@@ -175,6 +178,7 @@
 				F0D52802232786770023B226 /* Frameworks */,
 				F0D52803232786770023B226 /* Resources */,
 				4B30884F496A7918E9A0FD40 /* [CP] Embed Pods Frameworks */,
+				B230F61F6386533D0273B6F9 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -272,6 +276,23 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Spot/Pods-Spot-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
+		B230F61F6386533D0273B6F9 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Spot/Pods-Spot-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Spot/Pods-Spot-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Spot/Pods-Spot-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -280,14 +301,16 @@
 			buildActionMask = 2147483647;
 			files = (
 				F016EA002330E58200214C4E /* LoginViewController.swift in Sources */,
-				F0D5280B232786770023B226 /* SpotViewController.swift in Sources */,
 				F016E9FA2330CDD400214C4E /* FirestoreReferenceManager.swift in Sources */,
 				F01E4C0523338BD700F7ADB6 /* Colors.swift in Sources */,
 				F016E9FC2330D46A00214C4E /* FirebaseKeys.swift in Sources */,
+				F04E3CF8235DB06E0048D18A /* CustomMarkerView.swift in Sources */,
 				F01E4C0323338BB500F7ADB6 /* CustomButton.swift in Sources */,
 				F0CDE0AB2327A99C007126DE /* CreateSpotViewController.swift in Sources */,
+				F04E3CF6235DAB4F0048D18A /* MapViewController.swift in Sources */,
 				F0D52809232786770023B226 /* AppDelegate.swift in Sources */,
 				F016E9FE2330E39D00214C4E /* StartViewController.swift in Sources */,
+				F04E3CFA235DB2F70048D18A /* DetailsViewController.swift in Sources */,
 				F0CDE0A723279709007126DE /* User.swift in Sources */,
 				F01B3ACA232FAF5800B62D88 /* SpotView.swift in Sources */,
 				F0198B19233B6DC3004BF277 /* ImageService.swift in Sources */,
@@ -296,7 +319,6 @@
 				F0CDE0A923279719007126DE /* Spot.swift in Sources */,
 				F016EA022330E5A400214C4E /* SignUpViewController.swift in Sources */,
 				F01B3ACC232FB57D00B62D88 /* DetailViewController.swift in Sources */,
-				F016EA0423311C5F00214C4E /* CreateSpotAddressViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

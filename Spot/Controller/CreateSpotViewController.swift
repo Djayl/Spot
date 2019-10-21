@@ -7,16 +7,21 @@
 //
 
 import UIKit
-import CoreLocation
+import GooglePlaces
+import GoogleMaps
 import FirebaseFirestore
 import FirebaseStorage
 import Kingfisher
 
+@available(iOS 13.0, *)
 class CreateSpotViewController: UIViewController, UITextFieldDelegate, UITextViewDelegate {
     
     
-    var location: CLLocation!
+    var location: CLLocationCoordinate2D!
+    var controller: MapViewController?
     weak var delegate: AddSpotDelegate!
+    let customMarkerWidth: Int = 50
+    let customMarkerHeight: Int = 70
     var myImage: UIImage?
     var spots = [Spot]()
     
@@ -61,97 +66,41 @@ class CreateSpotViewController: UIViewController, UITextFieldDelegate, UITextVie
     @objc func goBack() {
         dismiss(animated: true, completion: nil)
     }
+
     
-    //    func createSpot(from coordinate: CLLocation) {
-    //        let geopoint = CLGeocoder()
-    //        geopoint.reverseGeocodeLocation(coordinate) { (placemarks, error) in
-    //            if error != nil {
-    //                print(error!)
-    //            }
-    //            if let coor = placemarks?.first?.location?.coordinate {
-    //
-    //                let annotation = Spot(title: String(), subtitle: String(), coordinate: coor, info: String())
-    //                annotation.title = self.titleTextfield.text
-    //                self.delegate?.addSpotToMapView(annotation: annotation)
-    //                self.goToMapView()
-    //    }
-    //
-    //    }
-    //    }
-    //    func getLocation() {
-    //    let point = CLLocation(latitude: location[0].coordinate.latitude, longitude: location[0].coordinate.longitude)
-    //    point.geocode { placemark, error in
-    //    if let error = error as? CLError {
-    //    print("CLError:", error)
-    //    return
-    //    } else if let placemark = placemark?.first {
-    //    print(placemark.location?.coordinate as Any)
-    //    // you should always update your UI in the main thread
-    //    DispatchQueue.main.async {
-    //        print(placemark.location?.coordinate as Any)
-    ////        if let coor = placemark.location?.coordinate {
-    //        let annotation = Spot(title: "", subtitle: "", coordinate: CLLocationCoordinate2D(), info: "")
-    //            annotation.title = self.titleTextfield.text
-    //            print(annotation.title as Any)
-    //            print(annotation.coordinate)
-    //            self.delegate.addSpotToMapView(annotation: annotation)
-    //            self.goToMapView()
-    //    //  update UI here
-    //    print("name:", placemark.name ?? "unknown")
-    //
-    //    print("address1:", placemark.thoroughfare ?? "unknown")
-    //    print("address2:", placemark.subThoroughfare ?? "unknown")
-    //    print("neighborhood:", placemark.subLocality ?? "unknown")
-    //    print("city:", placemark.locality ?? "unknown")
-    //
-    //    print("state:", placemark.administrativeArea ?? "unknown")
-    //    print("subAdministrativeArea:", placemark.subAdministrativeArea ?? "unknown")
-    //    print("zip code:", placemark.postalCode ?? "unknown")
-    //    print("country:", placemark.country ?? "unknown", terminator: "\n\n")
-    //
-    //    print("isoCountryCode:", placemark.isoCountryCode ?? "unknown")
-    //    print("region identifier:", placemark.region?.identifier ?? "unknown")
-    //
-    //    print("timezone:", placemark.timeZone ?? "unknown", terminator:"\n\n")
-    //
-    //    // Mailind Address
-    ////    print(placemark.mailingAddress ?? "unknown")
-    ////    }
-    //    }
-    //    }
-    //    }
-    //    }
-    
-    func getSpot() {
-        let geocoder = CLGeocoder()
-        geocoder.reverseGeocodeLocation(location) { (placemarks, error) in
-            if error != nil {
-                print(error!)
-            }
-            if let coor = placemarks?.first?.location?.coordinate {
-                guard let image = self.myImage else {
-                    self.creationButton.shake()
-                    self.presentAlert(with: "Un Spot doit avoir une image")
-                    return
-                }
-                guard let title = self.titleTextfield.text, self.titleTextfield.text?.isEmpty == false else {
-                    self.creationButton.shake()
-                    self.presentAlert(with: "Un Spot doit avoir un titre")
-                    return
-                }
-                let annotation = Spot(title: title, subtitle: "", coordinate: coor, info: "", image: image)
-                print(annotation.coordinate)
-                annotation.subtitle = self.subtitleTextfield.text
-                annotation.info = self.descriptionTextView.text
-                
-                //                annotation.image = image
-                self.spots.append(annotation)
-                self.delegate.addSpotToMapView(annotation: annotation)
-                print(annotation)
-                self.goToMapView()
-            }
-        }
-    }
+        func getSpot() {
+               let geocoder = GMSGeocoder()
+
+            geocoder.reverseGeocodeCoordinate(location) { (placemarks, error) in
+                   if error != nil {
+                       print(error!)
+                   }
+                if let coor = placemarks?.firstResult()?.coordinate {
+    //                   guard let image = self.myImage else {
+    //                       self.creationButton.shake()
+    //                       self.presentAlert(with: "Un Spot doit avoir une image")
+    //                       return
+    //                   }
+                       guard let title = self.titleTextfield.text, self.titleTextfield.text?.isEmpty == false else {
+    //                       self.creationButton.shake()
+    //                       self.presentAlert(with: "Un Spot doit avoir un titre")
+                           return
+                       }
+                       let spot = Spot(position: coor)
+                    let customMarker = CustomMarkerView(frame: CGRect(x: 0, y: 0, width: self.customMarkerWidth, height: self.customMarkerHeight), image: self.myImage!, borderColor: UIColor.darkGray)
+                    spot.iconView = customMarker
+                    spot.title = title
+                    spot.coordinate = coor
+                    print(coor)
+                    print(title)
+                    self.delegate.addSpotToMapView(marker: spot)
+
+
+                       self.goToMapView()
+                   }
+
+               }
+           }
     
     func saveData() {
         
@@ -222,6 +171,7 @@ class CreateSpotViewController: UIViewController, UITextFieldDelegate, UITextVie
 }
 
 
+@available(iOS 13.0, *)
 extension CreateSpotViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     func showImagePicckerControllerActionSheet() {

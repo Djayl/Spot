@@ -82,3 +82,24 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
     }
 
 }
+
+//extension UITextField {
+//    
+//    func checkUsername(field: String, completion: @escaping (Bool) -> Void) {
+//        let uid = Auth.auth().currentUser?.uid
+//        let collectionRef = FirestoreReferenceManager.referenceForUserPublicData(uid: uid!).
+//        collectionRef.whereField("username", isEqualTo: field).getDocuments { (snapshot, err) in
+//            if let err = err {
+//                print("Error getting document: \(err)")
+//            } else if (snapshot?.isEmpty)! {
+//                completion(false)
+//            } else {
+//                for document in (snapshot?.documents)! {
+//                    if document.data()["username"] != nil {
+//                        completion(true)
+//                    }
+//                }
+//            }
+//        }
+//    }
+//}

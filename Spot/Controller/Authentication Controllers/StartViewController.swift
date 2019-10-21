@@ -19,9 +19,15 @@ class StartViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         addGradient()
-       
+        
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+
+        // Hide the navigation bar on the this view controller
+        self.navigationController?.setNavigationBarHidden(true, animated: animated)
+    }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
