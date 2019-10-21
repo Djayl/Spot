@@ -38,7 +38,7 @@ class MapViewController: UIViewController {
             locationManager.requestWhenInUseAuthorization()
             mapView.delegate = self
 //            mapView.addSubview(maptypeButton)
-            setupSearchBar()
+//            setupSearchBar()
             
             resultsViewController?.delegate = self
             getData()
@@ -80,27 +80,27 @@ class MapViewController: UIViewController {
         }
 
         
-        func setupSearchBar() {
-                resultsViewController = GMSAutocompleteResultsViewController()
-                searchController = UISearchController(searchResultsController: resultsViewController)
-                searchController?.searchResultsUpdater = resultsViewController
-            
-            var searchBar = UISearchBar(frame: CGRect(x: 0, y: 20, width: UIScreen.main.bounds.width, height: 44))
-            searchBar = searchController!.searchBar
-                  searchBar.searchBarStyle = .default
-                  view.addSubview(searchBar)
-
-                  searchBar.placeholder = "Ajouter un Spot avec une addresse"
-                  searchBar.set(textColor: .brown)
-            searchBar.setTextField(color: UIColor.systemIndigo.withAlphaComponent(0.3))
-                  searchBar.setPlaceholder(textColor: .white)
-                  searchBar.setSearchImage(color: .blue)
-                  searchBar.setClearButton(color: .red)
-                navigationItem.titleView = searchController?.searchBar
-                definesPresentationContext = true
-                searchController?.hidesNavigationBarDuringPresentation = false
-            
-              }
+//        func setupSearchBar() {
+//                resultsViewController = GMSAutocompleteResultsViewController()
+//                searchController = UISearchController(searchResultsController: resultsViewController)
+//                searchController?.searchResultsUpdater = resultsViewController
+//            
+//            var searchBar = UISearchBar(frame: CGRect(x: 0, y: 20, width: UIScreen.main.bounds.width, height: 44))
+//            searchBar = searchController!.searchBar
+//                  searchBar.searchBarStyle = .default
+//                  view.addSubview(searchBar)
+//
+//                  searchBar.placeholder = "Ajouter un Spot avec une addresse"
+//                  searchBar.set(textColor: .brown)
+//            searchBar.setTextField(color: UIColor.systemIndigo.withAlphaComponent(0.3))
+//                  searchBar.setPlaceholder(textColor: .white)
+//                  searchBar.setSearchImage(color: .blue)
+//                  searchBar.setClearButton(color: .red)
+//                navigationItem.titleView = searchController?.searchBar
+//                definesPresentationContext = true
+//                searchController?.hidesNavigationBarDuringPresentation = false
+//            
+//              }
         
         
         func getData() {
@@ -129,7 +129,7 @@ class MapViewController: UIViewController {
                                     marker.position = CLLocationCoordinate2D(latitude: lat, longitude: lon)
                                     marker.title = title
                                     marker.imageURL = imageUrl2 as? String
-                                    let customMarker = CustomMarkerView(frame: CGRect(x: 0, y: 0, width: self.customMarkerWidth, height: self.customMarkerHeight), image: image, borderColor: UIColor.systemGreen.withAlphaComponent(0.8))
+                                    let customMarker = CustomMarkerView(frame: CGRect(x: 0, y: 0, width: self.customMarkerWidth, height: self.customMarkerHeight), image: image, borderColor: UIColor.systemIndigo.withAlphaComponent(0.8))
                                     marker.iconView = customMarker
                                     marker.map = self.mapView
                                     self.spots.append(marker)
@@ -143,15 +143,21 @@ class MapViewController: UIViewController {
                 }
             }
         }
-        
+//@objc func nextTapped(spot: Spot) {
+//        // the name for UIStoryboard is the file name of the storyboard without the .storyboard extension
+//        let displayVC : DetailsViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "DetailsVC") as! DetailsViewController
+//        displayVC.spot = spot
+//
+//        self.present(displayVC, animated: true, completion: nil)
+//    }
 
         @objc func didTapSpot(spot: Spot) {
             let vc = storyboard?.instantiateViewController(withIdentifier: "DetailsVC") as! DetailsViewController
             let nc = UINavigationController(rootViewController: vc)
-            
-            vc.passedData = spot
+
+            vc.spot = spot
             self.present(nc, animated: true, completion: nil)
-            
+
         }
         
     }
@@ -244,7 +250,10 @@ extension MapViewController: GMSMapViewDelegate, AddSpotDelegate {
         
         func mapView(_ mapView: GMSMapView, didTapInfoWindowOf marker: GMSMarker) {
             guard let spot = marker as? Spot else {return}
+            print(marker.title as Any)
             didTapSpot(spot: spot)
+//            nextTapped(spot: spot)
+          
         }
     }
 

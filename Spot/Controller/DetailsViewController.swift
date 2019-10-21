@@ -1,6 +1,6 @@
 //
 //  DetailsViewController.swift
-//  GoogleMapTest
+//  Spot
 //
 //  Created by MacBook DS on 02/10/2019.
 //  Copyright © 2019 Djilali Sakkar. All rights reserved.
@@ -13,22 +13,33 @@ import Kingfisher
 class DetailsViewController: UIViewController {
 
     @IBOutlet weak var imageView: UIImageView!
-    @IBOutlet weak var label: UILabel!
-    @IBOutlet weak var button: UIButton!
+    @IBOutlet weak var pictureTakerName: UILabel!
+    @IBOutlet weak var pictureTakerAvatar: UIImageView!
+    @IBOutlet weak var spotTitle: UILabel!
+    @IBOutlet weak var spotDescription: UILabel!
+    @IBOutlet weak var spotDate: UILabel!
+    @IBOutlet weak var spotCoordinate: UILabel!
     
     
-    var passedData = Spot()
+    var spot = Spot()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        getImage()
-        label.text = passedData.title
-        print(label.text as Any)
+        getSpot()
+        setupAvatarImageView()
+        
+        
 
     }
     
-    func getImage() {
-        guard let urlString = passedData.imageURL else {return}
+    func getSpot() {
+        guard let name = spot.name else {return}
+        spotTitle.text = name
+        guard let description = spot.summary else {return}
+        spotDescription.text = description
+        guard let coordinate = spot.coordinate else {return}
+        spotCoordinate.text = "\(coordinate)"
+        guard let urlString = spot.imageURL else {return}
         
         guard let url = URL(string: urlString) else {return}
         
@@ -44,8 +55,15 @@ class DetailsViewController: UIViewController {
         }
     }
     
+    private func setupAvatarImageView() {
+        pictureTakerAvatar.layer.cornerRadius = (pictureTakerAvatar.frame.size.width ) / 2
+        pictureTakerAvatar.clipsToBounds = true
+        pictureTakerAvatar.layer.borderWidth = 3.0
+        pictureTakerAvatar.layer.borderColor = UIColor.white.cgColor
+    }
+    
     @IBAction func remove(_ sender: Any) {
-        passedData.map = nil
+        spot.map = nil
         goToMapView()
     }
    

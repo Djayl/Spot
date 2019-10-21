@@ -11,7 +11,7 @@ import GoogleMaps
 
 class Spot: GMSMarker {
     var name: String?
-    var subtitle: String?
+    var summary: String?
     var image: UIImage?
     var coordinate: CLLocationCoordinate2D?
     var imageURL: String?

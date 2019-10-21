@@ -17,7 +17,6 @@
 		F0198B19233B6DC3004BF277 /* ImageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0198B18233B6DC3004BF277 /* ImageService.swift */; };
 		F01B3AC8232F8F4800B62D88 /* AlertService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F01B3AC7232F8F4800B62D88 /* AlertService.swift */; };
 		F01B3ACA232FAF5800B62D88 /* SpotView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F01B3AC9232FAF5800B62D88 /* SpotView.swift */; };
-		F01B3ACC232FB57D00B62D88 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F01B3ACB232FB57D00B62D88 /* DetailViewController.swift */; };
 		F01E4C0323338BB500F7ADB6 /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = F01E4C0223338BB500F7ADB6 /* CustomButton.swift */; };
 		F01E4C0523338BD700F7ADB6 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = F01E4C0423338BD700F7ADB6 /* Colors.swift */; };
 		F04E3CF6235DAB4F0048D18A /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F04E3CF5235DAB4F0048D18A /* MapViewController.swift */; };
@@ -46,7 +45,6 @@
 		F0198B18233B6DC3004BF277 /* ImageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageService.swift; sourceTree = "<group>"; };
 		F01B3AC7232F8F4800B62D88 /* AlertService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertService.swift; sourceTree = "<group>"; };
 		F01B3AC9232FAF5800B62D88 /* SpotView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpotView.swift; sourceTree = "<group>"; };
-		F01B3ACB232FB57D00B62D88 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		F01E4C0223338BB500F7ADB6 /* CustomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButton.swift; sourceTree = "<group>"; };
 		F01E4C0423338BD700F7ADB6 /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		F04E3CF5235DAB4F0048D18A /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
@@ -89,7 +87,6 @@
 			children = (
 				F016EA06233120AD00214C4E /* Authentication Controllers */,
 				F0CDE0AA2327A99C007126DE /* CreateSpotViewController.swift */,
-				F01B3ACB232FB57D00B62D88 /* DetailViewController.swift */,
 				F04E3CF5235DAB4F0048D18A /* MapViewController.swift */,
 				F04E3CF9235DB2F70048D18A /* DetailsViewController.swift */,
 			);
@@ -318,7 +315,6 @@
 				F017F36F233250480093603E /* Extensions.swift in Sources */,
 				F0CDE0A923279719007126DE /* Spot.swift in Sources */,
 				F016EA022330E5A400214C4E /* SignUpViewController.swift in Sources */,
-				F01B3ACC232FB57D00B62D88 /* DetailViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -76,18 +76,18 @@ class CreateSpotViewController: UIViewController, UITextFieldDelegate, UITextVie
                        print(error!)
                    }
                 if let coor = placemarks?.firstResult()?.coordinate {
-    //                   guard let image = self.myImage else {
-    //                       self.creationButton.shake()
-    //                       self.presentAlert(with: "Un Spot doit avoir une image")
-    //                       return
-    //                   }
+                       guard let image = self.myImage else {
+                           self.creationButton.shake()
+                           self.presentAlert(with: "Un Spot doit avoir une image")
+                           return
+                       }
                        guard let title = self.titleTextfield.text, self.titleTextfield.text?.isEmpty == false else {
-    //                       self.creationButton.shake()
-    //                       self.presentAlert(with: "Un Spot doit avoir un titre")
+                           self.creationButton.shake()
+                           self.presentAlert(with: "Un Spot doit avoir un titre")
                            return
                        }
                        let spot = Spot(position: coor)
-                    let customMarker = CustomMarkerView(frame: CGRect(x: 0, y: 0, width: self.customMarkerWidth, height: self.customMarkerHeight), image: self.myImage!, borderColor: UIColor.darkGray)
+                    let customMarker = CustomMarkerView(frame: CGRect(x: 0, y: 0, width: self.customMarkerWidth, height: self.customMarkerHeight), image: image, borderColor: UIColor.darkGray)
                     spot.iconView = customMarker
                     spot.title = title
                     spot.coordinate = coor
