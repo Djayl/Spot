@@ -15,7 +15,6 @@ class DetailsViewController: UIViewController {
     
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var pictureTakerName: UILabel!
-    @IBOutlet weak var pictureTakerAvatar: UIImageView!
     @IBOutlet weak var spotTitle: UILabel!
     @IBOutlet weak var spotDescription: UILabel!
     @IBOutlet weak var spotDate: UILabel!
@@ -32,8 +31,11 @@ class DetailsViewController: UIViewController {
         //        spotTitle.text = spot.title
         
         //        setupAvatarImageView()
-        pictureTakerAvatar.makeRounded()
-        
+      
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(imageTapped(_:)))
+
+        self.imageView.addGestureRecognizer(tapGestureRecognizer)
+        self.imageView.isUserInteractionEnabled = true
         
     }
     
@@ -43,7 +45,7 @@ class DetailsViewController: UIViewController {
     
     func getSpot() {
         guard let name = spot.title else {return}
-        spotTitle.text = name
+        spotTitle.text = name.uppercased()
         guard let summary = spot.summary else {return}
         spotDescription.text = summary
 //        let lat = spot.position.latitude
@@ -84,12 +86,28 @@ class DetailsViewController: UIViewController {
           }
         }
     
-    private func setupAvatarImageView() {
-        pictureTakerAvatar.layer.cornerRadius = (pictureTakerAvatar.frame.size.width ) / 2
-        pictureTakerAvatar.clipsToBounds = true
-        pictureTakerAvatar.layer.borderWidth = 3.0
-        pictureTakerAvatar.layer.borderColor = UIColor.white.cgColor
+        @objc func imageTapped(_ sender: UITapGestureRecognizer) {
+        let imageView = sender.view as! UIImageView
+        let newImageView = UIImageView(image: imageView.image)
+        newImageView.frame = UIScreen.main.bounds
+        newImageView.backgroundColor = .white
+        newImageView.contentMode = .scaleAspectFit
+        newImageView.isUserInteractionEnabled = true
+        let tap = UITapGestureRecognizer(target: self, action: #selector(dismissFullscreenImage))
+        newImageView.addGestureRecognizer(tap)
+        self.view.addSubview(newImageView)
+        self.navigationController?.isNavigationBarHidden = true
+        self.tabBarController?.tabBar.isHidden = true
     }
+
+    @objc func dismissFullscreenImage(_ sender: UITapGestureRecognizer) {
+        self.navigationController?.isNavigationBarHidden = false
+        self.tabBarController?.tabBar.isHidden = false
+        sender.view?.removeFromSuperview()
+    }
+    
+  
+    
     
     @IBAction func remove(_ sender: Any) {
         spot.map = nil
