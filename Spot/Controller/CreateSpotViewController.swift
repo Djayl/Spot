@@ -38,6 +38,7 @@ class CreateSpotViewController: UIViewController, UITextFieldDelegate, UITextVie
         print("success")
         setupTextFields()
         setupView()
+        handleTextView()
         hideKeyboardWhenTappedAround()
         setUpKeyboard()
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Retour", style: .done, target: self, action: #selector(goBack))
@@ -168,7 +169,47 @@ class CreateSpotViewController: UIViewController, UITextFieldDelegate, UITextVie
             })
         }
     }
+    func handleTextView() {
+        descriptionTextView.text = "Décrivez votre Spot"
+        descriptionTextView.textColor = UIColor.lightGray
+        descriptionTextView.font = UIFont(name: "futura", size: 14.0)
+        descriptionTextView.returnKeyType = .done
+        descriptionTextView.delegate = self
+    }
+
+    func textViewDidBeginEditing(_ textView: UITextView) {
+           if textView.text == "Décrivez votre Spot" {
+               textView.text = ""
+               textView.textColor = UIColor.black
+               textView.font = UIFont(name: "futura", size: 14.0)
+           }
+       }
+    
+    func textViewDidEndEditing(_ textView: UITextView) {
+        if textView.text == "" {
+            textView.text = "Décrivez votre Spot"
+            textView.textColor = UIColor.lightGray
+            textView.font = UIFont(name: "futura", size: 14.0)
+        }
+    }
+     
+     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+         // get the current text, or use an empty string if that failed
+         let currentText = textView.text ?? ""
+
+         // attempt to read the range they are trying to change, or exit if we can't
+         guard let stringRange = Range(range, in: currentText) else { return false }
+
+         // add their new text to the existing text
+         let updatedText = currentText.replacingCharacters(in: stringRange, with: text)
+
+         // make sure the result is under 16 characters
+         return updatedText.count <= 140
+     }
+    
 }
+
+
 
 
 @available(iOS 13.0, *)

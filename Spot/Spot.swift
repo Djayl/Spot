@@ -15,5 +15,7 @@ class Spot: GMSMarker {
     var image: UIImage?
     var coordinate: CLLocationCoordinate2D?
     var imageURL: String?
-   
+
+  
+
 }

@@ -7,15 +7,12 @@
 //
 
 import Foundation
-import MapKit
-import CoreLocation
 import Firebase
 
-class User: NSObject, MKAnnotation {
+class User: NSObject {
     let uid: String
     var name: String
-    var location: GeoPoint?
-    var spot = [Spot]()
+    
     
     
     init(uid: String, name: String) {
@@ -23,13 +20,8 @@ class User: NSObject, MKAnnotation {
         self.name = name
     }
     
-    var title: String? {
-        return name
-    }
+
     
-    var coordinate: CLLocationCoordinate2D {
-        return CLLocationCoordinate2D.init(latitude: location?.latitude ?? 0,
-                                           longitude: location?.longitude ?? 0)
-    }
+   
     
 }

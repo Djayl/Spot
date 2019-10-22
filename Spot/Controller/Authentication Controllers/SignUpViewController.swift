@@ -45,7 +45,7 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
                 
                     let userData = [
                         "uid": uid,
-                        "name": "Djel"
+                        "name": self.userNameTextField.text
                     ]
                     FirestoreReferenceManager.referenceForUserPublicData(uid: uid!).setData(userData as [String : Any], merge: true) { (err) in
                         if let err = err {

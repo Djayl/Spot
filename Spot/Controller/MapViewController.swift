@@ -22,7 +22,9 @@ class MapViewController: UIViewController {
     @IBOutlet weak var mapView: GMSMapView!
     
     var sourceView: UIView?
-        
+    
+    var spots = [Spot]()
+    
         var resultsViewController: GMSAutocompleteResultsViewController?
         var searchController: UISearchController?
         var userPosition: CLLocation?
@@ -30,7 +32,7 @@ class MapViewController: UIViewController {
         
         let customMarkerWidth: Int = 50
         let customMarkerHeight: Int = 70
-        var spots = [Spot]()
+        
         
         override func viewDidLoad() {
             super.viewDidLoad()
@@ -39,21 +41,26 @@ class MapViewController: UIViewController {
             mapView.delegate = self
 //            mapView.addSubview(maptypeButton)
 //            setupSearchBar()
-            
-            resultsViewController?.delegate = self
+          
+//            resultsViewController?.delegate = self
             getData()
             
         }
     
-        override func viewWillDisappear(_ animated: Bool) {
-            self.navigationController?.isNavigationBarHidden = false
-        }
+       override func viewWillDisappear(_ animated: Bool) {
+            super.viewWillDisappear(true)
+        // Show the Navigation Bar
+                self.navigationController?.setNavigationBarHidden(false, animated: false)
+            }
         
         @IBAction func mapType(_ sender: Any) {
             chooseMapType(controller: MapViewController())
         }
         
+    @objc func done() {
         
+    }
+    
         func chooseMapType(controller: UIViewController) {
             let alert = UIAlertController(title: "Modifier le type de carte", message: "Sélectionnez une option", preferredStyle: .actionSheet)
             alert.addAction(UIAlertAction(title: "Basique", style: .default, handler: { (_) in
@@ -156,11 +163,27 @@ class MapViewController: UIViewController {
             let nc = UINavigationController(rootViewController: vc)
 
             vc.spot = spot
+            
             self.present(nc, animated: true, completion: nil)
 
         }
-        
-    }
+        @IBAction func logOut() {
+            let firebaseAuth = Auth.auth()
+            do {
+                try firebaseAuth.signOut()
+            } catch let signOutError as NSError {
+                print ("Error signing out: %@", signOutError)
+            }
+    
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            let initial = storyboard.instantiateInitialViewController()
+            UIApplication.shared.keyWindow?.rootViewController = initial
+        }
+    
+  
+
+}
+
     // MARK: - CLLocationManagerDelegate
     //1
 @available(iOS 13.0, *)
@@ -189,6 +212,9 @@ extension MapViewController: GMSAutocompleteResultsViewControllerDelegate {
         func resultsController(_ resultsController: GMSAutocompleteResultsViewController, didFailAutocompleteWithError error: Error) {
             print("Error: \(error.localizedDescription)")
         }
+    
+
+    
     }
 
 @available(iOS 13.0, *)
@@ -250,11 +276,16 @@ extension MapViewController: GMSMapViewDelegate, AddSpotDelegate {
         
         func mapView(_ mapView: GMSMapView, didTapInfoWindowOf marker: GMSMarker) {
             guard let spot = marker as? Spot else {return}
-            print(marker.title as Any)
+            
             didTapSpot(spot: spot)
+//            performSegue(withIdentifier: "detailsSegue", sender: self)
+//            print(spot!.name as Any)
+//            didTapSpot(spot: spot)
 //            nextTapped(spot: spot)
-          
-        }
+            }
+        
+   
+    
     }
 
     //extension MapViewController: UIPopoverPresentationControllerDelegate{

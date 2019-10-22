@@ -178,3 +178,5 @@ private extension UITextField {
 
     func getClearButton() -> UIButton? { return value(forKey: "clearButton") as? UIButton }
 }
+
+
