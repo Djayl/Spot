@@ -12,6 +12,7 @@ import GoogleMaps
 import FirebaseFirestore
 import FirebaseStorage
 import Kingfisher
+import Firebase
 
 @available(iOS 13.0, *)
 class CreateSpotViewController: UIViewController, UITextFieldDelegate, UITextViewDelegate {
@@ -82,18 +83,30 @@ class CreateSpotViewController: UIViewController, UITextFieldDelegate, UITextVie
                            self.presentAlert(with: "Un Spot doit avoir une image")
                            return
                        }
+                    let uid = Auth.auth().currentUser?.uid
+                    let ref = FirestoreReferenceManager.referenceForUserPublicData(uid: uid!).collection("Spots").document()
+                    let documentID = ref.documentID
                        guard let title = self.titleTextfield.text, self.titleTextfield.text?.isEmpty == false else {
                            self.creationButton.shake()
                            self.presentAlert(with: "Un Spot doit avoir un titre")
                            return
                        }
-                       let spot = Spot(position: coor)
+                    guard let description = self.descriptionTextView.text else {return}
+                    let spot = Spot(position: coor)
                     let customMarker = CustomMarkerView(frame: CGRect(x: 0, y: 0, width: self.customMarkerWidth, height: self.customMarkerHeight), image: image, borderColor: UIColor.darkGray)
                     spot.iconView = customMarker
                     spot.title = title
+                    spot.summary = description
                     spot.coordinate = coor
-                    print(coor)
-                    print(title)
+                    self.uploadImage { (imageUrl) in
+                        let data = ["title": title as Any, "coordinate": GeoPoint(latitude: coor.latitude, longitude: coor.longitude), "uid": documentID, MyKeys.imageUrl: imageUrl, "description": description]
+                        ref.setData(data) { (err) in
+                            if let err = err {
+                                print(err.localizedDescription)
+                            }
+                            print("very successfull")
+                        }
+                    }
                     self.delegate.addSpotToMapView(marker: spot)
 
 
@@ -128,47 +141,78 @@ class CreateSpotViewController: UIViewController, UITextFieldDelegate, UITextVie
         showImagePicckerControllerActionSheet()
     }
     
-    fileprivate func uploadImage() {
-        guard let image = myImage, let data = image.jpegData(compressionQuality: 1.0) else {
-            presentAlert(with: "Il semble y avoir une erreur")
-            return
-        }
-        let imageName = UUID().uuidString
-        let imageReference = Storage.storage().reference().child(MyKeys.imagesFolder).child(imageName)
-        
-        imageReference.putData(data, metadata: nil) { (metadata, err) in
-            if let err = err {
-                self.presentAlert(with: err.localizedDescription)
+        func uploadImage(_ completion: @escaping (String)->Void) {
+            guard let image = myImage, let data = image.jpegData(compressionQuality: 1.0) else {
+                presentAlert(with: "Il semble y avoir une erreur")
                 return
             }
-            imageReference.downloadURL(completion: { (url, err) in
+            let imageName = UUID().uuidString
+            let imageReference = Storage.storage().reference().child(MyKeys.imagesFolder).child(imageName)
+            
+            imageReference.putData(data, metadata: nil) { (metadata, err) in
                 if let err = err {
                     self.presentAlert(with: err.localizedDescription)
                     return
                 }
-                
-                guard let url = url else {
-                    self.presentAlert(with: "Il semble y avoir une erreur")
-                    return
-                }
-                let dataReference = Firestore.firestore().collection(MyKeys.imagesCollections).document()
-                let documentUid = dataReference.documentID
-                let urlString = url.absoluteString
-                
-                let data = [MyKeys.uid: documentUid,
-                            MyKeys.imageUrl: urlString
-                ]
-                dataReference.setData(data, merge: true) { (err) in
+                imageReference.downloadURL(completion: { (url, err) in
                     if let err = err {
                         self.presentAlert(with: err.localizedDescription)
                         return
                     }
-                    UserDefaults.standard.setValue(documentUid, forKey: MyKeys.uid)
-                    self.presentAlert(with: "Image successfully upload")
-                }
-            })
+                    
+                    guard let url = url else {
+                        self.presentAlert(with: "Il semble y avoir une erreur")
+                        return
+                    }
+                    
+                    let urlString = url.absoluteString
+  
+                    completion(urlString)
+                })
+            }
         }
-    }
+    
+//    fileprivate func uploadImage() {
+//        guard let image = myImage, let data = image.jpegData(compressionQuality: 1.0) else {
+//            presentAlert(with: "Il semble y avoir une erreur")
+//            return
+//        }
+//        let imageName = UUID().uuidString
+//        let imageReference = Storage.storage().reference().child(MyKeys.imagesFolder).child(imageName)
+//
+//        imageReference.putData(data, metadata: nil) { (metadata, err) in
+//            if let err = err {
+//                self.presentAlert(with: err.localizedDescription)
+//                return
+//            }
+//            imageReference.downloadURL(completion: { (url, err) in
+//                if let err = err {
+//                    self.presentAlert(with: err.localizedDescription)
+//                    return
+//                }
+//
+//                guard let url = url else {
+//                    self.presentAlert(with: "Il semble y avoir une erreur")
+//                    return
+//                }
+//                let dataReference = Firestore.firestore().collection(MyKeys.imagesCollections).document()
+//                let documentUid = dataReference.documentID
+//                let urlString = url.absoluteString
+//
+//                let data = [MyKeys.uid: documentUid,
+//                            MyKeys.imageUrl: urlString
+//                ]
+//                dataReference.setData(data, merge: true) { (err) in
+//                    if let err = err {
+//                        self.presentAlert(with: err.localizedDescription)
+//                        return
+//                    }
+//                    UserDefaults.standard.setValue(documentUid, forKey: MyKeys.uid)
+//                    self.presentAlert(with: "Image successfully upload")
+//                }
+//            })
+//        }
+//    }
     func handleTextView() {
         descriptionTextView.text = "Décrivez votre Spot"
         descriptionTextView.textColor = UIColor.lightGray

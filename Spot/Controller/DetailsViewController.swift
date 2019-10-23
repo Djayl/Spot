@@ -36,6 +36,10 @@ class DetailsViewController: UIViewController {
 
         self.imageView.addGestureRecognizer(tapGestureRecognizer)
         self.imageView.isUserInteractionEnabled = true
+        spotDescription.setUpLabel()
+        spotDate.setUpLabel()
+        spotCoordinate.setUpLabel()
+        spotTitle.setUpLabel()
         
     }
     
@@ -44,10 +48,11 @@ class DetailsViewController: UIViewController {
     }
     
     func getSpot() {
+        
         guard let name = spot.title else {return}
         spotTitle.text = name.uppercased()
-        guard let summary = spot.summary else {return}
-        spotDescription.text = summary
+        guard let description = spot.snippet else {return}
+        spotDescription.text = description
 //        let lat = spot.position.latitude
 //        let lon = spot.position.longitude
 //        print(lat)
@@ -118,6 +123,8 @@ class DetailsViewController: UIViewController {
     @objc func goToMapView() {
         self.dismiss(animated: true, completion: nil)
     }
+
+    
 }
 
 extension UIImageView{
@@ -127,4 +134,11 @@ extension UIImageView{
         self.clipsToBounds = true
     }
     
+}
+
+extension UILabel {
+    func setUpLabel() {
+        layer.cornerRadius = 10
+        self.clipsToBounds = true
+    }
 }

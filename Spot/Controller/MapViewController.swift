@@ -20,6 +20,7 @@ protocol AddSpotDelegate: class {
 class MapViewController: UIViewController {
     
     @IBOutlet weak var mapView: GMSMapView!
+    @IBOutlet weak var deconnexionButton: UIButton!
     
     var sourceView: UIView?
     
@@ -39,6 +40,7 @@ class MapViewController: UIViewController {
             locationManager.delegate = self
             locationManager.requestWhenInUseAuthorization()
             mapView.delegate = self
+            mapView.addSubview(deconnexionButton)
 //            mapView.addSubview(maptypeButton)
 //            setupSearchBar()
           
@@ -123,6 +125,7 @@ class MapViewController: UIViewController {
                         let lat = point.latitude
                         let lon = point.longitude
                         let title = document.get("title") as? String
+                        let description = document.get("description") as? String
                         let imageUrl = document.get("imageUrl")
                         let imageUrl2 = imageUrl
                         guard let url = URL.init(string: imageUrl2 as! String) else {return}
@@ -135,6 +138,7 @@ class MapViewController: UIViewController {
                                     let marker = Spot()
                                     marker.position = CLLocationCoordinate2D(latitude: lat, longitude: lon)
                                     marker.title = title
+                                    marker.snippet = description
                                     marker.imageURL = imageUrl2 as? String
                                     let customMarker = CustomMarkerView(frame: CGRect(x: 0, y: 0, width: self.customMarkerWidth, height: self.customMarkerHeight), image: image, borderColor: UIColor.systemIndigo.withAlphaComponent(0.8))
                                     marker.iconView = customMarker

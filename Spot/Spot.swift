@@ -16,6 +16,8 @@ class Spot: GMSMarker {
     var coordinate: CLLocationCoordinate2D?
     var imageURL: String?
 
-  
+//  var description: String? {
+//    return summary ?? "Aucune description n'a été rédigé pour ce Spot"
+//  }
 
 }

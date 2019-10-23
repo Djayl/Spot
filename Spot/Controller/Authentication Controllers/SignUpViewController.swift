@@ -37,7 +37,11 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
             alertController.addAction(defaultAction)
             self.present(alertController, animated: true, completion: nil)
         }
-        else{
+        else {
+//            guard emailTextField.text?.isEmpty == false, passwordTextField.text?.isEmpty == false, userNameTextField.text?.isEmpty == false, passwordConfirmTextField.text?.isEmpty == false  else {
+//                signUpButton.shake()
+//                return}
+            
             Auth.auth().createUser(withEmail: emailTextField.text!, password: passwordTextField.text!){ (user, error) in
                 if error == nil {
                     self.performSegue(withIdentifier: "signupToSpot", sender: self)

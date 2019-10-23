@@ -102,7 +102,6 @@
                                 <state key="normal" title="Login"/>
                                 <connections>
                                     <action selector="loginAction:" destination="dZb-P3-DcI" eventType="touchUpInside" id="vd3-9w-MfS"/>
-                                    <segue destination="kPo-xd-047" kind="presentation" identifier="loginToSpot" id="r3x-Ax-dB2"/>
                                 </connections>
                             </button>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Adresse Email" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="9yS-dr-9cb">
@@ -151,6 +150,7 @@
                         <outlet property="emailTextField" destination="9yS-dr-9cb" id="k3Q-7y-ePe"/>
                         <outlet property="loginButton" destination="BOh-vS-HTj" id="z2h-V0-aqT"/>
                         <outlet property="passwordTextField" destination="OoD-gw-aZs" id="w9m-8q-buY"/>
+                        <segue destination="kPo-xd-047" kind="presentation" identifier="loginToSpot" id="58p-ga-bMk"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fu0-QE-dan" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -175,7 +175,6 @@
                                 <state key="normal" title="Sign Up"/>
                                 <connections>
                                     <action selector="signUpAction:" destination="iXz-oc-wbf" eventType="touchUpInside" id="XZo-pK-hPl"/>
-                                    <segue destination="kPo-xd-047" kind="presentation" identifier="signupToSpot" id="VUD-1S-3zP"/>
                                 </connections>
                             </button>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Nom d'utilisateur" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="XmJ-NV-w1W">
@@ -237,6 +236,7 @@
                         <outlet property="passwordTextField" destination="Nfg-9t-vKz" id="COr-Hg-z49"/>
                         <outlet property="signUpButton" destination="asC-cw-MCD" id="m3b-ry-1np"/>
                         <outlet property="userNameTextField" destination="XmJ-NV-w1W" id="UbP-Gg-mgx"/>
+                        <segue destination="kPo-xd-047" kind="presentation" identifier="signupToSpot" id="u1S-RT-YWF"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="A5q-Bf-r9F" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -248,12 +248,30 @@
             <objects>
                 <viewController id="kPo-xd-047" customClass="MapViewController" customModule="Spot" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="iRY-hU-ad0">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="548"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EUb-Pu-b09" customClass="GMSMapView">
-                                <rect key="frame" x="0.0" y="44" width="320" height="524"/>
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="548"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qLG-U5-UDw">
+                                        <rect key="frame" x="40" y="498" width="240" height="30"/>
+                                        <color key="backgroundColor" red="0.68946211229999999" green="0.79639542839999999" blue="0.83742713930000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="30" id="4Wm-PA-Wts"/>
+                                        </constraints>
+                                        <state key="normal" title="Deconnexion"/>
+                                        <connections>
+                                            <action selector="logOut" destination="kPo-xd-047" eventType="touchUpInside" id="QZk-gY-6gh"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="qLG-U5-UDw" secondAttribute="trailing" constant="40" id="F3W-47-fJd"/>
+                                    <constraint firstItem="qLG-U5-UDw" firstAttribute="leading" secondItem="EUb-Pu-b09" secondAttribute="leading" constant="40" id="hN5-9J-AJj"/>
+                                    <constraint firstAttribute="bottom" secondItem="qLG-U5-UDw" secondAttribute="bottom" constant="20" id="sLn-Yq-Nq8"/>
+                                </constraints>
                                 <connections>
                                     <outlet property="delegate" destination="kPo-xd-047" id="kZX-Jg-6It"/>
                                 </connections>
@@ -269,13 +287,10 @@
                         <viewLayoutGuide key="safeArea" id="cCj-Y7-VI4"/>
                     </view>
                     <navigationItem key="navigationItem" id="CXI-8g-e3t">
-                        <barButtonItem key="rightBarButtonItem" title="Deconnexion" id="A1X-7Y-JuQ">
-                            <connections>
-                                <action selector="logOut" destination="kPo-xd-047" id="JFx-2P-bnq"/>
-                            </connections>
-                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" title="Deconnexion" id="A1X-7Y-JuQ"/>
                     </navigationItem>
                     <connections>
+                        <outlet property="deconnexionButton" destination="qLG-U5-UDw" id="IGf-5w-w3i"/>
                         <outlet property="mapView" destination="EUb-Pu-b09" id="VOd-Pf-5T2"/>
                     </connections>
                 </viewController>
@@ -486,6 +501,6 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="hnO-7p-m5i"/>
+        <segue reference="u1S-RT-YWF"/>
     </inferredMetricsTieBreakers>
 </document>
