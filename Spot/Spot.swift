@@ -8,6 +8,7 @@
 
 import Foundation
 import GoogleMaps
+import Firebase
 
 class Spot: GMSMarker {
     var name: String?
@@ -15,9 +16,18 @@ class Spot: GMSMarker {
     var image: UIImage?
     var coordinate: CLLocationCoordinate2D?
     var imageURL: String?
+   
 
 //  var description: String? {
 //    return summary ?? "Aucune description n'a été rédigé pour ce Spot"
 //  }
+    
+}
 
+class CustomData{
+    var creationDate: Date
+    
+    init(creationDate: Date) {
+        self.creationDate = creationDate
+    }
 }

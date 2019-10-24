@@ -99,7 +99,7 @@ class CreateSpotViewController: UIViewController, UITextFieldDelegate, UITextVie
                     spot.summary = description
                     spot.coordinate = coor
                     self.uploadImage { (imageUrl) in
-                        let data = ["title": title as Any, "coordinate": GeoPoint(latitude: coor.latitude, longitude: coor.longitude), "uid": documentID, MyKeys.imageUrl: imageUrl, "description": description]
+                        let data = ["title": title as Any, "coordinate": GeoPoint(latitude: coor.latitude, longitude: coor.longitude), "uid": documentID, MyKeys.imageUrl: imageUrl, "description": description, "createdAt": FieldValue.serverTimestamp()]
                         ref.setData(data) { (err) in
                             if let err = err {
                                 print(err.localizedDescription)

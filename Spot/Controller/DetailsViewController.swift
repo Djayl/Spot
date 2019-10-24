@@ -25,7 +25,7 @@ class DetailsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        getSpot()
+        getSpotDetails()
         getImage()
         reverseGeocodeCoordinate(spot.position)
         //        spotTitle.text = spot.title
@@ -47,17 +47,31 @@ class DetailsViewController: UIViewController {
         
     }
     
-    func getSpot() {
+//    private func getDate() {
+//        guard let uid = Auth.auth().currentUser?.uid else {return}
+//        FirestoreReferenceManager.referenceForUserPublicData(uid: uid).collection("Spots").getDocuments { (querySnapshot, error) in
+//            if let error = error {
+//                print("Error getting documents: \(error)")
+//            } else {
+//                for document in querySnapshot!.documents {
+//                    let creationDate = document.get("createdAt") as? String
+//                    self.spotDate.text = creationDate
+//    }
+//            }
+//        }
+//    }
+    
+    func getSpotDetails() {
         
         guard let name = spot.title else {return}
         spotTitle.text = name.uppercased()
-        guard let description = spot.snippet else {return}
+        
+        guard let description = spot.snippet, description.isEmpty == false else {
+            spotDescription.text = "Aucune description n'a été rédigée pour ce Spot"
+            return}
         spotDescription.text = description
-//        let lat = spot.position.latitude
-//        let lon = spot.position.longitude
-//        print(lat)
-//        print(lon)
-//        spotCoordinate.text = "\(lat)"
+        let date  = (spot.userData as! CustomData).creationDate
+        spotDate.text = date.asString(style: .short)
     }
     
     func getImage() {
@@ -141,4 +155,12 @@ extension UILabel {
         layer.cornerRadius = 10
         self.clipsToBounds = true
     }
+}
+
+extension Date {
+  func asString(style: DateFormatter.Style) -> String {
+    let dateFormatter = DateFormatter()
+    dateFormatter.dateStyle = style
+    return dateFormatter.string(from: self)
+  }
 }

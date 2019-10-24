@@ -126,6 +126,10 @@ class MapViewController: UIViewController {
                         let lon = point.longitude
                         let title = document.get("title") as? String
                         let description = document.get("description") as? String
+                        let creationDate = document.get("createdAt") as? Timestamp
+                        
+                        guard let date = creationDate?.dateValue() else {return}
+                        let mCustomData = CustomData(creationDate: date)
                         let imageUrl = document.get("imageUrl")
                         let imageUrl2 = imageUrl
                         guard let url = URL.init(string: imageUrl2 as! String) else {return}
@@ -139,6 +143,7 @@ class MapViewController: UIViewController {
                                     marker.position = CLLocationCoordinate2D(latitude: lat, longitude: lon)
                                     marker.title = title
                                     marker.snippet = description
+                                    marker.userData = mCustomData
                                     marker.imageURL = imageUrl2 as? String
                                     let customMarker = CustomMarkerView(frame: CGRect(x: 0, y: 0, width: self.customMarkerWidth, height: self.customMarkerHeight), image: image, borderColor: UIColor.systemIndigo.withAlphaComponent(0.8))
                                     marker.iconView = customMarker
@@ -154,6 +159,34 @@ class MapViewController: UIViewController {
                 }
             }
         }
+    
+  func getReadableDate(timeStamp: TimeInterval) -> String? {
+      let date = Date(timeIntervalSince1970: timeStamp)
+      let dateFormatter = DateFormatter()
+      
+      if Calendar.current.isDateInTomorrow(date) {
+          return "Tomorrow"
+      } else if Calendar.current.isDateInYesterday(date) {
+          return "Yesterday"
+      } else if dateFallsInCurrentWeek(date: date) {
+          if Calendar.current.isDateInToday(date) {
+              dateFormatter.dateFormat = "h:mm a"
+              return dateFormatter.string(from: date)
+          } else {
+              dateFormatter.dateFormat = "EEEE"
+              return dateFormatter.string(from: date)
+          }
+      } else {
+          dateFormatter.dateFormat = "MMM d, yyyy"
+          return dateFormatter.string(from: date)
+      }
+  }
+
+  func dateFallsInCurrentWeek(date: Date) -> Bool {
+      let currentWeek = Calendar.current.component(Calendar.Component.weekOfYear, from: Date())
+      let datesWeek = Calendar.current.component(Calendar.Component.weekOfYear, from: date)
+      return (currentWeek == datesWeek)
+  }
 //@objc func nextTapped(spot: Spot) {
 //        // the name for UIStoryboard is the file name of the storyboard without the .storyboard extension
 //        let displayVC : DetailsViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "DetailsVC") as! DetailsViewController
@@ -280,6 +313,7 @@ extension MapViewController: GMSMapViewDelegate, AddSpotDelegate {
         
         func mapView(_ mapView: GMSMapView, didTapInfoWindowOf marker: GMSMarker) {
             guard let spot = marker as? Spot else {return}
+           
             
             didTapSpot(spot: spot)
 //            performSegue(withIdentifier: "detailsSegue", sender: self)
