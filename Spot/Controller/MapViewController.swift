@@ -20,7 +20,12 @@ protocol AddSpotDelegate: class {
 class MapViewController: UIViewController {
     
     @IBOutlet weak var mapView: GMSMapView!
-    @IBOutlet weak var deconnexionButton: UIButton!
+    @IBOutlet weak var stackView: UIStackView!
+    @IBOutlet weak var switchView: UIView!
+    @IBOutlet weak var switchLabel: UILabel!
+    @IBOutlet weak var switchButton: UISwitch!
+    @IBOutlet weak var chooseDataButton: UIButton!
+    
     
     var sourceView: UIView?
     
@@ -40,14 +45,22 @@ class MapViewController: UIViewController {
             locationManager.delegate = self
             locationManager.requestWhenInUseAuthorization()
             mapView.delegate = self
-            mapView.addSubview(deconnexionButton)
+
+//            mapView.addSubview(stackView)
+            mapView.addSubview(switchView)
+            mapView.addSubview(chooseDataButton)
+            mapView.reloadInputViews()
+            switchButton.addTarget(self, action: #selector(stateChanged), for: .valueChanged)
 //            mapView.addSubview(maptypeButton)
 //            setupSearchBar()
           
 //            resultsViewController?.delegate = self
-            getData()
+//            getData()
+               
             
         }
+    
+  
     
        override func viewWillDisappear(_ animated: Bool) {
             super.viewWillDisappear(true)
@@ -58,9 +71,36 @@ class MapViewController: UIViewController {
         @IBAction func mapType(_ sender: Any) {
             chooseMapType(controller: MapViewController())
         }
+    
+    @IBAction func dataType(_ sender: Any) {
+        chooseData(controller: MapViewController())
+    }
+    
+    
+    @objc func stateChanged(switchState: UISwitch) {
+         if switchState.isOn {
+             switchLabel.text = "Juste mes favoris"
+            getFavoriteSpots()
+
+         } else {
+             switchLabel.text = "Je veux tous les Spots"
+            getData()
+         }
+     }
         
-    @objc func done() {
+    func chooseData(controller: UIViewController) {
+        let alert = UIAlertController(title: "Choisissez ce que vous voulez voir", message: "Sélectionnez une option", preferredStyle: .actionSheet)
+        alert.addAction(UIAlertAction(title: "Tous les Spots", style: .default, handler: { (_) in
+            self.getData()
+            
+        }))
+        alert.addAction(UIAlertAction(title: "Juste mes favoris", style: .default, handler: { (_) in
+            self.getFavoriteSpots()
+           
+        }))
         
+        self.present(alert, animated: true, completion: {
+        })
     }
     
         func chooseMapType(controller: UIViewController) {
@@ -160,6 +200,55 @@ class MapViewController: UIViewController {
             }
         }
     
+    func getFavoriteSpots() {
+        guard let uid = Auth.auth().currentUser?.uid else {return}
+        FirestoreReferenceManager.referenceForUserPublicData(uid: uid).collection("Spots").whereField("isFavorite", isEqualTo: "Yes").getDocuments { (querySnapshot, error) in
+                 if let error = error {
+                     print("Error getting documents: \(error)")
+                 } else {
+                     for document in querySnapshot!.documents {
+                         
+                         let coordinate = document.get("coordinate")
+                         let point = coordinate as! GeoPoint
+                         let lat = point.latitude
+                         let lon = point.longitude
+                         let title = document.get("title") as? String
+                         let description = document.get("description") as? String
+                         let creationDate = document.get("createdAt") as? Timestamp
+                         
+                         guard let date = creationDate?.dateValue() else {return}
+                         let mCustomData = CustomData(creationDate: date)
+                         let imageUrl = document.get("imageUrl")
+                         let imageUrl2 = imageUrl
+                         guard let url = URL.init(string: imageUrl2 as! String) else {return}
+                         KingfisherManager.shared.retrieveImage(with: url, options: nil) { result in
+                             
+                             let image = try? result.get().image
+                             
+                             if let image = image {
+                                 DispatchQueue.main.async {
+                                     let marker = Spot()
+                                     marker.position = CLLocationCoordinate2D(latitude: lat, longitude: lon)
+                                     marker.title = title
+                                     marker.snippet = description
+                                     marker.userData = mCustomData
+                                     marker.imageURL = imageUrl2 as? String
+                                     let customMarker = CustomMarkerView(frame: CGRect(x: 0, y: 0, width: self.customMarkerWidth, height: self.customMarkerHeight), image: image, borderColor: UIColor.systemIndigo.withAlphaComponent(0.8))
+                                     marker.iconView = customMarker
+                                     marker.map = self.mapView
+                                     self.spots.append(marker)
+                                     
+                                 }
+                                 
+                             }
+                             
+                         }
+                     }
+                 }
+             }
+         }
+    
+    
   func getReadableDate(timeStamp: TimeInterval) -> String? {
       let date = Date(timeIntervalSince1970: timeStamp)
       let dateFormatter = DateFormatter()
@@ -217,7 +306,10 @@ class MapViewController: UIViewController {
             UIApplication.shared.keyWindow?.rootViewController = initial
         }
     
-  
+    @IBAction func reloadMap(_ sender: Any) {
+        
+    }
+    
 
 }
 

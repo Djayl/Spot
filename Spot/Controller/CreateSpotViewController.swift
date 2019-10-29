@@ -28,10 +28,12 @@ class CreateSpotViewController: UIViewController, UITextFieldDelegate, UITextVie
     
     
     @IBOutlet weak var titleTextfield: UITextField!
-    @IBOutlet weak var subtitleTextfield: UITextField!
     @IBOutlet weak var creationButton: CustomButton!
     @IBOutlet weak var pictureImageView: UIImageView!
     @IBOutlet weak var descriptionTextView: UITextView!
+    @IBOutlet weak var switchLabel: UILabel!
+    @IBOutlet weak var stateSwitch: UISwitch!
+    @IBOutlet weak var favoriteButton: FavoriteButton!
     
     
     override func viewDidLoad() {
@@ -44,10 +46,21 @@ class CreateSpotViewController: UIViewController, UITextFieldDelegate, UITextVie
         setUpKeyboard()
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Retour", style: .done, target: self, action: #selector(goBack))
         pictureImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(addPhoto)))
+        stateSwitch.addTarget(self, action: #selector(stateChanged), for: .valueChanged)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         self.navigationController?.isNavigationBarHidden = false
+    }
+    
+     @objc func stateChanged(switchState: UISwitch) {
+        if switchState.isOn {
+            switchLabel.text = "Je partage mon Spot"
+
+        } else {
+            switchLabel.text = "Je garde mon Spot pour moi"
+
+        }
     }
     
     fileprivate func setupView() {
@@ -61,7 +74,7 @@ class CreateSpotViewController: UIViewController, UITextFieldDelegate, UITextVie
     
     fileprivate func setupTextFields() {
         titleTextfield.delegate = self
-        subtitleTextfield.delegate = self
+//        subtitleTextfield.delegate = self
         descriptionTextView.delegate = self
     }
     
@@ -70,7 +83,7 @@ class CreateSpotViewController: UIViewController, UITextFieldDelegate, UITextVie
     }
 
     
-        func getSpot() {
+        func createPrivateSpot() {
                let geocoder = GMSGeocoder()
 
             geocoder.reverseGeocodeCoordinate(location) { (placemarks, error) in
@@ -84,6 +97,7 @@ class CreateSpotViewController: UIViewController, UITextFieldDelegate, UITextVie
                            return
                        }
                     let uid = Auth.auth().currentUser?.uid
+//                    let favoriteRef = FirestoreReferenceManager.referenceForUserPublicData(uid: uid!).collection("Favorites").document()
                     let ref = FirestoreReferenceManager.referenceForUserPublicData(uid: uid!).collection("Spots").document()
                     let documentID = ref.documentID
                        guard let title = self.titleTextfield.text, self.titleTextfield.text?.isEmpty == false else {
@@ -99,16 +113,32 @@ class CreateSpotViewController: UIViewController, UITextFieldDelegate, UITextVie
                     spot.summary = description
                     spot.coordinate = coor
                     self.uploadImage { (imageUrl) in
-                        let data = ["title": title as Any, "coordinate": GeoPoint(latitude: coor.latitude, longitude: coor.longitude), "uid": documentID, MyKeys.imageUrl: imageUrl, "description": description, "createdAt": FieldValue.serverTimestamp()]
-                        ref.setData(data) { (err) in
-                            if let err = err {
-                                print(err.localizedDescription)
+                       
+                        switch self.favoriteButton.isOn {
+// VOIR POUR FAIRE PLUTOT UN MERGE EN AJOUTANT LA MENTION ISFAVORITE: YES/NO ET DANS LA CASE FALSE METTRE LE REF.SETDATA COMME CA ON AURA QU'UNE SEULE COLLECTION DE SPOTS PUIS METTRE BOUTON POUR FAIRE APPARAITRE LES FAVORIS DANS LE MAPVIEWCONTROLLER
+                        case true:
+                            let data = ["title": title as Any, "coordinate": GeoPoint(latitude: coor.latitude, longitude: coor.longitude), "uid": documentID, MyKeys.imageUrl: imageUrl, "description": description, "createdAt": FieldValue.serverTimestamp(), "isFavorite": "Yes"]
+                            ref.setData(data) { (err) in
+                                if let err = err {
+                                    print(err.localizedDescription)
+                                }
+                                print("very successfull")
                             }
-                            print("very successfull")
+                            print("ADDED TO FAVORITE")
+                        case false:
+                            let data = ["title": title as Any, "coordinate": GeoPoint(latitude: coor.latitude, longitude: coor.longitude), "uid": documentID, MyKeys.imageUrl: imageUrl, "description": description, "createdAt": FieldValue.serverTimestamp(), "isFavorite": "No"]
+                             ref.setData(data) { (err) in
+                                 if let err = err {
+                                     print(err.localizedDescription)
+                                 }
+                                 print("very successfull")
+                             }
+                            print("NOT ADDED TO FAVORITE")
                         }
+                        
                     }
                     self.delegate.addSpotToMapView(marker: spot)
-
+                    
 
                        self.goToMapView()
                    }
@@ -116,10 +146,140 @@ class CreateSpotViewController: UIViewController, UITextFieldDelegate, UITextVie
                }
            }
     
-    func saveData() {
-        
+    func createPublicSpot() {
+        let geocoder = GMSGeocoder()
+        geocoder.reverseGeocodeCoordinate(location) { (placemarks, error) in
+            if error != nil {
+                print(error!)
+            }
+            if let coor = placemarks?.firstResult()?.coordinate {
+                guard let image = self.myImage else {
+                    self.creationButton.shake()
+                    self.presentAlert(with: "Un Spot doit avoir une image")
+                    return
+                }
+                let uid = Auth.auth().currentUser?.uid
+                let ref = FirestoreReferenceManager.root.collection("publicSpot").document()
+                let privateRef = FirestoreReferenceManager.referenceForUserPublicData(uid: uid!).collection("Spots").document()
+                let favoriteRef = FirestoreReferenceManager.referenceForUserPublicData(uid: uid!).collection("Spots").document()
+                let documentID = ref.documentID
+                guard let title = self.titleTextfield.text, self.titleTextfield.text?.isEmpty == false else {
+                    self.creationButton.shake()
+                    self.presentAlert(with: "Un Spot doit avoir un titre")
+                    return
+                }
+                guard let description = self.descriptionTextView.text else {return}
+                let spot = Spot(position: coor)
+                let customMarker = CustomMarkerView(frame: CGRect(x: 0, y: 0, width: self.customMarkerWidth, height: self.customMarkerHeight), image: image, borderColor: UIColor.darkGray)
+                spot.iconView = customMarker
+                spot.title = title
+                spot.summary = description
+                spot.coordinate = coor
+                self.uploadImage { (imageUrl) in
+                    let data = ["title": title as Any, "coordinate": GeoPoint(latitude: coor.latitude, longitude: coor.longitude), "uid": documentID, MyKeys.imageUrl: imageUrl, "description": description, "createdAt": FieldValue.serverTimestamp()]
+                    
+                    switch self.favoriteButton.isOn {
+                    case true:
+                        favoriteRef.setData(data) { (err) in
+                            if let err = err {
+                                print(err.localizedDescription)
+                            }
+                            print("very successfull")
+                        }
+                        print("added to favorite")
+                    case false:
+                        print("not added to favorite")
+                    }
+                    ref.setData(data) { (err) in
+                        if let err = err {
+                            print(err.localizedDescription)
+                        }
+                        print("very successfull")
+                    }
+                }
+                self.delegate.addSpotToMapView(marker: spot)
+                self.goToMapView()
+            }
+        }
     }
     
+    private func setData(data: [String:Any]) {
+        let uid = Auth.auth().currentUser?.uid
+        let publicRef = FirestoreReferenceManager.root.collection("publicSpot").document()
+        let privateRef = FirestoreReferenceManager.referenceForUserPublicData(uid: uid!).collection("Spots").document()
+        let favoriteRef = FirestoreReferenceManager.referenceForUserPublicData(uid: uid!).collection("Spots").document()
+        
+        switch publicRef {
+        case publicRef:
+            publicRef.setData(data) { (err) in
+                if let err = err {
+                    print(err.localizedDescription)
+                }
+                print("public spot added")
+            }
+        case privateRef:
+            privateRef.setData(data) { (err) in
+                if let err = err {
+                    print(err.localizedDescription)
+                }
+                print("private spot added")
+            }
+        case favoriteRef:
+            favoriteRef.setData(data) { (err) in
+                if let err = err {
+                    print(err.localizedDescription)
+                }
+                print("favorite spot added")
+            }
+        default:
+            print("OK")
+        }
+    }
+    
+
+    
+    func addToFavorite() {
+        let geocoder = GMSGeocoder()
+        geocoder.reverseGeocodeCoordinate(location) { (placemarks, error) in
+            if error != nil {
+                print(error!)
+            }
+            if let coor = placemarks?.firstResult()?.coordinate {
+                guard let image = self.myImage else {
+                    self.creationButton.shake()
+                    self.presentAlert(with: "Un Spot doit avoir une image")
+                    return
+                }
+                let ref = FirestoreReferenceManager.root.collection("publicSpot").document()
+                let documentID = ref.documentID
+                guard let title = self.titleTextfield.text, self.titleTextfield.text?.isEmpty == false else {
+                    self.creationButton.shake()
+                    self.presentAlert(with: "Un Spot doit avoir un titre")
+                    return
+                }
+                guard let description = self.descriptionTextView.text else {return}
+                let spot = Spot(position: coor)
+                let customMarker = CustomMarkerView(frame: CGRect(x: 0, y: 0, width: self.customMarkerWidth, height: self.customMarkerHeight), image: image, borderColor: UIColor.darkGray)
+                spot.iconView = customMarker
+                spot.title = title
+                spot.summary = description
+                spot.coordinate = coor
+                self.uploadImage { (imageUrl) in
+                    let data = ["title": title as Any, "coordinate": GeoPoint(latitude: coor.latitude, longitude: coor.longitude), "uid": documentID, MyKeys.imageUrl: imageUrl, "description": description, "createdAt": FieldValue.serverTimestamp()]
+                    ref.setData(data) { (err) in
+                        if let err = err {
+                            print(err.localizedDescription)
+                        }
+                        print("very successfull")
+                    }
+                }
+                self.delegate.addSpotToMapView(marker: spot)
+                self.goToMapView()
+            }
+        }
+    }
+    
+
     
     @objc func goToMapView() {
         self.dismiss(animated: true, completion: nil)
@@ -127,7 +287,7 @@ class CreateSpotViewController: UIViewController, UITextFieldDelegate, UITextVie
     
     @IBAction func sendData(_ sender: Any) {
      
-        getSpot()
+        createPrivateSpot()
     }
     
     deinit {

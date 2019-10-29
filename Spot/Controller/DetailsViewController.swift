@@ -43,6 +43,15 @@ class DetailsViewController: UIViewController {
         
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        getImage()
+    }
+    
+//    override func viewWillAppear(_ animated: Bool) {
+//        super.viewWillAppear(true)
+//        getImage()
+//    }
+    
     func getUserName() {
         
     }
@@ -62,6 +71,7 @@ class DetailsViewController: UIViewController {
 //    }
     
     func getSpotDetails() {
+        
         
         guard let name = spot.title else {return}
         spotTitle.text = name.uppercased()
