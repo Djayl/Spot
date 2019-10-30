@@ -22,13 +22,14 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         addGradient()
         emailTextField.delegate = self
         passwordTextField.delegate = self
+   
     }
-    
+ 
     @IBAction func loginAction(_ sender: Any) {
         
         Auth.auth().signIn(withEmail: emailTextField.text!, password: passwordTextField.text!) { (user, error) in
             if error == nil{
-                self.performSegue(withIdentifier: "loginToSpot", sender: self)
+                self.dismiss(animated: true, completion: nil)
             }
             else{
                 self.loginButton.shake()
@@ -58,6 +59,9 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
             
         }
     }
+    @IBAction func noAccount(_ sender: Any) {
+        performSegue(withIdentifier: "goToSignUp", sender: self)
+    }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {  
         textField.resignFirstResponder()
@@ -75,6 +79,9 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         self.view.layer.insertSublayer(gradient!, at: 0)
     }
     
+
+    }
     
     
-}
+    
+

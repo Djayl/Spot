@@ -20,11 +20,8 @@ protocol AddSpotDelegate: class {
 class MapViewController: UIViewController {
     
     @IBOutlet weak var mapView: GMSMapView!
-    @IBOutlet weak var stackView: UIStackView!
-    @IBOutlet weak var switchView: UIView!
-    @IBOutlet weak var switchLabel: UILabel!
-    @IBOutlet weak var switchButton: UISwitch!
-    @IBOutlet weak var chooseDataButton: UIButton!
+   
+    @IBOutlet weak var chooseDataButton: CustomButton!
     
     
     var sourceView: UIView?
@@ -46,17 +43,15 @@ class MapViewController: UIViewController {
             locationManager.requestWhenInUseAuthorization()
             mapView.delegate = self
 
-//            mapView.addSubview(stackView)
-            mapView.addSubview(switchView)
             mapView.addSubview(chooseDataButton)
             mapView.reloadInputViews()
-            switchButton.addTarget(self, action: #selector(stateChanged), for: .valueChanged)
+            
 //            mapView.addSubview(maptypeButton)
 //            setupSearchBar()
           
 //            resultsViewController?.delegate = self
 //            getData()
-               
+               checkIfUserLoggedIn()
             
         }
     
@@ -67,6 +62,17 @@ class MapViewController: UIViewController {
         // Show the Navigation Bar
                 self.navigationController?.setNavigationBarHidden(false, animated: false)
             }
+    
+    private func checkIfUserLoggedIn() {
+        DispatchQueue.main.async {
+            if AuthService.getCurrentUser() == nil {
+                let vc = self.storyboard?.instantiateViewController(withIdentifier: "loginVC") as! LoginViewController
+                let nc = UINavigationController(rootViewController: vc)
+                nc.modalPresentationStyle = .fullScreen
+                self.present(nc, animated: true, completion: nil)
+            }
+        }
+    }
         
         @IBAction func mapType(_ sender: Any) {
             chooseMapType(controller: MapViewController())
@@ -76,29 +82,22 @@ class MapViewController: UIViewController {
         chooseData(controller: MapViewController())
     }
     
-    
-    @objc func stateChanged(switchState: UISwitch) {
-         if switchState.isOn {
-             switchLabel.text = "Juste mes favoris"
-            getFavoriteSpots()
 
-         } else {
-             switchLabel.text = "Je veux tous les Spots"
-            getData()
-         }
-     }
         
     func chooseData(controller: UIViewController) {
         let alert = UIAlertController(title: "Choisissez ce que vous voulez voir", message: "Sélectionnez une option", preferredStyle: .actionSheet)
         alert.addAction(UIAlertAction(title: "Tous les Spots", style: .default, handler: { (_) in
+            self.mapView.clear()
             self.getData()
             
         }))
         alert.addAction(UIAlertAction(title: "Juste mes favoris", style: .default, handler: { (_) in
+            self.mapView.clear()
             self.getFavoriteSpots()
-           
         }))
-        
+        alert.addAction(UIAlertAction(title: "Annuler", style: .cancel, handler: { (_) in
+            print("User click Dismiss button")
+        }))
         self.present(alert, animated: true, completion: {
         })
     }
@@ -413,6 +412,11 @@ extension MapViewController: GMSMapViewDelegate, AddSpotDelegate {
 //            didTapSpot(spot: spot)
 //            nextTapped(spot: spot)
             }
+    func mapView(_ mapView: GMSMapView, didTap marker: GMSMarker) -> Bool {
+        let update = GMSCameraUpdate.zoomIn()
+        mapView.animate(with: update)
+        return false
+    }
         
    
     
