@@ -425,6 +425,13 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="APG-j2-al8" customClass="FavoriteButton" customModule="Spot" customModuleProvider="target">
+                                <rect key="frame" x="70" y="518" width="180" height="30"/>
+                                <state key="normal" title="Mettre en favori"/>
+                                <connections>
+                                    <action selector="putSpotToFavorite:" destination="Afb-Q0-1cP" eventType="touchUpInside" id="p0y-EW-a6G"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
@@ -442,21 +449,25 @@
                             <constraint firstItem="Usx-oC-4p0" firstAttribute="top" secondItem="Np0-X2-Xg2" secondAttribute="bottom" constant="5" id="Mfg-pA-msE"/>
                             <constraint firstItem="vv9-lj-62J" firstAttribute="trailing" secondItem="1dU-xh-UrI" secondAttribute="trailing" constant="20" id="Nz7-nP-Iky"/>
                             <constraint firstItem="1dU-xh-UrI" firstAttribute="leading" secondItem="vv9-lj-62J" secondAttribute="leading" constant="20" id="WAI-ZQ-gY9"/>
+                            <constraint firstItem="vv9-lj-62J" firstAttribute="bottom" secondItem="APG-j2-al8" secondAttribute="bottom" constant="20" id="XjL-ZA-YNj"/>
                             <constraint firstItem="vv9-lj-62J" firstAttribute="trailing" secondItem="Usx-oC-4p0" secondAttribute="trailing" constant="20" id="ade-IS-PEV"/>
                             <constraint firstItem="Np0-X2-Xg2" firstAttribute="top" secondItem="zy3-jf-QsA" secondAttribute="bottom" constant="5" id="bxl-cr-u4g"/>
                             <constraint firstItem="zy3-jf-QsA" firstAttribute="top" secondItem="vv9-lj-62J" secondAttribute="top" constant="65" id="eAQ-Rr-1NA"/>
+                            <constraint firstItem="APG-j2-al8" firstAttribute="leading" secondItem="vv9-lj-62J" secondAttribute="leading" constant="70" id="iaq-SG-4ga"/>
                             <constraint firstItem="rrW-28-QJI" firstAttribute="top" secondItem="1dU-xh-UrI" secondAttribute="bottom" constant="5" id="o55-mE-6HH"/>
                             <constraint firstItem="vv9-lj-62J" firstAttribute="trailing" secondItem="zy3-jf-QsA" secondAttribute="trailing" id="q8C-KN-YxE"/>
                             <constraint firstItem="vv9-lj-62J" firstAttribute="trailing" secondItem="rrW-28-QJI" secondAttribute="trailing" constant="20" id="rhG-JK-1fC"/>
                             <constraint firstItem="vv9-lj-62J" firstAttribute="trailing" secondItem="Np0-X2-Xg2" secondAttribute="trailing" constant="20" id="rhN-8u-cay"/>
                             <constraint firstItem="zy3-jf-QsA" firstAttribute="leading" secondItem="vv9-lj-62J" secondAttribute="leading" id="s2j-Yi-x03"/>
                             <constraint firstItem="xQP-X3-u8a" firstAttribute="top" secondItem="Xzo-hS-p7t" secondAttribute="bottom" constant="5" id="v3r-s4-sPA"/>
+                            <constraint firstItem="vv9-lj-62J" firstAttribute="trailing" secondItem="APG-j2-al8" secondAttribute="trailing" constant="70" id="vqb-go-Wli"/>
                             <constraint firstItem="rrW-28-QJI" firstAttribute="leading" secondItem="vv9-lj-62J" secondAttribute="leading" constant="20" id="xR5-Lv-zqh"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="vv9-lj-62J"/>
                     </view>
                     <navigationItem key="navigationItem" id="3lc-Z0-OcJ"/>
                     <connections>
+                        <outlet property="favoriteButton" destination="APG-j2-al8" id="saf-Qt-0aX"/>
                         <outlet property="imageView" destination="zy3-jf-QsA" id="Qcb-4I-Nbq"/>
                         <outlet property="spotCoordinate" destination="rrW-28-QJI" id="DxX-q6-BhT"/>
                         <outlet property="spotDate" destination="xQP-X3-u8a" id="qS6-aS-5eg"/>

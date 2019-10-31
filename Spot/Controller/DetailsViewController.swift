@@ -19,6 +19,7 @@ class DetailsViewController: UIViewController {
     @IBOutlet weak var spotDescription: UILabel!
     @IBOutlet weak var spotDate: UILabel!
     @IBOutlet weak var spotCoordinate: UILabel!
+    @IBOutlet weak var favoriteButton: FavoriteButton!
     
     
     var spot = Spot()
@@ -28,10 +29,7 @@ class DetailsViewController: UIViewController {
         getSpotDetails()
         getImage()
         reverseGeocodeCoordinate(spot.position)
-        //        spotTitle.text = spot.title
-        
-        //        setupAvatarImageView()
-      
+  
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(imageTapped(_:)))
 
         self.imageView.addGestureRecognizer(tapGestureRecognizer)
@@ -55,6 +53,9 @@ class DetailsViewController: UIViewController {
     func getUserName() {
         
     }
+    @IBAction func putSpotToFavorite(_ sender: Any) {
+        addToFavorite()
+    }
     
 //    private func getDate() {
 //        guard let uid = Auth.auth().currentUser?.uid else {return}
@@ -70,6 +71,16 @@ class DetailsViewController: UIViewController {
 //        }
 //    }
     
+    fileprivate func handleFavoriteButton() {
+        let favorite = (spot.userData as! CustomData).isFavorite
+        print(favorite)
+        if favorite == "Yes" {
+            favoriteButton.isOn = true
+        } else {
+            favoriteButton.isOn = false
+        }
+    }
+    
     func getSpotDetails() {
         
         
@@ -82,6 +93,8 @@ class DetailsViewController: UIViewController {
         spotDescription.text = description
         let date  = (spot.userData as! CustomData).creationDate
         spotDate.text = date.asString(style: .short)
+        
+//        handleFavoriteButton()
     }
     
     func getImage() {
@@ -114,6 +127,33 @@ class DetailsViewController: UIViewController {
               
           }
         }
+    
+    private func addToFavorite() {
+        let uid = Auth.auth().currentUser?.uid
+        let spotUid = (spot.userData as! CustomData).uid
+        let ref = FirestoreReferenceManager.referenceForUserPublicData(uid: uid!).collection("Spots").document(spotUid)
+        
+        switch favoriteButton.isOn {
+        case true:
+            favoriteButton.isOn = false
+            ref.updateData(["isFavorite": "Yes"]) { (error) in
+                if let error = error {
+                    print(error.localizedDescription)
+                }
+                print("Succesfully Updated data")
+            }
+        case false:
+            favoriteButton.isOn = true
+            ref.updateData(["isFavorite": "No"]) { (error) in
+                if let error = error {
+                    print(error.localizedDescription)
+                }
+                print("Succesfully Updated data")
+            }
+        }
+    }
+    
+  
     
         @objc func imageTapped(_ sender: UITapGestureRecognizer) {
         let imageView = sender.view as! UIImageView

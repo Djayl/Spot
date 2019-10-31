@@ -166,9 +166,12 @@ class MapViewController: UIViewController {
                         let title = document.get("title") as? String
                         let description = document.get("description") as? String
                         let creationDate = document.get("createdAt") as? Timestamp
-                        
+                        let uid = document.get("uid") as? String
+                        let favorite = document.get("isFavorite") as? String
+                        guard let spotFavorite = favorite else {return}
                         guard let date = creationDate?.dateValue() else {return}
-                        let mCustomData = CustomData(creationDate: date)
+                        guard let spotUid = uid else {return}
+                        let mCustomData = CustomData(creationDate: date, uid: spotUid, isFavorite: spotFavorite)
                         let imageUrl = document.get("imageUrl")
                         let imageUrl2 = imageUrl
                         guard let url = URL.init(string: imageUrl2 as! String) else {return}
@@ -214,9 +217,12 @@ class MapViewController: UIViewController {
                          let title = document.get("title") as? String
                          let description = document.get("description") as? String
                          let creationDate = document.get("createdAt") as? Timestamp
-                         
+                         let uid = document.get("uid") as? String
+                        let favorite = document.get("isFavorite") as? String
+                        guard let spotFavorite = favorite else {return}
+                        guard let spotUid = uid else {return}
                          guard let date = creationDate?.dateValue() else {return}
-                         let mCustomData = CustomData(creationDate: date)
+                        let mCustomData = CustomData(creationDate: date, uid: spotUid, isFavorite: spotFavorite)
                          let imageUrl = document.get("imageUrl")
                          let imageUrl2 = imageUrl
                          guard let url = URL.init(string: imageUrl2 as! String) else {return}

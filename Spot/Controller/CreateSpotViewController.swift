@@ -117,6 +117,7 @@ class CreateSpotViewController: UIViewController, UITextFieldDelegate, UITextVie
                         switch self.favoriteButton.isOn {
 // VOIR POUR FAIRE PLUTOT UN MERGE EN AJOUTANT LA MENTION ISFAVORITE: YES/NO ET DANS LA CASE FALSE METTRE LE REF.SETDATA COMME CA ON AURA QU'UNE SEULE COLLECTION DE SPOTS PUIS METTRE BOUTON POUR FAIRE APPARAITRE LES FAVORIS DANS LE MAPVIEWCONTROLLER
                         case true:
+                            self.favoriteButton.isOn = false
                             let data = ["title": title as Any, "coordinate": GeoPoint(latitude: coor.latitude, longitude: coor.longitude), "uid": documentID, MyKeys.imageUrl: imageUrl, "description": description, "createdAt": FieldValue.serverTimestamp(), "isFavorite": "Yes"]
                             ref.setData(data) { (err) in
                                 if let err = err {
@@ -126,6 +127,7 @@ class CreateSpotViewController: UIViewController, UITextFieldDelegate, UITextVie
                             }
                             print("ADDED TO FAVORITE")
                         case false:
+                            self.favoriteButton.isOn = true
                             let data = ["title": title as Any, "coordinate": GeoPoint(latitude: coor.latitude, longitude: coor.longitude), "uid": documentID, MyKeys.imageUrl: imageUrl, "description": description, "createdAt": FieldValue.serverTimestamp(), "isFavorite": "No"]
                              ref.setData(data) { (err) in
                                  if let err = err {
