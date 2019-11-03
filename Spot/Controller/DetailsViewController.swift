@@ -89,7 +89,7 @@ class DetailsViewController: UIViewController {
         
         guard let description = spot.snippet, description.isEmpty == false else {
             spotDescription.text = "Aucune description n'a été rédigée pour ce Spot"
-            return}
+            return }
         spotDescription.text = description
         let date  = (spot.userData as! CustomData).creationDate
         spotDate.text = date.asString(style: .short)
@@ -187,6 +187,8 @@ class DetailsViewController: UIViewController {
     @objc func goToMapView() {
         self.dismiss(animated: true, completion: nil)
     }
+    
+    
 
     
 }
