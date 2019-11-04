@@ -11,7 +11,7 @@ import Firebase
 import Kingfisher
 import GoogleMaps
 
-class DetailsViewController: UIViewController {
+class DetailsViewController: UIViewController, UIScrollViewDelegate {
     
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var pictureTakerName: UILabel!
@@ -22,22 +22,25 @@ class DetailsViewController: UIViewController {
     @IBOutlet weak var favoriteButton: FavoriteButton!
     
     
+    
     var spot = Spot()
+    var newImageView = UIImageView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         getSpotDetails()
         getImage()
         reverseGeocodeCoordinate(spot.position)
-  
+        
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(imageTapped(_:)))
-
+        
         self.imageView.addGestureRecognizer(tapGestureRecognizer)
         self.imageView.isUserInteractionEnabled = true
         spotDescription.setUpLabel()
         spotDate.setUpLabel()
         spotCoordinate.setUpLabel()
         spotTitle.setUpLabel()
+//        handleFavoriteButton()
         
     }
     
@@ -45,10 +48,12 @@ class DetailsViewController: UIViewController {
         getImage()
     }
     
-//    override func viewWillAppear(_ animated: Bool) {
-//        super.viewWillAppear(true)
-//        getImage()
-//    }
+    
+    
+    //    override func viewWillAppear(_ animated: Bool) {
+    //        super.viewWillAppear(true)
+    //        getImage()
+    //    }
     
     func getUserName() {
         
@@ -57,19 +62,63 @@ class DetailsViewController: UIViewController {
         addToFavorite()
     }
     
-//    private func getDate() {
-//        guard let uid = Auth.auth().currentUser?.uid else {return}
-//        FirestoreReferenceManager.referenceForUserPublicData(uid: uid).collection("Spots").getDocuments { (querySnapshot, error) in
-//            if let error = error {
-//                print("Error getting documents: \(error)")
-//            } else {
-//                for document in querySnapshot!.documents {
-//                    let creationDate = document.get("createdAt") as? String
-//                    self.spotDate.text = creationDate
-//    }
-//            }
-//        }
-//    }
+    @objc func scaleImage(_ sender: UIPinchGestureRecognizer) {
+        if let view = sender.view {
+            
+            switch sender.state {
+            case .changed:
+                let pinchCenter = CGPoint(x: sender.location(in: view).x - view.bounds.midX,
+                                          y: sender.location(in: view).y - view.bounds.midY)
+                let transform = view.transform.translatedBy(x: pinchCenter.x, y: pinchCenter.y)
+                    .scaledBy(x: sender.scale, y: sender.scale)
+                    .translatedBy(x: -pinchCenter.x, y: -pinchCenter.y)
+                newImageView.transform = transform
+                sender.scale = 1
+            case .ended:
+                // Nice animation to scale down when releasing the pinch.
+                // OPTIONAL
+                UIView.animate(withDuration: 0.2, animations: {
+                    view.transform = CGAffineTransform.identity
+                })
+            default:
+                return
+            }
+
+        }
+        //        if sender.state == .ended || sender.state == .changed {
+        //
+        //               let currentScale = sender.view!.frame.size.width / sender.view!.bounds.size.width
+        //               var newScale = currentScale*sender.scale
+        //
+        //               if newScale < 1 {
+        //                   newScale = 1
+        //               }
+        //               if newScale > 7 {
+        //                   newScale = 7
+        //               }
+        //
+        //               let transform = CGAffineTransform(scaleX: newScale, y: newScale)
+        //
+        //               self.newImageView.transform = transform
+        //               sender.scale = 1
+        //
+        //           }
+    }
+    
+    
+    //    private func getDate() {
+    //        guard let uid = Auth.auth().currentUser?.uid else {return}
+    //        FirestoreReferenceManager.referenceForUserPublicData(uid: uid).collection("Spots").getDocuments { (querySnapshot, error) in
+    //            if let error = error {
+    //                print("Error getting documents: \(error)")
+    //            } else {
+    //                for document in querySnapshot!.documents {
+    //                    let creationDate = document.get("createdAt") as? String
+    //                    self.spotDate.text = creationDate
+    //    }
+    //            }
+    //        }
+    //    }
     
     fileprivate func handleFavoriteButton() {
         let favorite = (spot.userData as! CustomData).isFavorite
@@ -94,7 +143,7 @@ class DetailsViewController: UIViewController {
         let date  = (spot.userData as! CustomData).creationDate
         spotDate.text = date.asString(style: .short)
         
-//        handleFavoriteButton()
+        //        handleFavoriteButton()
     }
     
     func getImage() {
@@ -110,23 +159,23 @@ class DetailsViewController: UIViewController {
             if let image = image {
                 self.imageView.image = image
             }
-      
+            
         }
     }
     
     func reverseGeocodeCoordinate(_ coordinate: CLLocationCoordinate2D) {
-       
-          let geocoder = GMSGeocoder()
-       
+        
+        let geocoder = GMSGeocoder()
+        
         geocoder.reverseGeocodeCoordinate(coordinate) { response, error in
             guard let address = response?.firstResult(), let lines = address.lines else {
-              return
+                return
             }
-    
+            
             self.spotCoordinate.text = lines.joined(separator: "\n")
-              
-          }
+            
         }
+    }
     
     private func addToFavorite() {
         let uid = Auth.auth().currentUser?.uid
@@ -140,7 +189,7 @@ class DetailsViewController: UIViewController {
                 if let error = error {
                     print(error.localizedDescription)
                 }
-                print("Succesfully Updated data")
+                print("Succesfully Favorite")
             }
         case false:
             favoriteButton.isOn = true
@@ -148,34 +197,42 @@ class DetailsViewController: UIViewController {
                 if let error = error {
                     print(error.localizedDescription)
                 }
-                print("Succesfully Updated data")
+                print("Succesfully Unfavorite")
             }
         }
     }
     
-  
     
-        @objc func imageTapped(_ sender: UITapGestureRecognizer) {
+    
+    @objc func imageTapped(_ sender: UITapGestureRecognizer) {
         let imageView = sender.view as! UIImageView
-        let newImageView = UIImageView(image: imageView.image)
+        newImageView = UIImageView(image: imageView.image)
         newImageView.frame = UIScreen.main.bounds
         newImageView.backgroundColor = .white
         newImageView.contentMode = .scaleAspectFit
         newImageView.isUserInteractionEnabled = true
         let tap = UITapGestureRecognizer(target: self, action: #selector(dismissFullscreenImage))
         newImageView.addGestureRecognizer(tap)
-        self.view.addSubview(newImageView)
+        let pinch = UIPinchGestureRecognizer(target: self, action: #selector(scaleImage(_:)))
+        newImageView.addGestureRecognizer(pinch)
+//        self.view.addSubview(newImageView)
+        UIView.transition(with: self.view, duration: 0.25, options: [.transitionCrossDissolve], animations: {
+            self.view.addSubview(self.newImageView)
+        }, completion: nil)
         self.navigationController?.isNavigationBarHidden = true
         self.tabBarController?.tabBar.isHidden = true
     }
-
+    
     @objc func dismissFullscreenImage(_ sender: UITapGestureRecognizer) {
         self.navigationController?.isNavigationBarHidden = false
         self.tabBarController?.tabBar.isHidden = false
-        sender.view?.removeFromSuperview()
+        UIView.transition(with: self.view, duration: 0.25, options: [.transitionCrossDissolve], animations: {
+            sender.view?.removeFromSuperview()
+        }, completion: nil)
+
     }
     
-  
+    
     
     
     @IBAction func remove(_ sender: Any) {
@@ -189,7 +246,7 @@ class DetailsViewController: UIViewController {
     }
     
     
-
+    
     
 }
 
@@ -210,9 +267,9 @@ extension UILabel {
 }
 
 extension Date {
-  func asString(style: DateFormatter.Style) -> String {
-    let dateFormatter = DateFormatter()
-    dateFormatter.dateStyle = style
-    return dateFormatter.string(from: self)
-  }
+    func asString(style: DateFormatter.Style) -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateStyle = style
+        return dateFormatter.string(from: self)
+    }
 }

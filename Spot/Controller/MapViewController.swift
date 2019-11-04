@@ -86,14 +86,17 @@ class MapViewController: UIViewController {
         
     func chooseData(controller: UIViewController) {
         let alert = UIAlertController(title: "Choisissez ce que vous voulez voir", message: "Sélectionnez une option", preferredStyle: .actionSheet)
-        alert.addAction(UIAlertAction(title: "Tous les Spots", style: .default, handler: { (_) in
+        alert.addAction(UIAlertAction(title: "Juste mes Spots", style: .default, handler: { (_) in
             self.mapView.clear()
             self.getData()
-            
         }))
         alert.addAction(UIAlertAction(title: "Juste mes favoris", style: .default, handler: { (_) in
             self.mapView.clear()
             self.getFavoriteSpots()
+        }))
+        alert.addAction(UIAlertAction(title: "Tous les Spots", style: .default, handler: { (_) in
+            self.mapView.clear()
+            self.getMySpots()
         }))
         alert.addAction(UIAlertAction(title: "Annuler", style: .cancel, handler: { (_) in
             print("User click Dismiss button")
@@ -253,6 +256,58 @@ class MapViewController: UIViewController {
              }
          }
     
+    func getMySpots() {
+        
+        FirestoreReferenceManager.root.collection("publicSpot").getDocuments { (querySnapshot, error) in
+                 if let error = error {
+                     print("Error getting documents: \(error)")
+                 } else {
+                     for document in querySnapshot!.documents {
+                         
+                         let coordinate = document.get("coordinate")
+                         let point = coordinate as! GeoPoint
+                         let lat = point.latitude
+                         let lon = point.longitude
+                         let title = document.get("title") as? String
+                         let description = document.get("description") as? String
+                         let creationDate = document.get("createdAt") as? Timestamp
+                         let uid = document.get("uid") as? String
+                        let favorite = document.get("isFavorite") as? String
+                        guard let spotFavorite = favorite else {return}
+                        guard let spotUid = uid else {return}
+                         guard let date = creationDate?.dateValue() else {return}
+                        let mCustomData = CustomData(creationDate: date, uid: spotUid, isFavorite: spotFavorite)
+                         let imageUrl = document.get("imageUrl")
+                         let imageUrl2 = imageUrl
+                         guard let url = URL.init(string: imageUrl2 as! String) else {return}
+                         KingfisherManager.shared.retrieveImage(with: url, options: nil) { result in
+                             
+                             let image = try? result.get().image
+                             
+                             if let image = image {
+                                 DispatchQueue.main.async {
+                                     let marker = Spot()
+                                     marker.position = CLLocationCoordinate2D(latitude: lat, longitude: lon)
+                                     marker.title = title
+                                     marker.snippet = description
+                                     marker.userData = mCustomData
+                                     marker.imageURL = imageUrl2 as? String
+                                     let customMarker = CustomMarkerView(frame: CGRect(x: 0, y: 0, width: self.customMarkerWidth, height: self.customMarkerHeight), image: image, borderColor: UIColor.systemIndigo.withAlphaComponent(0.8))
+                                     marker.iconView = customMarker
+                                     marker.map = self.mapView
+                                     self.spots.append(marker)
+                                     
+                                 }
+                                 
+                             }
+                             
+                         }
+                     }
+                 }
+             }
+         }
+    
+
     
   func getReadableDate(timeStamp: TimeInterval) -> String? {
       let date = Date(timeIntervalSince1970: timeStamp)
@@ -281,13 +336,7 @@ class MapViewController: UIViewController {
       let datesWeek = Calendar.current.component(Calendar.Component.weekOfYear, from: date)
       return (currentWeek == datesWeek)
   }
-//@objc func nextTapped(spot: Spot) {
-//        // the name for UIStoryboard is the file name of the storyboard without the .storyboard extension
-//        let displayVC : DetailsViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "DetailsVC") as! DetailsViewController
-//        displayVC.spot = spot
-//
-//        self.present(displayVC, animated: true, completion: nil)
-//    }
+
 
         @objc func didTapSpot(spot: Spot) {
             let vc = storyboard?.instantiateViewController(withIdentifier: "DetailsVC") as! DetailsViewController

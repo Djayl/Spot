@@ -382,9 +382,13 @@
                         <subviews>
                             <imageView clipsSubviews="YES" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="zy3-jf-QsA">
                                 <rect key="frame" x="0.0" y="65" width="320" height="170.5"/>
+                                <gestureRecognizers/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="zy3-jf-QsA" secondAttribute="height" multiplier="15:8" id="r2b-Ln-0Bj"/>
                                 </constraints>
+                                <connections>
+                                    <outletCollection property="gestureRecognizers" destination="avy-lo-BgT" appends="YES" id="9oG-6m-YCT"/>
+                                </connections>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zfU-47-IQe">
                                 <rect key="frame" x="20" y="20" width="280" height="40"/>
@@ -495,6 +499,11 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qA7-q1-F36" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <pinchGestureRecognizer id="avy-lo-BgT">
+                    <connections>
+                        <action selector="scaleImage:" destination="Afb-Q0-1cP" id="xuH-SN-7b1"/>
+                    </connections>
+                </pinchGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="3755" y="735"/>
         </scene>
