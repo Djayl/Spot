@@ -25,12 +25,12 @@ class FavoriteViewController: UIViewController {
         super.viewDidLoad()
         
         loadData()
-//        tableView.reloadData()
-        //        DispatchQueue.main.async {
-        //              self.tableView.reloadData()
-        //          }
+       
+        tableView.reloadData()
+   
     }
-    
+
+  
     
     func getFavoriteSpots() {
         guard let uid = Auth.auth().currentUser?.uid else {return}
@@ -45,11 +45,7 @@ class FavoriteViewController: UIViewController {
                     let lat = point.latitude
                     let lon = point.longitude
                     let title = document.get("title") as? String
-                    
-                    
-                    
-                    
-                    
+     
                     let imageUrl = document.get("imageUrl")
                     let imageUrl2 = imageUrl
                     guard let url = URL.init(string: imageUrl2 as! String) else {return}
@@ -80,7 +76,17 @@ class FavoriteViewController: UIViewController {
     }
     
     func deleteSpot(spot: Spot) {
-        
+         let uid = Auth.auth().currentUser?.uid
+                let spotUid = (spot.userData as! CustomData).uid
+                let ref = FirestoreReferenceManager.referenceForUserPublicData(uid: uid!).collection("Spots").document(spotUid)
+             
+                    ref.updateData(["isFavorite": "No"]) { (error) in
+                        if let error = error {
+                            print(error.localizedDescription)
+                        }
+                        self.tableView.reloadData()
+                        print("Succesfully UnFavorite")
+                    }
     }
     
     func loadData() {
@@ -125,13 +131,18 @@ class FavoriteViewController: UIViewController {
                                     spot.image = image
                                     spot.imageURL = imageUrl
                                     self.markers.append(spot)
+                                   
                                     print(self.markers.count)
-                                    self.tableView.reloadData()
+                                   
+                                        self.tableView.reloadData()
+                                    
+                                    
                                 }
+                                
                             }
-                            //                self.tableView.reloadData()
+//                                            self.tableView.reloadData()
                         }
-                        
+                       
                     }
                 }
             }
@@ -181,12 +192,16 @@ extension FavoriteViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle,
                    forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
+            deleteSpot(spot: markers[indexPath.row])
             markers.remove(at: indexPath.row)
             tableView.beginUpdates()
             tableView.deleteRows(at: [indexPath], with: .automatic)
             //            UserDefaults.standard.set(ingredients, forKey: "myIngredients")
             tableView.endUpdates()
+            
+            print("SUCCESSFULLY DELETED FROM FAVORITE TV")
             tableView.reloadData()
+            
         }
     }
     
@@ -206,7 +221,18 @@ extension FavoriteViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         didTapSpot(spot: markers[indexPath.row])
+        
     }
     
+}
+
+extension Array where Element: Equatable {
+    func removeDuplicates() -> Array {
+        return reduce(into: []) { result, element in
+            if !result.contains(element) {
+                result.append(element)
+            }
+        }
+    }
 }
 

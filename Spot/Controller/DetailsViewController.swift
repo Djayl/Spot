@@ -40,7 +40,7 @@ class DetailsViewController: UIViewController, UIScrollViewDelegate {
         spotDate.setUpLabel()
         spotCoordinate.setUpLabel()
         spotTitle.setUpLabel()
-//        handleFavoriteButton()
+        handleFavoriteButton()
         
     }
     
@@ -123,10 +123,11 @@ class DetailsViewController: UIViewController, UIScrollViewDelegate {
     fileprivate func handleFavoriteButton() {
         let favorite = (spot.userData as! CustomData).isFavorite
         print(favorite)
+        
         if favorite == "Yes" {
-            favoriteButton.isOn = true
-        } else {
             favoriteButton.isOn = false
+        } else {
+            favoriteButton.isOn = true
         }
     }
     
@@ -182,26 +183,31 @@ class DetailsViewController: UIViewController, UIScrollViewDelegate {
         let spotUid = (spot.userData as! CustomData).uid
         let ref = FirestoreReferenceManager.referenceForUserPublicData(uid: uid!).collection("Spots").document(spotUid)
         
-        switch favoriteButton.isOn {
-        case true:
-            favoriteButton.isOn = false
-            ref.updateData(["isFavorite": "Yes"]) { (error) in
-                if let error = error {
-                    print(error.localizedDescription)
-                }
-                print("Succesfully Favorite")
-            }
-        case false:
-            favoriteButton.isOn = true
+//        switch favoriteButton.isOn {
+        favoriteButton.isOn.toggle()
+//        case true:
+//            favoriteButton.isOn = false
+        if favoriteButton.isOn {
             ref.updateData(["isFavorite": "No"]) { (error) in
                 if let error = error {
                     print(error.localizedDescription)
                 }
-                print("Succesfully Unfavorite")
+                print("Succesfully UnFavorite")
             }
-        }
-    }
+            } else {
+//            }
+//        case false:
+//            favoriteButton.isOn = true
+            ref.updateData(["isFavorite": "Yes"]) { (error) in
+                if let error = error {
+                    print(error.localizedDescription)
+                }
+                print("Succesfully favorite")
+            }
+            }
+//        }
     
+    }
     
     
     @objc func imageTapped(_ sender: UITapGestureRecognizer) {
