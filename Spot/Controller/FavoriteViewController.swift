@@ -24,13 +24,18 @@ class FavoriteViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        loadData()
+//        loadData()
        
-        tableView.reloadData()
+//        tableView.reloadData()
    
     }
 
-  
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        markers.removeAll()
+        loadData()
+        
+    }
     
     func getFavoriteSpots() {
         guard let uid = Auth.auth().currentUser?.uid else {return}
