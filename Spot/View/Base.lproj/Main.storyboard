@@ -7,6 +7,14 @@
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
+    <customFonts key="customFonts">
+        <array key="IndigoRegular.otf">
+            <string>IndigoRegular-Regular</string>
+        </array>
+        <array key="SarySoft.otf">
+            <string>SarySoft-Regular</string>
+        </array>
+    </customFonts>
     <scenes>
         <!--Login View Controller-->
         <scene sceneID="1ch-1F-TEZ">
@@ -176,11 +184,13 @@
             </objects>
             <point key="canvasLocation" x="-1061" y="1205"/>
         </scene>
-        <!--Item-->
+        <!--Carte-->
         <scene sceneID="EBB-gL-aqJ">
             <objects>
                 <navigationController id="8mR-up-WBQ" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Item" id="5pa-WC-ebh"/>
+                    <tabBarItem key="tabBarItem" title="Carte" image="planet-earth" selectedImage="planet-earth" id="5pa-WC-ebh">
+                        <color key="badgeColor" systemColor="systemGreenColor" red="0.20392156859999999" green="0.78039215689999997" blue="0.34901960780000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    </tabBarItem>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="RkY-Hc-ypb">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -201,6 +211,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="49"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="tintColor" systemColor="systemGreenColor" red="0.20392156859999999" green="0.78039215689999997" blue="0.34901960780000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </tabBar>
                     <connections>
                         <segue destination="8mR-up-WBQ" kind="relationship" relationship="viewControllers" id="xZe-EP-L3a"/>
@@ -392,59 +403,55 @@
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zfU-47-IQe">
                                 <rect key="frame" x="20" y="20" width="280" height="40"/>
-                                <color key="backgroundColor" red="0.68946211229999999" green="0.79639542839999999" blue="0.83742713930000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="AM7-uD-V3O"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" name="PingFangSC-Semibold" family="PingFang SC" pointSize="26"/>
+                                <fontDescription key="fontDescription" name="IndigoRegular-Regular" family="Indigo Regular" pointSize="23"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Description" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Usx-oC-4p0">
-                                <rect key="frame" x="20" y="266.5" width="280" height="100"/>
-                                <color key="backgroundColor" red="0.68946211226575338" green="0.7963954283630138" blue="0.83742713930000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <rect key="frame" x="20" y="263.5" width="280" height="100"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="100" id="O3j-58-gh2"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" name="PingFangSC-Light" family="PingFang SC" pointSize="13"/>
+                                <fontDescription key="fontDescription" name="SarySoft-Regular" family="Sary Soft" pointSize="14"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Description:" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Np0-X2-Xg2">
-                                <rect key="frame" x="20" y="240.5" width="280" height="21"/>
-                                <fontDescription key="fontDescription" name="PingFangSC-Semibold" family="PingFang SC" pointSize="15"/>
+                                <rect key="frame" x="20" y="240.5" width="280" height="18"/>
+                                <fontDescription key="fontDescription" name="IndigoRegular-Regular" family="Indigo Regular" pointSize="15"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Date de création du Spot: " textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Xzo-hS-p7t">
-                                <rect key="frame" x="20" y="371.5" width="280" height="21"/>
-                                <fontDescription key="fontDescription" name="PingFangSC-Semibold" family="PingFang SC" pointSize="15"/>
+                                <rect key="frame" x="20" y="368.5" width="280" height="18"/>
+                                <fontDescription key="fontDescription" name="IndigoRegular-Regular" family="Indigo Regular" pointSize="15"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Date" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xQP-X3-u8a">
-                                <rect key="frame" x="20" y="397.5" width="280" height="30"/>
-                                <color key="backgroundColor" red="0.68946211229999999" green="0.79639542839999999" blue="0.83742713930000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <rect key="frame" x="20" y="391.5" width="280" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="Cht-uu-ksX"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" name="PingFangSC-Light" family="PingFang SC" pointSize="13"/>
+                                <fontDescription key="fontDescription" name="SarySoft-Regular" family="Sary Soft" pointSize="14"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Adresse du Spot: " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1dU-xh-UrI">
-                                <rect key="frame" x="20" y="432.5" width="280" height="21"/>
-                                <fontDescription key="fontDescription" name="PingFangSC-Semibold" family="PingFang SC" pointSize="15"/>
+                                <rect key="frame" x="20" y="426.5" width="280" height="18"/>
+                                <fontDescription key="fontDescription" name="IndigoRegular-Regular" family="Indigo Regular" pointSize="15"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Coordinate" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rrW-28-QJI">
-                                <rect key="frame" x="20" y="458.5" width="280" height="40"/>
-                                <color key="backgroundColor" red="0.68946211229999999" green="0.79639542839999999" blue="0.83742713930000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <rect key="frame" x="20" y="449.5" width="280" height="40"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="MLW-dS-wx9"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" name="PingFangSC-Light" family="PingFang SC" pointSize="13"/>
+                                <fontDescription key="fontDescription" name="SarySoft-Regular" family="Sary Soft" pointSize="14"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -507,11 +514,13 @@
             </objects>
             <point key="canvasLocation" x="3755" y="735"/>
         </scene>
-        <!--Item-->
+        <!--Favoris-->
         <scene sceneID="iyK-eK-jj4">
             <objects>
                 <navigationController id="F3F-dj-XY8" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Item" id="c5a-NL-QQe"/>
+                    <tabBarItem key="tabBarItem" title="Favoris" image="star" selectedImage="star" id="c5a-NL-QQe">
+                        <color key="badgeColor" systemColor="systemYellowColor" red="1" green="0.80000000000000004" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    </tabBarItem>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="x73-Lg-IAt">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -596,4 +605,8 @@
             <point key="canvasLocation" x="2336.25" y="1529.5774647887324"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="planet-earth" width="21" height="21"/>
+        <image name="star" width="21" height="21"/>
+    </resources>
 </document>

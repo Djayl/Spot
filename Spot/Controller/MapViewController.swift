@@ -39,13 +39,16 @@ class MapViewController: UIViewController {
         
         override func viewDidLoad() {
             super.viewDidLoad()
+//            navigationController?.hideNavigationItemBackground()
             locationManager.delegate = self
             locationManager.requestWhenInUseAuthorization()
             mapView.delegate = self
+            setUpNavigationController()
+            setUpTapBarController()
 
             mapView.addSubview(chooseDataButton)
             mapView.reloadInputViews()
-            
+
 //            mapView.addSubview(maptypeButton)
 //            setupSearchBar()
           
@@ -55,13 +58,25 @@ class MapViewController: UIViewController {
             
         }
     
-  
+    fileprivate func setUpNavigationController() {
+//        navigationController?.hideNavigationItemBackground()
+        navigationController?.navigationBar.barTintColor = Colors.skyBlue
+        navigationController?.navigationBar.tintColor = Colors.coolRed
+        navigationItem.rightBarButtonItem?.setTitleTextAttributes([.font : UIFont(name: "IndigoRegular-Regular", size: 15)!, .foregroundColor : Colors.coolRed], for: .normal)
+    }
     
-       override func viewWillDisappear(_ animated: Bool) {
-            super.viewWillDisappear(true)
-        // Show the Navigation Bar
-                self.navigationController?.setNavigationBarHidden(false, animated: false)
-            }
+    fileprivate func setUpTapBarController() {
+        tabBarController?.tabBar.tintColor = UIColor.yellow
+        tabBarController?.tabBar.unselectedItemTintColor = UIColor.green
+        tabBarController?.tabBar.barTintColor = Colors.skyBlue
+        
+    }
+//       override func viewWillDisappear(_ animated: Bool) {
+//            super.viewWillDisappear(true)
+//        // Show the Navigation Bar
+//                self.navigationController?.setNavigationBarHidden(false, animated: false)
+//       
+//            }
     
     private func checkIfUserLoggedIn() {
         DispatchQueue.main.async {
@@ -186,11 +201,12 @@ class MapViewController: UIViewController {
                                 DispatchQueue.main.async {
                                     let marker = Spot()
                                     marker.position = CLLocationCoordinate2D(latitude: lat, longitude: lon)
-                                    marker.title = title
+                                    marker.title = title?.capitalized
                                     marker.snippet = description
+                                    
                                     marker.userData = mCustomData
                                     marker.imageURL = imageUrl2 as? String
-                                    let customMarker = CustomMarkerView(frame: CGRect(x: 0, y: 0, width: self.customMarkerWidth, height: self.customMarkerHeight), image: image, borderColor: UIColor.systemIndigo.withAlphaComponent(0.8))
+                                    let customMarker = CustomMarkerView(frame: CGRect(x: 0, y: 0, width: self.customMarkerWidth, height: self.customMarkerHeight), image: image, borderColor: Colors.skyBlue.withAlphaComponent(0.8))
                                     marker.iconView = customMarker
                                     marker.map = self.mapView
                                     self.spots.append(marker)
@@ -499,7 +515,6 @@ extension MapViewController: GMSMapViewDelegate, AddSpotDelegate {
     //        self.update(spot)
     //    }
     //}
-
 
  
 

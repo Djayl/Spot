@@ -21,10 +21,9 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         super.viewDidLoad()
         addGradient()
         emailTextField.delegate = self
-        passwordTextField.delegate = self
-   
+        passwordTextField.delegate = self   
     }
- 
+    
     @IBAction func loginAction(_ sender: Any) {
         
         Auth.auth().signIn(withEmail: emailTextField.text!, password: passwordTextField.text!) { (user, error) in
@@ -44,7 +43,6 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     }
     
     @IBAction func resetPassword() {
-        
         guard let email = emailTextField.text, emailTextField.text?.isEmpty == false else {
             presentAlert(with: "Il vous faut renseigner une addresse email")
             return
@@ -52,7 +50,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         Auth.auth().sendPasswordReset(withEmail: email) { (error) in
             if error == nil {
                 self.showSimpleAlert()
-               print("password send")
+                print("password send")
             } else {
                 print("thers is an error")
             }
@@ -70,18 +68,15 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     
     func addGradient() {
         gradient = CAGradientLayer()
-        //        let startColor = UIColor(red: 3/255, green: 196/255, blue: 190/255, alpha: 1)
-        //        let endColor = UIColor(red: 0, green: 0, blue: 0, alpha: 1)
-        gradient?.colors = [Colors.coolGreen.cgColor,Colors.coolRed.cgColor]
+        gradient?.colors = [Colors.skyBlue.cgColor,UIColor.white]
         gradient?.startPoint = CGPoint(x: 0, y: 0)
         gradient?.endPoint = CGPoint(x: 0, y:1)
         gradient?.frame = view.frame
         self.view.layer.insertSublayer(gradient!, at: 0)
     }
     
+}
 
-    }
-    
-    
-    
+
+
 

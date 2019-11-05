@@ -23,6 +23,9 @@
 		F04E3CF8235DB06E0048D18A /* CustomMarkerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F04E3CF7235DB06E0048D18A /* CustomMarkerView.swift */; };
 		F04E3CFA235DB2F70048D18A /* DetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F04E3CF9235DB2F70048D18A /* DetailsViewController.swift */; };
 		F05048E2236D87C200F6F660 /* CustomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F05048E1236D87C200F6F660 /* CustomCell.swift */; };
+		F0528FAA23716EBB00845538 /* IndigoOutline.otf in Resources */ = {isa = PBXBuildFile; fileRef = F0528FA823716EB800845538 /* IndigoOutline.otf */; };
+		F0528FAB23716EBB00845538 /* IndigoRegular.otf in Resources */ = {isa = PBXBuildFile; fileRef = F0528FA923716EBB00845538 /* IndigoRegular.otf */; };
+		F0528FAE2371799200845538 /* SarySoft.otf in Resources */ = {isa = PBXBuildFile; fileRef = F0528FAD2371797A00845538 /* SarySoft.otf */; };
 		F05751F8236A20230051F777 /* AuthenticationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F05751F7236A20230051F777 /* AuthenticationService.swift */; };
 		F059CE39236C7D2600D64137 /* FavoriteTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F059CE37236C7D2600D64137 /* FavoriteTableViewCell.swift */; };
 		F059CE3A236C7D2600D64137 /* FavoriteTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F059CE38236C7D2600D64137 /* FavoriteTableViewCell.xib */; };
@@ -57,6 +60,9 @@
 		F04E3CF7235DB06E0048D18A /* CustomMarkerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomMarkerView.swift; sourceTree = "<group>"; };
 		F04E3CF9235DB2F70048D18A /* DetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsViewController.swift; sourceTree = "<group>"; };
 		F05048E1236D87C200F6F660 /* CustomCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomCell.swift; sourceTree = "<group>"; };
+		F0528FA823716EB800845538 /* IndigoOutline.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = IndigoOutline.otf; sourceTree = "<group>"; };
+		F0528FA923716EBB00845538 /* IndigoRegular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = IndigoRegular.otf; sourceTree = "<group>"; };
+		F0528FAD2371797A00845538 /* SarySoft.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = SarySoft.otf; sourceTree = "<group>"; };
 		F05751F7236A20230051F777 /* AuthenticationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationService.swift; sourceTree = "<group>"; };
 		F059CE37236C7D2600D64137 /* FavoriteTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteTableViewCell.swift; sourceTree = "<group>"; };
 		F059CE38236C7D2600D64137 /* FavoriteTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FavoriteTableViewCell.xib; sourceTree = "<group>"; };
@@ -132,6 +138,16 @@
 			path = View;
 			sourceTree = "<group>";
 		};
+		F0528FAC23716ED900845538 /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				F0528FA823716EB800845538 /* IndigoOutline.otf */,
+				F0528FA923716EBB00845538 /* IndigoRegular.otf */,
+				F0528FAD2371797A00845538 /* SarySoft.otf */,
+			);
+			path = Fonts;
+			sourceTree = "<group>";
+		};
 		F05751F6236A1FD50051F777 /* Model */ = {
 			isa = PBXGroup;
 			children = (
@@ -169,6 +185,7 @@
 				F0D52808232786770023B226 /* AppDelegate.swift */,
 				F0CDE0A023278C6A007126DE /* GoogleService-Info.plist */,
 				F0D52814232786780023B226 /* Info.plist */,
+				F0528FAC23716ED900845538 /* Fonts */,
 				F016EA052331206600214C4E /* Controller */,
 				F017F36D233235B10093603E /* View */,
 				F0D5280F232786780023B226 /* Assets.xcassets */,
@@ -250,11 +267,14 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F0528FAB23716EBB00845538 /* IndigoRegular.otf in Resources */,
 				F0D52813232786780023B226 /* LaunchScreen.storyboard in Resources */,
 				F0CDE0A123278C6A007126DE /* GoogleService-Info.plist in Resources */,
 				F059CE3A236C7D2600D64137 /* FavoriteTableViewCell.xib in Resources */,
 				F0D52810232786780023B226 /* Assets.xcassets in Resources */,
 				F0D5280E232786770023B226 /* Main.storyboard in Resources */,
+				F0528FAE2371799200845538 /* SarySoft.otf in Resources */,
+				F0528FAA23716EBB00845538 /* IndigoOutline.otf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

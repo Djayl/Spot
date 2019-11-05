@@ -54,5 +54,11 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+	<key>UIAppFonts</key>
+	<array>
+		<string>IndigoOutline.otf</string>
+		<string>IndigoRegular.otf</string>
+		<string>SarySoft.otf</string>
+	</array>
 </dict>
 </plist>

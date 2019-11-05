@@ -22,7 +22,7 @@ class DetailsViewController: UIViewController, UIScrollViewDelegate {
     @IBOutlet weak var favoriteButton: FavoriteButton!
     
     
-    
+    var gradient: CAGradientLayer?
     var spot = Spot()
     var newImageView = UIImageView()
     
@@ -31,9 +31,9 @@ class DetailsViewController: UIViewController, UIScrollViewDelegate {
         getSpotDetails()
         getImage()
         reverseGeocodeCoordinate(spot.position)
-        
+        addGradient()
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(imageTapped(_:)))
-        
+        self.navigationController?.setNavigationBarHidden(true, animated: false)
         self.imageView.addGestureRecognizer(tapGestureRecognizer)
         self.imageView.isUserInteractionEnabled = true
         spotDescription.setUpLabel()
@@ -45,8 +45,16 @@ class DetailsViewController: UIViewController, UIScrollViewDelegate {
     }
     
     override func viewDidAppear(_ animated: Bool) {
+        
         getImage()
     }
+    
+           override func viewWillAppear(_ animated: Bool) {
+                super.viewWillAppear(true)
+            // Show the Navigation Bar
+                    self.navigationController?.setNavigationBarHidden(true, animated: false)
+
+                }
     
     
     
@@ -237,6 +245,17 @@ class DetailsViewController: UIViewController, UIScrollViewDelegate {
         }, completion: nil)
 
     }
+    
+     func addGradient() {
+            gradient = CAGradientLayer()
+    //        let startColor = UIColor(red: 3/255, green: 196/255, blue: 190/255, alpha: 1)
+    //        let endColor = UIColor(red: 0, green: 0, blue: 0, alpha: 1)
+        gradient?.colors = [Colors.skyBlue.cgColor, UIColor.white]
+            gradient?.startPoint = CGPoint(x: 0, y: 0)
+            gradient?.endPoint = CGPoint(x: 0, y:1)
+            gradient?.frame = view.frame
+            self.view.layer.insertSublayer(gradient!, at: 0)
+        }
     
     
     

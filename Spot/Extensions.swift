@@ -38,6 +38,8 @@ extension UIViewController {
         }
         
     }
+
+   
     
     /// Method that displays an alert with a custom message
     func presentAlert(with message: String) {
@@ -77,20 +79,16 @@ extension CLLocation {
         CLGeocoder().reverseGeocodeLocation(self, completionHandler: completion)
     }
 }
+extension UINavigationController{
+       func hideNavigationItemBackground() {
+           self.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
+           self.navigationBar.shadowImage = UIImage()
+           self.navigationBar.isTranslucent = true
+           self.view.backgroundColor = UIColor.clear
+       }
+       
+   }
 
-//extension UIImageView {
-//    func load(url: URL) {
-//        DispatchQueue.global().async { [weak self] in
-//            if let data = try? Data(contentsOf: url) {
-//                if let image = UIImage(data: data) {
-//                    DispatchQueue.main.async {
-//                        self?.image = image
-//                    }
-//                }
-//            }
-//        }
-//    }
-//}
 extension UISearchBar {
 
     func getTextField() -> UITextField? { return value(forKey: "searchField") as? UITextField }

@@ -10,7 +10,7 @@ import UIKit
 import Firebase
 
 class SignUpViewController: UIViewController, UITextFieldDelegate {
- 
+    
     @IBOutlet weak var signUpButton: CustomButton!
     @IBOutlet weak var userNameTextField: UITextField!
     @IBOutlet weak var emailTextField: UITextField!
@@ -28,7 +28,6 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
     }
     
     @IBAction func signUpAction(_ sender: Any) {
-        
         if passwordTextField.text != passwordConfirmTextField.text{
             signUpButton.shake()
             let alertController = UIAlertController(title: "Mot de passe incorrect", message: "Merci de ressaisir votre mot de passe", preferredStyle: .alert)
@@ -36,39 +35,31 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
             
             alertController.addAction(defaultAction)
             self.present(alertController, animated: true, completion: nil)
-        }
-        else {
-//            guard emailTextField.text?.isEmpty == false, passwordTextField.text?.isEmpty == false, userNameTextField.text?.isEmpty == false, passwordConfirmTextField.text?.isEmpty == false  else {
-//                signUpButton.shake()
-//                return}
-            
+        } else {
             Auth.auth().createUser(withEmail: emailTextField.text!, password: passwordTextField.text!){ (user, error) in
                 if error == nil {
                     self.performSegue(withIdentifier: "signupToSpot", sender: self)
                     let uid = Auth.auth().currentUser?.uid
-                
                     let userData = [
                         "uid": uid,
-                        "name": self.userNameTextField.text
-                    ]
+                        "name": self.userNameTextField.text]
                     FirestoreReferenceManager.referenceForUserPublicData(uid: uid!).setData(userData as [String : Any], merge: true) { (err) in
                         if let err = err {
                             print(err.localizedDescription)
                         }
                         print("successfully done")
                     }
-                }
-                else{
+                } else {
                     self.signUpButton.shake()
                     let alertController = UIAlertController(title: "Erreur", message: error?.localizedDescription, preferredStyle: .alert)
                     let defaultAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
-                    
                     alertController.addAction(defaultAction)
                     self.present(alertController, animated: true, completion: nil)
                 }
             }
         }
     }
+    
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {   //delegate method
         textField.resignFirstResponder()
         return true
@@ -76,15 +67,13 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
     
     func addGradient() {
         gradient = CAGradientLayer()
-        //        let startColor = UIColor(red: 3/255, green: 196/255, blue: 190/255, alpha: 1)
-        //        let endColor = UIColor(red: 0, green: 0, blue: 0, alpha: 1)
-        gradient?.colors = [Colors.coolGreen.cgColor,Colors.coolRed.cgColor]
+        gradient?.colors = [Colors.skyBlue.cgColor,UIColor.white]
         gradient?.startPoint = CGPoint(x: 0, y: 0)
         gradient?.endPoint = CGPoint(x: 0, y:1)
         gradient?.frame = view.frame
         self.view.layer.insertSublayer(gradient!, at: 0)
     }
-
+    
 }
 
 //extension UITextField {
