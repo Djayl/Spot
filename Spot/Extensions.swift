@@ -177,4 +177,9 @@ private extension UITextField {
     func getClearButton() -> UIButton? { return value(forKey: "clearButton") as? UIButton }
 }
 
-
+extension String {
+    func toNoSmartQuotes() -> String {
+        let userInput: String = self
+        return userInput.folding(options: .diacriticInsensitive, locale: .current)
+    }
+}

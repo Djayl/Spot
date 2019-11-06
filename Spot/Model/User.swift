@@ -5,23 +5,26 @@
 //  Created by MacBook DS on 10/09/2019.
 //  Copyright © 2019 Djilali Sakkar. All rights reserved.
 //
-
+//
 //import Foundation
-//import Firebase
 //
-//class User: NSObject {
-//    let uid: String
-//    var name: String
+//struct User {
+//    let name: String
+//    let imageURL: String
 //    
-//    
-//    
-//    init(uid: String, name: String) {
-//        self.uid = uid
-//        self.name = name
+//    var dictionary: [String: Any] {
+//        return [
+//            "name": name,
+//            "imageURL": imageURL
+//        ]
 //    }
-//    
+//}
 //
-//    
-//   
-//    
+//extension User: DocumentSerializableProtocol {
+//    init?(dictionary: [String: Any]) {
+//        guard let name = dictionary["name"] as? String,
+//            let imageURL = dictionary["imageURL"] as? String else { return nil }
+//        
+//        self.init(name: name, imageURL: imageURL )
+//    }
 //}

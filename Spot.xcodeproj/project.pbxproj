@@ -19,6 +19,7 @@
 		F01B3ACA232FAF5800B62D88 /* SpotView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F01B3AC9232FAF5800B62D88 /* SpotView.swift */; };
 		F01E4C0323338BB500F7ADB6 /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = F01E4C0223338BB500F7ADB6 /* CustomButton.swift */; };
 		F01E4C0523338BD700F7ADB6 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = F01E4C0423338BD700F7ADB6 /* Colors.swift */; };
+		F02F751A2373128800610F1B /* Profil.swift in Sources */ = {isa = PBXBuildFile; fileRef = F02F75192373128800610F1B /* Profil.swift */; };
 		F04E3CF6235DAB4F0048D18A /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F04E3CF5235DAB4F0048D18A /* MapViewController.swift */; };
 		F04E3CF8235DB06E0048D18A /* CustomMarkerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F04E3CF7235DB06E0048D18A /* CustomMarkerView.swift */; };
 		F04E3CFA235DB2F70048D18A /* DetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F04E3CF9235DB2F70048D18A /* DetailsViewController.swift */; };
@@ -29,6 +30,10 @@
 		F05751F8236A20230051F777 /* AuthenticationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F05751F7236A20230051F777 /* AuthenticationService.swift */; };
 		F059CE39236C7D2600D64137 /* FavoriteTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F059CE37236C7D2600D64137 /* FavoriteTableViewCell.swift */; };
 		F059CE3A236C7D2600D64137 /* FavoriteTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F059CE38236C7D2600D64137 /* FavoriteTableViewCell.xib */; };
+		F0695A1D2372D5CB00F399B7 /* FirestoreService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0695A1C2372D5CB00F399B7 /* FirestoreService.swift */; };
+		F0695A1F2372D7BB00F399B7 /* Endpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0695A1E2372D7BB00F399B7 /* Endpoint.swift */; };
+		F0695A212372D88300F399B7 /* DocumentSerializableProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0695A202372D88300F399B7 /* DocumentSerializableProtocol.swift */; };
+		F0695A232372E0D200F399B7 /* Marker.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0695A222372E0D200F399B7 /* Marker.swift */; };
 		F0C1402B23686D1900341744 /* FavoriteButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0C1402A23686D1900341744 /* FavoriteButton.swift */; };
 		F0CDE0A123278C6A007126DE /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F0CDE0A023278C6A007126DE /* GoogleService-Info.plist */; };
 		F0CDE0A723279709007126DE /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0CDE0A623279709007126DE /* User.swift */; };
@@ -56,6 +61,7 @@
 		F01B3AC9232FAF5800B62D88 /* SpotView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpotView.swift; sourceTree = "<group>"; };
 		F01E4C0223338BB500F7ADB6 /* CustomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButton.swift; sourceTree = "<group>"; };
 		F01E4C0423338BD700F7ADB6 /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
+		F02F75192373128800610F1B /* Profil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Profil.swift; sourceTree = "<group>"; };
 		F04E3CF5235DAB4F0048D18A /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		F04E3CF7235DB06E0048D18A /* CustomMarkerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomMarkerView.swift; sourceTree = "<group>"; };
 		F04E3CF9235DB2F70048D18A /* DetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsViewController.swift; sourceTree = "<group>"; };
@@ -66,6 +72,10 @@
 		F05751F7236A20230051F777 /* AuthenticationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationService.swift; sourceTree = "<group>"; };
 		F059CE37236C7D2600D64137 /* FavoriteTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteTableViewCell.swift; sourceTree = "<group>"; };
 		F059CE38236C7D2600D64137 /* FavoriteTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FavoriteTableViewCell.xib; sourceTree = "<group>"; };
+		F0695A1C2372D5CB00F399B7 /* FirestoreService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreService.swift; sourceTree = "<group>"; };
+		F0695A1E2372D7BB00F399B7 /* Endpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Endpoint.swift; sourceTree = "<group>"; };
+		F0695A202372D88300F399B7 /* DocumentSerializableProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentSerializableProtocol.swift; sourceTree = "<group>"; };
+		F0695A222372E0D200F399B7 /* Marker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Marker.swift; sourceTree = "<group>"; };
 		F0C1402A23686D1900341744 /* FavoriteButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteButton.swift; sourceTree = "<group>"; };
 		F0CDE0A023278C6A007126DE /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = SOURCE_ROOT; };
 		F0CDE0A623279709007126DE /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
@@ -157,6 +167,11 @@
 				F016E9F92330CDD400214C4E /* FirestoreReferenceManager.swift */,
 				F016E9FB2330D46A00214C4E /* FirebaseKeys.swift */,
 				F05751F7236A20230051F777 /* AuthenticationService.swift */,
+				F0695A1C2372D5CB00F399B7 /* FirestoreService.swift */,
+				F0695A1E2372D7BB00F399B7 /* Endpoint.swift */,
+				F0695A202372D88300F399B7 /* DocumentSerializableProtocol.swift */,
+				F0695A222372E0D200F399B7 /* Marker.swift */,
+				F02F75192373128800610F1B /* Profil.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -351,22 +366,27 @@
 				F01E4C0523338BD700F7ADB6 /* Colors.swift in Sources */,
 				F016E9FC2330D46A00214C4E /* FirebaseKeys.swift in Sources */,
 				F04E3CF8235DB06E0048D18A /* CustomMarkerView.swift in Sources */,
+				F02F751A2373128800610F1B /* Profil.swift in Sources */,
 				F01E4C0323338BB500F7ADB6 /* CustomButton.swift in Sources */,
 				F0CDE0AB2327A99C007126DE /* CreateSpotViewController.swift in Sources */,
 				F04E3CF6235DAB4F0048D18A /* MapViewController.swift in Sources */,
 				F0D52809232786770023B226 /* AppDelegate.swift in Sources */,
 				F0CE143B236C42E60025446B /* FavoriteViewController.swift in Sources */,
 				F016E9FE2330E39D00214C4E /* StartViewController.swift in Sources */,
+				F0695A1D2372D5CB00F399B7 /* FirestoreService.swift in Sources */,
 				F04E3CFA235DB2F70048D18A /* DetailsViewController.swift in Sources */,
 				F0CDE0A723279709007126DE /* User.swift in Sources */,
 				F01B3ACA232FAF5800B62D88 /* SpotView.swift in Sources */,
+				F0695A232372E0D200F399B7 /* Marker.swift in Sources */,
 				F0198B19233B6DC3004BF277 /* ImageService.swift in Sources */,
 				F01B3AC8232F8F4800B62D88 /* AlertService.swift in Sources */,
 				F017F36F233250480093603E /* Extensions.swift in Sources */,
 				F0CDE0A923279719007126DE /* Spot.swift in Sources */,
+				F0695A212372D88300F399B7 /* DocumentSerializableProtocol.swift in Sources */,
 				F016EA022330E5A400214C4E /* SignUpViewController.swift in Sources */,
 				F05751F8236A20230051F777 /* AuthenticationService.swift in Sources */,
 				F059CE39236C7D2600D64137 /* FavoriteTableViewCell.swift in Sources */,
+				F0695A1F2372D7BB00F399B7 /* Endpoint.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

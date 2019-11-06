@@ -143,7 +143,7 @@ class DetailsViewController: UIViewController, UIScrollViewDelegate {
         
         
         guard let name = spot.title else {return}
-        spotTitle.text = name.uppercased()
+        spotTitle.text = name.uppercased().toNoSmartQuotes()
         
         guard let description = spot.snippet, description.isEmpty == false else {
             spotDescription.text = "Aucune description n'a été rédigée pour ce Spot"
