@@ -189,7 +189,7 @@ class MapViewController: UIViewController {
     
      func fetchAllSpots() {
         let firestoreService = FirestoreService<Marker>()
-        firestoreService.fetchCoco(endpoint: .spot) { [weak self] result in
+        firestoreService.fetchCollection(endpoint: .spot) { [weak self] result in
             switch result {
             case .success(let firestorePrograms):
                 DispatchQueue.main.async {
@@ -214,7 +214,7 @@ class MapViewController: UIViewController {
                                 marker.map = self?.mapView
                             }
                         }
-                   
+                    
                     }
                 }
             case .failure(let error):
@@ -703,10 +703,10 @@ extension MapViewController: GMSMapViewDelegate, AddSpotDelegate {
     
     func mapView(_ mapView: GMSMapView, willMove gesture: Bool)
     {
-      if mapView.selectedMarker != nil
-      {
-        mapView.selectedMarker = nil
-      }
+//      if mapView.selectedMarker != nil
+//      {
+//        mapView.selectedMarker = nil
+//      }
     }
    
     

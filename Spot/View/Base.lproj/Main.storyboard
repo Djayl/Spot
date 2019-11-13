@@ -60,9 +60,8 @@
                                     <action selector="resetPassword" destination="dZb-P3-DcI" eventType="touchUpInside" id="coy-GG-Pig"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nbj-va-SAO">
-                                <rect key="frame" x="88" y="518" width="145" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nbj-va-SAO">
+                                <rect key="frame" x="80" y="518" width="160" height="30"/>
                                 <fontDescription key="fontDescription" type="system" weight="thin" pointSize="15"/>
                                 <state key="normal" title="Je n'ai pas de compte"/>
                                 <connections>
@@ -77,6 +76,7 @@
                             <constraint firstItem="RHL-WU-AP9" firstAttribute="trailing" secondItem="BOh-vS-HTj" secondAttribute="trailing" constant="100" id="Do4-FJ-miF"/>
                             <constraint firstItem="OoD-gw-aZs" firstAttribute="leading" secondItem="RHL-WU-AP9" secondAttribute="leading" constant="30" id="Dv5-fW-xWJ"/>
                             <constraint firstItem="OoD-gw-aZs" firstAttribute="top" secondItem="9yS-dr-9cb" secondAttribute="bottom" constant="30" id="Mkc-YC-1VZ"/>
+                            <constraint firstItem="RHL-WU-AP9" firstAttribute="bottom" secondItem="nbj-va-SAO" secondAttribute="bottom" constant="20" id="Pse-fP-4nQ"/>
                             <constraint firstItem="RHL-WU-AP9" firstAttribute="trailing" secondItem="OoD-gw-aZs" secondAttribute="trailing" constant="30" id="QM9-km-Bog"/>
                             <constraint firstItem="BOh-vS-HTj" firstAttribute="leading" secondItem="RHL-WU-AP9" secondAttribute="leading" constant="100" id="Rsx-4i-Rk6"/>
                             <constraint firstItem="eC9-4d-VOW" firstAttribute="top" secondItem="OoD-gw-aZs" secondAttribute="bottom" constant="10" id="SR3-MO-a6i"/>
@@ -84,6 +84,8 @@
                             <constraint firstItem="RHL-WU-AP9" firstAttribute="trailing" secondItem="9yS-dr-9cb" secondAttribute="trailing" constant="30" id="ZAY-xf-37E"/>
                             <constraint firstItem="RHL-WU-AP9" firstAttribute="bottom" secondItem="BOh-vS-HTj" secondAttribute="bottom" constant="100" id="eS7-ly-Drn"/>
                             <constraint firstItem="RHL-WU-AP9" firstAttribute="trailing" secondItem="eC9-4d-VOW" secondAttribute="trailing" constant="30" id="mZU-BA-rCa"/>
+                            <constraint firstItem="nbj-va-SAO" firstAttribute="leading" secondItem="RHL-WU-AP9" secondAttribute="leading" constant="80" id="nIJ-4N-NcI"/>
+                            <constraint firstItem="RHL-WU-AP9" firstAttribute="trailing" secondItem="nbj-va-SAO" secondAttribute="trailing" constant="80" id="o9V-u9-xRB"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="RHL-WU-AP9"/>
                     </view>
@@ -248,7 +250,7 @@
                                 </subviews>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <constraints>
-                                    <constraint firstAttribute="trailing" secondItem="ql5-iX-PQ0" secondAttribute="trailing" constant="50" id="TR7-3B-e3E"/>
+                                    <constraint firstAttribute="trailing" relation="lessThanOrEqual" secondItem="ql5-iX-PQ0" secondAttribute="trailing" constant="50" id="TR7-3B-e3E"/>
                                     <constraint firstItem="ql5-iX-PQ0" firstAttribute="leading" secondItem="EUb-Pu-b09" secondAttribute="leading" constant="50" id="Xu2-Fs-fPi"/>
                                     <constraint firstAttribute="bottom" secondItem="ql5-iX-PQ0" secondAttribute="bottom" constant="40" id="kFb-Ly-Bz0"/>
                                 </constraints>
@@ -462,13 +464,6 @@
                                     <action selector="putSpotToFavorite:" destination="Afb-Q0-1cP" eventType="touchUpInside" id="p0y-EW-a6G"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Kh8-Bo-JnX">
-                                <rect key="frame" x="90" y="480" width="140" height="30"/>
-                                <state key="normal" title="Button"/>
-                                <connections>
-                                    <action selector="didTapButton:" destination="Afb-Q0-1cP" eventType="touchUpInside" id="sC9-WV-8E4"/>
-                                </connections>
-                            </button>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
@@ -485,11 +480,8 @@
                             <constraint firstItem="1dU-xh-UrI" firstAttribute="top" secondItem="xQP-X3-u8a" secondAttribute="bottom" constant="5" id="LCG-Q3-94T"/>
                             <constraint firstItem="Usx-oC-4p0" firstAttribute="top" secondItem="Np0-X2-Xg2" secondAttribute="bottom" constant="5" id="Mfg-pA-msE"/>
                             <constraint firstItem="vv9-lj-62J" firstAttribute="trailing" secondItem="1dU-xh-UrI" secondAttribute="trailing" constant="20" id="Nz7-nP-Iky"/>
-                            <constraint firstItem="vv9-lj-62J" firstAttribute="trailing" secondItem="Kh8-Bo-JnX" secondAttribute="trailing" constant="90" id="Uk3-3O-hxV"/>
                             <constraint firstItem="1dU-xh-UrI" firstAttribute="leading" secondItem="vv9-lj-62J" secondAttribute="leading" constant="20" id="WAI-ZQ-gY9"/>
-                            <constraint firstItem="Kh8-Bo-JnX" firstAttribute="leading" secondItem="vv9-lj-62J" secondAttribute="leading" constant="90" id="Wlw-Y1-qQZ"/>
                             <constraint firstItem="vv9-lj-62J" firstAttribute="bottom" secondItem="APG-j2-al8" secondAttribute="bottom" constant="20" id="XjL-ZA-YNj"/>
-                            <constraint firstItem="APG-j2-al8" firstAttribute="top" secondItem="Kh8-Bo-JnX" secondAttribute="bottom" constant="8" id="ZfH-ON-P8T"/>
                             <constraint firstItem="vv9-lj-62J" firstAttribute="trailing" secondItem="Usx-oC-4p0" secondAttribute="trailing" constant="20" id="ade-IS-PEV"/>
                             <constraint firstItem="Np0-X2-Xg2" firstAttribute="top" secondItem="zy3-jf-QsA" secondAttribute="bottom" constant="5" id="bxl-cr-u4g"/>
                             <constraint firstItem="zy3-jf-QsA" firstAttribute="top" secondItem="vv9-lj-62J" secondAttribute="top" constant="65" id="eAQ-Rr-1NA"/>
@@ -507,7 +499,6 @@
                     </view>
                     <navigationItem key="navigationItem" id="3lc-Z0-OcJ"/>
                     <connections>
-                        <outlet property="button" destination="Kh8-Bo-JnX" id="dnj-U9-WVq"/>
                         <outlet property="favoriteButton" destination="APG-j2-al8" id="saf-Qt-0aX"/>
                         <outlet property="imageView" destination="zy3-jf-QsA" id="Qcb-4I-Nbq"/>
                         <outlet property="spotCoordinate" destination="rrW-28-QJI" id="DxX-q6-BhT"/>

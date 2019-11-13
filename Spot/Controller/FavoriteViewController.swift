@@ -18,7 +18,7 @@ class FavoriteViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     
     var markers = [Spot]()
-   
+    let map = MapViewController()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,7 +31,13 @@ class FavoriteViewController: UIViewController {
         super.viewWillAppear(animated)
         markers.removeAll()
         fetchSpots()
+        
         tableView.reloadData()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+       
     }
 
     
@@ -136,21 +142,22 @@ class FavoriteViewController: UIViewController {
     private func removeSpotFromFavorite(spot: Spot) {
         guard let spotUid = (spot.userData as! CustomData).uid else {return}
                 let firestoreService = FirestoreService<Marker>()
-    //            DispatchQueue.main.async {
+                DispatchQueue.main.async {
                  
                     let data = ["isFavorite": false]
                 firestoreService.updateData(endpoint: .favorite(spotId: spotUid), data: data) { [weak self] result in
                     switch result {
                     case .success(let successMessage):
+                       
                         (spot.userData as! CustomData).isFavorite = false
-    //                    self?.favoriteButton.isOn = true
+
                         print(successMessage)
                     case .failure(let error):
                         print("Error updating document: \(error)")
                         self?.presentAlert(with: "Erreur réseau")
                     }
                 }
-    //        }
+            }
         }
     
     @objc func didTapSpot(spot: Spot) {
@@ -191,6 +198,7 @@ extension FavoriteViewController: UITableViewDataSource, UITableViewDelegate {
                    forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             removeSpotFromFavorite(spot: markers[indexPath.row])
+            
             markers.remove(at: indexPath.row)
             
             tableView.beginUpdates()

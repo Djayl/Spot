@@ -21,12 +21,12 @@ class DetailsViewController: UIViewController {
     @IBOutlet weak var spotDate: UILabel!
     @IBOutlet weak var spotCoordinate: UILabel!
     @IBOutlet weak var favoriteButton: FavoriteButton!
-    @IBOutlet weak var button: UIButton!
+
     
     
     var gradient: CAGradientLayer?
     var spot = Spot()
-    let map = MapViewController()
+//    let map = MapViewController()
     
     var newImageView = UIImageView()
     
@@ -48,11 +48,8 @@ class DetailsViewController: UIViewController {
         spotTitle.setUpLabel()
 //        map.fetchAllSpots()
 //        handleFavoriteButton()
-  
-    }
-    
-    @IBAction func didTapButton(_ sender: Any) {
-        
+        print((spot.userData as! CustomData).uid as Any)
+        checkFavoriteButton()
     }
     
     
@@ -69,10 +66,10 @@ class DetailsViewController: UIViewController {
             // Show the Navigation Bar
                     self.navigationController?.setNavigationBarHidden(true, animated: false)
 //                            DispatchQueue.main.async {
-//                                self.handleFavoriteButton()
+//                                self.checkFavoriteButton()
 //                            }
-           print("DETAILS WILL APPEAR")
             
+            checkFavoriteButton()
 //            handleFavoriteButton()
            
                 }
@@ -161,7 +158,7 @@ class DetailsViewController: UIViewController {
         
         guard let favorite = (spot.userData as! CustomData).isFavorite else {return}
         print(favorite)
-        
+       
         switch favorite {
         case true:
             favoriteButton.isOn = false
@@ -171,6 +168,22 @@ class DetailsViewController: UIViewController {
         }
  
     }
+    
+    private func checkFavoriteButton() {
+        let vc = FavoriteViewController()
+        
+            
+            if vc.markers.contains(spot) {
+                (spot.userData as! CustomData).isFavorite = true
+//                favoriteButton.isOn = true
+            } else {
+                (spot.userData as! CustomData).isFavorite = false
+//                favoriteButton.isOn = false
+            }
+            
+            
+        }
+    
     
     
     func getSpotDetails() {
@@ -308,7 +321,7 @@ class DetailsViewController: UIViewController {
     private func updateFavorite() {
         favoriteButton.isOn.toggle()
         let favorite = (spot.userData as! CustomData).isFavorite
-         print(favorite)
+         
          if favorite == true  {
            
                removeSpotFromFavorite()
@@ -346,6 +359,7 @@ class DetailsViewController: UIViewController {
                 switch result {
                 case .success(let successMessage):
                     (self?.spot.userData as! CustomData).isFavorite = true
+                    
 //                    self?.favoriteButton.isOn = false
                     print(successMessage)
                 case .failure(let error):
@@ -367,7 +381,7 @@ class DetailsViewController: UIViewController {
                 switch result {
                 case .success(let successMessage):
                     (self?.spot.userData as! CustomData).isFavorite = false
-//                    self?.favoriteButton.isOn = true
+                    
                     print(successMessage)
                 case .failure(let error):
                     print("Error updating document: \(error)")
@@ -441,7 +455,7 @@ class DetailsViewController: UIViewController {
     }
     
     @objc func dismissFullscreenImage(_ sender: UITapGestureRecognizer) {
-        self.navigationController?.isNavigationBarHidden = false
+        self.navigationController?.isNavigationBarHidden = true
         self.tabBarController?.tabBar.isHidden = false
         UIView.transition(with: self.view, duration: 0.25, options: [.transitionCrossDissolve], animations: {
             sender.view?.removeFromSuperview()
