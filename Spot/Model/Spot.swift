@@ -21,10 +21,10 @@ class Spot: GMSMarker {
 }
 
 class CustomData{
-    var creationDate: Date
-    var uid: String
-    var isFavorite: String
-    init(creationDate: Date, uid: String, isFavorite: String) {
+    var creationDate: Date?
+    var uid: String?
+    var isFavorite: Bool?
+    init(creationDate: Date, uid: String, isFavorite: Bool ) {
         self.creationDate = creationDate
         self.uid = uid
         self.isFavorite = isFavorite

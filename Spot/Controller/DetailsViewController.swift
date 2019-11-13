@@ -11,7 +11,8 @@ import Firebase
 import Kingfisher
 import GoogleMaps
 
-class DetailsViewController: UIViewController, UIScrollViewDelegate {
+@available(iOS 13.0, *)
+class DetailsViewController: UIViewController {
     
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var pictureTakerName: UILabel!
@@ -20,14 +21,19 @@ class DetailsViewController: UIViewController, UIScrollViewDelegate {
     @IBOutlet weak var spotDate: UILabel!
     @IBOutlet weak var spotCoordinate: UILabel!
     @IBOutlet weak var favoriteButton: FavoriteButton!
+    @IBOutlet weak var button: UIButton!
     
     
     var gradient: CAGradientLayer?
     var spot = Spot()
+    let map = MapViewController()
+    
     var newImageView = UIImageView()
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
+       
         getSpotDetails()
         getImage()
         reverseGeocodeCoordinate(spot.position)
@@ -40,20 +46,35 @@ class DetailsViewController: UIViewController, UIScrollViewDelegate {
         spotDate.setUpLabel()
         spotCoordinate.setUpLabel()
         spotTitle.setUpLabel()
-        handleFavoriteButton()
+//        map.fetchAllSpots()
+//        handleFavoriteButton()
+  
+    }
+    
+    @IBAction func didTapButton(_ sender: Any) {
         
     }
     
+    
     override func viewDidAppear(_ animated: Bool) {
-        
+       
+//        map.fetchAllSpots()
         getImage()
     }
     
+    
+    
            override func viewWillAppear(_ animated: Bool) {
-                super.viewWillAppear(true)
+                super.viewWillAppear(animated)
             // Show the Navigation Bar
                     self.navigationController?.setNavigationBarHidden(true, animated: false)
-
+//                            DispatchQueue.main.async {
+//                                self.handleFavoriteButton()
+//                            }
+           print("DETAILS WILL APPEAR")
+            
+//            handleFavoriteButton()
+           
                 }
     
     
@@ -67,8 +88,33 @@ class DetailsViewController: UIViewController, UIScrollViewDelegate {
         
     }
     @IBAction func putSpotToFavorite(_ sender: Any) {
-        addToFavorite()
+
+            self.addToFavorite()
+        
     }
+    
+    func didChangeStatus(spot: Spot) {
+        
+    }
+    
+//    func fetchSpotsFav() {
+//        let firestoreService = FirestoreService<Marker>()
+//        firestoreService.fetchDocument(endpoint: .spot) { [weak self] result in
+//            switch result {
+//            case .success(let marker):
+//                self?.updateScreenWithProfil(marker)
+//           
+//            case .failure(let error):
+//                print(error.localizedDescription)
+//                self?.presentAlert(with: "Erreur serveur")
+//            }
+//        }
+//    }
+//    
+//    private func updateScreenWithProfil(_ marker: Marker) {
+//        (spot.userData as! CustomData).isFavorite = marker.isFavorite
+//        
+//    }
     
     @objc func scaleImage(_ sender: UIPinchGestureRecognizer) {
         if let view = sender.view {
@@ -93,24 +139,7 @@ class DetailsViewController: UIViewController, UIScrollViewDelegate {
             }
 
         }
-        //        if sender.state == .ended || sender.state == .changed {
-        //
-        //               let currentScale = sender.view!.frame.size.width / sender.view!.bounds.size.width
-        //               var newScale = currentScale*sender.scale
-        //
-        //               if newScale < 1 {
-        //                   newScale = 1
-        //               }
-        //               if newScale > 7 {
-        //                   newScale = 7
-        //               }
-        //
-        //               let transform = CGAffineTransform(scaleX: newScale, y: newScale)
-        //
-        //               self.newImageView.transform = transform
-        //               sender.scale = 1
-        //
-        //           }
+
     }
     
     
@@ -128,20 +157,24 @@ class DetailsViewController: UIViewController, UIScrollViewDelegate {
     //        }
     //    }
     
-    fileprivate func handleFavoriteButton() {
-        let favorite = (spot.userData as! CustomData).isFavorite
+    private func handleFavoriteButton(){
+        
+        guard let favorite = (spot.userData as! CustomData).isFavorite else {return}
         print(favorite)
         
-        if favorite == "Yes" {
+        switch favorite {
+        case true:
             favoriteButton.isOn = false
-        } else {
+            
+        case false:
             favoriteButton.isOn = true
         }
+ 
     }
     
+    
     func getSpotDetails() {
-        
-        
+   
         guard let name = spot.title else {return}
         spotTitle.text = name.uppercased().toNoSmartQuotes()
         
@@ -149,8 +182,12 @@ class DetailsViewController: UIViewController, UIScrollViewDelegate {
             spotDescription.text = "Aucune description n'a été rédigée pour ce Spot"
             return }
         spotDescription.text = description
-        let date  = (spot.userData as! CustomData).creationDate
+        guard let date  = (spot.userData as! CustomData).creationDate else {return}
         spotDate.text = date.asString(style: .short)
+        handleFavoriteButton()
+        
+        
+        
         
         //        handleFavoriteButton()
     }
@@ -187,36 +224,202 @@ class DetailsViewController: UIViewController, UIScrollViewDelegate {
     }
     
     private func addToFavorite() {
-        let uid = Auth.auth().currentUser?.uid
-        let spotUid = (spot.userData as! CustomData).uid
-        let ref = FirestoreReferenceManager.referenceForUserPublicData(uid: uid!).collection("Spots").document(spotUid)
+//        let uid = Auth.auth().currentUser?.uid
+//        let spotUid = (spot.userData as! CustomData).uid
+//        let ref = FirestoreReferenceManager.referenceForUserPublicData(uid: uid!).collection("Spots").document(spotUid)
         
 //        switch favoriteButton.isOn {
+        
         favoriteButton.isOn.toggle()
-//        case true:
-//            favoriteButton.isOn = false
-        if favoriteButton.isOn {
-            ref.updateData(["isFavorite": "No"]) { (error) in
-                if let error = error {
-                    print(error.localizedDescription)
-                }
-                print("Succesfully UnFavorite")
-            }
-            } else {
-//            }
-//        case false:
-//            favoriteButton.isOn = true
-            ref.updateData(["isFavorite": "Yes"]) { (error) in
-                if let error = error {
-                    print(error.localizedDescription)
-                }
-                print("Succesfully favorite")
-            }
+//        DispatchQueue.main.async {
+            if self.favoriteButton.isOn {
+            //            DispatchQueue.main.async {
+               
+              
+                            self.removeSpotFromFavorite()
+                            print("FALSE")
+        
+            
+        } else {
+        //            DispatchQueue.main.async {
+                
+              
+                        self.addSpotToFavorite()
+                        print("TRUE")
             }
 //        }
+    }
+//        case true:
+//            favoriteButton.isOn = false
+        
+                
+//            }
+            
+//            ref.updateData(["isFavorite": "No"]) { (error) in
+//                if let error = error {
+//                    print(error.localizedDescription)
+//                }
+//                print("Succesfully UnFavorite")
+//            }
+            
+               
+//            }
+            
+////            }
+////        case false:
+////            favoriteButton.isOn = true
+//            ref.updateData(["isFavorite": "Yes"]) { (error) in
+//                if let error = error {
+//                    print(error.localizedDescription)
+//                }
+//                print("Succesfully favorite")
+//            }
+//            }
+//        }
+        
     
+    
+//
+//    private func saveNewSpot() {
+//        favoriteButton.isOn.toggle()
+//        let identifier = UUID().uuidString
+//        print(identifier)
+//        guard let name = spot.title else { return  }
+//        print(name)
+//        guard let description = spot.snippet else {return}
+//        print(description as Any)
+//        let coordinate = spot.position
+//        print(coordinate)
+//        guard let imageURL = spot.imageURL else {return}
+//        print(imageURL)
+//
+//        let newSpot = Marker(identifier: identifier, name: name, description: description, coordinate: GeoPoint(latitude: coordinate.latitude, longitude: coordinate.longitude), imageURL: imageURL, isFavorite: false, creationDate: Date())
+//
+//          if favoriteButton.isOn {
+////                saveSpotAsFavorite(identifier: identifier, spot: newSpot)
+//                print("favorite Spot successfully added")
+//            } else {
+////                deleteProgramInFirestore(identifier: identifier)
+//                print("unFavorited")
+//
+//       }
+//    }
+    
+    private func updateFavorite() {
+        favoriteButton.isOn.toggle()
+        let favorite = (spot.userData as! CustomData).isFavorite
+         print(favorite)
+         if favorite == true  {
+           
+               removeSpotFromFavorite()
+            
+//               favoriteButton.isOn = false
+
+           } else {
+//               guard let recipeDetail = recipeDetail else {return}
+            addSpotToFavorite()
+            
+//            favoriteButton.isOn = true
+           }
+           
+       }
+    
+    private func toggleButton() -> Bool{
+        favoriteButton.isOn.toggle()
+        if favoriteButton.isOn {
+            favoriteButton.isHidden = true
+        return true
+            
+        } else {
+           
+        return false
+        }
     }
     
+    private func addSpotToFavorite() {
+        guard let spotUid = (spot.userData as! CustomData).uid else {return}
+            let firestoreService = FirestoreService<Marker>()
+//            DispatchQueue.main.async {
+             
+                let data = ["isFavorite": true]
+            firestoreService.updateData(endpoint: .favorite(spotId: spotUid), data: data) { [weak self] result in
+                switch result {
+                case .success(let successMessage):
+                    (self?.spot.userData as! CustomData).isFavorite = true
+//                    self?.favoriteButton.isOn = false
+                    print(successMessage)
+                case .failure(let error):
+                    print("Error updating document: \(error)")
+                    self?.presentAlert(with: "Erreur réseau")
+                }
+            }
+//        }
+    }
+
+    
+    private func removeSpotFromFavorite() {
+        guard let spotUid = (spot.userData as! CustomData).uid else {return}
+            let firestoreService = FirestoreService<Marker>()
+//            DispatchQueue.main.async {
+             
+                let data = ["isFavorite": false]
+            firestoreService.updateData(endpoint: .favorite(spotId: spotUid), data: data) { [weak self] result in
+                switch result {
+                case .success(let successMessage):
+                    (self?.spot.userData as! CustomData).isFavorite = false
+//                    self?.favoriteButton.isOn = true
+                    print(successMessage)
+                case .failure(let error):
+                    print("Error updating document: \(error)")
+                    self?.presentAlert(with: "Erreur réseau")
+                }
+            }
+//        }
+    }
+    
+//    private func updateSpot() {
+//
+//        let spotUid = (spot.userData as! CustomData).uid
+//        let uid = Auth.auth().currentUser?.uid
+//
+//        let ref = FirestoreReferenceManager.referenceForUserPublicData(uid: uid!).collection("Spots").document(spotUid)
+//
+//
+//
+//    }
+
+          
+//    private func deleteProgramInFirestore(identifier: String) {
+//             let firestoreService = FirestoreService<Marker>()
+//             firestoreService.deleteDocumentData(endpoint: .favorite, identifier: identifier) { [weak self] result in
+//                 switch result {
+//                 case .success(let successMessage):
+//                     print(successMessage)
+//                 case .failure(let error):
+//                     print("Error deleting document: \(error)")
+//                     self?.presentAlert(with: "Erreur réseau")
+//                 }
+//             }
+//         }
+
+    
+//  private func saveSpotAsFavorite(identifier: String, spot: Marker) {
+//               let firestoreService = FirestoreService<Marker>()
+//                let data = ["id":spot.identifier]
+//               firestoreService.saveData(endpoint: .favorite, identifier: identifier, data: data) { [weak self] result in
+//                   switch result {
+//                   case .success(let successMessage):
+//                       print(successMessage)
+//                       self?.dismiss(animated: true, completion: nil)
+//                   case .failure(let error):
+//                       print("Error adding document: \(error)")
+//                       self?.presentAlert(with: "Problème réseau")
+//                   }
+//               }
+//           }
+        
+    
+
     
     @objc func imageTapped(_ sender: UITapGestureRecognizer) {
         let imageView = sender.view as! UIImageView

@@ -9,21 +9,22 @@
 import UIKit
 
 class FavoriteButton: UIButton {
+    
 
     var isOn = true {
         didSet {
-         
-            
+
+
             let color = !isOn ? Colors.twitterBlue: .clear
             let title = !isOn ? "Favori" : "Mettre en favori"
             let titleColor = !isOn ? . white : Colors.twitterBlue
-            
+
             setTitle(title, for: .normal)
             setTitleColor(titleColor, for: .normal)
             backgroundColor = color
         }
     }
-    
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         initButton()

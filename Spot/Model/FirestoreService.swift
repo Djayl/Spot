@@ -38,7 +38,7 @@ final public class FirestoreService<FirestoreObject: DocumentSerializableProtoco
     
     init() {
         let settings = dataBase.settings
-        settings.areTimestampsInSnapshotsEnabled = true
+//        settings.areTimestampsInSnapshotsEnabled = true
         dataBase.settings = settings
     }
     
@@ -59,6 +59,22 @@ final public class FirestoreService<FirestoreObject: DocumentSerializableProtoco
                 result(.failure(.offline))
                 return
             }
+            let object = objectData.documents.compactMap({FirestoreObject(dictionary: $0.data())})
+            result(.success(object))
+        })
+    }
+    
+    public func fetchCoco(endpoint: Endpoint, result: @escaping (FirestoreCollectionResult<FirestoreObject>) -> Void) {
+        collection = dataBase.collection(endpoint.path)
+        collection?.addSnapshotListener({ (querySnapshot, error) in
+            if error != nil {
+                result(.failure(.offline))
+            }
+            guard let objectData = querySnapshot else {
+                result(.failure(.offline))
+                return
+            }
+  
             let object = objectData.documents.compactMap({FirestoreObject(dictionary: $0.data())})
             result(.success(object))
         })

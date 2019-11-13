@@ -45,10 +45,13 @@ class MapViewController: UIViewController {
             mapView.delegate = self
             setUpNavigationController()
             setUpTapBarController()
+            
 
             mapView.addSubview(chooseDataButton)
-            mapView.reloadInputViews()
-
+           
+//            mapView.reloadInputViews()
+          
+//            checkUpdates()
 //            mapView.addSubview(maptypeButton)
 //            setupSearchBar()
           
@@ -57,7 +60,16 @@ class MapViewController: UIViewController {
                checkIfUserLoggedIn()
             
         }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+ 
+        
+        
+        
+    }
+   
     
+ 
     fileprivate func setUpNavigationController() {
 //        navigationController?.hideNavigationItemBackground()
         navigationController?.navigationBar.barTintColor = Colors.skyBlue
@@ -94,8 +106,13 @@ class MapViewController: UIViewController {
         }
     
     @IBAction func dataType(_ sender: Any) {
-        chooseData(controller: MapViewController())
+       
+            self.chooseData(controller: MapViewController())
+        
+        
     }
+    
+    
     
 
         
@@ -103,15 +120,17 @@ class MapViewController: UIViewController {
         let alert = UIAlertController(title: "Choisissez ce que vous voulez voir", message: "Sélectionnez une option", preferredStyle: .actionSheet)
         alert.addAction(UIAlertAction(title: "Juste mes Spots", style: .default, handler: { (_) in
             self.mapView.clear()
-            self.getData()
+            self.fetchAllSpots()
+           
+       
         }))
         alert.addAction(UIAlertAction(title: "Juste mes favoris", style: .default, handler: { (_) in
             self.mapView.clear()
-            self.getFavoriteSpots()
+            self.fetchFavoriteSpots()
         }))
         alert.addAction(UIAlertAction(title: "Tous les Spots", style: .default, handler: { (_) in
             self.mapView.clear()
-            self.getMySpots()
+            self.fetchPublicSpots()
         }))
         alert.addAction(UIAlertAction(title: "Annuler", style: .cancel, handler: { (_) in
             print("User click Dismiss button")
@@ -167,16 +186,202 @@ class MapViewController: UIViewController {
 //                searchController?.hidesNavigationBarDuringPresentation = false
 //            
 //              }
+    
+     func fetchAllSpots() {
+        let firestoreService = FirestoreService<Marker>()
+        firestoreService.fetchCoco(endpoint: .spot) { [weak self] result in
+            switch result {
+            case .success(let firestorePrograms):
+                DispatchQueue.main.async {
+                for markers in firestorePrograms {
+                    guard let url = URL.init(string: markers.imageURL ) else {return}
+                    let mCustomData = CustomData(creationDate: markers.creationDate, uid: markers.identifier, isFavorite: markers.isFavorite)
+                    
+                    KingfisherManager.shared.retrieveImage(with: url, options: nil) { result in
+                        let image = try? result.get().image
+                        if let image = image {
+//                            DispatchQueue.main.async {
+                                let marker = Spot()
+                                marker.position = CLLocationCoordinate2D(latitude: markers.coordinate.latitude, longitude: markers.coordinate.longitude)
+                                marker.title = markers.name.capitalized
+                                marker.snippet = markers.description
+                                
+                                marker.userData = mCustomData
+                                marker.imageURL = markers.imageURL
+                            let customMarker = CustomMarkerView(frame: CGRect(x: 0, y: 0, width: self!.customMarkerWidth, height: self!.customMarkerHeight), image: image, borderColor: Colors.skyBlue.withAlphaComponent(0.8))
+                                marker.iconView = customMarker
+                                
+                                marker.map = self?.mapView
+                            }
+                        }
+                   
+                    }
+                }
+            case .failure(let error):
+                print(error.localizedDescription)
+                self?.presentAlert(with: "Erreur serveur")
+            }
+        }
+    }
+    
+      func checkUpdates() {
+            let firestoreService = FirestoreService<Marker>()
+            firestoreService.fetchCoco(endpoint: .spot) { [weak self] result in
+                switch result {
+                case .success(let firestorePrograms):
+                    DispatchQueue.main.async {
+                    for markers in firestorePrograms {
+                        guard let url = URL.init(string: markers.imageURL ) else {return}
+                        let mCustomData = CustomData(creationDate: markers.creationDate, uid: markers.identifier, isFavorite: markers.isFavorite)
+                        
+                        KingfisherManager.shared.retrieveImage(with: url, options: nil) { result in
+                            let image = try? result.get().image
+                            if let image = image {
+    //                            DispatchQueue.main.async {
+                                    let marker = Spot()
+                                    marker.position = CLLocationCoordinate2D(latitude: markers.coordinate.latitude, longitude: markers.coordinate.longitude)
+                                    marker.title = markers.name.capitalized
+                                    marker.snippet = markers.description
+                                    
+                                    marker.userData = mCustomData
+                                    marker.imageURL = markers.imageURL
+                                let customMarker = CustomMarkerView(frame: CGRect(x: 0, y: 0, width: self!.customMarkerWidth, height: self!.customMarkerHeight), image: image, borderColor: Colors.skyBlue.withAlphaComponent(0.8))
+                                    marker.iconView = customMarker
+                                    
+                                    marker.map = self?.mapView
+                                }
+                            }
+                        }
+                    }
+                case .failure(let error):
+                    print(error.localizedDescription)
+                    self?.presentAlert(with: "Erreur serveur")
+                }
+            }
+        }
+    private func fetchFavoriteSpots() {
+        let firestoreService = FirestoreService<Marker>()
+        firestoreService.fetchCollection(endpoint: .spot) { [weak self] result in
+            switch result {
+            case .success(let firestorePrograms):
+                for markers in firestorePrograms {
+                    if markers.isFavorite == true {
+                    guard let url = URL.init(string: markers.imageURL ) else {return}
+                    let mCustomData = CustomData(creationDate: markers.creationDate, uid: markers.identifier, isFavorite: markers.isFavorite)
+                    KingfisherManager.shared.retrieveImage(with: url, options: nil) { result in
+                        let image = try? result.get().image
+                        if let image = image {
+                            DispatchQueue.main.async {
+                                let marker = Spot()
+                                marker.position = CLLocationCoordinate2D(latitude: markers.coordinate.latitude, longitude: markers.coordinate.longitude)
+                                marker.title = markers.name.capitalized
+                                marker.snippet = markers.description
+                                marker.userData = mCustomData
+                                marker.imageURL = markers.imageURL
+                                let customMarker = CustomMarkerView(frame: CGRect(x: 0, y: 0, width: self!.customMarkerWidth, height: self!.customMarkerHeight), image: image, borderColor: Colors.skyBlue.withAlphaComponent(0.8))
+                                marker.iconView = customMarker
+                                
+                                marker.map = self?.mapView
+                            }
+                        }
+                    }
+                }
+            }
+            case .failure(let error):
+                print(error.localizedDescription)
+                self?.presentAlert(with: "Erreur serveur")
+            }
+        }
+    }
+    
+    private func createSpot(marker: Marker) {
         
-        
+    }
+    
+    private func fetchPublicSpots() {
+        let firestoreService = FirestoreService<Marker>()
+        firestoreService.fetchCollection(endpoint: .publicSpot) { [weak self] result in
+            switch result {
+            case .success(let firestorePrograms):
+                for markers in firestorePrograms {
+                    
+                    guard let url = URL.init(string: markers.imageURL ) else {return}
+                    let mCustomData = CustomData(creationDate: markers.creationDate, uid: markers.identifier, isFavorite: markers.isFavorite)
+                    KingfisherManager.shared.retrieveImage(with: url, options: nil) { result in
+                        let image = try? result.get().image
+                        if let image = image {
+                            DispatchQueue.main.async {
+                                let marker = Spot()
+                                marker.position = CLLocationCoordinate2D(latitude: markers.coordinate.latitude, longitude: markers.coordinate.longitude)
+                                marker.title = markers.name.capitalized
+                                marker.snippet = markers.description
+                                marker.userData = mCustomData
+                                marker.imageURL = markers.imageURL
+                                let customMarker = CustomMarkerView(frame: CGRect(x: 0, y: 0, width: self!.customMarkerWidth, height: self!.customMarkerHeight), image: image, borderColor: Colors.skyBlue.withAlphaComponent(0.8))
+                                marker.iconView = customMarker
+                                marker.map = self?.mapView
+                            }
+                        }
+                    }
+                }
+            
+            case .failure(let error):
+                print(error.localizedDescription)
+                self?.presentAlert(with: "Erreur serveur")
+            }
+        }
+    }
+     func fetchSpots() {
+        let firestoreService = FirestoreService<Marker>()
+        firestoreService.fetchCollection(endpoint: .spot) { [weak self] result in
+            switch result {
+            case .success(let firestorePrograms):
+                for markers in firestorePrograms {
+                    let mCustomData = CustomData(creationDate: markers.creationDate, uid: markers.identifier, isFavorite: markers.isFavorite)
+                    let marker = Spot()
+                    marker.position = CLLocationCoordinate2D(latitude: markers.coordinate.latitude, longitude: markers.coordinate.longitude)
+                    marker.title = markers.name.capitalized
+                    marker.snippet = markers.description
+                    marker.userData = mCustomData
+                    marker.imageURL = markers.imageURL
+                }
+            case .failure(let error):
+                print(error.localizedDescription)
+                self?.presentAlert(with: "Erreur serveur")
+            }
+        }
+    }
+    
+    private func updateScreenWithProfil(_ spot: Marker) {
+            let marker = Spot()
+             let mCustomData = CustomData(creationDate: spot.creationDate, uid: spot.identifier, isFavorite: spot.isFavorite)
+            marker.userData = mCustomData
+       }
+    
+    private func fetchProfilInformation() {
+        let firestoreService = FirestoreService<Marker>()
+        firestoreService.fetchDocument(endpoint: .spot) { [weak self] result in
+            switch result {
+            case .success(let firestoreProfil):
+                self?.updateScreenWithProfil(firestoreProfil)
+            case .failure(let error):
+                print(error.localizedDescription)
+                
+            }
+        }
+    }
+    
+    
+
+
         func getData() {
             guard let uid = Auth.auth().currentUser?.uid else {return}
-            FirestoreReferenceManager.referenceForUserPublicData(uid: uid).collection("Spots").getDocuments { (querySnapshot, error) in
+            Firestore.firestore().document(uid).collection("spots").addSnapshotListener { (querySnapshot, error) in
                 if let error = error {
                     print("Error getting documents: \(error)")
                 } else {
                     for document in querySnapshot!.documents {
-                        
+
                         let coordinate = document.get("coordinate")
                         let point = coordinate as! GeoPoint
                         let lat = point.latitude
@@ -185,7 +390,7 @@ class MapViewController: UIViewController {
                         let description = document.get("description") as? String
                         let creationDate = document.get("createdAt") as? Timestamp
                         let uid = document.get("uid") as? String
-                        let favorite = document.get("isFavorite") as? String
+                        let favorite = document.get("isFavorite") as? Bool
                         guard let spotFavorite = favorite else {return}
                         guard let date = creationDate?.dateValue() else {return}
                         guard let spotUid = uid else {return}
@@ -194,137 +399,138 @@ class MapViewController: UIViewController {
                         let imageUrl2 = imageUrl
                         guard let url = URL.init(string: imageUrl2 as! String) else {return}
                         KingfisherManager.shared.retrieveImage(with: url, options: nil) { result in
-                            
+
                             let image = try? result.get().image
-                            
+
                             if let image = image {
                                 DispatchQueue.main.async {
                                     let marker = Spot()
                                     marker.position = CLLocationCoordinate2D(latitude: lat, longitude: lon)
                                     marker.title = title?.capitalized
                                     marker.snippet = description
-                                    
+
                                     marker.userData = mCustomData
                                     marker.imageURL = imageUrl2 as? String
                                     let customMarker = CustomMarkerView(frame: CGRect(x: 0, y: 0, width: self.customMarkerWidth, height: self.customMarkerHeight), image: image, borderColor: Colors.skyBlue.withAlphaComponent(0.8))
                                     marker.iconView = customMarker
                                     marker.map = self.mapView
-                                    self.spots.append(marker)
                                     
+
                                 }
-                                
+
                             }
-                            
+
                         }
                     }
                 }
             }
         }
-    
-    func getFavoriteSpots() {
-        guard let uid = Auth.auth().currentUser?.uid else {return}
-        FirestoreReferenceManager.referenceForUserPublicData(uid: uid).collection("Spots").whereField("isFavorite", isEqualTo: "Yes").getDocuments { (querySnapshot, error) in
-                 if let error = error {
-                     print("Error getting documents: \(error)")
-                 } else {
-                     for document in querySnapshot!.documents {
-                         
-                         let coordinate = document.get("coordinate")
-                         let point = coordinate as! GeoPoint
-                         let lat = point.latitude
-                         let lon = point.longitude
-                         let title = document.get("title") as? String
-                         let description = document.get("description") as? String
-                         let creationDate = document.get("createdAt") as? Timestamp
-                         let uid = document.get("uid") as? String
-                        let favorite = document.get("isFavorite") as? String
-                        guard let spotFavorite = favorite else {return}
-                        guard let spotUid = uid else {return}
-                         guard let date = creationDate?.dateValue() else {return}
-                        let mCustomData = CustomData(creationDate: date, uid: spotUid, isFavorite: spotFavorite)
-                         let imageUrl = document.get("imageUrl")
-                         let imageUrl2 = imageUrl
-                         guard let url = URL.init(string: imageUrl2 as! String) else {return}
-                         KingfisherManager.shared.retrieveImage(with: url, options: nil) { result in
-                             
-                             let image = try? result.get().image
-                             
-                             if let image = image {
-                                 DispatchQueue.main.async {
-                                     let marker = Spot()
-                                     marker.position = CLLocationCoordinate2D(latitude: lat, longitude: lon)
-                                     marker.title = title
-                                     marker.snippet = description
-                                     marker.userData = mCustomData
-                                     marker.imageURL = imageUrl2 as? String
-                                     let customMarker = CustomMarkerView(frame: CGRect(x: 0, y: 0, width: self.customMarkerWidth, height: self.customMarkerHeight), image: image, borderColor: UIColor.systemIndigo.withAlphaComponent(0.8))
-                                     marker.iconView = customMarker
-                                     marker.map = self.mapView
-                                     self.spots.append(marker)
-                                     
-                                 }
-                                 
-                             }
-                             
-                         }
-                     }
-                 }
-             }
-         }
-    
-    func getMySpots() {
-        
-        FirestoreReferenceManager.root.collection("publicSpot").getDocuments { (querySnapshot, error) in
-                 if let error = error {
-                     print("Error getting documents: \(error)")
-                 } else {
-                     for document in querySnapshot!.documents {
-                         
-                         let coordinate = document.get("coordinate")
-                         let point = coordinate as! GeoPoint
-                         let lat = point.latitude
-                         let lon = point.longitude
-                         let title = document.get("title") as? String
-                         let description = document.get("description") as? String
-                         let creationDate = document.get("createdAt") as? Timestamp
-                         let uid = document.get("uid") as? String
-                        let favorite = document.get("isFavorite") as? String
-                        guard let spotFavorite = favorite else {return}
-                        guard let spotUid = uid else {return}
-                         guard let date = creationDate?.dateValue() else {return}
-                        let mCustomData = CustomData(creationDate: date, uid: spotUid, isFavorite: spotFavorite)
-                         let imageUrl = document.get("imageUrl")
-                         let imageUrl2 = imageUrl
-                         guard let url = URL.init(string: imageUrl2 as! String) else {return}
-                         KingfisherManager.shared.retrieveImage(with: url, options: nil) { result in
-                             
-                             let image = try? result.get().image
-                             
-                             if let image = image {
-                                 DispatchQueue.main.async {
-                                     let marker = Spot()
-                                     marker.position = CLLocationCoordinate2D(latitude: lat, longitude: lon)
-                                     marker.title = title
-                                     marker.snippet = description
-                                     marker.userData = mCustomData
-                                     marker.imageURL = imageUrl2 as? String
-                                     let customMarker = CustomMarkerView(frame: CGRect(x: 0, y: 0, width: self.customMarkerWidth, height: self.customMarkerHeight), image: image, borderColor: UIColor.systemIndigo.withAlphaComponent(0.8))
-                                     marker.iconView = customMarker
-                                     marker.map = self.mapView
-                                     self.spots.append(marker)
-                                     
-                                 }
-                                 
-                             }
-                             
-                         }
-                     }
-                 }
-             }
-         }
-    
-
-    
+//
+//
+//    func getFavoriteSpots() {
+//        guard let uid = Auth.auth().currentUser?.uid else {return}
+//        FirestoreReferenceManager.referenceForUserPublicData(uid: uid).collection("Spots").whereField("isFavorite", isEqualTo: "Yes").getDocuments { (querySnapshot, error) in
+//                 if let error = error {
+//                     print("Error getting documents: \(error)")
+//                 } else {
+//                     for document in querySnapshot!.documents {
+//
+//                         let coordinate = document.get("coordinate")
+//                         let point = coordinate as! GeoPoint
+//                         let lat = point.latitude
+//                         let lon = point.longitude
+//                         let title = document.get("title") as? String
+//                         let description = document.get("description") as? String
+//                         let creationDate = document.get("createdAt") as? Timestamp
+//                         let uid = document.get("uid") as? String
+//                        let favorite = document.get("isFavorite") as? String
+//                        guard let spotFavorite = favorite else {return}
+//                        guard let spotUid = uid else {return}
+//                         guard let date = creationDate?.dateValue() else {return}
+//                        let mCustomData = CustomData(creationDate: date, uid: spotUid, isFavorite: spotFavorite)
+//                         let imageUrl = document.get("imageUrl")
+//                         let imageUrl2 = imageUrl
+//                         guard let url = URL.init(string: imageUrl2 as! String) else {return}
+//                         KingfisherManager.shared.retrieveImage(with: url, options: nil) { result in
+//
+//                             let image = try? result.get().image
+//
+//                             if let image = image {
+//                                 DispatchQueue.main.async {
+//                                     let marker = Spot()
+//                                     marker.position = CLLocationCoordinate2D(latitude: lat, longitude: lon)
+//                                     marker.title = title
+//                                     marker.snippet = description
+//                                     marker.userData = mCustomData
+//                                     marker.imageURL = imageUrl2 as? String
+//                                     let customMarker = CustomMarkerView(frame: CGRect(x: 0, y: 0, width: self.customMarkerWidth, height: self.customMarkerHeight), image: image, borderColor: UIColor.systemIndigo.withAlphaComponent(0.8))
+//                                     marker.iconView = customMarker
+//                                     marker.map = self.mapView
+//                                     self.spots.append(marker)
+//
+//                                 }
+//
+//                             }
+//
+//                         }
+//                     }
+//                 }
+//             }
+//         }
+//
+//    func getMySpots() {
+//
+//        FirestoreReferenceManager.root.collection("publicSpot").getDocuments { (querySnapshot, error) in
+//                 if let error = error {
+//                     print("Error getting documents: \(error)")
+//                 } else {
+//                     for document in querySnapshot!.documents {
+//
+//                         let coordinate = document.get("coordinate")
+//                         let point = coordinate as! GeoPoint
+//                         let lat = point.latitude
+//                         let lon = point.longitude
+//                         let title = document.get("title") as? String
+//                         let description = document.get("description") as? String
+//                         let creationDate = document.get("createdAt") as? Timestamp
+//                         let uid = document.get("uid") as? String
+//                        let favorite = document.get("isFavorite") as? String
+//                        guard let spotFavorite = favorite else {return}
+//                        guard let spotUid = uid else {return}
+//                         guard let date = creationDate?.dateValue() else {return}
+//                        let mCustomData = CustomData(creationDate: date, uid: spotUid, isFavorite: spotFavorite)
+//                         let imageUrl = document.get("imageUrl")
+//                         let imageUrl2 = imageUrl
+//                         guard let url = URL.init(string: imageUrl2 as! String) else {return}
+//                         KingfisherManager.shared.retrieveImage(with: url, options: nil) { result in
+//
+//                             let image = try? result.get().image
+//
+//                             if let image = image {
+//                                 DispatchQueue.main.async {
+//                                     let marker = Spot()
+//                                     marker.position = CLLocationCoordinate2D(latitude: lat, longitude: lon)
+//                                     marker.title = title
+//                                     marker.snippet = description
+//                                     marker.userData = mCustomData
+//                                     marker.imageURL = imageUrl2 as? String
+//                                     let customMarker = CustomMarkerView(frame: CGRect(x: 0, y: 0, width: self.customMarkerWidth, height: self.customMarkerHeight), image: image, borderColor: UIColor.systemIndigo.withAlphaComponent(0.8))
+//                                     marker.iconView = customMarker
+//                                     marker.map = self.mapView
+//                                     self.spots.append(marker)
+//
+//                                 }
+//
+//                             }
+//
+//                         }
+//                     }
+//                 }
+//             }
+//         }
+//
+//
+//
   func getReadableDate(timeStamp: TimeInterval) -> String? {
       let date = Date(timeIntervalSince1970: timeStamp)
       let dateFormatter = DateFormatter()
@@ -352,17 +558,20 @@ class MapViewController: UIViewController {
       let datesWeek = Calendar.current.component(Calendar.Component.weekOfYear, from: date)
       return (currentWeek == datesWeek)
   }
-
+   
 
         @objc func didTapSpot(spot: Spot) {
             let vc = storyboard?.instantiateViewController(withIdentifier: "DetailsVC") as! DetailsViewController
             let nc = UINavigationController(rootViewController: vc)
-
+//            spots.removeAll()
+//            spots.append(spot)
             vc.spot = spot
-            
+           
             self.present(nc, animated: true, completion: nil)
-
-        }
+            }
+    
+   
+        
         @IBAction func logOut() {
             let firebaseAuth = Auth.auth()
             do {
@@ -456,7 +665,7 @@ extension MapViewController: GMSMapViewDelegate, AddSpotDelegate {
             
         }
         
-        
+
         func addSpotToMapView(marker: Spot) {
             
             marker.map = mapView
@@ -469,26 +678,36 @@ extension MapViewController: GMSMapViewDelegate, AddSpotDelegate {
             let location = coordinate
             vc.location = location
             vc.delegate = self
+            
             self.present(nc, animated: true, completion: nil)
 
         }
+    
+    
         
         func mapView(_ mapView: GMSMapView, didTapInfoWindowOf marker: GMSMarker) {
             guard let spot = marker as? Spot else {return}
-           
             
             didTapSpot(spot: spot)
-//            performSegue(withIdentifier: "detailsSegue", sender: self)
-//            print(spot!.name as Any)
-//            didTapSpot(spot: spot)
-//            nextTapped(spot: spot)
+            
+
             }
+    
     func mapView(_ mapView: GMSMapView, didTap marker: GMSMarker) -> Bool {
-        let update = GMSCameraUpdate.zoomIn()
-        mapView.animate(with: update)
+       
+//        let update = GMSCameraUpdate.zoomIn()
+//        mapView.animate(with: update)
+        
         return false
     }
-        
+    
+    func mapView(_ mapView: GMSMapView, willMove gesture: Bool)
+    {
+      if mapView.selectedMarker != nil
+      {
+        mapView.selectedMarker = nil
+      }
+    }
    
     
     }

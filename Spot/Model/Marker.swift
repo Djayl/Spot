@@ -16,7 +16,7 @@ struct Marker {
     let description: String
     let coordinate: GeoPoint
     let imageURL: String
-    let isFavorite: String
+    let isFavorite: Bool
     let creationDate: Date
    
     
@@ -40,8 +40,8 @@ extension Marker: DocumentSerializableProtocol {
             let name = dictionary["name"] as? String,
             let description = dictionary["description"] as? String,
             let coordinate = dictionary["coordinate"] as? GeoPoint,
-            let imageURL = dictionary["imageURL"] as? String,
-            let isFavorite = dictionary["isFavorite"] as? String else { return nil}
+            let imageURL = dictionary["imageURL"] as? String, 
+            let isFavorite = dictionary["isFavorite"] as? Bool else { return nil}
         
         var date = Date()
         if let creationDate = dictionary["creationDate"] as? Timestamp {

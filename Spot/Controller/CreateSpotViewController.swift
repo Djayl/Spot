@@ -144,6 +144,86 @@ class CreateSpotViewController: UIViewController, UITextFieldDelegate, UITextVie
             
         }
     }
+    
+
+    private func saveNewSpot() {
+        let geocoder = GMSGeocoder()
+        
+        geocoder.reverseGeocodeCoordinate(location) { (placemarks, error) in
+            if error != nil {
+                print(error!)
+            }
+            if let coor = placemarks?.firstResult()?.coordinate {
+                
+                guard let image = self.myImage else {
+                    self.creationButton.shake()
+                    self.presentAlert(with: "Un Spot doit avoir une image")
+                    return
+                }
+                guard let name = self.titleTextfield.text, !name.isEmpty else {
+                    self.creationButton.shake()
+                    self.presentAlert(with: "Un spot doit avoir un titre")
+                    return
+                }
+                guard let description = self.descriptionTextView.text, !description.isEmpty else {
+                    self.creationButton.shake()
+                    self.presentAlert(with: "Un spot doit avoir une description")
+                    return
+                }
+                let identifier = UUID().uuidString
+                let spot = Spot(position: coor)
+                let customMarker = CustomMarkerView(frame: CGRect(x: 0, y: 0, width: self.customMarkerWidth, height: self.customMarkerHeight), image: image, borderColor: UIColor.darkGray)
+                spot.iconView = customMarker
+                spot.title = name
+                spot.summary = description
+                spot.coordinate = coor
+                self.uploadImage { (imageUrl) in
+                let newSpot = Marker(identifier: identifier, name: name, description: description, coordinate: GeoPoint(latitude: coor.latitude, longitude: coor.longitude), imageURL: imageUrl, isFavorite: false, creationDate: Date())
+                    DispatchQueue.main.async {
+                    if self.stateSwitch.isOn {
+                self.savePublicSpotInFirestore(identifier: identifier, spot: newSpot)
+                        print("Public Spot successfully added")
+                    } else {
+                self.saveSpotInFirestore(identifier: identifier, spot: newSpot)
+                        print("Private Spot successfully added")
+                    }
+                    }
+            }
+                self.delegate.addSpotToMapView(marker: spot)
+                self.goToMapView()
+        }
+        }
+    }
+        private func saveSpotInFirestore(identifier: String, spot: Marker) {
+            let firestoreService = FirestoreService<Marker>()
+            firestoreService.saveData(endpoint: .spot, identifier: identifier, data: spot.dictionary) { [weak self] result in
+                switch result {
+                case .success(let successMessage):
+                    print(successMessage)
+                    self?.dismiss(animated: true, completion: nil)
+                case .failure(let error):
+                    print("Error adding document: \(error)")
+                    self?.presentAlert(with: "Problème réseau")
+                }
+            }
+        }
+    
+    private func savePublicSpotInFirestore(identifier: String, spot: Marker) {
+        let firestoreService = FirestoreService<Marker>()
+        firestoreService.saveData(endpoint: .publicSpot, identifier: identifier, data: spot.dictionary) { [weak self] result in
+            switch result {
+            case .success(let successMessage):
+                print(successMessage)
+                self?.dismiss(animated: true, completion: nil)
+            case .failure(let error):
+                print("Error adding document: \(error)")
+                self?.presentAlert(with: "Problème réseau")
+            }
+        }
+    }
+
+        
+    
 //
 //    func createPublicSpot() {
 //        let geocoder = GMSGeocoder()
@@ -288,16 +368,17 @@ class CreateSpotViewController: UIViewController, UITextFieldDelegate, UITextVie
     }
     
     @IBAction func sendData(_ sender: Any) {
-        let uid = Auth.auth().currentUser?.uid
-        let publicRef = FirestoreReferenceManager.root.collection("publicSpot").document()
-        let privateRef = FirestoreReferenceManager.referenceForUserPublicData(uid: uid!).collection("Spots").document()
-        if stateSwitch.isOn {
-            createSpot(with: publicRef)
-            print("PUBLIC SPOT CREATED")
-        } else {
-            createSpot(with: privateRef)
-            print("PRIVATE SPOT CREATED")
-        }
+//        let uid = Auth.auth().currentUser?.uid
+//        let publicRef = FirestoreReferenceManager.root.collection("publicSpot").document()
+//        let privateRef = FirestoreReferenceManager.referenceForUserPublicData(uid: uid!).collection("Spots").document()
+//        if stateSwitch.isOn {
+//            createSpot(with: publicRef)
+//            print("PUBLIC SPOT CREATED")
+//        } else {
+//            createSpot(with: privateRef)
+//            print("PRIVATE SPOT CREATED")
+//        }
+        saveNewSpot()
     }
     
     deinit {
