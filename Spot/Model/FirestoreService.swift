@@ -80,6 +80,43 @@ final public class FirestoreService<FirestoreObject: DocumentSerializableProtoco
         })
     }
     
+    public func listenDocument(endpoint: Endpoint, result: @escaping (FirestoreDocumentResult<FirestoreObject>) -> Void) {
+        // [START listen_document]
+        document = dataBase.document(endpoint.path)
+        document?.addSnapshotListener { (querySnapshot, error) in
+            guard let document = querySnapshot else {
+                print("Error fetching document: \(error!)")
+                return
+            }
+            guard let data = document.data().map({FirestoreObject(dictionary: $0)}) as? FirestoreObject else {return }
+            result(.success(data))
+//            print("Current data: \(data)")
+        }
+        // [END listen_document]
+    }
+    
+    public func listenCollection(endpoint: Endpoint, result: @escaping (FirestoreCollectionResult<FirestoreObject>) -> Void) {
+        // [START listen_document]
+        collection = dataBase.collection(endpoint.path)
+        collection?.addSnapshotListener { (querySnapshot, error) in
+            guard let document = querySnapshot else {
+                print("Error fetching document: \(error!)")
+                return
+            }
+            document.documentChanges.forEach {
+                diff in
+            
+                if diff.type == .modified {
+                    let object = document.documents.compactMap({FirestoreObject(dictionary: $0.data())})
+                    result(.success(object))
+            print("****","Current data: \(object)")
+        }
+        // [END listen_document]
+    }
+        }
+    }
+  
+    
     /// Fetch a Firestore Object from a document in Firestore BDD and parse it into a Swift object
     ///
     /// - Parameter endpoint: The endpoint where to fetch document in Firestore BDD

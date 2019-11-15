@@ -11,13 +11,13 @@ import UIKit
 class FavoriteButton: UIButton {
     
 
-    var isOn = true {
+    var isOn = false {
         didSet {
 
 
-            let color = !isOn ? Colors.twitterBlue: .clear
-            let title = !isOn ? "Favori" : "Mettre en favori"
-            let titleColor = !isOn ? . white : Colors.twitterBlue
+            let color = isOn ? Colors.twitterBlue: .clear
+            let title = isOn ? "Favori" : "Mettre en favori"
+            let titleColor = isOn ? . white : Colors.twitterBlue
 
             setTitle(title, for: .normal)
             setTitleColor(titleColor, for: .normal)

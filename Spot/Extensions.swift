@@ -183,3 +183,29 @@ extension String {
         return userInput.folding(options: .diacriticInsensitive, locale: .current)
     }
 }
+
+//extension Array where Element: Equatable {
+//    mutating func removeDuplicates() {
+//        var result = [Element]()
+//        for value in self {
+//            if !result.contains(value) {
+//                result.append(value)
+//            }
+//        }
+//        self = result
+//    }
+//}
+
+extension Array where Element: Hashable {
+    func removingDuplicates() -> [Element] {
+        var addedDict = [Element: Bool]()
+
+        return filter {
+            addedDict.updateValue(true, forKey: $0) == nil
+        }
+    }
+
+    mutating func removeDuplicates() {
+        self = self.removingDuplicates()
+    }
+}

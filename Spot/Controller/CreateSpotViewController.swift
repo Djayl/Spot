@@ -178,13 +178,16 @@ class CreateSpotViewController: UIViewController, UITextFieldDelegate, UITextVie
                 spot.summary = description
                 spot.coordinate = coor
                 self.uploadImage { (imageUrl) in
-                let newSpot = Marker(identifier: identifier, name: name, description: description, coordinate: GeoPoint(latitude: coor.latitude, longitude: coor.longitude), imageURL: imageUrl, isFavorite: false, creationDate: Date())
+                let privateSpot = Marker(identifier: identifier, name: name, description: description, coordinate: GeoPoint(latitude: coor.latitude, longitude: coor.longitude), imageURL: imageUrl, isFavorite: false,publicSpot: false ,creationDate: Date())
+                let publicSpot = Marker(identifier: identifier, name: name, description: description, coordinate: GeoPoint(latitude: coor.latitude, longitude: coor.longitude), imageURL: imageUrl, isFavorite: false,publicSpot: true ,creationDate: Date())
                     DispatchQueue.main.async {
                     if self.stateSwitch.isOn {
-                self.savePublicSpotInFirestore(identifier: identifier, spot: newSpot)
-                        print("Public Spot successfully added")
+                self.savePublicSpotInFirestore(identifier: identifier, spot: publicSpot)
+                self.saveSpotInFirestore(identifier: identifier, spot: publicSpot)
+                        print("Public Spot successfully added in private and public BDD")
+                        
                     } else {
-                self.saveSpotInFirestore(identifier: identifier, spot: newSpot)
+                self.saveSpotInFirestore(identifier: identifier, spot: privateSpot)
                         print("Private Spot successfully added")
                     }
                     }
@@ -210,7 +213,7 @@ class CreateSpotViewController: UIViewController, UITextFieldDelegate, UITextVie
     
     private func savePublicSpotInFirestore(identifier: String, spot: Marker) {
         let firestoreService = FirestoreService<Marker>()
-        firestoreService.saveData(endpoint: .publicSpot, identifier: identifier, data: spot.dictionary) { [weak self] result in
+        firestoreService.saveData(endpoint: .publicCollection, identifier: identifier, data: spot.dictionary) { [weak self] result in
             switch result {
             case .success(let successMessage):
                 print(successMessage)

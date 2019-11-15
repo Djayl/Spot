@@ -24,9 +24,11 @@ class CustomData{
     var creationDate: Date?
     var uid: String?
     var isFavorite: Bool?
-    init(creationDate: Date, uid: String, isFavorite: Bool ) {
+    var publicSpot: Bool?
+    init(creationDate: Date, uid: String, isFavorite: Bool, publicSpot: Bool ) {
         self.creationDate = creationDate
         self.uid = uid
         self.isFavorite = isFavorite
+        self.publicSpot = publicSpot
     }
 }

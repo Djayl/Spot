@@ -10,14 +10,16 @@ import Foundation
 import Firebase
 import GoogleMaps
 
-struct Marker {
+struct Marker: Equatable {
     let identifier: String
     let name: String
     let description: String
     let coordinate: GeoPoint
     let imageURL: String
     let isFavorite: Bool
+    let publicSpot: Bool
     let creationDate: Date
+    
    
     
     var dictionary: [String: Any] {
@@ -28,7 +30,9 @@ struct Marker {
             "coordinate": GeoPoint(latitude: coordinate.latitude, longitude: coordinate.longitude),
             "imageURL": imageURL,
             "isFavorite": isFavorite,
-            "creationDate": creationDate,
+            "publicSpot": publicSpot,
+            "creationDate": creationDate
+            
            
         ]
     }
@@ -41,15 +45,15 @@ extension Marker: DocumentSerializableProtocol {
             let description = dictionary["description"] as? String,
             let coordinate = dictionary["coordinate"] as? GeoPoint,
             let imageURL = dictionary["imageURL"] as? String, 
-            let isFavorite = dictionary["isFavorite"] as? Bool else { return nil}
-        
+            let isFavorite = dictionary["isFavorite"] as? Bool,
+            let publicSpot = dictionary["publicSpot"] as? Bool else {return nil}
         var date = Date()
         if let creationDate = dictionary["creationDate"] as? Timestamp {
             date = creationDate.dateValue()
             
         }
        
-        self.init(identifier: identifier, name: name, description: description, coordinate: coordinate, imageURL: imageURL, isFavorite: isFavorite, creationDate: date)
+        self.init(identifier: identifier, name: name, description: description, coordinate: coordinate, imageURL: imageURL, isFavorite: isFavorite, publicSpot: publicSpot, creationDate: date)
     }
     
 }
