@@ -6,7 +6,7 @@
 //  Copyright © 2019 Djilali Sakkar. All rights reserved.
 //
 
-import Firebase
+import FirebaseFirestore
 
 struct FirestoreReferenceManager {
     

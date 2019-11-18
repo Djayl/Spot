@@ -15,89 +15,45 @@ import Kingfisher
 @available(iOS 13.0, *)
 class FavoriteViewController: UIViewController {
     
-    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var tableView: UITableView! { didSet{ tableView.tableFooterView = UIView() } }
     
     var markers = [Spot]()
-    let map = MapViewController()
-
+  
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-//        markers.removeDuplicates()
-//        fetchSpots()
-        
-        tableView.reloadData()
+//        tableView.reloadData()
         tableView.dataSource = self
         tableView.delegate = self
+        
+//        tableView.reloadData()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-//        markers.removeAll()
-//        markers.removeDuplicates()
         markers.removeAll()
-        fetchSpots()
-        fetchSpotsFromPublic()
-        
+//        fetchPrivateSpots()
+//        fetchSpotsFromPublic()
+        listenToPrivateSpots()
+//        listenToPublicSpots()
         tableView.reloadData()
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-      for markers in markers {
-             listener(spot: markers)
-             }
-    }
-
-    
-    func deleteSpotFromFavorites(spot: Spot) {
-        let uid = Auth.auth().currentUser?.uid
-        guard let spotUid = (spot.userData as! CustomData).uid else {return}
-        let ref = FirestoreReferenceManager.referenceForUserPublicData(uid: uid!).collection("Spots").document(spotUid)
-        
-        ref.updateData(["isFavorite": "No"]) { (error) in
-            if let error = error {
-                print(error.localizedDescription)
-            }
-            self.tableView.reloadData()
-            print("Succesfully UnFavorite")
-        }
+//        for markers in markers {
+//            listener(spot: markers)
+//        }
     }
     
-    private func fetchSpots() {
-        
+    private func fetchPrivateSpots() {
         let firestoreService = FirestoreService<Marker>()
         firestoreService.fetchCollection(endpoint: .spot) { [weak self] result in
             switch result {
-            case .success(let firestorePrograms):
-                for markers in firestorePrograms {
-                    if markers.isFavorite == true {
-                    let name = markers.name
-                    guard let url = URL.init(string: markers.imageURL ) else {return}
-                        let mCustomData = CustomData(creationDate: markers.creationDate, uid: markers.identifier, isFavorite: markers.isFavorite, publicSpot: markers.publicSpot)
-                    KingfisherManager.shared.retrieveImage(with: url, options: nil) { result in
-                        let image = try? result.get().image
-                        if let image = image {
-                            DispatchQueue.main.async {
-                                let marker = Spot()
-                                marker.position = CLLocationCoordinate2D(latitude: markers.coordinate.latitude, longitude: markers.coordinate.longitude)
-                                marker.name = name
-                                marker.title = name
-                                marker.snippet = markers.description
-                                marker.userData = mCustomData
-                                marker.imageURL = markers.imageURL
-                                marker.image = image
-                            
-                                self?.markers.append(marker)
-                            
-                                print(self?.markers.count as Any)
-                               
-                                   
-                                    self?.tableView.reloadData()
-                               
-//                                self?.tableView.reloadData()
-                            }
-                        }
-                    }
+            case .success(let markers):
+                for marker in markers {
+                    if marker.isFavorite == true {
+                        self?.displaySpot(marker)
                     }
                 }
             case .failure(let error):
@@ -114,148 +70,115 @@ class FavoriteViewController: UIViewController {
         }
     }
     
-      private func fetchSpotsFromPublic() {
-          
-          let firestoreService = FirestoreService<Marker>()
-          firestoreService.fetchCollection(endpoint: .publicCollection) { [weak self] result in
-              switch result {
-              case .success(let firestorePrograms):
-                  for markers in firestorePrograms {
-                      if markers.isFavorite == true {
-                      let name = markers.name
-                      guard let url = URL.init(string: markers.imageURL ) else {return}
-                          let mCustomData = CustomData(creationDate: markers.creationDate, uid: markers.identifier, isFavorite: markers.isFavorite, publicSpot: markers.publicSpot)
-                      KingfisherManager.shared.retrieveImage(with: url, options: nil) { result in
-                          let image = try? result.get().image
-                          if let image = image {
-                              DispatchQueue.main.async {
-                                  let marker = Spot()
-                                  marker.position = CLLocationCoordinate2D(latitude: markers.coordinate.latitude, longitude: markers.coordinate.longitude)
-                                  marker.name = name
-                                  marker.title = name
-                                  marker.snippet = markers.description
-                                  marker.userData = mCustomData
-                                  marker.imageURL = markers.imageURL
-                                  marker.image = image
-                              
-                                  self?.markers.append(marker)
-                              
-                                  print(self?.markers.count as Any)
-                                 
-                                     
-                                      self?.tableView.reloadData()
-                                 
-  //                                self?.tableView.reloadData()
-                              }
-                          }
-                      }
-                      }
-                  }
-              case .failure(let error):
-                  print(error.localizedDescription)
-                  self?.presentAlert(with: "Erreur serveur")
-              }
-          }
-      }
-    
-//    func loadData() {
-//        guard let uid = Auth.auth().currentUser?.uid else {return}
-//        FirestoreReferenceManager.referenceForUserPublicData(uid: uid).collection("Spots").whereField("isFavorite", isEqualTo: "Yes").getDocuments { (querySnapshot, error) in
-//            if let error = error {
-//                print("Error getting documents: \(error)")
-//            } else {
-//                for document in querySnapshot!.documents {
-//                    if let title = document.data()["title"] as? String,
-//                        let imageUrl = document.data()["imageUrl"] as? String,
-//                        let coordinate = document.data()["coordinate"] as? GeoPoint,
-//                        let description = document.data()["description"] as? String,
-//                        let creationDate = document.data()["createdAt"] as? Timestamp,
-//                        let uid = document.data()["uid"] as? String,
-//                        let favorite = document.data()["isFavorite"] as? String
-//                    {
-//                        let position = coordinate
-//                        let lat = position.latitude
-//                        let lon = position.longitude
-//                        let spotFavorite = favorite
-//                        let date = creationDate.dateValue()
-//                        let spotUid = uid
-//                        let mCustomData = CustomData(creationDate: date, uid: spotUid, isFavorite: spotFavorite)
-//                        print(title as Any)
-//                        guard let url = URL.init(string: imageUrl) else {return}
-//                        KingfisherManager.shared.retrieveImage(with: url, options: nil) { result in
-//                            let image = try? result.get().image
-//                            if let image = image {
-//                                DispatchQueue.main.async {
-//                                    let spot = Spot()
-//                                    spot.position = CLLocationCoordinate2D(latitude: lat, longitude: lon)
-//                                    spot.snippet = description
-//                                    spot.userData = mCustomData
-//                                    spot.name = title
-//                                    spot.title = title
-//                                    spot.image = image
-//                                    spot.imageURL = imageUrl
-//                                    self.markers.append(spot)
-//                                    print(self.markers.count)
-//                                    self.tableView.reloadData()
-//                                }
-//                            }
-//                        }
-//                    }
-//                }
-//            }
-//        }
-//    }
-//    private func updateFavorite(_ marker: Marker, spot: Spot){
-//            (spot.userData as! CustomData).isFavorite = marker.isFavorite
-//           }
-        
-    private func listener(spot: Spot) {
-            guard let spotUid = (spot.userData as! CustomData).uid else {return}
-            let firestoreService = FirestoreService<Marker>()
-            firestoreService.listenDocument(endpoint: .favorite(spotId: spotUid)) { [weak self] result in
-                switch result {
-                            case .success(let marker):
-                                (spot.userData as! CustomData).isFavorite = marker.isFavorite
-                //                (self?.spot.userData as! CustomData).isFavorite = true
-    //                            print(successMessage)
-                            case .failure(let error):
-                                print("Error updating document: \(error)")
-                                self?.presentAlert(with: "Erreur réseau")
-                            }
+    private func displaySpot(_ marker: Marker) {
+        let name = marker.name
+        guard let url = URL.init(string: marker.imageURL ) else {return}
+        let mCustomData = CustomData(creationDate: marker.creationDate, uid: marker.identifier, isFavorite: marker.isFavorite, publicSpot: marker.publicSpot, creatorName: marker.creatorName)
+        KingfisherManager.shared.retrieveImage(with: url, options: nil) { result in
+            let image = try? result.get().image
+            if let image = image {
+                DispatchQueue.main.async {
+                    let spot = Spot()
+                    spot.position = CLLocationCoordinate2D(latitude: marker.coordinate.latitude, longitude: marker.coordinate.longitude)
+                    spot.name = name
+                    spot.title = name
+                    spot.snippet = marker.description
+                    spot.userData = mCustomData
+                    spot.imageURL = marker.imageURL
+                    spot.image = image
+                    self.markers.append(spot)
+                    print(self.markers.count as Any)
+                    self.tableView.reloadData()
+                }
             }
         }
-   
-    private func removeSpotFromFavorite(spot: Spot) {
+    }
+    
+    private func fetchSpotsFromPublic() {
+        let firestoreService = FirestoreService<Marker>()
+        firestoreService.fetchCollection(endpoint: .publicCollection) { [weak self] result in
+            switch result {
+            case .success(let markers):
+                for marker in markers {
+                    if marker.isFavorite == true {
+                        self?.displaySpot(marker)
+                    }
+                }
+            case .failure(let error):
+                print(error.localizedDescription)
+                self?.presentAlert(with: "Erreur serveur")
+            }
+        }
+    }
+    
+    private func listenToPrivateSpots() {
+        let firestoreService = FirestoreService<Marker>()
+        firestoreService.listenCollection(endpoint: .spot) { [weak self] result in
+            switch result {
+            case .success(let markers):
+                for marker in markers {
+                    if marker.isFavorite == true {
+                    self?.displaySpot(marker)
+                    }
+                }
+            case .failure(let error):
+                print("Error updating document: \(error)")
+                self?.presentAlert(with: "Erreur réseau")
+            }
+        }
+    }
+    
+    private func listenToPublicSpots() {
+        let firestoreService = FirestoreService<Marker>()
+        firestoreService.listenCollection(endpoint: .publicCollection) { [weak self] result in
+            switch result {
+            case .success(let markers):
+                for marker in markers {
+                    if marker.isFavorite == true {
+                    self?.displaySpot(marker)
+                    }
+                }
+            case .failure(let error):
+                print("Error updating document: \(error)")
+                self?.presentAlert(with: "Erreur réseau")
+            }
+        }
+    }
         
+    private func listener(spot: Spot) {
         guard let spotUid = (spot.userData as! CustomData).uid else {return}
-        
+        let firestoreService = FirestoreService<Marker>()
+        firestoreService.listenDocument(endpoint: .favorite(spotId: spotUid)) { [weak self] result in
+            switch result {
+            case .success(let marker):
+                (spot.userData as! CustomData).isFavorite = marker.isFavorite
+            case .failure(let error):
+                print("Error updating document: \(error)")
+                self?.presentAlert(with: "Erreur réseau")
+            }
+        }
+    }
+    
+    private func removeSpotFromFavorite(spot: Spot) {
+        guard let spotUid = (spot.userData as! CustomData).uid else {return}
         let firestoreService = FirestoreService<Marker>()
         let data = ["isFavorite": false]
         if (spot.userData as! CustomData).publicSpot == false {
-            //                DispatchQueue.main.async {
-            
-            
             firestoreService.updateData(endpoint: .favorite(spotId: spotUid), data: data) { [weak self] result in
                 switch result {
                 case .success(let successMessage):
-                    
                     (spot.userData as! CustomData).isFavorite = false
-                    
                     print(successMessage)
                 case .failure(let error):
                     print("Error updating document: \(error)")
                     self?.presentAlert(with: "Erreur réseau")
                 }
             }
-            //            }
         } else {
-            
             firestoreService.updateData(endpoint: .publicSpot(spotId: spotUid), data: data) { [weak self] result in
                 switch result {
                 case .success(let successMessage):
-                    
                     (spot.userData as! CustomData).isFavorite = false
-                    
                     print(successMessage)
                 case .failure(let error):
                     print("Error updating document: \(error)")
@@ -271,8 +194,8 @@ class FavoriteViewController: UIViewController {
         vc.spot = spot
         self.present(nc, animated: true, completion: nil)
     }
-    
 }
+
 @available(iOS 13.0, *)
 extension FavoriteViewController: UITableViewDataSource, UITableViewDelegate {
     
@@ -284,8 +207,7 @@ extension FavoriteViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 100
     }
-    
-    
+
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if let cell = tableView.dequeueReusableCell(withIdentifier: "CustomCellIdentifier") as? CustomCell {
             cell.configureCell(spot: markers[indexPath.row])
@@ -304,16 +226,11 @@ extension FavoriteViewController: UITableViewDataSource, UITableViewDelegate {
         if editingStyle == .delete {
             removeSpotFromFavorite(spot: markers[indexPath.row])
             print("row deleted")
-            checkFavorite(spot: markers[indexPath.row])
+//            checkFavorite(spot: markers[indexPath.row])
             listener(spot: markers[indexPath.row])
             print((markers[indexPath.row].userData as! CustomData).isFavorite as Any)
             markers.remove(at: indexPath.row)
-            
-           
             tableView.deleteRows(at: [indexPath], with: .automatic)
-            
-            print("SUCCESSFULLY DELETED FROM FAVORITE TV")
-//            tableView.reloadData()
         }
     }
     
@@ -337,13 +254,4 @@ extension FavoriteViewController: UITableViewDataSource, UITableViewDelegate {
     }
 }
 
-//extension Array where Element: Equatable {
-//    func removeDuplicates() -> Array {
-//        return reduce(into: []) { result, element in
-//            if !result.contains(element) {
-//                result.append(element)
-//            }
-//        }
-//    }
-//}
 

@@ -16,5 +16,8 @@ enum Colors {
     static let coolPurple = UIColor(red: 218/255, green: 226/255, blue: 248/255, alpha: 1.0)
     static let coolPink = UIColor(red: 214/255, green: 164/255, blue: 164/255, alpha: 1.0)
     static let skyBlue = UIColor(red: 7/255, green: 101/255, blue: 133/255, alpha: 1.0)
-//    static let white = UIColor(red: 214/255, green: 164/255, blue: 164/255, alpha: 1.0)
+    static let nicoPurple = UIColor(red: 196/255, green: 156/255, blue: 207/255, alpha: 1.0)
+    static let nicoBlue = UIColor(red: 91/255, green: 208/255, blue: 241/255, alpha: 1.0)
+    static let nicoDarkBlue = UIColor(red: 14/255, green: 73/255, blue: 88/255, alpha: 0.7)
+    static let nicoDarkPurple = UIColor(red: 69/255, green: 50/255, blue: 74/255, alpha: 1.0)
 }

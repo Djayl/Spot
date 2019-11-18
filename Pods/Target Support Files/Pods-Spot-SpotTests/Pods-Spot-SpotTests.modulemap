@@ -1,0 +1,6 @@
+framework module Pods_Spot_SpotTests {
+  umbrella header "Pods-Spot-SpotTests-umbrella.h"
+
+  export *
+  module * { export * }
+}

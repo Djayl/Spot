@@ -3,7 +3,7 @@
     <device id="retina4_0" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15509"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15510"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -41,7 +41,7 @@
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="FHi-7S-YhJ"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <fontDescription key="fontDescription" name="SarySoft-Regular" family="Sary Soft" pointSize="17"/>
                                 <textInputTraits key="textInputTraits" textContentType="email"/>
                             </textField>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Mot de passe" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="OoD-gw-aZs">
@@ -49,20 +49,20 @@
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="nSs-Cw-zSj"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <fontDescription key="fontDescription" name="SarySoft-Regular" family="Sary Soft" pointSize="17"/>
                                 <textInputTraits key="textInputTraits" enablesReturnKeyAutomatically="YES" secureTextEntry="YES" textContentType="password"/>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eC9-4d-VOW">
-                                <rect key="frame" x="30" y="300" width="260" height="30"/>
-                                <fontDescription key="fontDescription" type="system" weight="thin" pointSize="15"/>
+                                <rect key="frame" x="30" y="300" width="260" height="33"/>
+                                <fontDescription key="fontDescription" name="IndigoRegular-Regular" family="Indigo Regular" pointSize="17"/>
                                 <state key="normal" title="J'ai oublié mon mot de passe"/>
                                 <connections>
                                     <action selector="resetPassword" destination="dZb-P3-DcI" eventType="touchUpInside" id="coy-GG-Pig"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nbj-va-SAO">
-                                <rect key="frame" x="80" y="518" width="160" height="30"/>
-                                <fontDescription key="fontDescription" type="system" weight="thin" pointSize="15"/>
+                                <rect key="frame" x="80" y="515" width="160" height="33"/>
+                                <fontDescription key="fontDescription" name="IndigoRegular-Regular" family="Indigo Regular" pointSize="17"/>
                                 <state key="normal" title="Je n'ai pas de compte"/>
                                 <connections>
                                     <action selector="noAccount:" destination="dZb-P3-DcI" eventType="touchUpInside" id="wxb-y7-u5P"/>
@@ -126,7 +126,7 @@
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="ljh-aF-yGr"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <fontDescription key="fontDescription" name="SarySoft-Regular" family="Sary Soft" pointSize="17"/>
                                 <textInputTraits key="textInputTraits" textContentType="username"/>
                             </textField>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Mot de passe" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Nfg-9t-vKz">
@@ -134,7 +134,7 @@
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="Ge5-8s-s4R"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <fontDescription key="fontDescription" name="SarySoft-Regular" family="Sary Soft" pointSize="17"/>
                                 <textInputTraits key="textInputTraits" secureTextEntry="YES" textContentType="password"/>
                             </textField>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Ressaisissez votre mot de passe" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="qfC-az-kfm">
@@ -142,7 +142,7 @@
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="tEG-DV-PfI"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <fontDescription key="fontDescription" name="SarySoft-Regular" family="Sary Soft" pointSize="17"/>
                                 <textInputTraits key="textInputTraits" secureTextEntry="YES" textContentType="password"/>
                             </textField>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Adresse Email" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Rxx-KN-VEZ">
@@ -150,7 +150,7 @@
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="CAh-2T-IeE"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <fontDescription key="fontDescription" name="SarySoft-Regular" family="Sary Soft" pointSize="17"/>
                                 <textInputTraits key="textInputTraits" textContentType="email"/>
                             </textField>
                         </subviews>
@@ -311,8 +311,8 @@
                                     <constraint firstAttribute="width" secondItem="L3e-aV-XtQ" secondAttribute="height" multiplier="4:3" id="Ehp-nP-OLI"/>
                                 </constraints>
                             </imageView>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="h6f-YZ-qhd">
-                                <rect key="frame" x="20" y="400" width="280" height="60"/>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="h6f-YZ-qhd">
+                                <rect key="frame" x="20" y="380" width="280" height="60"/>
                                 <color key="backgroundColor" red="0.75294117650000003" green="0.76862745099999996" blue="0.78823529410000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="60" id="ltH-4p-60m"/>
@@ -321,19 +321,19 @@
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Donnez un titre à votre Spot" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="s62-Cm-ycZ">
-                                <rect key="frame" x="20" y="315" width="280" height="34"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <rect key="frame" x="20" y="295" width="280" height="34"/>
+                                <fontDescription key="fontDescription" name="SarySoft-Regular" family="Sary Soft" pointSize="17"/>
                                 <textInputTraits key="textInputTraits"/>
                                 <connections>
                                     <outlet property="delegate" destination="K06-px-yNI" id="L1F-7Y-mrj"/>
                                 </connections>
                             </textField>
                             <stackView opaque="NO" contentMode="scaleToFill" spacing="60" translatesAutoresizingMaskIntoConstraints="NO" id="4gs-Im-hsx">
-                                <rect key="frame" x="20" y="359" width="280" height="31"/>
+                                <rect key="frame" x="20" y="339" width="280" height="31"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Je partage mon Spot" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="r9r-l2-sR9">
                                         <rect key="frame" x="0.0" y="0.0" width="171" height="31"/>
-                                        <fontDescription key="fontDescription" name="PingFangSC-Regular" family="PingFang SC" pointSize="15"/>
+                                        <fontDescription key="fontDescription" name="IndigoRegular-Regular" family="Indigo Regular" pointSize="15"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
@@ -342,25 +342,18 @@
                                     </switch>
                                 </subviews>
                             </stackView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eF2-id-wN7" customClass="FavoriteButton" customModule="Spot" customModuleProvider="target">
-                                <rect key="frame" x="70" y="269" width="180" height="30"/>
-                                <state key="normal" title="Mettre en favori"/>
-                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="L3e-aV-XtQ" firstAttribute="top" secondItem="fEV-DR-6iG" secondAttribute="top" constant="50" id="3Cv-SR-f5Z"/>
                             <constraint firstItem="hnm-he-RsY" firstAttribute="leading" secondItem="fEV-DR-6iG" secondAttribute="leading" constant="50" id="4Vg-82-BlL"/>
                             <constraint firstItem="fEV-DR-6iG" firstAttribute="bottom" secondItem="hnm-he-RsY" secondAttribute="bottom" constant="20" id="4Xj-F0-qWd"/>
-                            <constraint firstItem="fEV-DR-6iG" firstAttribute="trailing" secondItem="eF2-id-wN7" secondAttribute="trailing" constant="70" id="BMG-gk-bzU"/>
                             <constraint firstItem="fEV-DR-6iG" firstAttribute="trailing" secondItem="hnm-he-RsY" secondAttribute="trailing" constant="50" id="Gvc-99-rUh"/>
-                            <constraint firstItem="eF2-id-wN7" firstAttribute="top" secondItem="L3e-aV-XtQ" secondAttribute="bottom" constant="24" id="Ip1-er-Kth"/>
                             <constraint firstItem="fEV-DR-6iG" firstAttribute="trailing" secondItem="h6f-YZ-qhd" secondAttribute="trailing" constant="20" id="Ivi-5d-kiQ"/>
                             <constraint firstItem="4gs-Im-hsx" firstAttribute="top" secondItem="s62-Cm-ycZ" secondAttribute="bottom" constant="10" id="JRm-6O-WLS"/>
                             <constraint firstItem="L3e-aV-XtQ" firstAttribute="leading" secondItem="fEV-DR-6iG" secondAttribute="leading" constant="30" id="RlR-39-8KK"/>
                             <constraint firstItem="fEV-DR-6iG" firstAttribute="trailing" secondItem="s62-Cm-ycZ" secondAttribute="trailing" constant="20" id="TrE-fd-AgH"/>
-                            <constraint firstItem="eF2-id-wN7" firstAttribute="leading" secondItem="fEV-DR-6iG" secondAttribute="leading" constant="70" id="Ze9-Rg-FPa"/>
-                            <constraint firstItem="s62-Cm-ycZ" firstAttribute="top" secondItem="L3e-aV-XtQ" secondAttribute="bottom" constant="70" id="lgz-40-QHN"/>
+                            <constraint firstItem="s62-Cm-ycZ" firstAttribute="top" secondItem="L3e-aV-XtQ" secondAttribute="bottom" constant="50" id="lgz-40-QHN"/>
                             <constraint firstItem="4gs-Im-hsx" firstAttribute="leading" secondItem="fEV-DR-6iG" secondAttribute="leading" constant="20" id="p2P-pj-mDR"/>
                             <constraint firstItem="h6f-YZ-qhd" firstAttribute="leading" secondItem="fEV-DR-6iG" secondAttribute="leading" constant="20" id="pmA-Gh-cbB"/>
                             <constraint firstItem="s62-Cm-ycZ" firstAttribute="leading" secondItem="fEV-DR-6iG" secondAttribute="leading" constant="20" id="rxy-CN-iVz"/>
@@ -374,7 +367,6 @@
                     <connections>
                         <outlet property="creationButton" destination="hnm-he-RsY" id="iMX-dx-mtY"/>
                         <outlet property="descriptionTextView" destination="h6f-YZ-qhd" id="zrq-m3-mwm"/>
-                        <outlet property="favoriteButton" destination="eF2-id-wN7" id="1I9-3u-zbb"/>
                         <outlet property="pictureImageView" destination="L3e-aV-XtQ" id="NOR-hO-bGt"/>
                         <outlet property="stateSwitch" destination="Qr3-7t-axe" id="CN2-BE-KZ2"/>
                         <outlet property="switchLabel" destination="r9r-l2-sR9" id="QrE-UJ-CXa"/>
@@ -412,29 +404,29 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Description" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Usx-oC-4p0">
-                                <rect key="frame" x="20" y="263.5" width="280" height="100"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Description" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Usx-oC-4p0">
+                                <rect key="frame" x="20" y="321.5" width="280" height="80"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="100" id="O3j-58-gh2"/>
+                                    <constraint firstAttribute="height" constant="80" id="O3j-58-gh2"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="SarySoft-Regular" family="Sary Soft" pointSize="14"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Description:" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Np0-X2-Xg2">
-                                <rect key="frame" x="20" y="240.5" width="280" height="18"/>
+                                <rect key="frame" x="20" y="298.5" width="280" height="18"/>
                                 <fontDescription key="fontDescription" name="IndigoRegular-Regular" family="Indigo Regular" pointSize="15"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Date de création du Spot: " textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Xzo-hS-p7t">
-                                <rect key="frame" x="20" y="368.5" width="280" height="18"/>
+                                <rect key="frame" x="20" y="406.5" width="280" height="18"/>
                                 <fontDescription key="fontDescription" name="IndigoRegular-Regular" family="Indigo Regular" pointSize="15"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Date" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xQP-X3-u8a">
-                                <rect key="frame" x="20" y="391.5" width="280" height="30"/>
+                                <rect key="frame" x="20" y="429.5" width="280" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="Cht-uu-ksX"/>
                                 </constraints>
@@ -443,15 +435,15 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Adresse du Spot: " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1dU-xh-UrI">
-                                <rect key="frame" x="20" y="426.5" width="280" height="18"/>
+                                <rect key="frame" x="20" y="464.5" width="280" height="18"/>
                                 <fontDescription key="fontDescription" name="IndigoRegular-Regular" family="Indigo Regular" pointSize="15"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Coordinate" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rrW-28-QJI">
-                                <rect key="frame" x="20" y="449.5" width="280" height="40"/>
+                                <rect key="frame" x="20" y="487.5" width="280" height="30"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="40" id="MLW-dS-wx9"/>
+                                    <constraint firstAttribute="height" constant="30" id="MLW-dS-wx9"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="SarySoft-Regular" family="Sary Soft" pointSize="14"/>
                                 <nil key="textColor"/>
@@ -464,6 +456,21 @@
                                     <action selector="putSpotToFavorite:" destination="Afb-Q0-1cP" eventType="touchUpInside" id="p0y-EW-a6G"/>
                                 </connections>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="24P-06-IuW">
+                                <rect key="frame" x="20" y="263.5" width="280" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="t4G-1Q-GE2"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="SarySoft-Regular" family="Sary Soft" pointSize="14"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Spot créé par:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oms-9V-b0R">
+                                <rect key="frame" x="20" y="240.5" width="280" height="18"/>
+                                <fontDescription key="fontDescription" name="IndigoRegular-Regular" family="Indigo Regular" pointSize="15"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
@@ -474,19 +481,25 @@
                             <constraint firstItem="vv9-lj-62J" firstAttribute="trailing" secondItem="xQP-X3-u8a" secondAttribute="trailing" constant="20" id="7vm-Dy-ylL"/>
                             <constraint firstItem="zfU-47-IQe" firstAttribute="top" secondItem="vv9-lj-62J" secondAttribute="top" constant="20" id="Atl-hX-0dR"/>
                             <constraint firstItem="vv9-lj-62J" firstAttribute="trailing" secondItem="zfU-47-IQe" secondAttribute="trailing" constant="20" id="B8K-kg-Sbf"/>
+                            <constraint firstItem="oms-9V-b0R" firstAttribute="top" secondItem="zy3-jf-QsA" secondAttribute="bottom" constant="5" id="F1A-0g-KoZ"/>
                             <constraint firstItem="zfU-47-IQe" firstAttribute="leading" secondItem="vv9-lj-62J" secondAttribute="leading" constant="20" id="Hne-aY-oFL"/>
                             <constraint firstItem="xQP-X3-u8a" firstAttribute="leading" secondItem="vv9-lj-62J" secondAttribute="leading" constant="20" id="Iaf-hv-kGg"/>
                             <constraint firstItem="vv9-lj-62J" firstAttribute="trailing" secondItem="Xzo-hS-p7t" secondAttribute="trailing" constant="20" id="J9E-MN-rcz"/>
                             <constraint firstItem="1dU-xh-UrI" firstAttribute="top" secondItem="xQP-X3-u8a" secondAttribute="bottom" constant="5" id="LCG-Q3-94T"/>
-                            <constraint firstItem="Usx-oC-4p0" firstAttribute="top" secondItem="Np0-X2-Xg2" secondAttribute="bottom" constant="5" id="Mfg-pA-msE"/>
+                            <constraint firstItem="vv9-lj-62J" firstAttribute="trailing" secondItem="oms-9V-b0R" secondAttribute="trailing" constant="20" id="MWi-Je-nev"/>
                             <constraint firstItem="vv9-lj-62J" firstAttribute="trailing" secondItem="1dU-xh-UrI" secondAttribute="trailing" constant="20" id="Nz7-nP-Iky"/>
                             <constraint firstItem="1dU-xh-UrI" firstAttribute="leading" secondItem="vv9-lj-62J" secondAttribute="leading" constant="20" id="WAI-ZQ-gY9"/>
+                            <constraint firstItem="24P-06-IuW" firstAttribute="leading" secondItem="vv9-lj-62J" secondAttribute="leading" constant="20" id="X52-mj-vK8"/>
                             <constraint firstItem="vv9-lj-62J" firstAttribute="bottom" secondItem="APG-j2-al8" secondAttribute="bottom" constant="20" id="XjL-ZA-YNj"/>
+                            <constraint firstItem="Np0-X2-Xg2" firstAttribute="top" secondItem="24P-06-IuW" secondAttribute="bottom" constant="5" id="Y76-8u-Bhh"/>
                             <constraint firstItem="vv9-lj-62J" firstAttribute="trailing" secondItem="Usx-oC-4p0" secondAttribute="trailing" constant="20" id="ade-IS-PEV"/>
-                            <constraint firstItem="Np0-X2-Xg2" firstAttribute="top" secondItem="zy3-jf-QsA" secondAttribute="bottom" constant="5" id="bxl-cr-u4g"/>
+                            <constraint firstItem="vv9-lj-62J" firstAttribute="trailing" secondItem="24P-06-IuW" secondAttribute="trailing" constant="20" id="bQC-a0-8kp"/>
+                            <constraint firstItem="Usx-oC-4p0" firstAttribute="top" secondItem="Np0-X2-Xg2" secondAttribute="bottom" constant="5" id="dxx-YT-ZS1"/>
                             <constraint firstItem="zy3-jf-QsA" firstAttribute="top" secondItem="vv9-lj-62J" secondAttribute="top" constant="65" id="eAQ-Rr-1NA"/>
                             <constraint firstItem="APG-j2-al8" firstAttribute="leading" secondItem="vv9-lj-62J" secondAttribute="leading" constant="70" id="iaq-SG-4ga"/>
+                            <constraint firstItem="oms-9V-b0R" firstAttribute="leading" secondItem="vv9-lj-62J" secondAttribute="leading" constant="20" id="ndp-04-9an"/>
                             <constraint firstItem="rrW-28-QJI" firstAttribute="top" secondItem="1dU-xh-UrI" secondAttribute="bottom" constant="5" id="o55-mE-6HH"/>
+                            <constraint firstItem="24P-06-IuW" firstAttribute="top" secondItem="oms-9V-b0R" secondAttribute="bottom" constant="5" id="pJc-GB-4ib"/>
                             <constraint firstItem="vv9-lj-62J" firstAttribute="trailing" secondItem="zy3-jf-QsA" secondAttribute="trailing" id="q8C-KN-YxE"/>
                             <constraint firstItem="vv9-lj-62J" firstAttribute="trailing" secondItem="rrW-28-QJI" secondAttribute="trailing" constant="20" id="rhG-JK-1fC"/>
                             <constraint firstItem="vv9-lj-62J" firstAttribute="trailing" secondItem="Np0-X2-Xg2" secondAttribute="trailing" constant="20" id="rhN-8u-cay"/>
@@ -501,6 +514,7 @@
                     <connections>
                         <outlet property="favoriteButton" destination="APG-j2-al8" id="saf-Qt-0aX"/>
                         <outlet property="imageView" destination="zy3-jf-QsA" id="Qcb-4I-Nbq"/>
+                        <outlet property="pictureTakerName" destination="24P-06-IuW" id="B3r-hq-NJm"/>
                         <outlet property="spotCoordinate" destination="rrW-28-QJI" id="DxX-q6-BhT"/>
                         <outlet property="spotDate" destination="xQP-X3-u8a" id="qS6-aS-5eg"/>
                         <outlet property="spotDescription" destination="Usx-oC-4p0" id="EtE-LE-lNt"/>
@@ -514,7 +528,7 @@
                     </connections>
                 </pinchGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="3755" y="735"/>
+            <point key="canvasLocation" x="3753.75" y="734.15492957746483"/>
         </scene>
         <!--Favoris-->
         <scene sceneID="iyK-eK-jj4">

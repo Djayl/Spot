@@ -8,6 +8,7 @@
 
 import Foundation
 import FirebaseFirestore
+import Firebase
 
 public enum FirestoreError: Error {
     case offline
@@ -64,21 +65,7 @@ final public class FirestoreService<FirestoreObject: DocumentSerializableProtoco
         })
     }
     
-    public func fetchCoco(endpoint: Endpoint, result: @escaping (FirestoreCollectionResult<FirestoreObject>) -> Void) {
-        collection = dataBase.collection(endpoint.path)
-        collection?.addSnapshotListener({ (querySnapshot, error) in
-            if error != nil {
-                result(.failure(.offline))
-            }
-            guard let objectData = querySnapshot else {
-                result(.failure(.offline))
-                return
-            }
-  
-            let object = objectData.documents.compactMap({FirestoreObject(dictionary: $0.data())})
-            result(.success(object))
-        })
-    }
+
     
     public func listenDocument(endpoint: Endpoint, result: @escaping (FirestoreDocumentResult<FirestoreObject>) -> Void) {
         // [START listen_document]
@@ -99,22 +86,26 @@ final public class FirestoreService<FirestoreObject: DocumentSerializableProtoco
         // [START listen_document]
         collection = dataBase.collection(endpoint.path)
         collection?.addSnapshotListener { (querySnapshot, error) in
-            guard let document = querySnapshot else {
-                print("Error fetching document: \(error!)")
+            
+            guard let objectData = querySnapshot else {
+                result(.failure(.offline))
                 return
             }
-            document.documentChanges.forEach {
-                diff in
+            let object = objectData.documents.compactMap({FirestoreObject(dictionary: $0.data())})
+            result(.success(object))
             
-                if diff.type == .modified {
-                    let object = document.documents.compactMap({FirestoreObject(dictionary: $0.data())})
-                    result(.success(object))
-            print("****","Current data: \(object)")
+//            document.documentChanges.forEach {
+//                diff in
+//
+//                if diff.type == .modified {
+//                    let object = document.documents.compactMap({FirestoreObject(dictionary: $0.data())})
+//                    result(.success(object))
+//            print("****","Current data: \(object)")
         }
         // [END listen_document]
     }
-        }
-    }
+        
+    
   
     
     /// Fetch a Firestore Object from a document in Firestore BDD and parse it into a Swift object

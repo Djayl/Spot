@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		0484491BBCC92E3E18A37759 /* Pods_Spot.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 69D45E66E98844E453A429FB /* Pods_Spot.framework */; };
+		CD0EC00D72C1FE5B26F779CE /* Pods_Spot_SpotTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D5672BA3E1D179256B10062 /* Pods_Spot_SpotTests.framework */; };
 		F016E9FA2330CDD400214C4E /* FirestoreReferenceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F016E9F92330CDD400214C4E /* FirestoreReferenceManager.swift */; };
 		F016E9FC2330D46A00214C4E /* FirebaseKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = F016E9FB2330D46A00214C4E /* FirebaseKeys.swift */; };
 		F016E9FE2330E39D00214C4E /* StartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F016E9FD2330E39D00214C4E /* StartViewController.swift */; };
@@ -23,6 +24,8 @@
 		F04E3CF6235DAB4F0048D18A /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F04E3CF5235DAB4F0048D18A /* MapViewController.swift */; };
 		F04E3CF8235DB06E0048D18A /* CustomMarkerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F04E3CF7235DB06E0048D18A /* CustomMarkerView.swift */; };
 		F04E3CFA235DB2F70048D18A /* DetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F04E3CF9235DB2F70048D18A /* DetailsViewController.swift */; };
+		F04E65FE237EC5A500159D06 /* SpotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F04E65FD237EC5A500159D06 /* SpotTests.swift */; };
+		F04E6606237EC82300159D06 /* FirestoreServiceSpy.swift in Sources */ = {isa = PBXBuildFile; fileRef = F04E6605237EC82300159D06 /* FirestoreServiceSpy.swift */; };
 		F05048E2236D87C200F6F660 /* CustomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F05048E1236D87C200F6F660 /* CustomCell.swift */; };
 		F0528FAA23716EBB00845538 /* IndigoOutline.otf in Resources */ = {isa = PBXBuildFile; fileRef = F0528FA823716EB800845538 /* IndigoOutline.otf */; };
 		F0528FAB23716EBB00845538 /* IndigoRegular.otf in Resources */ = {isa = PBXBuildFile; fileRef = F0528FA923716EBB00845538 /* IndigoRegular.otf */; };
@@ -46,10 +49,25 @@
 		F0D52813232786780023B226 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F0D52811232786780023B226 /* LaunchScreen.storyboard */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		F04E6600237EC5A500159D06 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F0D527FD232786770023B226 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = F0D52804232786770023B226;
+			remoteInfo = Spot;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
 		156F5639327E14F2FCEF3D89 /* Pods-Spot.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Spot.release.xcconfig"; path = "Target Support Files/Pods-Spot/Pods-Spot.release.xcconfig"; sourceTree = "<group>"; };
+		44A991A86A1BB43DDEE49757 /* Pods-SpotTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SpotTests.debug.xcconfig"; path = "Target Support Files/Pods-SpotTests/Pods-SpotTests.debug.xcconfig"; sourceTree = "<group>"; };
+		4D5672BA3E1D179256B10062 /* Pods_Spot_SpotTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Spot_SpotTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		55EC65B87B275DFEF5F6327C /* Pods-Spot-SpotTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Spot-SpotTests.debug.xcconfig"; path = "Target Support Files/Pods-Spot-SpotTests/Pods-Spot-SpotTests.debug.xcconfig"; sourceTree = "<group>"; };
 		69D45E66E98844E453A429FB /* Pods_Spot.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Spot.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BDC02235817325F6A3E1ECAE /* Pods-Spot.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Spot.debug.xcconfig"; path = "Target Support Files/Pods-Spot/Pods-Spot.debug.xcconfig"; sourceTree = "<group>"; };
+		D45C6BA2F0BC67C37477B12B /* Pods-Spot-SpotTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Spot-SpotTests.release.xcconfig"; path = "Target Support Files/Pods-Spot-SpotTests/Pods-Spot-SpotTests.release.xcconfig"; sourceTree = "<group>"; };
+		E3E35D4DCEAD0AB15A59E2A4 /* Pods-SpotTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SpotTests.release.xcconfig"; path = "Target Support Files/Pods-SpotTests/Pods-SpotTests.release.xcconfig"; sourceTree = "<group>"; };
 		F016E9F92330CDD400214C4E /* FirestoreReferenceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreReferenceManager.swift; sourceTree = "<group>"; };
 		F016E9FB2330D46A00214C4E /* FirebaseKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseKeys.swift; sourceTree = "<group>"; };
 		F016E9FD2330E39D00214C4E /* StartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartViewController.swift; sourceTree = "<group>"; };
@@ -65,6 +83,10 @@
 		F04E3CF5235DAB4F0048D18A /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		F04E3CF7235DB06E0048D18A /* CustomMarkerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomMarkerView.swift; sourceTree = "<group>"; };
 		F04E3CF9235DB2F70048D18A /* DetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsViewController.swift; sourceTree = "<group>"; };
+		F04E65FB237EC5A500159D06 /* SpotTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SpotTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		F04E65FD237EC5A500159D06 /* SpotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpotTests.swift; sourceTree = "<group>"; };
+		F04E65FF237EC5A500159D06 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F04E6605237EC82300159D06 /* FirestoreServiceSpy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreServiceSpy.swift; sourceTree = "<group>"; };
 		F05048E1236D87C200F6F660 /* CustomCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomCell.swift; sourceTree = "<group>"; };
 		F0528FA823716EB800845538 /* IndigoOutline.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = IndigoOutline.otf; sourceTree = "<group>"; };
 		F0528FA923716EBB00845538 /* IndigoRegular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = IndigoRegular.otf; sourceTree = "<group>"; };
@@ -91,6 +113,14 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		F04E65F8237EC5A500159D06 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CD0EC00D72C1FE5B26F779CE /* Pods_Spot_SpotTests.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		F0D52802232786770023B226 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -106,6 +136,7 @@
 			isa = PBXGroup;
 			children = (
 				69D45E66E98844E453A429FB /* Pods_Spot.framework */,
+				4D5672BA3E1D179256B10062 /* Pods_Spot_SpotTests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -148,6 +179,16 @@
 			path = View;
 			sourceTree = "<group>";
 		};
+		F04E65FC237EC5A500159D06 /* SpotTests */ = {
+			isa = PBXGroup;
+			children = (
+				F04E65FD237EC5A500159D06 /* SpotTests.swift */,
+				F04E65FF237EC5A500159D06 /* Info.plist */,
+				F04E6605237EC82300159D06 /* FirestoreServiceSpy.swift */,
+			);
+			path = SpotTests;
+			sourceTree = "<group>";
+		};
 		F0528FAC23716ED900845538 /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
@@ -180,6 +221,7 @@
 			isa = PBXGroup;
 			children = (
 				F0D52807232786770023B226 /* Spot */,
+				F04E65FC237EC5A500159D06 /* SpotTests */,
 				F0D52806232786770023B226 /* Products */,
 				F47DA2DDF8F1071F1A7FA0E7 /* Pods */,
 				DE6A402E99EE869D3DB3F258 /* Frameworks */,
@@ -190,6 +232,7 @@
 			isa = PBXGroup;
 			children = (
 				F0D52805232786770023B226 /* Spot.app */,
+				F04E65FB237EC5A500159D06 /* SpotTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -217,6 +260,10 @@
 			children = (
 				BDC02235817325F6A3E1ECAE /* Pods-Spot.debug.xcconfig */,
 				156F5639327E14F2FCEF3D89 /* Pods-Spot.release.xcconfig */,
+				44A991A86A1BB43DDEE49757 /* Pods-SpotTests.debug.xcconfig */,
+				E3E35D4DCEAD0AB15A59E2A4 /* Pods-SpotTests.release.xcconfig */,
+				55EC65B87B275DFEF5F6327C /* Pods-Spot-SpotTests.debug.xcconfig */,
+				D45C6BA2F0BC67C37477B12B /* Pods-Spot-SpotTests.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -224,6 +271,27 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		F04E65FA237EC5A500159D06 /* SpotTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F04E6604237EC5A500159D06 /* Build configuration list for PBXNativeTarget "SpotTests" */;
+			buildPhases = (
+				333C4569E07F88B204E92534 /* [CP] Check Pods Manifest.lock */,
+				F04E65F7237EC5A500159D06 /* Sources */,
+				F04E65F8237EC5A500159D06 /* Frameworks */,
+				F04E65F9237EC5A500159D06 /* Resources */,
+				8FCD1E9893A0E217D1FD2386 /* [CP] Copy Pods Resources */,
+				B3320C7D304F1053FB902E75 /* [CP] Embed Pods Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				F04E6601237EC5A500159D06 /* PBXTargetDependency */,
+			);
+			name = SpotTests;
+			productName = SpotTests;
+			productReference = F04E65FB237EC5A500159D06 /* SpotTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		F0D52804232786770023B226 /* Spot */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = F0D52817232786780023B226 /* Build configuration list for PBXNativeTarget "Spot" */;
@@ -250,10 +318,14 @@
 		F0D527FD232786770023B226 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 1030;
+				LastSwiftUpdateCheck = 1120;
 				LastUpgradeCheck = 1030;
 				ORGANIZATIONNAME = "Djilali Sakkar";
 				TargetAttributes = {
+					F04E65FA237EC5A500159D06 = {
+						CreatedOnToolsVersion = 11.2;
+						TestTargetID = F0D52804232786770023B226;
+					};
 					F0D52804232786770023B226 = {
 						CreatedOnToolsVersion = 10.3;
 					};
@@ -273,11 +345,19 @@
 			projectRoot = "";
 			targets = (
 				F0D52804232786770023B226 /* Spot */,
+				F04E65FA237EC5A500159D06 /* SpotTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		F04E65F9237EC5A500159D06 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		F0D52803232786770023B226 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -318,6 +398,28 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
+		333C4569E07F88B204E92534 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Spot-SpotTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
 		4B30884F496A7918E9A0FD40 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -333,6 +435,23 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Spot/Pods-Spot-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		8FCD1E9893A0E217D1FD2386 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Spot-SpotTests/Pods-Spot-SpotTests-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Spot-SpotTests/Pods-Spot-SpotTests-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Spot-SpotTests/Pods-Spot-SpotTests-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		B230F61F6386533D0273B6F9 /* [CP] Copy Pods Resources */ = {
@@ -352,9 +471,35 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Spot/Pods-Spot-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
+		B3320C7D304F1053FB902E75 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Spot-SpotTests/Pods-Spot-SpotTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Spot-SpotTests/Pods-Spot-SpotTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Spot-SpotTests/Pods-Spot-SpotTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		F04E65F7237EC5A500159D06 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F04E6606237EC82300159D06 /* FirestoreServiceSpy.swift in Sources */,
+				F04E65FE237EC5A500159D06 /* SpotTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		F0D52801232786770023B226 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -392,6 +537,14 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		F04E6601237EC5A500159D06 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = F0D52804232786770023B226 /* Spot */;
+			targetProxy = F04E6600237EC5A500159D06 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin PBXVariantGroup section */
 		F0D5280C232786770023B226 /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
@@ -412,6 +565,50 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		F04E6602237EC5A500159D06 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 55EC65B87B275DFEF5F6327C /* Pods-Spot-SpotTests.debug.xcconfig */;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = NBSSU42XDA;
+				INFOPLIST_FILE = SpotTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = fr.djilalisakkar.SpotTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Spot.app/Spot";
+			};
+			name = Debug;
+		};
+		F04E6603237EC5A500159D06 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = D45C6BA2F0BC67C37477B12B /* Pods-Spot-SpotTests.release.xcconfig */;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = NBSSU42XDA;
+				INFOPLIST_FILE = SpotTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = fr.djilalisakkar.SpotTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Spot.app/Spot";
+			};
+			name = Release;
+		};
 		F0D52815232786780023B226 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -571,6 +768,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		F04E6604237EC5A500159D06 /* Build configuration list for PBXNativeTarget "SpotTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F04E6602237EC5A500159D06 /* Debug */,
+				F04E6603237EC5A500159D06 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		F0D52800232786770023B226 /* Build configuration list for PBXProject "Spot" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

@@ -17,6 +17,17 @@ import Firebase
 @available(iOS 13.0, *)
 class CreateSpotViewController: UIViewController, UITextFieldDelegate, UITextViewDelegate {
     
+    // MARK: - Outlets
+ 
+    @IBOutlet weak var titleTextfield: UITextField!
+    @IBOutlet weak var creationButton: CustomButton!
+    @IBOutlet weak var pictureImageView: UIImageView!
+    @IBOutlet weak var descriptionTextView: UITextView!
+    @IBOutlet weak var switchLabel: UILabel!
+    @IBOutlet weak var stateSwitch: UISwitch!
+
+    
+    // MARK: - Properties
     
     var location: CLLocationCoordinate2D!
     var controller: MapViewController?
@@ -25,20 +36,13 @@ class CreateSpotViewController: UIViewController, UITextFieldDelegate, UITextVie
     let customMarkerHeight: Int = 70
     var myImage: UIImage?
     var spots = [Spot]()
-    
-    
-    @IBOutlet weak var titleTextfield: UITextField!
-    @IBOutlet weak var creationButton: CustomButton!
-    @IBOutlet weak var pictureImageView: UIImageView!
-    @IBOutlet weak var descriptionTextView: UITextView!
-    @IBOutlet weak var switchLabel: UILabel!
-    @IBOutlet weak var stateSwitch: UISwitch!
-    @IBOutlet weak var favoriteButton: FavoriteButton!
-    
+    var userName = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        print("success")
+        self.navigationItem.title = "Je crée mon Spot"
+        fetchProfilInformation()
+        setUpNavigationController()
         setupTextFields()
         setupView()
         handleTextView()
@@ -49,23 +53,40 @@ class CreateSpotViewController: UIViewController, UITextFieldDelegate, UITextVie
         stateSwitch.addTarget(self, action: #selector(stateChanged), for: .valueChanged)
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+    }
+    
     override func viewWillDisappear(_ animated: Bool) {
         self.navigationController?.isNavigationBarHidden = false
     }
     
-    @objc func stateChanged(switchState: UISwitch) {
+    // MARK: - Actions
+    
+    @IBAction func sendData(_ sender: Any) {
+       saveNewSpot()
+    }
+    
+    // MARK: - Methods
+    
+    @objc private func stateChanged(switchState: UISwitch) {
         if switchState.isOn {
             switchLabel.text = "Je partage mon Spot"
-            
         } else {
             switchLabel.text = "Je garde mon Spot pour moi"
-            
         }
     }
     
+    fileprivate func setUpNavigationController() {
+        navigationController?.navigationBar.barTintColor = Colors.skyBlue
+        navigationController?.navigationBar.tintColor = Colors.coolRed
+        navigationItem.leftBarButtonItem?.setTitleTextAttributes([.font : UIFont(name: "IndigoRegular-Regular", size: 15)!, .foregroundColor : Colors.coolRed], for: .normal)
+    }
+    
     fileprivate func setupView() {
-        
         descriptionTextView.text = "Type your description"
+        descriptionTextView.font = UIFont(name: "SarySoft-Regular", size: 15)
         descriptionTextView.layer.cornerRadius = 5
         pictureImageView.isUserInteractionEnabled = true
         pictureImageView.layer.cornerRadius = 10
@@ -74,87 +95,37 @@ class CreateSpotViewController: UIViewController, UITextFieldDelegate, UITextVie
     
     fileprivate func setupTextFields() {
         titleTextfield.delegate = self
-        //        subtitleTextfield.delegate = self
         descriptionTextView.delegate = self
     }
     
-    @objc func goBack() {
+    @objc private func goBack() {
         dismiss(animated: true, completion: nil)
     }
+     
+    private func setProfilData(_ profil: Profil){
+        userName = profil.userName
+   }
     
+   private func fetchProfilInformation() {
+          let firestoreService = FirestoreService<Profil>()
+          firestoreService.fetchDocument(endpoint: .currentUser) { [weak self] result in
+              switch result {
+              case .success(let profil):
+                  self?.setProfilData(profil)
+              case .failure(let error):
+                  print(error.localizedDescription)
+                  self?.presentAlert(with: "Erreur réseau")
+              }
+          }
+      }
     
-    func createSpot(with reference: DocumentReference) {
-        let geocoder = GMSGeocoder()
-        
-        geocoder.reverseGeocodeCoordinate(location) { (placemarks, error) in
-            if error != nil {
-                print(error!)
-            }
-            if let coor = placemarks?.firstResult()?.coordinate {
-                guard let image = self.myImage else {
-                    self.creationButton.shake()
-                    self.presentAlert(with: "Un Spot doit avoir une image")
-                    return
-                }
-                let documentID = reference.documentID
-                guard let title = self.titleTextfield.text, self.titleTextfield.text?.isEmpty == false else {
-                    self.creationButton.shake()
-                    self.presentAlert(with: "Un Spot doit avoir un titre")
-                    return
-                }
-                guard let description = self.descriptionTextView.text else {return}
-                let spot = Spot(position: coor)
-                let customMarker = CustomMarkerView(frame: CGRect(x: 0, y: 0, width: self.customMarkerWidth, height: self.customMarkerHeight), image: image, borderColor: UIColor.darkGray)
-                spot.iconView = customMarker
-                spot.title = title
-                spot.summary = description
-                spot.coordinate = coor
-                self.uploadImage { (imageUrl) in
-                    
-                    switch self.favoriteButton.isOn {
-
-                    case true:
-                        
-                        let data = ["title": title as Any, "coordinate": GeoPoint(latitude: coor.latitude, longitude: coor.longitude), "uid": documentID, MyKeys.imageUrl: imageUrl, "description": description, "createdAt": FieldValue.serverTimestamp(), "isFavorite": "Yes"]
-                        reference.setData(data) { (err) in
-                            if let err = err {
-                                print(err.localizedDescription)
-                            }
-                            print("very successfull")
-                        }
-                        print("ADDED TO FAVORITE")
-                    case false:
-                        
-                        let data = ["title": title as Any, "coordinate": GeoPoint(latitude: coor.latitude, longitude: coor.longitude), "uid": documentID, MyKeys.imageUrl: imageUrl, "description": description, "createdAt": FieldValue.serverTimestamp(), "isFavorite": "No"]
-                        reference.setData(data) { (err) in
-                            if let err = err {
-                                print(err.localizedDescription)
-                            }
-                            print("very successfull")
-                        }
-                        print("NOT ADDED TO FAVORITE")
-                    }
-                    
-                }
-                self.delegate.addSpotToMapView(marker: spot)
-                
-                
-                self.goToMapView()
-            }
-            
-        }
-    }
-    
-
     private func saveNewSpot() {
         let geocoder = GMSGeocoder()
-        
         geocoder.reverseGeocodeCoordinate(location) { (placemarks, error) in
             if error != nil {
                 print(error!)
             }
             if let coor = placemarks?.firstResult()?.coordinate {
-                
                 guard let image = self.myImage else {
                     self.creationButton.shake()
                     self.presentAlert(with: "Un Spot doit avoir une image")
@@ -170,6 +141,7 @@ class CreateSpotViewController: UIViewController, UITextFieldDelegate, UITextVie
                     self.presentAlert(with: "Un spot doit avoir une description")
                     return
                 }
+                let creatorName = self.userName
                 let identifier = UUID().uuidString
                 let spot = Spot(position: coor)
                 let customMarker = CustomMarkerView(frame: CGRect(x: 0, y: 0, width: self.customMarkerWidth, height: self.customMarkerHeight), image: image, borderColor: UIColor.darkGray)
@@ -178,38 +150,40 @@ class CreateSpotViewController: UIViewController, UITextFieldDelegate, UITextVie
                 spot.summary = description
                 spot.coordinate = coor
                 self.uploadImage { (imageUrl) in
-                let privateSpot = Marker(identifier: identifier, name: name, description: description, coordinate: GeoPoint(latitude: coor.latitude, longitude: coor.longitude), imageURL: imageUrl, isFavorite: false,publicSpot: false ,creationDate: Date())
-                let publicSpot = Marker(identifier: identifier, name: name, description: description, coordinate: GeoPoint(latitude: coor.latitude, longitude: coor.longitude), imageURL: imageUrl, isFavorite: false,publicSpot: true ,creationDate: Date())
+                    let privateSpot = Marker(identifier: identifier, name: name, description: description, coordinate: GeoPoint(latitude: coor.latitude, longitude: coor.longitude), imageURL: imageUrl, isFavorite: false,publicSpot: false , creatorName: creatorName, creationDate: Date())
+                    let publicSpot = Marker(identifier: identifier, name: name, description: description, coordinate: GeoPoint(latitude: coor.latitude, longitude: coor.longitude), imageURL: imageUrl, isFavorite: false,publicSpot: true , creatorName: creatorName, creationDate: Date())
                     DispatchQueue.main.async {
-                    if self.stateSwitch.isOn {
-                self.savePublicSpotInFirestore(identifier: identifier, spot: publicSpot)
-                self.saveSpotInFirestore(identifier: identifier, spot: publicSpot)
-                        print("Public Spot successfully added in private and public BDD")
-                        
-                    } else {
-                self.saveSpotInFirestore(identifier: identifier, spot: privateSpot)
-                        print("Private Spot successfully added")
+                        if self.stateSwitch.isOn {
+                            self.savePublicSpotInFirestore(identifier: identifier, spot: publicSpot)
+                            self.saveSpotInFirestore(identifier: identifier, spot: publicSpot)
+                            print("Public Spot successfully added in private and public BDD")
+                            
+                        } else {
+                            self.saveSpotInFirestore(identifier: identifier, spot: privateSpot)
+                            
+                            print("Private Spot successfully added")
+                        }
                     }
-                    }
-            }
+                }
                 self.delegate.addSpotToMapView(marker: spot)
                 self.goToMapView()
-        }
-        }
-    }
-        private func saveSpotInFirestore(identifier: String, spot: Marker) {
-            let firestoreService = FirestoreService<Marker>()
-            firestoreService.saveData(endpoint: .spot, identifier: identifier, data: spot.dictionary) { [weak self] result in
-                switch result {
-                case .success(let successMessage):
-                    print(successMessage)
-                    self?.dismiss(animated: true, completion: nil)
-                case .failure(let error):
-                    print("Error adding document: \(error)")
-                    self?.presentAlert(with: "Problème réseau")
-                }
             }
         }
+    }
+    
+    private func saveSpotInFirestore(identifier: String, spot: Marker) {
+        let firestoreService = FirestoreService<Marker>()
+        firestoreService.saveData(endpoint: .spot, identifier: identifier, data: spot.dictionary) { [weak self] result in
+            switch result {
+            case .success(let successMessage):
+                print(successMessage)
+                self?.dismiss(animated: true, completion: nil)
+            case .failure(let error):
+                print("Error adding document: \(error)")
+                self?.presentAlert(with: "Problème réseau")
+            }
+        }
+    }
     
     private func savePublicSpotInFirestore(identifier: String, spot: Marker) {
         let firestoreService = FirestoreService<Marker>()
@@ -224,106 +198,8 @@ class CreateSpotViewController: UIViewController, UITextFieldDelegate, UITextVie
             }
         }
     }
-
-        
-    
-//
-//    func createPublicSpot() {
-//        let geocoder = GMSGeocoder()
-//        geocoder.reverseGeocodeCoordinate(location) { (placemarks, error) in
-//            if error != nil {
-//                print(error!)
-//            }
-//            if let coor = placemarks?.firstResult()?.coordinate {
-//                guard let image = self.myImage else {
-//                    self.creationButton.shake()
-//                    self.presentAlert(with: "Un Spot doit avoir une image")
-//                    return
-//                }
-//                let uid = Auth.auth().currentUser?.uid
-//                let ref = FirestoreReferenceManager.root.collection("publicSpot").document()
-//                //                let privateRef = FirestoreReferenceManager.referenceForUserPublicData(uid: uid!).collection("Spots").document()
-//                let favoriteRef = FirestoreReferenceManager.referenceForUserPublicData(uid: uid!).collection("Spots").document()
-//                let documentID = ref.documentID
-//                guard let title = self.titleTextfield.text, self.titleTextfield.text?.isEmpty == false else {
-//                    self.creationButton.shake()
-//                    self.presentAlert(with: "Un Spot doit avoir un titre")
-//                    return
-//                }
-//                guard let description = self.descriptionTextView.text, self.descriptionTextView.text.isEmpty == false else {
-//                    self.creationButton.shake()
-//                    self.presentAlert(with: "Vous devez décrire votre Spot")
-//                    return}
-//                let spot = Spot(position: coor)
-//                let customMarker = CustomMarkerView(frame: CGRect(x: 0, y: 0, width: self.customMarkerWidth, height: self.customMarkerHeight), image: image, borderColor: UIColor.darkGray)
-//                spot.iconView = customMarker
-//                spot.title = title
-//                spot.summary = description
-//                spot.coordinate = coor
-//                self.uploadImage { (imageUrl) in
-//                    let data = ["title": title as Any, "coordinate": GeoPoint(latitude: coor.latitude, longitude: coor.longitude), "uid": documentID, MyKeys.imageUrl: imageUrl, "description": description, "createdAt": FieldValue.serverTimestamp()]
-//
-//                    switch self.favoriteButton.isOn {
-//                    case true:
-//                        favoriteRef.setData(data) { (err) in
-//                            if let err = err {
-//                                print(err.localizedDescription)
-//                            }
-//                            print("very successfull")
-//                        }
-//                        print("added to favorite")
-//                    case false:
-//                        print("not added to favorite")
-//                    }
-//                    ref.setData(data) { (err) in
-//                        if let err = err {
-//                            print(err.localizedDescription)
-//                        }
-//                        print("very successfull")
-//                    }
-//                }
-//                self.delegate.addSpotToMapView(marker: spot)
-//                self.goToMapView()
-//            }
-//        }
-//    }
-    
-//    private func setData(data: [String:Any]) {
-//        let uid = Auth.auth().currentUser?.uid
-//        let publicRef = FirestoreReferenceManager.root.collection("publicSpot").document()
-//        let privateRef = FirestoreReferenceManager.referenceForUserPublicData(uid: uid!).collection("Spots").document()
-//        let favoriteRef = FirestoreReferenceManager.referenceForUserPublicData(uid: uid!).collection("Spots").document()
-//
-//        switch publicRef {
-//        case publicRef:
-//            publicRef.setData(data) { (err) in
-//                if let err = err {
-//                    print(err.localizedDescription)
-//                }
-//                print("public spot added")
-//            }
-//        case privateRef:
-//            privateRef.setData(data) { (err) in
-//                if let err = err {
-//                    print(err.localizedDescription)
-//                }
-//                print("private spot added")
-//            }
-//        case favoriteRef:
-//            favoriteRef.setData(data) { (err) in
-//                if let err = err {
-//                    print(err.localizedDescription)
-//                }
-//                print("favorite spot added")
-//            }
-//        default:
-//            print("OK")
-//        }
-//    }
-    
-    
-    
-    func addToFavorite() {
+ 
+    private func addToFavorite() {
         let geocoder = GMSGeocoder()
         geocoder.reverseGeocodeCoordinate(location) { (placemarks, error) in
             if error != nil {
@@ -363,25 +239,9 @@ class CreateSpotViewController: UIViewController, UITextFieldDelegate, UITextVie
             }
         }
     }
-    
-    
-    
+
     @objc func goToMapView() {
         self.dismiss(animated: true, completion: nil)
-    }
-    
-    @IBAction func sendData(_ sender: Any) {
-//        let uid = Auth.auth().currentUser?.uid
-//        let publicRef = FirestoreReferenceManager.root.collection("publicSpot").document()
-//        let privateRef = FirestoreReferenceManager.referenceForUserPublicData(uid: uid!).collection("Spots").document()
-//        if stateSwitch.isOn {
-//            createSpot(with: publicRef)
-//            print("PUBLIC SPOT CREATED")
-//        } else {
-//            createSpot(with: privateRef)
-//            print("PRIVATE SPOT CREATED")
-//        }
-        saveNewSpot()
     }
     
     deinit {
@@ -391,7 +251,7 @@ class CreateSpotViewController: UIViewController, UITextFieldDelegate, UITextVie
         
     }
     
-    @objc func addPhoto() {
+    @objc private func addPhoto() {
         showImagePicckerControllerActionSheet()
     }
     
@@ -402,7 +262,6 @@ class CreateSpotViewController: UIViewController, UITextFieldDelegate, UITextVie
         }
         let imageName = UUID().uuidString
         let imageReference = Storage.storage().reference().child(MyKeys.imagesFolder).child(imageName)
-        
         imageReference.putData(data, metadata: nil) { (metadata, err) in
             if let err = err {
                 self.presentAlert(with: err.localizedDescription)
@@ -413,81 +272,37 @@ class CreateSpotViewController: UIViewController, UITextFieldDelegate, UITextVie
                     self.presentAlert(with: err.localizedDescription)
                     return
                 }
-                
                 guard let url = url else {
                     self.presentAlert(with: "Il semble y avoir une erreur")
                     return
                 }
-                
                 let urlString = url.absoluteString
-                
                 completion(urlString)
             })
         }
     }
-    
-    //    fileprivate func uploadImage() {
-    //        guard let image = myImage, let data = image.jpegData(compressionQuality: 1.0) else {
-    //            presentAlert(with: "Il semble y avoir une erreur")
-    //            return
-    //        }
-    //        let imageName = UUID().uuidString
-    //        let imageReference = Storage.storage().reference().child(MyKeys.imagesFolder).child(imageName)
-    //
-    //        imageReference.putData(data, metadata: nil) { (metadata, err) in
-    //            if let err = err {
-    //                self.presentAlert(with: err.localizedDescription)
-    //                return
-    //            }
-    //            imageReference.downloadURL(completion: { (url, err) in
-    //                if let err = err {
-    //                    self.presentAlert(with: err.localizedDescription)
-    //                    return
-    //                }
-    //
-    //                guard let url = url else {
-    //                    self.presentAlert(with: "Il semble y avoir une erreur")
-    //                    return
-    //                }
-    //                let dataReference = Firestore.firestore().collection(MyKeys.imagesCollections).document()
-    //                let documentUid = dataReference.documentID
-    //                let urlString = url.absoluteString
-    //
-    //                let data = [MyKeys.uid: documentUid,
-    //                            MyKeys.imageUrl: urlString
-    //                ]
-    //                dataReference.setData(data, merge: true) { (err) in
-    //                    if let err = err {
-    //                        self.presentAlert(with: err.localizedDescription)
-    //                        return
-    //                    }
-    //                    UserDefaults.standard.setValue(documentUid, forKey: MyKeys.uid)
-    //                    self.presentAlert(with: "Image successfully upload")
-    //                }
-    //            })
-    //        }
-    //    }
-    func handleTextView() {
+
+    internal func handleTextView() {
         descriptionTextView.text = "Décrivez votre Spot"
         descriptionTextView.textColor = UIColor.lightGray
-        descriptionTextView.font = UIFont(name: "futura", size: 14.0)
+        descriptionTextView.font = UIFont(name: "SarySoft-Regular", size: 14.0)
         descriptionTextView.returnKeyType = .done
         descriptionTextView.delegate = self
     }
     
-    func textViewDidBeginEditing(_ textView: UITextView) {
+    internal func textViewDidBeginEditing(_ textView: UITextView) {
         if textView.text == "Décrivez votre Spot" {
             textView.text = ""
             textView.textColor = UIColor.black
-            textView.font = UIFont(name: "futura", size: 14.0)
+            textView.font = UIFont(name: "SarySoft-Regular", size: 14.0)
         }
     }
     
-    func textViewDidEndEditing(_ textView: UITextView) {
+    internal func textViewDidEndEditing(_ textView: UITextView) {
         if textView.text == "" {
             textView.text = "Décrivez votre Spot"
             textView.textColor = UIColor.lightGray
-            textView.font = UIFont(name: "futura", size: 14.0)
+            textView.font = UIFont(name: "SarySoft-Regular", size: 14.0)
         }
     }
     
@@ -504,12 +319,8 @@ class CreateSpotViewController: UIViewController, UITextFieldDelegate, UITextVie
         // make sure the result is under 16 characters
         return updatedText.count <= 140
     }
-    
 }
-
-
-
-
+// MARK: - ImagePicker Delegate
 @available(iOS 13.0, *)
 extension CreateSpotViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
@@ -521,20 +332,19 @@ extension CreateSpotViewController: UIImagePickerControllerDelegate, UINavigatio
             self.showImagePickerController(sourceType: .camera)
         }
         let cancelAction = UIAlertAction(title: "Annuler", style: .cancel, handler: nil)
-        
         AlertService.showAlert(style: .actionSheet, title: "Choisissez votre image", message: nil, actions: [photoLibraryAction, cameraAction, cancelAction], completion: nil)
     }
     
-    func showImagePickerController(sourceType: UIImagePickerController.SourceType) {
+    private func showImagePickerController(sourceType: UIImagePickerController.SourceType) {
         let imagePickerController = UIImagePickerController()
         imagePickerController.delegate = self
         imagePickerController.allowsEditing = true
         imagePickerController.sourceType = sourceType
         present(imagePickerController, animated: true, completion: nil)
     }
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+    
+    internal func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         if let editedImage = info[UIImagePickerController.InfoKey.editedImage] as? UIImage {
-            
             pictureImageView.image = editedImage
             myImage = editedImage
         } else if let originalImage = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {

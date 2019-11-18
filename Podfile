@@ -1,8 +1,8 @@
-# Uncomment the next line to define a global platform for your project
+
  platform :ios, '11.0'
 
 target 'Spot' do
-  # Comment the next line if you don't want to use dynamic frameworks
+  
   use_frameworks!
 
   pod 'Firebase/Core'
@@ -12,5 +12,17 @@ target 'Spot' do
   pod 'Firebase/Storage'
   pod 'GoogleMaps'
   pod 'GooglePlaces'
+
+
+
+
+target 'SpotTests' do
+    pod 'Firebase'
+    pod 'GoogleMaps'
+    pod 'Firebase/Core'
+    pod 'Firebase/Firestore'
+    pod 'Firebase/Auth'
+    pod 'Firebase/Storage'
+	end
 
 end

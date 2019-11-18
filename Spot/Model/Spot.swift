@@ -10,7 +10,7 @@ import Foundation
 import GoogleMaps
 import Firebase
 
-class Spot: GMSMarker {
+class Spot: GMSMarker{
     var name: String?
     var summary: String?
     var image: UIImage?
@@ -25,10 +25,12 @@ class CustomData{
     var uid: String?
     var isFavorite: Bool?
     var publicSpot: Bool?
-    init(creationDate: Date, uid: String, isFavorite: Bool, publicSpot: Bool ) {
+    var creatorName: String?
+    init(creationDate: Date, uid: String, isFavorite: Bool, publicSpot: Bool, creatorName: String) {
         self.creationDate = creationDate
         self.uid = uid
         self.isFavorite = isFavorite
         self.publicSpot = publicSpot
+        self.creatorName = creatorName
     }
 }
