@@ -115,7 +115,7 @@ class MapViewController: UIViewController {
         alert.addAction(UIAlertAction(title: "Mes favoris", style: .default, handler: { (_) in
             self.mapView.clear()
             self.fetchFavoriteSpots()
-            self.fetchFavoriteSpotsFromPublic()
+//            self.fetchFavoriteSpotsFromPublic()
         }))
         alert.addAction(UIAlertAction(title: "Annuler", style: .cancel, handler: { (_) in
             print("User click Dismiss button")
@@ -166,7 +166,7 @@ class MapViewController: UIViewController {
     
     private func fetchFavoriteSpots() {
         let firestoreService = FirestoreService<Marker>()
-        firestoreService.fetchCollection(endpoint: .spot) { [weak self] result in
+        firestoreService.fetchCollection(endpoint: .favoriteCollection) { [weak self] result in
             switch result {
             case .success(let markers):
                 for marker in markers {

@@ -105,8 +105,25 @@ final public class FirestoreService<FirestoreObject: DocumentSerializableProtoco
         // [END listen_document]
     }
         
-    
-  
+    public func listenCollectionIfDiff(endpoint: Endpoint, result: @escaping (FirestoreCollectionResult<FirestoreObject>) -> Void) {
+        collection = dataBase.collection(endpoint.path)
+        collection?.addSnapshotListener { (querySnapshot, error) in
+            
+            guard let objectData = querySnapshot else {
+                result(.failure(.offline))
+                return
+            }
+            objectData.documentChanges.forEach {
+                diff in
+                
+                if diff.type == .added {
+                    let object = objectData.documents.compactMap({FirestoreObject(dictionary: $0.data())})
+                    result(.success(object))
+                }
+            }
+            
+        }
+    }
     
     /// Fetch a Firestore Object from a document in Firestore BDD and parse it into a Swift object
     ///
