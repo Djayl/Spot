@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import GooglePlaces
 import GoogleMaps
 import FirebaseFirestore
 import FirebaseStorage
@@ -86,7 +85,7 @@ class CreateSpotViewController: UIViewController, UITextFieldDelegate, UITextVie
     
     fileprivate func setupView() {
         descriptionTextView.text = "Type your description"
-        descriptionTextView.font = UIFont(name: "SarySoft-Regular", size: 15)
+        descriptionTextView.font = UIFont(name: "ABeeZee-Regular", size: 15)
         descriptionTextView.layer.cornerRadius = 5
         pictureImageView.isUserInteractionEnabled = true
         pictureImageView.layer.cornerRadius = 10
@@ -157,10 +156,8 @@ class CreateSpotViewController: UIViewController, UITextFieldDelegate, UITextVie
                             self.savePublicSpotInFirestore(identifier: identifier, spot: publicSpot)
                             self.saveSpotInFirestore(identifier: identifier, spot: publicSpot)
                             print("Public Spot successfully added in private and public BDD")
-                            
                         } else {
                             self.saveSpotInFirestore(identifier: identifier, spot: privateSpot)
-                            
                             print("Private Spot successfully added")
                         }
                     }
@@ -198,49 +195,8 @@ class CreateSpotViewController: UIViewController, UITextFieldDelegate, UITextVie
             }
         }
     }
- 
-    private func addToFavorite() {
-        let geocoder = GMSGeocoder()
-        geocoder.reverseGeocodeCoordinate(location) { (placemarks, error) in
-            if error != nil {
-                print(error!)
-            }
-            if let coor = placemarks?.firstResult()?.coordinate {
-                guard let image = self.myImage else {
-                    self.creationButton.shake()
-                    self.presentAlert(with: "Un Spot doit avoir une image")
-                    return
-                }
-                let ref = FirestoreReferenceManager.root.collection("publicSpot").document()
-                let documentID = ref.documentID
-                guard let title = self.titleTextfield.text, self.titleTextfield.text?.isEmpty == false else {
-                    self.creationButton.shake()
-                    self.presentAlert(with: "Un Spot doit avoir un titre")
-                    return
-                }
-                guard let description = self.descriptionTextView.text else {return}
-                let spot = Spot(position: coor)
-                let customMarker = CustomMarkerView(frame: CGRect(x: 0, y: 0, width: self.customMarkerWidth, height: self.customMarkerHeight), image: image, borderColor: UIColor.darkGray)
-                spot.iconView = customMarker
-                spot.title = title
-                spot.summary = description
-                spot.coordinate = coor
-                self.uploadImage { (imageUrl) in
-                    let data = ["title": title as Any, "coordinate": GeoPoint(latitude: coor.latitude, longitude: coor.longitude), "uid": documentID, MyKeys.imageUrl: imageUrl, "description": description, "createdAt": FieldValue.serverTimestamp()]
-                    ref.setData(data) { (err) in
-                        if let err = err {
-                            print(err.localizedDescription)
-                        }
-                        print("very successfull")
-                    }
-                }
-                self.delegate.addSpotToMapView(marker: spot)
-                self.goToMapView()
-            }
-        }
-    }
 
-    @objc func goToMapView() {
+    @objc private func goToMapView() {
         self.dismiss(animated: true, completion: nil)
     }
     
@@ -255,7 +211,7 @@ class CreateSpotViewController: UIViewController, UITextFieldDelegate, UITextVie
         showImagePicckerControllerActionSheet()
     }
     
-    func uploadImage(_ completion: @escaping (String)->Void) {
+    private func uploadImage(_ completion: @escaping (String)->Void) {
         guard let image = myImage, let data = image.jpegData(compressionQuality: 1.0) else {
             presentAlert(with: "Il semble y avoir une erreur")
             return
@@ -285,7 +241,7 @@ class CreateSpotViewController: UIViewController, UITextFieldDelegate, UITextVie
     internal func handleTextView() {
         descriptionTextView.text = "Décrivez votre Spot"
         descriptionTextView.textColor = UIColor.lightGray
-        descriptionTextView.font = UIFont(name: "SarySoft-Regular", size: 14.0)
+        descriptionTextView.font = UIFont(name: "ABeeZee-Regular", size: 14.0)
         descriptionTextView.returnKeyType = .done
         descriptionTextView.delegate = self
     }
@@ -294,7 +250,7 @@ class CreateSpotViewController: UIViewController, UITextFieldDelegate, UITextVie
         if textView.text == "Décrivez votre Spot" {
             textView.text = ""
             textView.textColor = UIColor.black
-            textView.font = UIFont(name: "SarySoft-Regular", size: 14.0)
+            textView.font = UIFont(name: "ABeeZee-Regular", size: 14.0)
         }
     }
     
@@ -307,16 +263,13 @@ class CreateSpotViewController: UIViewController, UITextFieldDelegate, UITextVie
     }
     
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
-        // get the current text, or use an empty string if that failed
+        // Get the current text, or use an empty string if that failed
         let currentText = textView.text ?? ""
-        
-        // attempt to read the range they are trying to change, or exit if we can't
+        // Attempt to read the range they are trying to change, or exit if we can't
         guard let stringRange = Range(range, in: currentText) else { return false }
-        
-        // add their new text to the existing text
+        // Add their new text to the existing text
         let updatedText = currentText.replacingCharacters(in: stringRange, with: text)
-        
-        // make sure the result is under 16 characters
+        // Make sure the result is under 16 characters
         return updatedText.count <= 140
     }
 }
@@ -355,11 +308,5 @@ extension CreateSpotViewController: UIImagePickerControllerDelegate, UINavigatio
     }
 }
 
-struct MyKeys {
-    static let imagesFolder = "imagesFolder"
-    static let imagesCollections = "imagesCollections"
-    static let uid = "uid"
-    static let imageUrl = "imageUrl"
-}
 
 

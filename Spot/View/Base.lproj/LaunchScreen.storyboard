@@ -19,14 +19,14 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Z8j-Ld-nTG">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                 <subviews>
-                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Spot-image" translatesAutoresizingMaskIntoConstraints="NO" id="vbl-S0-nxG">
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo spot" translatesAutoresizingMaskIntoConstraints="NO" id="aZl-mf-ZIU">
                                         <rect key="frame" x="-120.5" y="86" width="561" height="396"/>
                                     </imageView>
                                 </subviews>
                                 <color key="backgroundColor" red="0.96861833330000002" green="0.96862131360000003" blue="0.96862787009999995" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <constraints>
-                                    <constraint firstItem="vbl-S0-nxG" firstAttribute="centerY" secondItem="Z8j-Ld-nTG" secondAttribute="centerY" id="nRb-w8-AIb"/>
-                                    <constraint firstItem="vbl-S0-nxG" firstAttribute="centerX" secondItem="Z8j-Ld-nTG" secondAttribute="centerX" id="orx-4j-1WN"/>
+                                    <constraint firstItem="aZl-mf-ZIU" firstAttribute="centerY" secondItem="Z8j-Ld-nTG" secondAttribute="centerY" id="LL6-xA-3A1"/>
+                                    <constraint firstItem="aZl-mf-ZIU" firstAttribute="centerX" secondItem="Z8j-Ld-nTG" secondAttribute="centerX" id="UB4-IN-a15"/>
                                 </constraints>
                             </view>
                         </subviews>
@@ -46,6 +46,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="Spot-image" width="280.5" height="198"/>
+        <image name="logo spot" width="280.5" height="198"/>
     </resources>
 </document>

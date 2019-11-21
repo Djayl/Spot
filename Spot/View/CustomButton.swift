@@ -10,29 +10,29 @@ import UIKit
 
 class CustomButton: UIButton {
     
+    // MARK: - Initialization
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupButton()
     }
-    
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         setupButton()
     }
     
+    // MARK: - Methods
     
     func setupButton() {
         setShadow()
-        setTitleColor(Colors.nicoDarkPurple, for: .normal)
-        
+        setTitleColor(Colors.coolRed, for: .normal)
         backgroundColor      = Colors.coolGreen
         titleLabel?.font     = UIFont(name: "IndigoRegular-Regular", size: 17)
         layer.cornerRadius   = 25
         layer.borderWidth    = 3.0
         layer.borderColor    = Colors.nicoDarkPurple.cgColor
     }
-    
     
     private func setShadow() {
         layer.shadowColor   = Colors.nicoDarkPurple.cgColor
@@ -42,7 +42,6 @@ class CustomButton: UIButton {
         clipsToBounds       = true
         layer.masksToBounds = false
     }
-    
     
     func shake() {
         let shake           = CABasicAnimation(keyPath: "position")

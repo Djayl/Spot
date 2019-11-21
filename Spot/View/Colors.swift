@@ -8,6 +8,8 @@
 
 import UIKit
 
+// MARK: - Properties
+
 enum Colors {
     static let coolBlue = UIColor(red: 42/255, green: 126/255, blue: 254/255, alpha: 1.0)
     static let coolGreen = UIColor(red: 71/255, green: 149/255, blue: 158/255, alpha: 1.0)
@@ -18,6 +20,6 @@ enum Colors {
     static let skyBlue = UIColor(red: 7/255, green: 101/255, blue: 133/255, alpha: 1.0)
     static let nicoPurple = UIColor(red: 196/255, green: 156/255, blue: 207/255, alpha: 1.0)
     static let nicoBlue = UIColor(red: 91/255, green: 208/255, blue: 241/255, alpha: 1.0)
-    static let nicoDarkBlue = UIColor(red: 14/255, green: 73/255, blue: 88/255, alpha: 0.7)
+    static let nicoDarkBlue = UIColor(red: 14/255, green: 73/255, blue: 88/255, alpha: 1.0)
     static let nicoDarkPurple = UIColor(red: 69/255, green: 50/255, blue: 74/255, alpha: 1.0)
 }

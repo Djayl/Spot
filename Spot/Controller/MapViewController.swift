@@ -23,6 +23,7 @@ class MapViewController: UIViewController {
     
     @IBOutlet weak var mapView: GMSMapView!
     @IBOutlet weak var chooseDataButton: CustomButton!
+    @IBOutlet weak var chooseMapTypeButton: UIButton!
     
     // MARK: - Properties
     
@@ -42,6 +43,7 @@ class MapViewController: UIViewController {
         setUpNavigationController()
         setUpTapBarController()
         mapView.addSubview(chooseDataButton)
+        mapView.addSubview(chooseMapTypeButton)
         checkIfUserLoggedIn()
     }
     
@@ -58,27 +60,37 @@ class MapViewController: UIViewController {
     
     @IBAction func dataType(_ sender: Any) {
         self.chooseData(controller: MapViewController())
+        
     }
     
     @IBAction func logOut() {
-        let firebaseAuth = Auth.auth()
-        do {
-            try firebaseAuth.signOut()
-        } catch let signOutError as NSError {
-            print ("Error signing out: %@", signOutError)
+        presentAlertWithAction(message: "Êtes-vous sûr de vouloir vous déconnecter?") {
+            let firebaseAuth = Auth.auth()
+            do {
+                try firebaseAuth.signOut()
+            } catch let signOutError as NSError {
+                print ("Error signing out: %@", signOutError)
+            }
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            let initial = storyboard.instantiateInitialViewController()
+            UIApplication.shared.keyWindow?.rootViewController = initial
         }
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let initial = storyboard.instantiateInitialViewController()
-        UIApplication.shared.keyWindow?.rootViewController = initial
     }
+    
+    @IBAction func goToExplanation(_ sender: Any) {
+        let vc = storyboard?.instantiateViewController(withIdentifier: "ExplanationVC") as! ExplanationViewController
+        let nc = UINavigationController(rootViewController: vc)
+        self.present(nc, animated: true, completion: nil)
+    }
+    
     
     // MARK: - Methods
     
     fileprivate func setUpNavigationController() {
         navigationController?.navigationBar.barTintColor = Colors.nicoDarkBlue.withAlphaComponent(0.5)
         navigationController?.navigationBar.isTranslucent = true
-        //        navigationController?.navigationBar.tintColor = Colors.nicoPurple
         navigationItem.rightBarButtonItem?.setTitleTextAttributes([.font : UIFont(name: "IndigoRegular-Regular", size: 15)!, .foregroundColor : Colors.coolRed], for: .normal)
+        navigationItem.leftBarButtonItem?.setTitleTextAttributes([.font : UIFont(name: "IndigoRegular-Regular", size: 15)!, .foregroundColor : Colors.coolRed], for: .normal)
     }
     
     fileprivate func setUpTapBarController() {
@@ -99,8 +111,10 @@ class MapViewController: UIViewController {
         }
     }
     
+    
     private func chooseData(controller: UIViewController) {
         let alert = UIAlertController(title: "Choisissez ce que vous voulez voir", message: "Sélectionnez une option", preferredStyle: .actionSheet)
+        alert.addColorInTitleAndMessage(color: UIColor.systemBlue, titleFontSize: 20, messageFontSize: 15)
         alert.addAction(UIAlertAction(title: "Les spots publics", style: .default, handler: { (_) in
             self.mapView.clear()
             self.fetchPublicSpots()
@@ -126,6 +140,8 @@ class MapViewController: UIViewController {
     
     func chooseMapType(controller: UIViewController) {
         let alert = UIAlertController(title: "Modifier le type de carte", message: "Sélectionnez une option", preferredStyle: .actionSheet)
+
+        alert.addColorInTitleAndMessage(color: UIColor.systemBlue, titleFontSize: 20, messageFontSize: 15)
         alert.addAction(UIAlertAction(title: "Basique", style: .default, handler: { (_) in
             self.mapView.mapType = .normal
         }))
@@ -166,13 +182,11 @@ class MapViewController: UIViewController {
     
     private func fetchFavoriteSpots() {
         let firestoreService = FirestoreService<Marker>()
-        firestoreService.fetchCollection(endpoint: .favoriteCollection) { [weak self] result in
+        firestoreService.listenCollection(endpoint: .favoriteCollection) { [weak self] result in
             switch result {
             case .success(let markers):
                 for marker in markers {
-                    if marker.isFavorite == true {
-                        self?.displaySpot(marker)
-                    }
+                    self?.displaySpot(marker)
                 }
             case .failure(let error):
                 print(error.localizedDescription)
@@ -354,19 +368,14 @@ extension MapViewController: GMSMapViewDelegate, AddSpotDelegate {
         self.present(nc, animated: true, completion: nil)
     }
     
-    
-    
     func mapView(_ mapView: GMSMapView, didTapInfoWindowOf marker: GMSMarker) {
         guard let spot = marker as? Spot else {return}
-        
         didTapSpot(spot: spot)
     }
     
     func mapView(_ mapView: GMSMapView, didTap marker: GMSMarker) -> Bool {
-        
         //        let update = GMSCameraUpdate.zoomIn()
         //        mapView.animate(with: update)
-        
         return false
     }
 }

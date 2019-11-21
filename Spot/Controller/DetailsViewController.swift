@@ -23,7 +23,6 @@ class DetailsViewController: UIViewController {
     @IBOutlet weak var spotDate: UILabel!
     @IBOutlet weak var spotCoordinate: UILabel!
     @IBOutlet weak var favoriteButton: FavoriteButton!
-    @IBOutlet weak var saveButton: CustomButton!
  
     
     // MARK: - Properties
@@ -35,48 +34,28 @@ class DetailsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-//        fetchFavorites()
         getSpotDetails()
         getImage()
         reverseGeocodeCoordinate(spot.position)
         addGradient()
-//        handleSaveButton()
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(imageTapped(_:)))
         self.navigationController?.setNavigationBarHidden(true, animated: false)
         self.imageView.addGestureRecognizer(tapGestureRecognizer)
         self.imageView.isUserInteractionEnabled = true
-       
-//        spotDescription.setUpLabel()
-//        spotDate.setUpLabel()
-//        spotCoordinate.setUpLabel()
-//        spotTitle.setUpLabel()
-        
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
-        
-//        getImage()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationController?.setNavigationBarHidden(true, animated: false)
         getImage()
-//        listenerToPrivate()
-//        listenerToPublic()
-//        fetchFavoriteInformation()
-        fetchJustOneFavorite()
+        listenToFavoriteSpot()
     }
     
     // MARK: - Actions
     
     @IBAction func putSpotToFavorite(_ sender: Any) {
-//        addToFavorite()
         handleCustomButton()
-//        createFavorite()
     }
-  
     
     @IBAction func remove(_ sender: Any) {
         spot.map = nil
@@ -85,33 +64,9 @@ class DetailsViewController: UIViewController {
     
     // MARK: - Methods
     
-    private func updateScreenWithProfil(_ profil: Profil) {
-              
-              pictureTakerName.text = profil.userName
-          }
-    
-    private func handleSaveButton() {
-        if (spot.userData as! CustomData).publicSpot == true {
-            favoriteButton.isHidden = true
-            saveButton.isHidden = false
-        } else {
-            favoriteButton.isHidden = false
-            saveButton.isHidden = true
-        }
+    private func getSpotCreatorName(_ profil: Profil) {
+        pictureTakerName.text = profil.userName
     }
-       
-//       private func fetchProfilInformation() {
-//              let firestoreService = FirestoreService<Profil>()
-//              firestoreService.fetchDocument(endpoint: .currentUser) { [weak self] result in
-//                  switch result {
-//                  case .success(let firestoreProfil):
-//                      self?.updateScreenWithProfil(firestoreProfil)
-//                  case .failure(let error):
-//                      print(error.localizedDescription)
-//                      self?.presentAlert(with: "Erreur réseau")
-//                  }
-//              }
-//          }
     
     @objc func scaleImage(_ sender: UIPinchGestureRecognizer) {
         if let view = sender.view {
@@ -125,8 +80,6 @@ class DetailsViewController: UIViewController {
                 newImageView.transform = transform
                 sender.scale = 1
             case .ended:
-                // Nice animation to scale down when releasing the pinch.
-                // OPTIONAL
                 UIView.animate(withDuration: 0.2, animations: {
                     view.transform = CGAffineTransform.identity
                 })
@@ -135,19 +88,19 @@ class DetailsViewController: UIViewController {
             }
         }
     }
- 
-    private func handleFavoriteButton(){
-        guard let favorite = (spot.userData as! CustomData).isFavorite else {return}
-        print("****", favorite)
-        if favorite.intValue == 1 || favorite == true{
-            favoriteButton.isOn = true
-        }
-        if favorite.intValue == 0 || favorite == false {
-            favoriteButton.isOn = false
-        }
-    }
     
-   private func getSpotDetails() {
+//    private func handleFavoriteButton(){
+//        guard let favorite = (spot.userData as! CustomData).isFavorite else {return}
+//        print("****", favorite)
+//        if favorite.intValue == 1 || favorite == true{
+//            favoriteButton.isOn = true
+//        }
+//        if favorite.intValue == 0 || favorite == false {
+//            favoriteButton.isOn = false
+//        }
+//    }
+    
+    private func getSpotDetails() {
         
         guard let name = spot.title else {return}
         spotTitle.text = name.uppercased().toNoSmartQuotes()
@@ -184,50 +137,8 @@ class DetailsViewController: UIViewController {
         }
     }
     
-    private func addToFavorite() {
-        favoriteButton.isOn.toggle()
-        if !favoriteButton.isOn {
-            self.removeSpotFromFavorite()
-            print("FALSE")
-        } else {
-            self.addSpotToFavorite()
-            print("TRUE")
-        }
-    }
-    
     private func updateSpot(_ marker: Marker){
         (spot.userData as! CustomData).isFavorite = marker.isFavorite
-    }
-    
-    private func listenerToPrivate() {
-        guard let spotUid = (spot.userData as! CustomData).uid else {return}
-        let firestoreService = FirestoreService<Marker>()
-        firestoreService.listenDocument(endpoint: .favorite(spotId: spotUid)) { [weak self] result in
-            switch result {
-            case .success(let marker):
-                self?.updateSpot(marker)
-                self?.handleFavoriteButton()
-            case .failure(let error):
-                print("Error updating document: \(error)")
-                self?.presentAlert(with: "Erreur réseau")
-            }
-        }
-        
-    }
-
-    private func listenerToPublic() {
-        guard let spotUid = (spot.userData as! CustomData).uid else {return}
-        let firestoreService = FirestoreService<Marker>()
-        firestoreService.listenDocument(endpoint: .publicSpot(spotId: spotUid)) { [weak self] result in
-            switch result {
-            case .success(let marker):
-                self?.updateSpot(marker)
-                self?.handleFavoriteButton()
-            case .failure(let error):
-                print("Error updating document: \(error)")
-                self?.presentAlert(with: "Erreur réseau")
-            }
-        }
     }
     
     private func setFavoriteInFirestore(identifier: String, spot: Marker) {
@@ -237,7 +148,6 @@ class DetailsViewController: UIViewController {
             case .success(let successMessage):
                 print(successMessage)
                 print("Successfully added in favorites")
-//                self?.dismiss(animated: true, completion: nil)
             case .failure(let error):
                 print("Error adding document: \(error)")
                 self?.presentAlert(with: "Problème réseau")
@@ -249,10 +159,8 @@ class DetailsViewController: UIViewController {
         let coordinate = spot.position
         let longitude = coordinate.longitude
         let latitude = coordinate.latitude
-        
         guard let name = spot.title,
             let description = spot.snippet,
-            
             let imageURL = spot.imageURL,
             let uid = (spot.userData as! CustomData).uid,
             let creationDate = (spot.userData as! CustomData).creationDate,
@@ -285,60 +193,33 @@ class DetailsViewController: UIViewController {
         favoriteButton.isOn.toggle()
         if !favoriteButton.isOn {
             self.removeFavorite()
-            print("FALSE")
         } else {
             self.createFavorite()
-            print("TRUE")
         }
     }
     
     private func displaySpot(_ marker: Marker) {
         let name = marker.name
         let mCustomData = CustomData(creationDate: marker.creationDate, uid: marker.identifier, isFavorite: marker.isFavorite, publicSpot: marker.publicSpot, creatorName: marker.creatorName)
-                    let spot = Spot()
-                    spot.position = CLLocationCoordinate2D(latitude: marker.coordinate.latitude, longitude: marker.coordinate.longitude)
-//                    spot.name = name
-                    spot.title = name
-                    spot.snippet = marker.description
-                    spot.userData = mCustomData
-                    spot.imageURL = marker.imageURL
-                    favoriteSpots.append(spot)
+        let spot = Spot()
+        spot.position = CLLocationCoordinate2D(latitude: marker.coordinate.latitude, longitude: marker.coordinate.longitude)
+        spot.title = name
+        spot.snippet = marker.description
+        spot.userData = mCustomData
+        spot.imageURL = marker.imageURL
+        favoriteSpots.append(spot)
     }
     
-    private func fetchFavoriteInformation() {
-        let firestoreService = FirestoreService<Marker>()
-        firestoreService.listenCollection(endpoint: .favoriteCollection) { [weak self] result in
-            switch result {
-            case .success(let favorites):
-                for favorite in favorites {
-                    if (self?.spot.userData as! CustomData).uid == favorite.identifier {
-                        self?.favoriteButton.isOn = true
-                        print("*****",(self?.spot.userData as! CustomData).uid as Any)
-                        print("*****", favorite.identifier)
-                    } else {
-                        self?.favoriteButton.isOn = false
-                    }
-                }
-                print(favorites)
-            case .failure(let error):
-                print(error.localizedDescription)
-                self?.presentAlert(with: "Erreur réseau")
-            }
-        }
-    }
-    private func fetchJustOneFavorite() {
+    private func listenToFavoriteSpot() {
         guard let uid = (spot.userData as! CustomData).uid else {return}
         let firestoreService = FirestoreService<Marker>()
         firestoreService.listenCollection(endpoint: .favoriteCollection) { [weak self] result in
             switch result {
             case .success(let favorites):
                 for favorite in favorites {
-                if favorite.identifier == uid {
-                self?.favoriteButton.isOn = true
+                    if favorite.identifier == uid {
+                        self?.favoriteButton.isOn = true
                     }
-//                } else {
-//                    self?.favoriteButton.isOn = false
-//                }
                 }
             case .failure(let error):
                 print(error.localizedDescription)
@@ -347,86 +228,11 @@ class DetailsViewController: UIViewController {
         }
     }
     
-    private func fetchFavorites() {
-        let firestoreService = FirestoreService<Marker>()
-        firestoreService.fetchCollection(endpoint: .favoriteCollection) { [weak self] result in
-            switch result {
-            case .success(let favorites):
-                 for favorite in favorites {
-                                   if (self?.spot.userData as! CustomData).uid == favorite.identifier {
-                                       self?.favoriteButton.isOn = true
-                                       print("*****",(self?.spot.userData as! CustomData).uid as Any)
-                                       print("*****", favorite.identifier)
-                                   } else {
-                                       self?.favoriteButton.isOn = false
-                                   }
-                               }
-            case .failure(let error):
-                print(error.localizedDescription)
-                self?.presentAlert(with: "Erreur réseau")
-            }
-        }
-    }
-
-    private func addSpotToFavorite() {
-        guard let spotUid = (spot.userData as! CustomData).uid else {return}
-        let firestoreService = FirestoreService<Marker>()
-        let data = ["isFavorite": true]
-        if (spot.userData as! CustomData).publicSpot == false {
-            firestoreService.updateData(endpoint: .favorite(spotId: spotUid), data: data) { [weak self] result in
-                switch result {
-                case .success(let successMessage):
-                    print(successMessage)
-                case .failure(let error):
-                    print("Error updating document: \(error)")
-                    self?.presentAlert(with: "Erreur réseau")
-                }
-            }
-        } else {
-            firestoreService.updateData(endpoint: .publicSpot(spotId: spotUid), data: data) { [weak self] result in
-                switch result {
-                case .success(let successMessage):
-                    print(successMessage)
-                case .failure(let error):
-                    print("Error updating document: \(error)")
-                    self?.presentAlert(with: "Erreur réseau")
-                }
-            }
-        }
-    }
-        
-    private func removeSpotFromFavorite() {
-        guard let spotUid = (spot.userData as! CustomData).uid else {return}
-        let firestoreService = FirestoreService<Marker>()
-        let data = ["isFavorite": false]
-        if (spot.userData as! CustomData).publicSpot == false {
-            firestoreService.updateData(endpoint: .favorite(spotId: spotUid), data: data) { [weak self] result in
-                switch result {
-                case .success(let successMessage):
-                    print(successMessage)
-                case .failure(let error):
-                    print("Error updating document: \(error)")
-                    self?.presentAlert(with: "Erreur réseau")
-                }
-            }
-        } else {
-            firestoreService.updateData(endpoint: .publicSpot(spotId: spotUid), data: data) { [weak self] result in
-                switch result {
-                case .success(let successMessage):
-                    print(successMessage)
-                case .failure(let error):
-                    print("Error updating document: \(error)")
-                    self?.presentAlert(with: "Erreur réseau")
-                }
-            }
-        }
-    }
-
     @objc private func imageTapped(_ sender: UITapGestureRecognizer) {
         let imageView = sender.view as! UIImageView
         newImageView = UIImageView(image: imageView.image)
         newImageView.frame = UIScreen.main.bounds
-        newImageView.backgroundColor = .white
+        newImageView.backgroundColor = Colors.nicoDarkBlue
         newImageView.contentMode = .scaleAspectFit
         newImageView.isUserInteractionEnabled = true
         let tap = UITapGestureRecognizer(target: self, action: #selector(dismissFullscreenImage))
@@ -440,7 +246,7 @@ class DetailsViewController: UIViewController {
         self.tabBarController?.tabBar.isHidden = true
     }
     
-   @objc private func dismissFullscreenImage(_ sender: UITapGestureRecognizer) {
+    @objc private func dismissFullscreenImage(_ sender: UITapGestureRecognizer) {
         self.navigationController?.isNavigationBarHidden = true
         self.tabBarController?.tabBar.isHidden = false
         UIView.transition(with: self.view, duration: 0.25, options: [.transitionCrossDissolve], animations: {
@@ -456,37 +262,9 @@ class DetailsViewController: UIViewController {
         gradient?.frame = view.frame
         self.view.layer.insertSublayer(gradient!, at: 0)
     }
-
+    
     @objc private func goToMapView() {
         self.dismiss(animated: true, completion: nil)
     }
 }
 
-extension UIImageView{
-    
-    func makeRounded() {
-        self.layer.cornerRadius = self.frame.size.width / 2
-        self.clipsToBounds = true
-    }
-}
-
-extension UILabel {
-    func setUpLabel() {
-        layer.cornerRadius = 10
-        self.clipsToBounds = true
-    }
-}
-
-extension Date {
-    func asString(style: DateFormatter.Style) -> String {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateStyle = style
-        return dateFormatter.string(from: self)
-    }
-}
-
-extension Bool {
-    var intValue: Int {
-        return self ? 1 : 0
-    }
-}

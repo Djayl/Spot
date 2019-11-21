@@ -15,15 +15,17 @@ import Kingfisher
 @available(iOS 13.0, *)
 class FavoriteViewController: UIViewController {
     
+    // MARK: - Outlets
+    
     @IBOutlet weak var tableView: UITableView! { didSet{ tableView.tableFooterView = UIView() } }
     
+    // MARK: - Properties
+    
     var markers = [Spot]()
-  
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        tableView.dataSource = self
-        tableView.delegate = self
+        setUpTableView()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -36,28 +38,31 @@ class FavoriteViewController: UIViewController {
         super.viewDidAppear(animated)
     }
     
-//    private func fetchFavoriteSpots() {
-//        let firestoreService = FirestoreService<Marker>()
-//        firestoreService.listenCollection(endpoint: .favoriteCollection) { [weak self] result in
-//            switch result {
-//            case .success(let successMessage):
-////                for marker in markers {
-////                        self?.displaySpot(marker)
-////                    }
-//                print(successMessage)
-//            case .failure(let error):
-//                print(error.localizedDescription)
-//                self?.presentAlert(with: "Erreur serveur")
-//            }
-//        }
-//    }
+    // MARK: - Methods
     
-//    private func checkFavorite(spot: Spot) {
-//        let vc = DetailsViewController()
-//        if spot == vc.spot {
-//            (vc.spot.userData as! CustomData).isFavorite = false
-//        }
-//    }
+    fileprivate func setUpTableView() {
+        tableView.dataSource = self
+        tableView.delegate = self
+        tableView.separatorStyle = .none
+    }
+    
+    private func fetchFavoriteSpots() {
+        let firestoreService = FirestoreService<Marker>()
+        firestoreService.fetchCollection(endpoint: .favoriteCollection) { [weak self] result in
+            switch result {
+            case .success(let markers):
+                for marker in markers {
+                    self?.displaySpot(marker)
+                }
+                DispatchQueue.main.async {
+                    self?.tableView.reloadData()
+                }
+            case .failure(let error):
+                print(error.localizedDescription)
+                self?.presentAlert(with: "Erreur serveur")
+            }
+        }
+    }
     
     private func displaySpot(_ marker: Marker) {
         let name = marker.name
@@ -66,17 +71,16 @@ class FavoriteViewController: UIViewController {
         KingfisherManager.shared.retrieveImage(with: url, options: nil) { result in
             let image = try? result.get().image
             if let image = image {
-
-                    let spot = Spot()
-                    spot.position = CLLocationCoordinate2D(latitude: marker.coordinate.latitude, longitude: marker.coordinate.longitude)
-                    spot.name = name
-                    spot.title = name
-                    spot.snippet = marker.description
-                    spot.userData = mCustomData
-                    spot.imageURL = marker.imageURL
-                    spot.image = image
-                    self.markers.append(spot)
-
+                let spot = Spot()
+                spot.position = CLLocationCoordinate2D(latitude: marker.coordinate.latitude, longitude: marker.coordinate.longitude)
+                spot.name = name
+                spot.title = name
+                spot.snippet = marker.description
+                spot.userData = mCustomData
+                spot.imageURL = marker.imageURL
+                spot.image = image
+                self.markers.append(spot)
+                
             }
         }
     }
@@ -88,19 +92,18 @@ class FavoriteViewController: UIViewController {
             case .success(let markers):
                 self?.markers.removeAll()
                 for marker in markers {
-                        self?.displaySpot(marker)
-                    }
+                    self?.displaySpot(marker)
+                }
                 DispatchQueue.main.async {
                     self?.tableView.reloadData()
                 }
-
             case .failure(let error):
                 print(error.localizedDescription)
                 self?.presentAlert(with: "Erreur serveur")
             }
         }
     }
-        
+    
     private func listener(spot: Spot) {
         guard let spotUid = (spot.userData as! CustomData).uid else {return}
         let firestoreService = FirestoreService<Marker>()
@@ -136,59 +139,8 @@ class FavoriteViewController: UIViewController {
             }
         }
     }
-    
-//    private func getFavorites() {
-//        let firestoreService = FirestoreService<Marker>()
-//        firestoreService.fetchCollection(endpoint: .favoriteCollection) { [weak self] result in
-//            switch result {
-//            case .success(let markers):
-//                for marker in markers {
-//                    self?.markers.removeAll()
-//                    self?.displaySpot(marker)
-//                    }
-//                    DispatchQueue.main.async {
-//                        self?.tableView.reloadData()
-//                    }
-//
-//            case .failure(let error):
-//                print("Error updating document: \(error)")
-//                self?.presentAlert(with: "Erreur réseau")
-//            }
-//        }
-//    }
-    
-   
-    
-//    private func removeSpotFromFavorite(spot: Spot) {
-//        guard let spotUid = (spot.userData as! CustomData).uid else {return}
-//        let firestoreService = FirestoreService<Marker>()
-//        let data = ["isFavorite": false]
-//        if (spot.userData as! CustomData).publicSpot == false {
-//            firestoreService.updateData(endpoint: .favorite(spotId: spotUid), data: data) { [weak self] result in
-//                switch result {
-//                case .success(let successMessage):
-//                    (spot.userData as! CustomData).isFavorite = false
-//                    print(successMessage)
-//                case .failure(let error):
-//                    print("Error updating document: \(error)")
-//                    self?.presentAlert(with: "Erreur réseau")
-//                }
-//            }
-//        } else {
-//            firestoreService.updateData(endpoint: .publicSpot(spotId: spotUid), data: data) { [weak self] result in
-//                switch result {
-//                case .success(let successMessage):
-//                    (spot.userData as! CustomData).isFavorite = false
-//                    print(successMessage)
-//                case .failure(let error):
-//                    print("Error updating document: \(error)")
-//                    self?.presentAlert(with: "Erreur réseau")
-//                }
-//            }
-//        }
-//    }
-    
-    @objc func didTapSpot(spot: Spot) {
+        
+    @objc private func didTapSpot(spot: Spot) {
         let vc = storyboard?.instantiateViewController(withIdentifier: "DetailsVC") as! DetailsViewController
         let nc = UINavigationController(rootViewController: vc)
         vc.spot = spot
@@ -196,18 +148,19 @@ class FavoriteViewController: UIViewController {
     }
 }
 
+// MARK: - Table View delegate and data source
+
 @available(iOS 13.0, *)
 extension FavoriteViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection    section: Int) -> Int {
-        
         return markers.count
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 100
     }
-
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if let cell = tableView.dequeueReusableCell(withIdentifier: "CustomCellIdentifier") as? CustomCell {
             cell.configureCell(spot: markers[indexPath.row])
@@ -224,15 +177,9 @@ extension FavoriteViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle,
                    forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-//            removeSpotFromFavorite(spot: markers[indexPath.row])
             removeFav(spot: markers[indexPath.row])
-            print("row deleted")
-//            checkFavorite(spot: markers[indexPath.row])
-//            listener(spot: markers[indexPath.row])
-          
             markers.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .automatic)
-//            tableView.reloadData()
         }
     }
     
@@ -252,7 +199,6 @@ extension FavoriteViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         didTapSpot(spot: markers[indexPath.row])
-//        listener(spot: markers[indexPath.row])
     }
 }
 

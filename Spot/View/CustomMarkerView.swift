@@ -10,6 +10,9 @@ import Foundation
 import UIKit
 
 class CustomMarkerView: UIView {
+    
+    // MARK: - Properties
+    
     var img: UIImage!
     var borderColor: UIColor!
     
@@ -20,6 +23,8 @@ class CustomMarkerView: UIView {
         self.tag = tag
         setupViews()
     }
+    
+    // MARK: - Methods
     
     func setupViews() {
         let imgView = UIImageView(image: img)
@@ -33,7 +38,6 @@ class CustomMarkerView: UIView {
         lbl.font = UIFont.systemFont(ofSize: 24)
         lbl.textColor = borderColor
         lbl.textAlignment = .center
-        
         self.addSubview(imgView)
         self.addSubview(lbl)
     }

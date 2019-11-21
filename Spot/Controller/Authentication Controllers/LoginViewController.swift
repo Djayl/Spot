@@ -11,9 +11,13 @@ import Firebase
 
 class LoginViewController: UIViewController, UITextFieldDelegate {
     
+    // MARK: - Outlets
+    
     @IBOutlet weak var loginButton: CustomButton!
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
+    
+    // MARK: - Methods
     
     var gradient: CAGradientLayer?
     
@@ -24,23 +28,32 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         passwordTextField.delegate = self   
     }
     
-    @IBAction func loginAction(_ sender: Any) {
+    // MARK: - Actions
+    
+    @IBAction private func loginAction(_ sender: Any) {
         logIn()
-//        Auth.auth().signIn(withEmail: emailTextField.text!, password: passwordTextField.text!) { (user, error) in
-//            if error == nil{
-//                self.dismiss(animated: true, completion: nil)
-//            }
-//            else{
-//                self.loginButton.shake()
-//                let alertController = UIAlertController(title: "Pas si vite!", message: error?.localizedDescription, preferredStyle: .alert)
-//                let defaultAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
-//
-//                alertController.addAction(defaultAction)
-//                self.present(alertController, animated: true, completion: nil)
-//            }
-//        }
-        
     }
+    
+    @IBAction private func resetPassword() {
+        guard let email = emailTextField.text, emailTextField.text?.isEmpty == false else {
+            presentAlert(with: "Il vous faut renseigner une addresse email")
+            return
+        }
+        Auth.auth().sendPasswordReset(withEmail: email) { (error) in
+            if error == nil {
+                self.showSimpleAlert()
+                print("password send")
+            } else {
+                print("thers is an error")
+            }
+        }
+    }
+    
+    @IBAction private func noAccount(_ sender: Any) {
+        performSegue(withIdentifier: "goToSignUp", sender: self)
+    }
+    
+    // MARK: - Methods
     
     private func logIn() {
            guard let email = emailTextField.text, !email.isEmpty else {
@@ -60,36 +73,17 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                    self?.dismiss(animated: true, completion: nil)
                } else {
                    print("Error loging user: \(error!.localizedDescription)")
-                   self?.presentAlert(with: "Erreur serveur")
+                self?.presentAlert(with: error?.localizedDescription ?? "Erreur réseau")
                }
            }
        }
     
-    @IBAction func resetPassword() {
-        guard let email = emailTextField.text, emailTextField.text?.isEmpty == false else {
-            presentAlert(with: "Il vous faut renseigner une addresse email")
-            return
-        }
-        Auth.auth().sendPasswordReset(withEmail: email) { (error) in
-            if error == nil {
-                self.showSimpleAlert()
-                print("password send")
-            } else {
-                print("thers is an error")
-            }
-            
-        }
-    }
-    @IBAction func noAccount(_ sender: Any) {
-        performSegue(withIdentifier: "goToSignUp", sender: self)
-    }
-    
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {  
+    internal func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true
     }
     
-    func addGradient() {
+    private func addGradient() {
         gradient = CAGradientLayer()
         gradient?.colors = [Colors.skyBlue.cgColor,UIColor.white]
         gradient?.startPoint = CGPoint(x: 0, y: 0)
