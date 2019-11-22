@@ -7,7 +7,7 @@
 //
 
 import XCTest
-import FirebaseFirestore
+import Firebase
 
 
 
@@ -37,9 +37,9 @@ class SpotTests: XCTestCase {
     func testFetchCollectionSuccessfully() {
         let firestoreServiceSpy = FirestoreServiceSpy<Marker>()
 
-        let marker = Marker(identifier: "EB9CF9CA-73E6-460C-9641-A620FC311FD2", name: "test", description: "test", coordinate: GeoPoint(latitude: 2.0, longitude: 2.0) , imageURL: "test", isFavorite: false,publicSpot: true ,creationDate: Date())
+        let marker = Marker(identifier: "EB9CF9CA-73E6-460C-9641-A620FC311FD2", name: "test", description: "test", coordinate: CLLocationCoordinate2D(latitude: 2.0, longitude: 2.0) , imageURL: "test", isFavorite: false,publicSpot: true, creatorName: "test" ,creationDate: Date())
         let markers = [marker]
-
+        
         let exp = expectation(description: "Wait for load completion")
 
         firestoreServiceSpy.fetchCollection(endpoint: .spot) { result in

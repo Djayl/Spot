@@ -7,11 +7,11 @@
 //
 
 import UIKit
-import Firebase
+import FirebaseFirestore
 import Kingfisher
 import GoogleMaps
 
-@available(iOS 13.0, *)
+//@available(iOS 13.0, *)
 class DetailsViewController: UIViewController {
     
     // MARK: - Outlets
@@ -39,14 +39,14 @@ class DetailsViewController: UIViewController {
         reverseGeocodeCoordinate(spot.position)
         addGradient()
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(imageTapped(_:)))
-        self.navigationController?.setNavigationBarHidden(true, animated: false)
-        self.imageView.addGestureRecognizer(tapGestureRecognizer)
-        self.imageView.isUserInteractionEnabled = true
+        navigationController?.setNavigationBarHidden(true, animated: false)
+        imageView.addGestureRecognizer(tapGestureRecognizer)
+        imageView.isUserInteractionEnabled = true
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.navigationController?.setNavigationBarHidden(true, animated: false)
+        navigationController?.setNavigationBarHidden(true, animated: false)
         getImage()
         listenToFavoriteSpot()
     }
@@ -88,17 +88,6 @@ class DetailsViewController: UIViewController {
             }
         }
     }
-    
-//    private func handleFavoriteButton(){
-//        guard let favorite = (spot.userData as! CustomData).isFavorite else {return}
-//        print("****", favorite)
-//        if favorite.intValue == 1 || favorite == true{
-//            favoriteButton.isOn = true
-//        }
-//        if favorite.intValue == 0 || favorite == false {
-//            favoriteButton.isOn = false
-//        }
-//    }
     
     private func getSpotDetails() {
         

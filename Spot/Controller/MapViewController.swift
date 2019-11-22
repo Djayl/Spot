@@ -8,8 +8,6 @@
 
 import UIKit
 import GoogleMaps
-import GooglePlaces
-import Firebase
 import Kingfisher
 
 protocol AddSpotDelegate: class {
@@ -65,9 +63,9 @@ class MapViewController: UIViewController {
     
     @IBAction func logOut() {
         presentAlertWithAction(message: "Êtes-vous sûr de vouloir vous déconnecter?") {
-            let firebaseAuth = Auth.auth()
+            let authService = AuthService()
             do {
-                try firebaseAuth.signOut()
+                try authService.signOut()
             } catch let signOutError as NSError {
                 print ("Error signing out: %@", signOutError)
             }
@@ -124,12 +122,10 @@ class MapViewController: UIViewController {
             self.mapView.clear()
             self.fetchPrivateSpots()
             self.listenToPrivateSpots()
-            
         }))
         alert.addAction(UIAlertAction(title: "Mes favoris", style: .default, handler: { (_) in
             self.mapView.clear()
             self.fetchFavoriteSpots()
-//            self.fetchFavoriteSpotsFromPublic()
         }))
         alert.addAction(UIAlertAction(title: "Annuler", style: .cancel, handler: { (_) in
             print("User click Dismiss button")
@@ -277,9 +273,7 @@ class MapViewController: UIViewController {
             switch result {
             case .success(let markers):
                 for marker in markers {
-                    
                     self?.displaySpot(marker)
-                    
                 }
             case .failure(let error):
                 print("Error updating document: \(error)")
@@ -304,7 +298,6 @@ class MapViewController: UIViewController {
             }
         }
     }
-    
 }
 
 // MARK: - CLLocationManagerDelegate

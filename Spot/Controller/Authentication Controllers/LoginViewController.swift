@@ -7,15 +7,15 @@
 //
 
 import UIKit
-import Firebase
 
-class LoginViewController: UIViewController, UITextFieldDelegate {
+
+final class LoginViewController: UIViewController {
     
     // MARK: - Outlets
     
-    @IBOutlet weak var loginButton: CustomButton!
-    @IBOutlet weak var emailTextField: UITextField!
-    @IBOutlet weak var passwordTextField: UITextField!
+    @IBOutlet private weak var loginButton: CustomButton!
+    @IBOutlet private weak var emailTextField: UITextField!
+    @IBOutlet private weak var passwordTextField: UITextField!
     
     // MARK: - Methods
     
@@ -39,12 +39,14 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
             presentAlert(with: "Il vous faut renseigner une addresse email")
             return
         }
-        Auth.auth().sendPasswordReset(withEmail: email) { (error) in
-            if error == nil {
-                self.showSimpleAlert()
+        let authService = AuthService()
+        authService.resetPassword(email: email) { [weak self] authDataResult, error in
+            if error == nil && authDataResult != nil {
+                self?.showSimpleAlert()
                 print("password send")
             } else {
                 print("thers is an error")
+                self?.presentAlert(with: error?.localizedDescription ?? "Erreur réseau")
             }
         }
     }
@@ -78,11 +80,6 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
            }
        }
     
-    internal func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        textField.resignFirstResponder()
-        return true
-    }
-    
     private func addGradient() {
         gradient = CAGradientLayer()
         gradient?.colors = [Colors.skyBlue.cgColor,UIColor.white]
@@ -94,6 +91,12 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     
 }
 
+// MARK: - UITextfield Delegate
 
-
+extension LoginViewController: UITextFieldDelegate {
+    internal func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
+}
 

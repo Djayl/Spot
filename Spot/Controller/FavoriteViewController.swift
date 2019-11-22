@@ -7,12 +7,11 @@
 //
 
 import UIKit
-import Firebase
 import GoogleMaps
 import Kingfisher
 
 
-@available(iOS 13.0, *)
+//@available(iOS 13.0, *)
 class FavoriteViewController: UIViewController {
     
     // MARK: - Outlets
@@ -150,7 +149,7 @@ class FavoriteViewController: UIViewController {
 
 // MARK: - Table View delegate and data source
 
-@available(iOS 13.0, *)
+//@available(iOS 13.0, *)
 extension FavoriteViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection    section: Int) -> Int {

@@ -39,7 +39,7 @@ final public class FirestoreService<FirestoreObject: DocumentSerializableProtoco
     
     init() {
         let settings = dataBase.settings
-//        settings.areTimestampsInSnapshotsEnabled = true
+        //        settings.areTimestampsInSnapshotsEnabled = true
         dataBase.settings = settings
     }
     
@@ -65,8 +65,6 @@ final public class FirestoreService<FirestoreObject: DocumentSerializableProtoco
         })
     }
     
-
-    
     public func listenDocument(endpoint: Endpoint, result: @escaping (FirestoreDocumentResult<FirestoreObject>) -> Void) {
         // [START listen_document]
         document = dataBase.document(endpoint.path)
@@ -77,9 +75,7 @@ final public class FirestoreService<FirestoreObject: DocumentSerializableProtoco
             }
             guard let data = document.data().map({FirestoreObject(dictionary: $0)}) as? FirestoreObject else {return }
             result(.success(data))
-//            print("Current data: \(data)")
         }
-        // [END listen_document]
     }
     
     public func listenCollection(endpoint: Endpoint, result: @escaping (FirestoreCollectionResult<FirestoreObject>) -> Void) {
@@ -94,17 +90,9 @@ final public class FirestoreService<FirestoreObject: DocumentSerializableProtoco
             let object = objectData.documents.compactMap({FirestoreObject(dictionary: $0.data())})
             result(.success(object))
             
-//            document.documentChanges.forEach {
-//                diff in
-//
-//                if diff.type == .modified {
-//                    let object = document.documents.compactMap({FirestoreObject(dictionary: $0.data())})
-//                    result(.success(object))
-//            print("****","Current data: \(object)")
         }
-        // [END listen_document]
     }
-        
+    
     public func listenCollectionIfDiff(endpoint: Endpoint, result: @escaping (FirestoreCollectionResult<FirestoreObject>) -> Void) {
         collection = dataBase.collection(endpoint.path)
         collection?.addSnapshotListener { (querySnapshot, error) in
@@ -192,4 +180,5 @@ final public class FirestoreService<FirestoreObject: DocumentSerializableProtoco
             }
         })
     }
+    
 }

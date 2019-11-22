@@ -9,9 +9,8 @@
 import UIKit
 import GoogleMaps
 import FirebaseFirestore
-import FirebaseStorage
 import Kingfisher
-import Firebase
+
 
 @available(iOS 13.0, *)
 class CreateSpotViewController: UIViewController, UITextFieldDelegate, UITextViewDelegate {
@@ -36,6 +35,7 @@ class CreateSpotViewController: UIViewController, UITextFieldDelegate, UITextVie
     var myImage: UIImage?
     var spots = [Spot]()
     var userName = ""
+    var imageURL: String?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -148,7 +148,9 @@ class CreateSpotViewController: UIViewController, UITextFieldDelegate, UITextVie
                 spot.title = name
                 spot.summary = description
                 spot.coordinate = coor
-                self.uploadImage { (imageUrl) in
+//                guard let imageUrl = self.imageURL else {return}
+//                print(imageUrl)
+                self.getImage { (imageUrl) in
                     let privateSpot = Marker(identifier: identifier, name: name, description: description, coordinate: GeoPoint(latitude: coor.latitude, longitude: coor.longitude), imageURL: imageUrl, isFavorite: false,publicSpot: false , creatorName: creatorName, creationDate: Date())
                     let publicSpot = Marker(identifier: identifier, name: name, description: description, coordinate: GeoPoint(latitude: coor.latitude, longitude: coor.longitude), imageURL: imageUrl, isFavorite: false,publicSpot: true , creatorName: creatorName, creationDate: Date())
                     DispatchQueue.main.async {
@@ -211,34 +213,49 @@ class CreateSpotViewController: UIViewController, UITextFieldDelegate, UITextVie
         showImagePicckerControllerActionSheet()
     }
     
-    private func uploadImage(_ completion: @escaping (String)->Void) {
+//    private func uploadImage(_ completion: @escaping (String)->Void) {
+//        guard let image = myImage, let data = image.jpegData(compressionQuality: 1.0) else {
+//            presentAlert(with: "Il semble y avoir une erreur")
+//            return
+//        }
+//        let imageName = UUID().uuidString
+//        let imageReference = Storage.storage().reference().child(MyKeys.imagesFolder).child(imageName)
+//        imageReference.putData(data, metadata: nil) { (metadata, err) in
+//            if let err = err {
+//                self.presentAlert(with: err.localizedDescription)
+//                return
+//            }
+//            imageReference.downloadURL(completion: { (url, err) in
+//                if let err = err {
+//                    self.presentAlert(with: err.localizedDescription)
+//                    return
+//                }
+//                guard let url = url else {
+//                    self.presentAlert(with: "Il semble y avoir une erreur")
+//                    return
+//                }
+//                let urlString = url.absoluteString
+//                completion(urlString)
+//            })
+//        }
+//    }
+    
+    private func getImage(_ completion: @escaping (String)->Void) {
         guard let image = myImage, let data = image.jpegData(compressionQuality: 1.0) else {
-            presentAlert(with: "Il semble y avoir une erreur")
-            return
-        }
+                   presentAlert(with: "Il semble y avoir une erreur")
+                   return
+               }
+        let firebaseStorageManager = FirebaseStorageManager()
         let imageName = UUID().uuidString
-        let imageReference = Storage.storage().reference().child(MyKeys.imagesFolder).child(imageName)
-        imageReference.putData(data, metadata: nil) { (metadata, err) in
-            if let err = err {
-                self.presentAlert(with: err.localizedDescription)
-                return
-            }
-            imageReference.downloadURL(completion: { (url, err) in
-                if let err = err {
-                    self.presentAlert(with: err.localizedDescription)
-                    return
-                }
-                guard let url = url else {
-                    self.presentAlert(with: "Il semble y avoir une erreur")
-                    return
-                }
-                let urlString = url.absoluteString
-                completion(urlString)
-            })
+        firebaseStorageManager.uploadImageData(data: data, serverFileName: imageName) { (isSuccess, url) in
+            guard let imageUrl = url else {return}
+            completion(imageUrl)
         }
+        
     }
-
+ 
     internal func handleTextView() {
+        
         descriptionTextView.text = "Décrivez votre Spot"
         descriptionTextView.textColor = UIColor.lightGray
         descriptionTextView.font = UIFont(name: "ABeeZee-Regular", size: 14.0)

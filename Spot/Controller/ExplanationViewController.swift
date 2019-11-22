@@ -10,8 +10,12 @@ import UIKit
 
 class ExplanationViewController: UIViewController {
 
+    // MARK: - Outlets
+    
     @IBOutlet weak var textLabel: UILabel!
     @IBOutlet weak var textLabel2: UILabel!
+    
+    // MARK: - Properties
     
     var gradient: CAGradientLayer?
     
@@ -26,6 +30,8 @@ class ExplanationViewController: UIViewController {
         super.viewWillAppear(animated)
          self.navigationController?.setNavigationBarHidden(true, animated: false)
     }
+    
+    // MARK: - Methods
     
     private func handleFirstLabel() {
         textLabel.layer.masksToBounds = true

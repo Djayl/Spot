@@ -32,4 +32,9 @@ final public class AuthService {
     func signOut() throws {
         try Auth.auth().signOut()
     }
+    
+    func resetPassword(email: String, completion: @escaping AuthDataResultCallback) {
+        Auth.auth().sendPasswordReset(withEmail: email)
+    }
+  
 }
