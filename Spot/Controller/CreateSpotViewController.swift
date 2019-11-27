@@ -148,8 +148,6 @@ class CreateSpotViewController: UIViewController, UITextFieldDelegate, UITextVie
                 spot.title = name
                 spot.summary = description
                 spot.coordinate = coor
-//                guard let imageUrl = self.imageURL else {return}
-//                print(imageUrl)
                 self.getImage { (imageUrl) in
                     let privateSpot = Marker(identifier: identifier, name: name, description: description, coordinate: GeoPoint(latitude: coor.latitude, longitude: coor.longitude), imageURL: imageUrl, isFavorite: false,publicSpot: false , creatorName: creatorName, creationDate: Date())
                     let publicSpot = Marker(identifier: identifier, name: name, description: description, coordinate: GeoPoint(latitude: coor.latitude, longitude: coor.longitude), imageURL: imageUrl, isFavorite: false,publicSpot: true , creatorName: creatorName, creationDate: Date())

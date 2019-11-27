@@ -10,7 +10,7 @@ import Foundation
 import FirebaseFirestore
 import GoogleMaps
 
-struct Marker {
+struct Marker: Equatable {
     let identifier: String
     let name: String
     let description: String
