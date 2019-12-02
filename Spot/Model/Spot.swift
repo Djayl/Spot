@@ -16,20 +16,18 @@ class Spot: GMSMarker{
     var image: UIImage?
     var coordinate: CLLocationCoordinate2D?
     var imageURL: String?
-   
-
 }
 
 class CustomData{
     var creationDate: Date?
     var uid: String?
-    var isFavorite: Bool?
+    var ownerId: String?
     var publicSpot: Bool?
     var creatorName: String?
-    init(creationDate: Date, uid: String, isFavorite: Bool, publicSpot: Bool, creatorName: String) {
+    init(creationDate: Date, uid: String, ownerId: String, publicSpot: Bool, creatorName: String) {
         self.creationDate = creationDate
         self.uid = uid
-        self.isFavorite = isFavorite
+        self.ownerId = ownerId
         self.publicSpot = publicSpot
         self.creatorName = creatorName
     }

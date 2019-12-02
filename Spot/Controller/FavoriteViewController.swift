@@ -11,7 +11,6 @@ import GoogleMaps
 import Kingfisher
 
 
-//@available(iOS 13.0, *)
 class FavoriteViewController: UIViewController {
     
     // MARK: - Outlets
@@ -26,6 +25,8 @@ class FavoriteViewController: UIViewController {
         super.viewDidLoad()
         setUpTableView()
     }
+    
+   // MARK: - View Life Cycle
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -66,7 +67,7 @@ class FavoriteViewController: UIViewController {
     private func displaySpot(_ marker: Marker) {
         let name = marker.name
         guard let url = URL.init(string: marker.imageURL ) else {return}
-        let mCustomData = CustomData(creationDate: marker.creationDate, uid: marker.identifier, isFavorite: marker.isFavorite, publicSpot: marker.publicSpot, creatorName: marker.creatorName)
+        let mCustomData = CustomData(creationDate: marker.creationDate, uid: marker.identifier, ownerId: marker.ownerId, publicSpot: marker.publicSpot, creatorName: marker.creatorName)
         KingfisherManager.shared.retrieveImage(with: url, options: nil) { result in
             let image = try? result.get().image
             if let image = image {
@@ -103,19 +104,19 @@ class FavoriteViewController: UIViewController {
         }
     }
     
-    private func listener(spot: Spot) {
-        guard let spotUid = (spot.userData as! CustomData).uid else {return}
-        let firestoreService = FirestoreService<Marker>()
-        firestoreService.listenDocument(endpoint: .favorite(spotId: spotUid)) { [weak self] result in
-            switch result {
-            case .success(let marker):
-                (spot.userData as! CustomData).isFavorite = marker.isFavorite
-            case .failure(let error):
-                print("Error updating document: \(error)")
-                self?.presentAlert(with: "Erreur réseau")
-            }
-        }
-    }
+//    private func listener(spot: Spot) {
+//        guard let spotUid = (spot.userData as! CustomData).uid else {return}
+//        let firestoreService = FirestoreService<Marker>()
+//        firestoreService.listenDocument(endpoint: .favorite(spotId: spotUid)) { [weak self] result in
+//            switch result {
+//            case .success(let marker):
+//                (spot.userData as! CustomData).isFavorite = marker.isFavorite
+//            case .failure(let error):
+//                print("Error updating document: \(error)")
+//                self?.presentAlert(with: "Erreur réseau")
+//            }
+//        }
+//    }
     
     private func removeFav(spot: Spot) {
         guard let spotUid = (spot.userData as! CustomData).uid else {return}
@@ -149,7 +150,6 @@ class FavoriteViewController: UIViewController {
 
 // MARK: - Table View delegate and data source
 
-//@available(iOS 13.0, *)
 extension FavoriteViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection    section: Int) -> Int {

@@ -11,12 +11,14 @@ import UIKit
 
 class CustomCell: UITableViewCell {
     
+    // MARK: - Outlets
+    
     @IBOutlet weak var cellLabel: UILabel!
     @IBOutlet weak var cellImageView: UIImageView!
    
+    // MARK: - Methods
     
     func configureCell(spot:Spot) {
-        
         cellLabel.text = spot.name?.capitalized
         cellLabel.font = UIFont(name: "IndigoRegular-Regular", size: 15)
         cellImageView.image = spot.image

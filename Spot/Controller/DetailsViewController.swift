@@ -11,7 +11,7 @@ import FirebaseFirestore
 import Kingfisher
 import GoogleMaps
 
-//@available(iOS 13.0, *)
+
 class DetailsViewController: UIViewController {
     
     // MARK: - Outlets
@@ -23,7 +23,8 @@ class DetailsViewController: UIViewController {
     @IBOutlet weak var spotDate: UILabel!
     @IBOutlet weak var spotCoordinate: UILabel!
     @IBOutlet weak var favoriteButton: FavoriteButton!
- 
+    @IBOutlet weak var deleteButton: UIButton!
+    
     
     // MARK: - Properties
     
@@ -31,9 +32,14 @@ class DetailsViewController: UIViewController {
     var spot = Spot()
     var newImageView = UIImageView()
     var favoriteSpots = [Spot]()
+    private var userName = ""
+    private var ownerId = ""
+    
+    // MARK: - View Life Cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        fetchProfilInformation()
         getSpotDetails()
         getImage()
         reverseGeocodeCoordinate(spot.position)
@@ -58,8 +64,11 @@ class DetailsViewController: UIViewController {
     }
     
     @IBAction func remove(_ sender: Any) {
-        spot.map = nil
-        goToMapView()
+        presentAlertWithAction(message: "Etes-vous sûr de vouloir effacer ce Spot?") {
+            self.spot.map = nil
+            self.deleteSpot()
+            self.goToMapView()
+        }
     }
     
     // MARK: - Methods
@@ -89,20 +98,37 @@ class DetailsViewController: UIViewController {
         }
     }
     
+     private func setProfilData(_ profil: Profil){
+         userName = profil.userName
+         ownerId = profil.identifier
+    }
+     
+     
+    private func fetchProfilInformation() {
+           let firestoreService = FirestoreService<Profil>()
+           firestoreService.fetchDocument(endpoint: .currentUser) { [weak self] result in
+               switch result {
+               case .success(let profil):
+                   self?.setProfilData(profil)
+                   self?.handleDeleteButton()
+               case .failure(let error):
+                   print(error.localizedDescription)
+                   self?.presentAlert(with: "Erreur réseau")
+               }
+           }
+       }
+    
     private func getSpotDetails() {
-        
         guard let name = spot.title else {return}
         spotTitle.text = name.uppercased().toNoSmartQuotes()
-        
         guard let description = spot.snippet, description.isEmpty == false else {
             spotDescription.text = "Aucune description n'a été rédigée pour ce Spot"
             return }
         spotDescription.text = description
-        guard let date  = (spot.userData as! CustomData).creationDate else {return}
+        guard let date  = (spot.userData as? CustomData)?.creationDate else {return}
         spotDate.text = date.asString(style: .short)
-        guard let creatorName = (spot.userData as! CustomData).creatorName else {return}
+        guard let creatorName = (spot.userData as? CustomData)?.creatorName else {return}
         pictureTakerName.text = creatorName
-        
     }
     
     private func getImage() {
@@ -126,9 +152,6 @@ class DetailsViewController: UIViewController {
         }
     }
     
-    private func updateSpot(_ marker: Marker){
-        (spot.userData as! CustomData).isFavorite = marker.isFavorite
-    }
     
     private func setFavoriteInFirestore(identifier: String, spot: Marker) {
         let firestoreService = FirestoreService<Marker>()
@@ -144,6 +167,60 @@ class DetailsViewController: UIViewController {
         }
     }
     
+    private func handleDeleteButton() {
+        if (spot.userData as? CustomData)?.ownerId == ownerId {
+            deleteButton.isHidden = false
+        } else {
+            deleteButton.isHidden = true
+        }
+    }
+    
+    private func deleteSpotFromPrivate(identifier: String) {
+        let firestoreService = FirestoreService<Marker>()
+        firestoreService.deleteDocumentData(endpoint: .spot, identifier: identifier) { [weak self] result in
+            switch result {
+            case .success(let successMessage):
+                print(successMessage)
+            case .failure(let error):
+                print("Error deleting document: \(error)")
+                self?.presentAlert(with: "Erreur réseau")
+            }
+        }
+    }
+    
+    private func deleteSpotFromPublic(identifier: String) {
+        let firestoreService = FirestoreService<Marker>()
+        firestoreService.deleteDocumentData(endpoint: .publicCollection, identifier: identifier) { [weak self] result in
+            switch result {
+            case .success(let successMessage):
+                print(successMessage)
+            case .failure(let error):
+                print("Error deleting document: \(error)")
+                self?.presentAlert(with: "Erreur réseau")
+            }
+        }
+    }
+    
+    private func deleteSpotFromFavorite(identifier: String) {
+        let firestoreService = FirestoreService<Marker>()
+        firestoreService.deleteDocumentData(endpoint: .favoriteCollection, identifier: identifier) { [weak self] result in
+            switch result {
+            case .success(let successMessage):
+                print(successMessage)
+            case .failure(let error):
+                print("Error deleting document: \(error)")
+                self?.presentAlert(with: "Erreur réseau")
+            }
+        }
+    }
+    
+    private func deleteSpot() {
+        guard let uid = (spot.userData as? CustomData)?.uid else {return}
+        deleteSpotFromPrivate(identifier: uid)
+        deleteSpotFromPublic(identifier: uid)
+        deleteSpotFromFavorite(identifier: uid)
+    }
+    
     private func createFavorite() {
         let coordinate = spot.position
         let longitude = coordinate.longitude
@@ -151,12 +228,12 @@ class DetailsViewController: UIViewController {
         guard let name = spot.title,
             let description = spot.snippet,
             let imageURL = spot.imageURL,
-            let uid = (spot.userData as! CustomData).uid,
-            let creationDate = (spot.userData as! CustomData).creationDate,
-            let creatorName = (spot.userData as! CustomData).creatorName,
-            let publicSpot = (spot.userData as! CustomData).publicSpot,
-            let isFavorite = (spot.userData as! CustomData).isFavorite else {return}
-        let favoriteSpot = Marker(identifier: uid, name: name, description: description, coordinate: GeoPoint(latitude: latitude, longitude: longitude), imageURL: imageURL, isFavorite: isFavorite, publicSpot: publicSpot, creatorName: creatorName, creationDate: creationDate)
+            let uid = (spot.userData as? CustomData)?.uid,
+            let creationDate = (spot.userData as? CustomData)?.creationDate,
+            let creatorName = (spot.userData as? CustomData)?.creatorName,
+            let publicSpot = (spot.userData as? CustomData)?.publicSpot,
+            let ownerId = (spot.userData as? CustomData)?.ownerId else {return}
+        let favoriteSpot = Marker(identifier: uid, name: name, description: description, coordinate: GeoPoint(latitude: latitude, longitude: longitude), imageURL: imageURL, ownerId: ownerId, publicSpot: publicSpot, creatorName: creatorName, creationDate: creationDate)
         setFavoriteInFirestore(identifier: uid, spot: favoriteSpot)
     }
     
@@ -174,7 +251,7 @@ class DetailsViewController: UIViewController {
     }
     
     private func removeFavorite() {
-        guard let identifier = (spot.userData as! CustomData).uid else {return}
+        guard let identifier = (spot.userData as? CustomData)?.uid else {return}
         deleteFavoriteFromFirestore(identifier: identifier)
     }
     
@@ -189,7 +266,7 @@ class DetailsViewController: UIViewController {
     
     private func displaySpot(_ marker: Marker) {
         let name = marker.name
-        let mCustomData = CustomData(creationDate: marker.creationDate, uid: marker.identifier, isFavorite: marker.isFavorite, publicSpot: marker.publicSpot, creatorName: marker.creatorName)
+        let mCustomData = CustomData(creationDate: marker.creationDate, uid: marker.identifier, ownerId: marker.ownerId, publicSpot: marker.publicSpot, creatorName: marker.creatorName)
         let spot = Spot()
         spot.position = CLLocationCoordinate2D(latitude: marker.coordinate.latitude, longitude: marker.coordinate.longitude)
         spot.title = name

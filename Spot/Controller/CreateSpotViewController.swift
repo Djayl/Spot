@@ -13,7 +13,7 @@ import Kingfisher
 
 
 @available(iOS 13.0, *)
-class CreateSpotViewController: UIViewController, UITextFieldDelegate, UITextViewDelegate {
+final class CreateSpotViewController: UIViewController, UITextFieldDelegate, UITextViewDelegate {
     
     // MARK: - Outlets
  
@@ -28,7 +28,7 @@ class CreateSpotViewController: UIViewController, UITextFieldDelegate, UITextVie
     // MARK: - Properties
     
     var location: CLLocationCoordinate2D!
-    var controller: MapViewController?
+    private var controller: MapViewController?
     weak var delegate: AddSpotDelegate!
     let customMarkerWidth: Int = 50
     let customMarkerHeight: Int = 70
@@ -36,6 +36,9 @@ class CreateSpotViewController: UIViewController, UITextFieldDelegate, UITextVie
     var spots = [Spot]()
     var userName = ""
     var imageURL: String?
+    private var ownerId = ""
+    
+    // MARK: - View Life Cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -64,7 +67,9 @@ class CreateSpotViewController: UIViewController, UITextFieldDelegate, UITextVie
     // MARK: - Actions
     
     @IBAction func sendData(_ sender: Any) {
-       saveNewSpot()
+        presentAlertWithAction(message: "Voulez-vous créer ce Spot?") {
+            self.saveNewSpot()
+        }
     }
     
     // MARK: - Methods
@@ -103,6 +108,7 @@ class CreateSpotViewController: UIViewController, UITextFieldDelegate, UITextVie
      
     private func setProfilData(_ profil: Profil){
         userName = profil.userName
+        ownerId = profil.identifier
    }
     
    private func fetchProfilInformation() {
@@ -149,8 +155,8 @@ class CreateSpotViewController: UIViewController, UITextFieldDelegate, UITextVie
                 spot.summary = description
                 spot.coordinate = coor
                 self.getImage { (imageUrl) in
-                    let privateSpot = Marker(identifier: identifier, name: name, description: description, coordinate: GeoPoint(latitude: coor.latitude, longitude: coor.longitude), imageURL: imageUrl, isFavorite: false,publicSpot: false , creatorName: creatorName, creationDate: Date())
-                    let publicSpot = Marker(identifier: identifier, name: name, description: description, coordinate: GeoPoint(latitude: coor.latitude, longitude: coor.longitude), imageURL: imageUrl, isFavorite: false,publicSpot: true , creatorName: creatorName, creationDate: Date())
+                    let privateSpot = Marker(identifier: identifier, name: name, description: description, coordinate: GeoPoint(latitude: coor.latitude, longitude: coor.longitude), imageURL: imageUrl, ownerId: self.ownerId,publicSpot: false , creatorName: creatorName, creationDate: Date())
+                    let publicSpot = Marker(identifier: identifier, name: name, description: description, coordinate: GeoPoint(latitude: coor.latitude, longitude: coor.longitude), imageURL: imageUrl, ownerId: self.ownerId,publicSpot: true , creatorName: creatorName, creationDate: Date())
                     DispatchQueue.main.async {
                         if self.stateSwitch.isOn {
                             self.savePublicSpotInFirestore(identifier: identifier, spot: publicSpot)
@@ -253,7 +259,6 @@ class CreateSpotViewController: UIViewController, UITextFieldDelegate, UITextVie
     }
  
     internal func handleTextView() {
-        
         descriptionTextView.text = "Décrivez votre Spot"
         descriptionTextView.textColor = UIColor.lightGray
         descriptionTextView.font = UIFont(name: "ABeeZee-Regular", size: 14.0)

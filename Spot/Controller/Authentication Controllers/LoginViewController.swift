@@ -21,6 +21,8 @@ final class LoginViewController: UIViewController {
     
     var gradient: CAGradientLayer?
     
+    // MARK: - View Life Cycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         addGradient()

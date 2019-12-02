@@ -19,6 +19,8 @@ class ExplanationViewController: UIViewController {
     
     var gradient: CAGradientLayer?
     
+    // MARK: - View Life Cycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         addGradient()
@@ -48,7 +50,7 @@ class ExplanationViewController: UIViewController {
         textLabel2.backgroundColor = Colors.nicoBlue
         textLabel2.font = UIFont(name: "IndigoRegular-Regular", size: 15)
         textLabel2.sizeToFit()
-        textLabel2.text = "Une fois tous les champs renseignés, vous pourrez choisir de partager votre Spot ou de le conserver dans votre collection privée.\n\nSi vous choisissez de le garder pour vous, vous serez alors le seul à pouvoir le voir.\n\nSi vous préférez le partager, il deviendra public et l'ensemble des utilisateurs y auront accès."
+        textLabel2.text = "Une fois tous les champs renseignés, vous pourrez choisir de partager votre Spot ou de le conserver dans votre collection privée.\n\nSi vous choisissez de le garder pour vous, vous serez alors le seul à pouvoir le voir.\n\nSi vous préférez le partager, il deviendra public et l'ensemble des utilisateurs y aura accès."
     }
 
     private func addGradient() {

@@ -29,7 +29,7 @@ class FavoriteButton: UIButton {
             let color = isOn ? Colors.twitterBlue: .clear
             let title = isOn ? "Favori" : "Mettre en favori"
             let titleColor = isOn ? . white : Colors.twitterBlue
-
+            
             setTitle(title, for: .normal)
             setTitleColor(titleColor, for: .normal)
             backgroundColor = color
@@ -42,20 +42,4 @@ class FavoriteButton: UIButton {
         layer.cornerRadius = frame.size.height/2
         setTitleColor(Colors.twitterBlue, for: .normal)
     }
-    
-//    @objc func buttonPressed() {
-//        activateButton(bool: !isOn)
-//    }
-//
-//    func activateButton(bool: Bool) {
-//        isOn = bool
-//
-//        let color = bool ? Colors.twitterBlue: .clear
-//        let title = bool ? "Favori" : "Mettre en favori"
-//        let titleColor = bool ? . white : Colors.twitterBlue
-//
-//        setTitle(title, for: .normal)
-//        setTitleColor(titleColor, for: .normal)
-//        backgroundColor = color
-//    }
 }

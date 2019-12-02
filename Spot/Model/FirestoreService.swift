@@ -8,7 +8,7 @@
 
 import Foundation
 import FirebaseFirestore
-import Firebase
+
 
 public enum FirestoreError: Error {
     case offline

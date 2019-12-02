@@ -25,6 +25,8 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
     let authService = AuthService()
     let firestoreService = FirestoreService<Profil>()
     
+    // MARK: - View Life Cycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         addGradient()

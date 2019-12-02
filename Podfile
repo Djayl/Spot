@@ -1,28 +1,22 @@
 
- platform :ios, '11.0'
 
 target 'Spot' do
   
   use_frameworks!
 
-  pod 'Firebase/Core'
-  pod 'Firebase/Firestore'
-  pod 'Firebase/Auth'
-  pod 'Kingfisher', '~> 5.0'
-  pod 'Firebase/Storage'
-  pod 'GoogleMaps'
-  pod 'GooglePlaces'
-
-
-
-
-target 'SpotTests' do
-    pod 'Firebase'
-    pod 'GoogleMaps'
     pod 'Firebase/Core'
-    pod 'Firebase/Firestore'
+    pod 'Firebase/Analytics'
     pod 'Firebase/Auth'
+    pod 'Firebase/Firestore'
+    pod 'Kingfisher', '~> 5.0'
     pod 'Firebase/Storage'
-	end
+    pod 'GoogleMaps'
+    pod 'GooglePlaces'
+    pod 'Protobuf', :inhibit_warnings => true
+  
+   target 'SpotTests' do
+    inherit! :search_paths
+    
+  end
 
 end

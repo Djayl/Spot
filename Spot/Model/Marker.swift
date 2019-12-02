@@ -16,7 +16,7 @@ struct Marker: Equatable {
     let description: String
     let coordinate: GeoPoint
     let imageURL: String
-    let isFavorite: Bool
+    let ownerId: String
     let publicSpot: Bool
     let creatorName: String
     let creationDate: Date
@@ -30,7 +30,7 @@ struct Marker: Equatable {
             "description": description,
             "coordinate": GeoPoint(latitude: coordinate.latitude, longitude: coordinate.longitude),
             "imageURL": imageURL,
-            "isFavorite": isFavorite,
+            "ownerId": ownerId,
             "publicSpot": publicSpot,
             "creatorName": creatorName,
             "creationDate": creationDate
@@ -46,7 +46,7 @@ extension Marker: DocumentSerializableProtocol {
             let description = dictionary["description"] as? String,
             let coordinate = dictionary["coordinate"] as? GeoPoint,
             let imageURL = dictionary["imageURL"] as? String, 
-            let isFavorite = dictionary["isFavorite"] as? Bool,
+            let ownerId = dictionary["ownerId"] as? String,
             let publicSpot = dictionary["publicSpot"] as? Bool,
             let creatorName = dictionary["creatorName"] as? String else {return nil}
         var date = Date()
@@ -55,7 +55,7 @@ extension Marker: DocumentSerializableProtocol {
             
         }
        
-        self.init(identifier: identifier, name: name, description: description, coordinate: coordinate, imageURL: imageURL, isFavorite: isFavorite, publicSpot: publicSpot, creatorName: creatorName, creationDate: date)
+        self.init(identifier: identifier, name: name, description: description, coordinate: coordinate, imageURL: imageURL, ownerId: ownerId, publicSpot: publicSpot, creatorName: creatorName, creationDate: date)
     }
     
 }

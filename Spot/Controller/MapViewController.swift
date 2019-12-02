@@ -28,10 +28,11 @@ class MapViewController: UIViewController {
     var sourceView: UIView?
     var spots = [Spot]()
     var userPosition: CLLocation?
-    private let locationManager = CLLocationManager()
+    let locationManager = CLLocationManager()
     let customMarkerWidth: Int = 50
     let customMarkerHeight: Int = 70
     
+    // MARK: - View Life Cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -125,7 +126,7 @@ class MapViewController: UIViewController {
         }))
         alert.addAction(UIAlertAction(title: "Mes favoris", style: .default, handler: { (_) in
             self.mapView.clear()
-            self.fetchFavoriteSpots()
+            self.listenToFavoriteSpots()
         }))
         alert.addAction(UIAlertAction(title: "Annuler", style: .cancel, handler: { (_) in
             print("User click Dismiss button")
@@ -176,7 +177,7 @@ class MapViewController: UIViewController {
         }
     }
     
-    private func fetchFavoriteSpots() {
+    private func listenToFavoriteSpots() {
         let firestoreService = FirestoreService<Marker>()
         firestoreService.listenCollection(endpoint: .favoriteCollection) { [weak self] result in
             switch result {
@@ -191,22 +192,22 @@ class MapViewController: UIViewController {
         }
     }
     
-    private func fetchFavoriteSpotsFromPublic() {
-        let firestoreService = FirestoreService<Marker>()
-        firestoreService.fetchCollection(endpoint: .publicCollection) { [weak self] result in
-            switch result {
-            case .success(let markers):
-                for marker in markers {
-                    if marker.isFavorite == true {
-                        self?.displaySpot(marker)
-                    }
-                }
-            case .failure(let error):
-                print(error.localizedDescription)
-                self?.presentAlert(with: "Erreur serveur")
-            }
-        }
-    }
+//    private func fetchFavoriteSpotsFromPublic() {
+//        let firestoreService = FirestoreService<Marker>()
+//        firestoreService.fetchCollection(endpoint: .publicCollection) { [weak self] result in
+//            switch result {
+//            case .success(let markers):
+//                for marker in markers {
+//                    if marker.isFavorite == true {
+//                        self?.displaySpot(marker)
+//                    }
+//                }
+//            case .failure(let error):
+//                print(error.localizedDescription)
+//                self?.presentAlert(with: "Erreur serveur")
+//            }
+//        }
+//    }
     
     
     private func fetchPublicSpots() {
@@ -247,7 +248,7 @@ class MapViewController: UIViewController {
     
     private func displaySpot(_ marker: Marker) {
         guard let url = URL.init(string: marker.imageURL ) else {return}
-        let mCustomData = CustomData(creationDate: marker.creationDate, uid: marker.identifier, isFavorite: marker.isFavorite, publicSpot: marker.publicSpot, creatorName: marker.creatorName)
+        let mCustomData = CustomData(creationDate: marker.creationDate, uid: marker.identifier, ownerId: marker.ownerId, publicSpot: marker.publicSpot, creatorName: marker.creatorName)
         KingfisherManager.shared.retrieveImage(with: url, options: nil) { result in
             let image = try? result.get().image
             if let image = image {
@@ -301,31 +302,6 @@ class MapViewController: UIViewController {
 }
 
 // MARK: - CLLocationManagerDelegate
-
-//@available(iOS 13.0, *)
-//extension MapViewController: GMSAutocompleteResultsViewControllerDelegate {
-////    func resultsController(_ resultsController: GMSAutocompleteResultsViewController, didAutocompleteWith place: GMSPlace) {
-////        // 1
-////        let markerPosition = place.coordinate
-////        let camera = GMSCameraPosition.camera(withTarget: markerPosition, zoom: 20)
-////        //        let mapView = GMSMapView.map(withFrame: .zero, camera: camera)
-////        mapView.animate(to: camera)
-////        searchController?.isActive = false
-////        let vc = storyboard?.instantiateViewController(withIdentifier: "CreationVC") as! CreateSpotViewController
-////        let nc = UINavigationController(rootViewController: vc)
-////        let location = place.coordinate
-////        vc.location = location
-////        vc.delegate = self
-////        self.present(nc, animated: true, completion: nil)
-////    }
-////
-////    func resultsController(_ resultsController: GMSAutocompleteResultsViewController, didFailAutocompleteWithError error: Error) {
-////        print("Error: \(error.localizedDescription)")
-////    }
-////
-////
-////
-//}
 
 @available(iOS 13.0, *)
 extension MapViewController: CLLocationManagerDelegate {

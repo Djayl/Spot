@@ -12,6 +12,7 @@ import FirebaseStorage
 
 class FirebaseStorageManager {
     
+    // MARK: - Methods
     
     public func uploadFile(localFile: URL, serverFileName: String, completionHandler: @escaping (_ isSuccess: Bool, _ url: String?) -> Void) {
         
