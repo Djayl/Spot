@@ -28,6 +28,7 @@
 		F04EBAA0238445EA009B0074 /* UITextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = F04EBA9F238445EA009B0074 /* UITextField.swift */; };
 		F04EBAA22384463E009B0074 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = F04EBAA12384463E009B0074 /* String.swift */; };
 		F04EBAA423844664009B0074 /* Array.swift in Sources */ = {isa = PBXBuildFile; fileRef = F04EBAA323844664009B0074 /* Array.swift */; };
+		F04FC19D23A430FC00766C73 /* SpotCreatorProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F04FC19C23A430FC00766C73 /* SpotCreatorProfileViewController.swift */; };
 		F04FC23C2387105400EA857A /* FirebaseStorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F04FC23B2387105400EA857A /* FirebaseStorageManager.swift */; };
 		F05048E2236D87C200F6F660 /* CustomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F05048E1236D87C200F6F660 /* CustomCell.swift */; };
 		F050CF67239E8D7E00D31800 /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = F050CF66239E8D7E00D31800 /* UIColor.swift */; };
@@ -99,6 +100,7 @@
 		F04EBA9F238445EA009B0074 /* UITextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITextField.swift; sourceTree = "<group>"; };
 		F04EBAA12384463E009B0074 /* String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
 		F04EBAA323844664009B0074 /* Array.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Array.swift; sourceTree = "<group>"; };
+		F04FC19C23A430FC00766C73 /* SpotCreatorProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpotCreatorProfileViewController.swift; sourceTree = "<group>"; };
 		F04FC23B2387105400EA857A /* FirebaseStorageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseStorageManager.swift; sourceTree = "<group>"; };
 		F05048E1236D87C200F6F660 /* CustomCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomCell.swift; sourceTree = "<group>"; };
 		F050CF66239E8D7E00D31800 /* UIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
@@ -176,6 +178,7 @@
 				F02AA33B2386D59100D67E73 /* ExplanationViewController.swift */,
 				F055FB5C239FB6D00005EEE5 /* ProfileViewController.swift */,
 				F055FB5E239FCC3B0005EEE5 /* CreateProfileViewController.swift */,
+				F04FC19C23A430FC00766C73 /* SpotCreatorProfileViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -524,6 +527,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F05048E2236D87C200F6F660 /* CustomCell.swift in Sources */,
+				F04FC19D23A430FC00766C73 /* SpotCreatorProfileViewController.swift in Sources */,
 				F016EA002330E58200214C4E /* LoginViewController.swift in Sources */,
 				F04EBA97238443B2009B0074 /* UIViewController.swift in Sources */,
 				F04EBA9A23844465009B0074 /* CLLocation.swift in Sources */,

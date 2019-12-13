@@ -18,7 +18,7 @@ class ProfileViewController: UIViewController {
     @IBOutlet weak var descriptionLabel: UILabel!
     @IBOutlet weak var modifyButton: CustomButton!
     
-//    var profil: Profil?
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()

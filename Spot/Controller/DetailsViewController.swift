@@ -71,6 +71,9 @@ class DetailsViewController: UIViewController {
             self.goToMapView()
         }
     }
+    @IBAction func goToCreatorProfile(_ sender: Any) {
+        fetchSpotOwnerProfile()
+    }
     
     // MARK: - Methods
     
@@ -97,6 +100,28 @@ class DetailsViewController: UIViewController {
                 return
             }
         }
+    }
+    
+    private func showSpotOwnerProfile(profil: Profil) {
+        let vc = storyboard?.instantiateViewController(withIdentifier: "SpotCreatorVC") as! SpotCreatorProfileViewController
+        let nc = UINavigationController(rootViewController: vc)
+        vc.profil = profil
+        self.present(nc, animated: true, completion: nil)
+    }
+    
+    private func fetchSpotOwnerProfile() {
+        guard let identifier = (spot.userData as? CustomData)?.ownerId else {return}
+        let firestoreService = FirestoreService<Profil>()
+        firestoreService.fetchDocument(endpoint: .particularUser(userId: identifier)) { [weak self] result in
+            switch result {
+            case .success(let profil):
+                self?.showSpotOwnerProfile(profil: profil)
+            case .failure(let error):
+                print(error.localizedDescription)
+                self?.presentAlert(with: "Erreur réseau")
+            }
+        }
+
     }
     
      private func setProfilData(_ profil: Profil){
