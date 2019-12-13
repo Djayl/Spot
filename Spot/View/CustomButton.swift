@@ -8,6 +8,7 @@
 
 import UIKit
 
+@available(iOS 13.0, *)
 class CustomButton: UIButton {
     
     // MARK: - Initialization
@@ -26,12 +27,12 @@ class CustomButton: UIButton {
     
     func setupButton() {
         setShadow()
-        setTitleColor(Colors.coolRed, for: .normal)
-        backgroundColor      = Colors.coolGreen
-        titleLabel?.font     = UIFont(name: "IndigoRegular-Regular", size: 17)
+        setTitleColor(UIColor.label, for: .normal)
+        backgroundColor      = UIColor.systemBackground
+        titleLabel?.font     = UIFont(name: "LeagueSpartan-Bold", size: 17)
         layer.cornerRadius   = 25
         layer.borderWidth    = 3.0
-        layer.borderColor    = Colors.nicoDarkPurple.cgColor
+        layer.borderColor    = UIColor.tertiarySystemBackground.cgColor
     }
     
     private func setShadow() {

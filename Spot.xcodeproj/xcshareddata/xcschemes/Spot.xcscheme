@@ -39,7 +39,7 @@
          </BuildableReference>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "F04E65FA237EC5A500159D06"
+            BlueprintIdentifier = "F05E72602396663500F6E61A"
             BuildableName = "SpotTests.xctest"
             BlueprintName = "SpotTests"
             ReferencedContainer = "container:Spot.xcodeproj">
@@ -50,7 +50,7 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "F04E65FA237EC5A500159D06"
+               BlueprintIdentifier = "F05E72602396663500F6E61A"
                BuildableName = "SpotTests.xctest"
                BlueprintName = "SpotTests"
                ReferencedContainer = "container:Spot.xcodeproj">

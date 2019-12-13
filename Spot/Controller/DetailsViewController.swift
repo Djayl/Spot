@@ -12,6 +12,7 @@ import Kingfisher
 import GoogleMaps
 
 
+@available(iOS 13.0, *)
 class DetailsViewController: UIViewController {
     
     // MARK: - Outlets
@@ -43,7 +44,7 @@ class DetailsViewController: UIViewController {
         getSpotDetails()
         getImage()
         reverseGeocodeCoordinate(spot.position)
-        addGradient()
+        spotDescription.sizeToFit()
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(imageTapped(_:)))
         navigationController?.setNavigationBarHidden(true, animated: false)
         imageView.addGestureRecognizer(tapGestureRecognizer)
@@ -109,6 +110,7 @@ class DetailsViewController: UIViewController {
            firestoreService.fetchDocument(endpoint: .currentUser) { [weak self] result in
                switch result {
                case .success(let profil):
+                print(profil.userName)
                    self?.setProfilData(profil)
                    self?.handleDeleteButton()
                case .failure(let error):
@@ -120,11 +122,14 @@ class DetailsViewController: UIViewController {
     
     private func getSpotDetails() {
         guard let name = spot.title else {return}
-        spotTitle.text = name.uppercased().toNoSmartQuotes()
-        guard let description = spot.snippet, description.isEmpty == false else {
+        spotTitle.text = name.capitalized.toNoSmartQuotes()
+        guard let description = spot.snippet, !description.isEmpty else {
             spotDescription.text = "Aucune description n'a été rédigée pour ce Spot"
-            return }
+            return}
         spotDescription.text = description
+//        if description.isEmpty {
+//            spotDescription.text = "Aucune description n'a été rédigée pour ce Spot"
+//        }
         guard let date  = (spot.userData as? CustomData)?.creationDate else {return}
         spotDate.text = date.asString(style: .short)
         guard let creatorName = (spot.userData as? CustomData)?.creatorName else {return}
@@ -298,7 +303,7 @@ class DetailsViewController: UIViewController {
         let imageView = sender.view as! UIImageView
         newImageView = UIImageView(image: imageView.image)
         newImageView.frame = UIScreen.main.bounds
-        newImageView.backgroundColor = Colors.nicoDarkBlue
+        newImageView.backgroundColor = UIColor.white
         newImageView.contentMode = .scaleAspectFit
         newImageView.isUserInteractionEnabled = true
         let tap = UITapGestureRecognizer(target: self, action: #selector(dismissFullscreenImage))
@@ -322,7 +327,7 @@ class DetailsViewController: UIViewController {
     
     private func addGradient() {
         gradient = CAGradientLayer()
-        gradient?.colors = [Colors.skyBlue.cgColor, UIColor.white]
+        gradient?.colors = [Colors.nicoDarkPurple.cgColor, UIColor.white]
         gradient?.startPoint = CGPoint(x: 0, y: 0)
         gradient?.endPoint = CGPoint(x: 0, y:1)
         gradient?.frame = view.frame

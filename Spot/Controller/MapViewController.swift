@@ -26,16 +26,17 @@ class MapViewController: UIViewController {
     // MARK: - Properties
     
     var sourceView: UIView?
-    var spots = [Spot]()
     var userPosition: CLLocation?
     let locationManager = CLLocationManager()
     let customMarkerWidth: Int = 50
     let customMarkerHeight: Int = 70
     
+    
     // MARK: - View Life Cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
+//        overrideUserInterfaceStyle = .light
         locationManager.delegate = self
         locationManager.requestWhenInUseAuthorization()
         mapView.delegate = self
@@ -43,12 +44,11 @@ class MapViewController: UIViewController {
         setUpTapBarController()
         mapView.addSubview(chooseDataButton)
         mapView.addSubview(chooseMapTypeButton)
-        checkIfUserLoggedIn()
+        checkIfUserLoggedIn()        
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
     }
     
     // MARK: - Actions
@@ -62,19 +62,13 @@ class MapViewController: UIViewController {
         
     }
     
-    @IBAction func logOut() {
-        presentAlertWithAction(message: "Êtes-vous sûr de vouloir vous déconnecter?") {
-            let authService = AuthService()
-            do {
-                try authService.signOut()
-            } catch let signOutError as NSError {
-                print ("Error signing out: %@", signOutError)
-            }
-            let storyboard = UIStoryboard(name: "Main", bundle: nil)
-            let initial = storyboard.instantiateInitialViewController()
-            UIApplication.shared.keyWindow?.rootViewController = initial
-        }
+    @IBAction func goToProfile() {
+        let vc = storyboard?.instantiateViewController(withIdentifier: "ProfileVC") as! ProfileViewController
+               let nc = UINavigationController(rootViewController: vc)
+               self.present(nc, animated: true, completion: nil)
     }
+    
+    
     
     @IBAction func goToExplanation(_ sender: Any) {
         let vc = storyboard?.instantiateViewController(withIdentifier: "ExplanationVC") as! ExplanationViewController
@@ -86,16 +80,16 @@ class MapViewController: UIViewController {
     // MARK: - Methods
     
     fileprivate func setUpNavigationController() {
-        navigationController?.navigationBar.barTintColor = Colors.nicoDarkBlue.withAlphaComponent(0.5)
+        navigationController?.navigationBar.barTintColor = UIColor.systemBackground.withAlphaComponent(0.5)
         navigationController?.navigationBar.isTranslucent = true
-        navigationItem.rightBarButtonItem?.setTitleTextAttributes([.font : UIFont(name: "IndigoRegular-Regular", size: 15)!, .foregroundColor : Colors.coolRed], for: .normal)
-        navigationItem.leftBarButtonItem?.setTitleTextAttributes([.font : UIFont(name: "IndigoRegular-Regular", size: 15)!, .foregroundColor : Colors.coolRed], for: .normal)
+        navigationItem.rightBarButtonItem?.setTitleTextAttributes([.font : UIFont(name: "LeagueSpartan-Bold", size: 15)!, .foregroundColor : UIColor.red], for: .normal)
+        navigationItem.leftBarButtonItem?.setTitleTextAttributes([.font : UIFont(name: "LeagueSpartan-Bold", size: 15)!, .foregroundColor : UIColor.label], for: .normal)
     }
     
     fileprivate func setUpTapBarController() {
-        tabBarController?.tabBar.tintColor = UIColor.yellow
-        tabBarController?.tabBar.unselectedItemTintColor = UIColor.green
-        tabBarController?.tabBar.barTintColor = Colors.nicoDarkBlue
+        tabBarController?.tabBar.tintColor = UIColor.green
+        tabBarController?.tabBar.unselectedItemTintColor = UIColor.lightGray
+        tabBarController?.tabBar.barTintColor = UIColor.systemBackground
         
     }
     
@@ -116,12 +110,12 @@ class MapViewController: UIViewController {
         alert.addColorInTitleAndMessage(color: UIColor.systemBlue, titleFontSize: 20, messageFontSize: 15)
         alert.addAction(UIAlertAction(title: "Les spots publics", style: .default, handler: { (_) in
             self.mapView.clear()
-            self.fetchPublicSpots()
+            //            self.fetchPublicSpots()
             self.listenToPublicSpots()
         }))
         alert.addAction(UIAlertAction(title: "Ma collection privée", style: .default, handler: { (_) in
             self.mapView.clear()
-            self.fetchPrivateSpots()
+            //            self.fetchPrivateSpots()
             self.listenToPrivateSpots()
         }))
         alert.addAction(UIAlertAction(title: "Mes favoris", style: .default, handler: { (_) in
@@ -137,7 +131,7 @@ class MapViewController: UIViewController {
     
     func chooseMapType(controller: UIViewController) {
         let alert = UIAlertController(title: "Modifier le type de carte", message: "Sélectionnez une option", preferredStyle: .actionSheet)
-
+        
         alert.addColorInTitleAndMessage(color: UIColor.systemBlue, titleFontSize: 20, messageFontSize: 15)
         alert.addAction(UIAlertAction(title: "Basique", style: .default, handler: { (_) in
             self.mapView.mapType = .normal
@@ -190,25 +184,7 @@ class MapViewController: UIViewController {
                 self?.presentAlert(with: "Erreur serveur")
             }
         }
-    }
-    
-//    private func fetchFavoriteSpotsFromPublic() {
-//        let firestoreService = FirestoreService<Marker>()
-//        firestoreService.fetchCollection(endpoint: .publicCollection) { [weak self] result in
-//            switch result {
-//            case .success(let markers):
-//                for marker in markers {
-//                    if marker.isFavorite == true {
-//                        self?.displaySpot(marker)
-//                    }
-//                }
-//            case .failure(let error):
-//                print(error.localizedDescription)
-//                self?.presentAlert(with: "Erreur serveur")
-//            }
-//        }
-//    }
-    
+    }    
     
     private func fetchPublicSpots() {
         let firestoreService = FirestoreService<Marker>()
@@ -229,6 +205,13 @@ class MapViewController: UIViewController {
         let vc = storyboard?.instantiateViewController(withIdentifier: "DetailsVC") as! DetailsViewController
         let nc = UINavigationController(rootViewController: vc)
         vc.spot = spot
+        self.present(nc, animated: true, completion: nil)
+    }
+    
+    @objc private func buttonTapped(marker: GMSMarker) {
+        let vc = storyboard?.instantiateViewController(withIdentifier: "DetailsVC") as! DetailsViewController
+        let nc = UINavigationController(rootViewController: vc)
+        vc.spot = marker as! Spot
         self.present(nc, animated: true, completion: nil)
     }
     
@@ -259,7 +242,7 @@ class MapViewController: UIViewController {
                     spot.snippet = marker.description
                     spot.userData = mCustomData
                     spot.imageURL = marker.imageURL
-                    let customMarker = CustomMarkerView(frame: CGRect(x: 0, y: 0, width: self.customMarkerWidth, height: self.customMarkerHeight), image: image, borderColor: Colors.skyBlue.withAlphaComponent(0.8))
+                    let customMarker = CustomMarkerView(frame: CGRect(x: 0, y: 0, width: self.customMarkerWidth, height: self.customMarkerHeight), image: image, borderColor: Colors.nicoDarkBlue.withAlphaComponent(0.8))
                     spot.iconView = customMarker
                     spot.map = self.mapView
                 }
@@ -343,11 +326,32 @@ extension MapViewController: GMSMapViewDelegate, AddSpotDelegate {
     }
     
     func mapView(_ mapView: GMSMapView, didTap marker: GMSMarker) -> Bool {
-        //        let update = GMSCameraUpdate.zoomIn()
-        //        mapView.animate(with: update)
+        
         return false
     }
+    
+    func mapView(_ mapView: GMSMapView, markerInfoWindow marker: GMSMarker) -> UIView? {
+        let view = UIView(frame: CGRect.init(x: 0, y: 0, width: 200, height: 70))
+        view.backgroundColor = UIColor.systemBackground
+        view.layer.cornerRadius = 6
+        view.layer.borderWidth = 3.0
+        view.layer.borderColor = UIColor.systemBackground.cgColor
+        
+        let lbl1 = UILabel(frame: CGRect.init(x: 8, y: 8, width: view.frame.size.width - 16, height: 17))
+        lbl1.font = UIFont(name: "LeagueSpartan-Bold", size: 15)
+        lbl1.textColor = UIColor.label
+        lbl1.text = marker.title
+        view.addSubview(lbl1)
+        let lbl2 = UILabel(frame: CGRect.init(x: lbl1.frame.origin.x, y: lbl1.frame.origin.y + lbl1.frame.size.height + 3, width: view.frame.size.width - 16, height: 15))
+        lbl2.text = marker.snippet
+        lbl2.font = UIFont(name: "GlacialIndifference-Regular", size: 14)
+        lbl2.textColor = UIColor.label
+        view.addSubview(lbl2)
+        return view
+    }
 }
+
+
 
 
 

@@ -288,6 +288,7 @@ PODS:
     - nanopb/encode (= 0.3.9011)
   - nanopb/decode (0.3.9011)
   - nanopb/encode (0.3.9011)
+  - ProgressHUD (2.70)
   - Protobuf (3.9.0)
 
 DEPENDENCIES:
@@ -299,6 +300,7 @@ DEPENDENCIES:
   - GoogleMaps
   - GooglePlaces
   - Kingfisher (~> 5.0)
+  - ProgressHUD
   - Protobuf
 
 SPEC REPOS:
@@ -329,6 +331,7 @@ SPEC REPOS:
     - GTMSessionFetcher
     - leveldb-library
     - nanopb
+    - ProgressHUD
 
 SPEC CHECKSUMS:
   abseil: 18063d773f5366ff8736a050fe035a28f635fd27
@@ -355,8 +358,9 @@ SPEC CHECKSUMS:
   Kingfisher: c7d211b54f1f30d8060aadab177d52b4349c825b
   leveldb-library: 55d93ee664b4007aac644a782d11da33fba316f7
   nanopb: 18003b5e52dab79db540fe93fe9579f399bd1ccd
+  ProgressHUD: e603e8b8622c47d8818b9fb38b3cfe9d3e7ca421
   Protobuf: 1097ca58584c8d9be81bfbf2c5ff5975648dd87a
 
-PODFILE CHECKSUM: c278eb0076b454a0bf080b5881704f6e046a6557
+PODFILE CHECKSUM: 6e3932cb9f7b0c2427114fbfbcc1ee990e0dd9c3
 
-COCOAPODS: 1.8.3
+COCOAPODS: 1.8.4

@@ -9,7 +9,8 @@
 import UIKit
 
 
-class SignUpViewController: UIViewController, UITextFieldDelegate {
+@available(iOS 13.0, *)
+class SignUpViewController: UIViewController, UITextFieldDelegate, UITextViewDelegate {
     
     // MARK: - Outlets
     
@@ -18,9 +19,14 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
     @IBOutlet weak var passwordConfirmTextField: UITextField!
+    @IBOutlet weak var profileImageView: UIImageView!
+    @IBOutlet weak var equipmentTextField: UITextField!
+    @IBOutlet weak var ageTextField: UITextField!
+    @IBOutlet weak var descriptionTextView: UITextView!
     
     // MARK: - Properties
     
+    var myImage: UIImage?
     var gradient: CAGradientLayer?
     let authService = AuthService()
     let firestoreService = FirestoreService<Profil>()
@@ -29,10 +35,13 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupTextFields()
+        setupView()
+        setupImageView()
         addGradient()
-        emailTextField.delegate = self
-        passwordTextField.delegate = self
-        passwordConfirmTextField.delegate = self
+        handleTextView()
+        hideKeyboardWhenTappedAround()
+        profileImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(addPhoto)))
     }
     
     // MARK: - Actions
@@ -48,6 +57,12 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
         return true
     }
     
+    private func setupImageView() {
+           profileImageView.layer.borderWidth = 3
+           profileImageView.layer.cornerRadius = profileImageView.frame.height / 2
+           profileImageView.layer.borderColor = UIColor.gray.cgColor
+       }
+    
     private func addGradient() {
         gradient = CAGradientLayer()
         gradient?.colors = [Colors.skyBlue.cgColor,UIColor.white]
@@ -57,39 +72,59 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
         self.view.layer.insertSublayer(gradient!, at: 0)
     }
     
-    private func createUserAccount() {
-        guard let userName = userNameTextField.text, !userName.isEmpty else {
-            signUpButton.shake()
-            presentAlert(with: "Merci de renseigner un nom d'utilisateur")
+    @objc private func addPhoto() {
+        showImagePicckerControllerActionSheet()
+    }
+    
+    private func getImage(_ completion: @escaping (String)->Void) {
+        guard let image = myImage, let data = image.jpegData(compressionQuality: 1.0) else {
+            presentAlert(with: "Il semble y avoir une erreur")
             return
         }
-        guard let email = emailTextField.text, !email.isEmpty else {
-            signUpButton.shake()
-            presentAlert(with: "Merci de renseigner un email")
-            return
-        }
-        guard let password = passwordTextField.text, !password.isEmpty else {
-            signUpButton.shake()
-            presentAlert(with: "Merci de renseigner un mot de passe")
-            return
-        }
-        guard let passwordConfirmed = passwordConfirmTextField.text, passwordConfirmed == password, !passwordConfirmed.isEmpty else {
-            signUpButton.shake()
-            presentAlert(with: "Merci de confirmer votre mot de passe")
-            return
-        }
-        authService.signUp(email: email, password: password) { (authResult, error) in
-            if error == nil && authResult != nil {
-                guard let currentUser = AuthService.getCurrentUser() else { return }
-                let profil = Profil(identifier: currentUser.uid, email: email, userName: userName)
-                self.saveUserData(profil)
-                self.dismiss(animated: true, completion: nil)
-            } else {
-                print("Error creating user: \(error!.localizedDescription)")
-                self.presentAlert(with: error!.localizedDescription)
-            }
+        let firebaseStorageManager = FirebaseStorageManager()
+        let imageName = UUID().uuidString
+        firebaseStorageManager.uploadImageData(data: data, serverFileName: imageName) { (isSuccess, url) in
+            guard let imageUrl = url else {return}
+            completion(imageUrl)
         }
     }
+    
+    private func createUserAccount() {
+           guard let userName = userNameTextField.text, !userName.isEmpty else {
+               presentAlert(with: "Merci de renseigner un nom d'utilisateur")
+               return}
+           guard let email = emailTextField.text, !email.isEmpty else {
+               presentAlert(with: "Merci de renseigner un email")
+               return}
+           guard let password = passwordTextField.text, !password.isEmpty else {
+               presentAlert(with: "Merci de renseigner un mot de passe")
+               return}
+           guard let passwordConfirmed = passwordConfirmTextField.text, passwordConfirmed == password, !passwordConfirmed.isEmpty else {
+               presentAlert(with: "Merci de confirmer votre mot de passe")
+               return}
+           guard let age = ageTextField.text, !age.isEmpty else {
+               presentAlert(with: "Merci de renseigner un âge")
+               return}
+           guard let equipment = equipmentTextField.text, !equipment.isEmpty else {
+               presentAlert(with: "Merci de renseigner un équipement")
+               return}
+           guard let description = descriptionTextView.text, !description.isEmpty else {
+               presentAlert(with: "Merci de renseigner une brève description de vous")
+               return}
+           authService.signUp(email: email, password: password) { (authResult, error) in
+               if error == nil && authResult != nil {
+                   guard let currentUser = AuthService.getCurrentUser() else { return }
+                   self.getImage { (imageURL) in
+                       let profil = Profil(identifier: currentUser.uid, email: email, userName: userName, imageURL: imageURL, equipment: equipment, age: age, description: description)
+                       self.saveUserData(profil)
+                       self.dismiss(animated: true, completion: nil)
+                   }
+               } else {
+                   print("Error creating user: \(error!.localizedDescription)")
+                   self.presentAlert(with: error!.localizedDescription)
+               }
+           }
+       }
     
     private func saveUserData(_ profil: Profil) {
         firestoreService.saveData(endpoint: .user, identifier: profil.identifier, data: profil.dictionary) { [weak self] result in
@@ -102,5 +137,86 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
             }
         }
     }
-}
+        
+        internal func handleTextView() {
+            descriptionTextView.text = "Décrivez-vous"
+            descriptionTextView.textColor = UIColor.lightGray
+            descriptionTextView.font = UIFont(name: "GlacialIndifference-Regular", size: 14.0)
+            descriptionTextView.returnKeyType = .done
+            descriptionTextView.delegate = self
+        }
+        
+        internal func textViewDidBeginEditing(_ textView: UITextView) {
+            if textView.text == "Décrivez-vous" {
+                textView.text = ""
+                textView.textColor = UIColor.black
+                textView.font = UIFont(name: "GlacialIndifference-Regular", size: 14.0)
+            }
+        }
+        
+        internal func textViewDidEndEditing(_ textView: UITextView) {
+            if textView.text == "" {
+                textView.text = "Décrivez-vous"
+                textView.textColor = UIColor.lightGray
+                textView.font = UIFont(name: "GlacialIndifference-Regular", size: 14.0)
+            }
+        }
+        
+        fileprivate func setupView() {
+            descriptionTextView.text = "Décrivez-vous"
+            descriptionTextView.font = UIFont(name: "GlacialIndifference-Regular", size: 15)
+            descriptionTextView.layer.cornerRadius = 5
+            profileImageView.isUserInteractionEnabled = true
+            profileImageView.layer.cornerRadius = 10
+            profileImageView.layer.masksToBounds = true
+        }
+        
+        fileprivate func setupTextFields() {
+            equipmentTextField.delegate = self
+            descriptionTextView.delegate = self
+            emailTextField.delegate = self
+            passwordTextField.delegate = self
+            passwordConfirmTextField.delegate = self
+            ageTextField.delegate = self
+            userNameTextField.delegate = self
+        }
+    }
+
+
+    // MARK: - ImagePicker Delegate
+
+    @available(iOS 13.0, *)
+    extension SignUpViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+        
+        func showImagePicckerControllerActionSheet() {
+            let photoLibraryAction = UIAlertAction(title: "Ouvrir la photothèque", style: .default) { (action) in
+                self.showImagePickerController(sourceType: .photoLibrary)
+            }
+            let cameraAction = UIAlertAction(title: "Prendre une photo", style: .default) { (action) in
+                self.showImagePickerController(sourceType: .camera)
+            }
+            let cancelAction = UIAlertAction(title: "Annuler", style: .cancel, handler: nil)
+            AlertService.showAlert(style: .actionSheet, title: "Choisissez votre image", message: nil, actions: [photoLibraryAction, cameraAction, cancelAction], completion: nil)
+        }
+        
+        private func showImagePickerController(sourceType: UIImagePickerController.SourceType) {
+            let imagePickerController = UIImagePickerController()
+            imagePickerController.delegate = self
+            imagePickerController.allowsEditing = true
+            imagePickerController.sourceType = sourceType
+            present(imagePickerController, animated: true, completion: nil)
+        }
+        
+        internal func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+            if let editedImage = info[UIImagePickerController.InfoKey.editedImage] as? UIImage {
+                profileImageView.image = editedImage
+                myImage = editedImage
+            } else if let originalImage = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
+                myImage = originalImage
+                profileImageView.image = originalImage
+            }
+            dismiss(animated: true, completion: nil)
+        }
+    }
+
 

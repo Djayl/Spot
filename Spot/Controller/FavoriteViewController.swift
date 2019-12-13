@@ -11,6 +11,7 @@ import GoogleMaps
 import Kingfisher
 
 
+@available(iOS 13.0, *)
 class FavoriteViewController: UIViewController {
     
     // MARK: - Outlets
@@ -104,20 +105,6 @@ class FavoriteViewController: UIViewController {
         }
     }
     
-//    private func listener(spot: Spot) {
-//        guard let spotUid = (spot.userData as! CustomData).uid else {return}
-//        let firestoreService = FirestoreService<Marker>()
-//        firestoreService.listenDocument(endpoint: .favorite(spotId: spotUid)) { [weak self] result in
-//            switch result {
-//            case .success(let marker):
-//                (spot.userData as! CustomData).isFavorite = marker.isFavorite
-//            case .failure(let error):
-//                print("Error updating document: \(error)")
-//                self?.presentAlert(with: "Erreur réseau")
-//            }
-//        }
-//    }
-    
     private func removeFav(spot: Spot) {
         guard let spotUid = (spot.userData as! CustomData).uid else {return}
         deleteFavoriteFromFirestore(identifier: spotUid)
@@ -150,6 +137,7 @@ class FavoriteViewController: UIViewController {
 
 // MARK: - Table View delegate and data source
 
+@available(iOS 13.0, *)
 extension FavoriteViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection    section: Int) -> Int {
@@ -185,9 +173,9 @@ extension FavoriteViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         let label = UILabel()
         label.text = "Ajoutez ici vos favoris"
-        label.font = UIFont(name: "IndigoRegular-Regular", size: 20)
+        label.font = UIFont(name: "LeagueSpartan-Bold", size: 20)
         label.textAlignment = .center
-        label.textColor = .darkGray
+        label.textColor = .label
         return label
     }
     

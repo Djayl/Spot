@@ -9,6 +9,7 @@
 import Foundation
 import UIKit
 
+@available(iOS 13.0, *)
 class CustomCell: UITableViewCell {
     
     // MARK: - Outlets
@@ -20,11 +21,11 @@ class CustomCell: UITableViewCell {
     
     func configureCell(spot:Spot) {
         cellLabel.text = spot.name?.capitalized
-        cellLabel.font = UIFont(name: "IndigoRegular-Regular", size: 15)
+        cellLabel.font = UIFont(name: "LeagueSpartan-Bold", size: 15)
         cellImageView.image = spot.image
         cellImageView.layer.cornerRadius = 15
         cellImageView.layer.borderWidth = 2
-        cellImageView.layer.borderColor = Colors.skyBlue.cgColor
+        cellImageView.layer.borderColor = UIColor.secondarySystemBackground.cgColor
     }
 }
 

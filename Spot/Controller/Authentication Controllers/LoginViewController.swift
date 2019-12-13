@@ -9,6 +9,7 @@
 import UIKit
 
 
+@available(iOS 13.0, *)
 final class LoginViewController: UIViewController {
     
     // MARK: - Outlets
@@ -95,6 +96,7 @@ final class LoginViewController: UIViewController {
 
 // MARK: - UITextfield Delegate
 
+@available(iOS 13.0, *)
 extension LoginViewController: UITextFieldDelegate {
     internal func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()

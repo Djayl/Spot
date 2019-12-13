@@ -141,7 +141,7 @@ final class CreateSpotViewController: UIViewController, UITextFieldDelegate, UIT
                     self.presentAlert(with: "Un spot doit avoir un titre")
                     return
                 }
-                guard let description = self.descriptionTextView.text, !description.isEmpty else {
+                guard let description = self.descriptionTextView.text, description != "Décrivez votre Spot", !description.isEmpty else {
                     self.creationButton.shake()
                     self.presentAlert(with: "Un spot doit avoir une description")
                     return
@@ -152,7 +152,7 @@ final class CreateSpotViewController: UIViewController, UITextFieldDelegate, UIT
                 let customMarker = CustomMarkerView(frame: CGRect(x: 0, y: 0, width: self.customMarkerWidth, height: self.customMarkerHeight), image: image, borderColor: UIColor.darkGray)
                 spot.iconView = customMarker
                 spot.title = name
-                spot.summary = description
+                spot.snippet = description
                 spot.coordinate = coor
                 self.getImage { (imageUrl) in
                     let privateSpot = Marker(identifier: identifier, name: name, description: description, coordinate: GeoPoint(latitude: coor.latitude, longitude: coor.longitude), imageURL: imageUrl, ownerId: self.ownerId,publicSpot: false , creatorName: creatorName, creationDate: Date())
@@ -217,33 +217,6 @@ final class CreateSpotViewController: UIViewController, UITextFieldDelegate, UIT
         showImagePicckerControllerActionSheet()
     }
     
-//    private func uploadImage(_ completion: @escaping (String)->Void) {
-//        guard let image = myImage, let data = image.jpegData(compressionQuality: 1.0) else {
-//            presentAlert(with: "Il semble y avoir une erreur")
-//            return
-//        }
-//        let imageName = UUID().uuidString
-//        let imageReference = Storage.storage().reference().child(MyKeys.imagesFolder).child(imageName)
-//        imageReference.putData(data, metadata: nil) { (metadata, err) in
-//            if let err = err {
-//                self.presentAlert(with: err.localizedDescription)
-//                return
-//            }
-//            imageReference.downloadURL(completion: { (url, err) in
-//                if let err = err {
-//                    self.presentAlert(with: err.localizedDescription)
-//                    return
-//                }
-//                guard let url = url else {
-//                    self.presentAlert(with: "Il semble y avoir une erreur")
-//                    return
-//                }
-//                let urlString = url.absoluteString
-//                completion(urlString)
-//            })
-//        }
-//    }
-    
     private func getImage(_ completion: @escaping (String)->Void) {
         guard let image = myImage, let data = image.jpegData(compressionQuality: 1.0) else {
                    presentAlert(with: "Il semble y avoir une erreur")
@@ -255,7 +228,6 @@ final class CreateSpotViewController: UIViewController, UITextFieldDelegate, UIT
             guard let imageUrl = url else {return}
             completion(imageUrl)
         }
-        
     }
  
     internal func handleTextView() {
@@ -293,6 +265,7 @@ final class CreateSpotViewController: UIViewController, UITextFieldDelegate, UIT
         return updatedText.count <= 140
     }
 }
+
 // MARK: - ImagePicker Delegate
 @available(iOS 13.0, *)
 extension CreateSpotViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
@@ -327,6 +300,8 @@ extension CreateSpotViewController: UIImagePickerControllerDelegate, UINavigatio
         dismiss(animated: true, completion: nil)
     }
 }
+
+
 
 
 

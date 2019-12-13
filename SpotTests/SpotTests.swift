@@ -1,3 +1,4 @@
+
 //
 //  SpotTests.swift
 //  SpotTests
@@ -114,6 +115,7 @@ class SpotTests: XCTestCase {
         wait(for: [exp], timeout: 1.0)
     }
 }
+
 
 
 
