@@ -36,9 +36,8 @@ class SignUpViewController: UIViewController, UITextFieldDelegate, UITextViewDel
     override func viewDidLoad() {
         super.viewDidLoad()
         setupTextFields()
-        setupView()
         setupImageView()
-        addGradient()
+        
         handleTextView()
         hideKeyboardWhenTappedAround()
         profileImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(addPhoto)))
@@ -58,10 +57,10 @@ class SignUpViewController: UIViewController, UITextFieldDelegate, UITextViewDel
     }
     
     private func setupImageView() {
-           profileImageView.layer.borderWidth = 3
-           profileImageView.layer.cornerRadius = profileImageView.frame.height / 2
-           profileImageView.layer.borderColor = UIColor.gray.cgColor
-       }
+        profileImageView.layer.borderWidth = 2
+        profileImageView.layer.borderColor = UIColor.secondarySystemBackground.cgColor
+        profileImageView.layer.cornerRadius = profileImageView.frame.height / 2
+    }
     
     private func addGradient() {
         gradient = CAGradientLayer()
@@ -139,37 +138,40 @@ class SignUpViewController: UIViewController, UITextFieldDelegate, UITextViewDel
     }
         
         internal func handleTextView() {
-            descriptionTextView.text = "Décrivez-vous"
+            descriptionTextView.text = "Parlez-nous un peu de vous, de votre passion pour la photo..."
             descriptionTextView.textColor = UIColor.lightGray
-            descriptionTextView.font = UIFont(name: "GlacialIndifference-Regular", size: 14.0)
+            descriptionTextView.font = UIFont(name: "GlacialIndifference-Regular", size: 16.0)
             descriptionTextView.returnKeyType = .done
             descriptionTextView.delegate = self
+            descriptionTextView.layer.cornerRadius = 5
+            descriptionTextView.layer.borderWidth = 1
+            descriptionTextView.layer.borderColor = UIColor.secondarySystemBackground.cgColor
         }
         
         internal func textViewDidBeginEditing(_ textView: UITextView) {
-            if textView.text == "Décrivez-vous" {
+            if textView.text == "Parlez-nous un peu de vous, de votre passion pour la photo..." {
                 textView.text = ""
                 textView.textColor = UIColor.black
-                textView.font = UIFont(name: "GlacialIndifference-Regular", size: 14.0)
+                textView.font = UIFont(name: "Parlez-nous un peu de vous, de votre passion pour la photo...", size: 16.0)
             }
         }
         
         internal func textViewDidEndEditing(_ textView: UITextView) {
             if textView.text == "" {
-                textView.text = "Décrivez-vous"
+                textView.text = "Parlez-nous un peu de vous, de votre passion pour la photo..."
                 textView.textColor = UIColor.lightGray
-                textView.font = UIFont(name: "GlacialIndifference-Regular", size: 14.0)
+                textView.font = UIFont(name: "GlacialIndifference-Regular", size: 16.0)
             }
         }
         
-        fileprivate func setupView() {
-            descriptionTextView.text = "Décrivez-vous"
-            descriptionTextView.font = UIFont(name: "GlacialIndifference-Regular", size: 15)
-            descriptionTextView.layer.cornerRadius = 5
-            profileImageView.isUserInteractionEnabled = true
-            profileImageView.layer.cornerRadius = 10
-            profileImageView.layer.masksToBounds = true
-        }
+//        fileprivate func setupView() {
+//            descriptionTextView.text = "Décrivez-vous"
+//            descriptionTextView.font = UIFont(name: "GlacialIndifference-Regular", size: 15)
+//            descriptionTextView.layer.cornerRadius = 5
+//            profileImageView.isUserInteractionEnabled = true
+//            profileImageView.layer.cornerRadius = 10
+//            profileImageView.layer.masksToBounds = true
+//        }
         
         fileprivate func setupTextFields() {
             equipmentTextField.delegate = self

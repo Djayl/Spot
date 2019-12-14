@@ -24,7 +24,7 @@ class CreateProfileViewController: UIViewController, UITextViewDelegate, UITextF
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupView()
+//        setupView()
         setupImageView()
         setupTextFields()
         handleTextView()
@@ -38,7 +38,10 @@ class CreateProfileViewController: UIViewController, UITextViewDelegate, UITextF
         fetchProfilInformation()
     }
     @IBAction func saveProfilData(_ sender: Any) {
-        saveUserData()
+//        saveUserData()
+        updateEquipment()
+        updateDescription()
+        updateProfileImage()
     }
     
     @objc private func addPhoto() {
@@ -76,9 +79,7 @@ class CreateProfileViewController: UIViewController, UITextViewDelegate, UITextF
     }
     
     private func setupImageView() {
-//        profileImageView.layer.borderWidth = 3
-//        profileImageView.contentMode = .scaleAspectFill
-//        profileImageView.layer.cornerRadius = 6
+        profileImageView.layer.borderWidth = 2
         profileImageView.layer.cornerRadius = profileImageView.frame.height / 2
         profileImageView.layer.borderColor = UIColor.gray.cgColor
     }
@@ -124,7 +125,6 @@ class CreateProfileViewController: UIViewController, UITextViewDelegate, UITextF
     private func updateProfileImage() {
         if myImage != nil {
             self.getImage { (imageUrl) in
-                
                 let data = ["imageURL": imageUrl]
                 self.firestoreService.updateData(endpoint: .currentUser, data: data) { [weak self] result in
                     switch result {
@@ -140,6 +140,44 @@ class CreateProfileViewController: UIViewController, UITextViewDelegate, UITextF
             }
         }
     }
+    
+    private func updateEquipment() {
+        guard let equipment = self.equipmentTextField.text else {return}
+        if equipment.isEmpty == false {
+            let data = ["equipment": equipment]
+            self.firestoreService.updateData(endpoint: .currentUser, data: data) { [weak self] result in
+                switch result {
+                case .success(let successMessage):
+                    ProgressHUD.showSuccess(NSLocalizedString("Profil mis à jour", comment: ""))
+                    print(successMessage)
+                    self?.dismiss(animated: true, completion: nil)
+                case .failure(let error):
+                    print("Error adding document: \(error)")
+                    self?.presentAlert(with: "Erreur réseau")
+                }
+            }
+        }
+    }
+    
+    private func updateDescription() {
+        guard let description = self.descriptionTextView.text else {return}
+        if description.isEmpty == false {
+            let data = ["description": description]
+            self.firestoreService.updateData(endpoint: .currentUser, data: data) { [weak self] result in
+                switch result {
+                case .success(let successMessage):
+                    ProgressHUD.showSuccess(NSLocalizedString("Profil mis à jour", comment: ""))
+                    print(successMessage)
+                    self?.dismiss(animated: true, completion: nil)
+                case .failure(let error):
+                    print("Error adding document: \(error)")
+                    self?.presentAlert(with: "Erreur réseau")
+                }
+            }
+        }
+    }
+    
+    
     
     private func saveUserData() {
         guard self.myImage != nil else {
