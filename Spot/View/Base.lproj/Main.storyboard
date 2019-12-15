@@ -588,44 +588,23 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Description" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Usx-oC-4p0">
-                                <rect key="frame" x="20" y="325.5" width="280" height="18"/>
-                                <fontDescription key="fontDescription" name="GlacialIndifference-Regular" family="Glacial Indifference" pointSize="15"/>
+                                <rect key="frame" x="10" y="389.5" width="300" height="19.5"/>
+                                <fontDescription key="fontDescription" name="GlacialIndifference-Regular" family="Glacial Indifference" pointSize="16"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Description:" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Np0-X2-Xg2">
-                                <rect key="frame" x="20" y="300.5" width="280" height="20"/>
-                                <fontDescription key="fontDescription" name="LeagueSpartan-Bold" family="League Spartan" pointSize="16"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="A propos du Spot: " textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Np0-X2-Xg2">
+                                <rect key="frame" x="10" y="365" width="300" height="19.5"/>
+                                <fontDescription key="fontDescription" name="GlacialIndifference-Bold" family="Glacial Indifference" pointSize="16"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Date de création du Spot: " textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Xzo-hS-p7t">
-                                <rect key="frame" x="20" y="348.5" width="280" height="20"/>
-                                <fontDescription key="fontDescription" name="LeagueSpartan-Bold" family="League Spartan" pointSize="16"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Date" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xQP-X3-u8a">
-                                <rect key="frame" x="20" y="373.5" width="280" height="30"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="30" id="Cht-uu-ksX"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" name="GlacialIndifference-Regular" family="Glacial Indifference" pointSize="15"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Adresse du Spot: " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1dU-xh-UrI">
-                                <rect key="frame" x="20" y="408.5" width="280" height="20"/>
-                                <fontDescription key="fontDescription" name="LeagueSpartan-Bold" family="League Spartan" pointSize="16"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Coordinate" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rrW-28-QJI">
-                                <rect key="frame" x="20" y="433.5" width="280" height="30"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="30" id="MLW-dS-wx9"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" name="GlacialIndifference-Regular" family="Glacial Indifference" pointSize="15"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1dU-xh-UrI">
+                                <rect key="frame" x="10" y="419" width="300" height="19.5"/>
+                                <string key="text" base64-UTF8="YES">
+Tx7DuSBzZSB0cm91dmUgbGUgU3BvdD8gA
+</string>
+                                <fontDescription key="fontDescription" name="GlacialIndifference-Bold" family="Glacial Indifference" pointSize="16"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -636,21 +615,6 @@
                                     <action selector="putSpotToFavorite:" destination="Afb-Q0-1cP" eventType="touchUpInside" id="p0y-EW-a6G"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="24P-06-IuW">
-                                <rect key="frame" x="20" y="265.5" width="280" height="30"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="30" id="t4G-1Q-GE2"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" name="GlacialIndifference-Regular" family="Glacial Indifference" pointSize="15"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Spot créé par:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oms-9V-b0R">
-                                <rect key="frame" x="20" y="240.5" width="280" height="20"/>
-                                <fontDescription key="fontDescription" name="LeagueSpartan-Bold" family="League Spartan" pointSize="16"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lRb-FW-gpS">
                                 <rect key="frame" x="289" y="20" width="21" height="22"/>
                                 <state key="normal" image="trash-bin">
@@ -660,63 +624,100 @@
                                     <action selector="remove:" destination="Afb-Q0-1cP" eventType="touchUpInside" id="o7e-vf-E5l"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3vq-5u-9Qh">
-                                <rect key="frame" x="224" y="265" width="82" height="30"/>
-                                <state key="normal" title="Voir le Profil"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="btm-2M-Gaa">
+                                <rect key="frame" x="75" y="245.5" width="80" height="20.5"/>
+                                <subviews>
+                                    <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="24P-06-IuW">
+                                        <rect key="frame" x="0.0" y="0.0" width="40" height="20.5"/>
+                                        <fontDescription key="fontDescription" name="GlacialIndifference-Regular" family="Glacial Indifference" pointSize="16"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Age" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZSj-Zh-Pfk">
+                                        <rect key="frame" x="40" y="0.0" width="40" height="20.5"/>
+                                        <fontDescription key="fontDescription" name="GlacialIndifference-Regular" family="Glacial Indifference" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                            </stackView>
+                            <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Coordinate" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rrW-28-QJI">
+                                <rect key="frame" x="10" y="443.5" width="300" height="19.5"/>
+                                <fontDescription key="fontDescription" name="GlacialIndifference-Regular" family="Glacial Indifference" pointSize="16"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="equipment" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TYW-Ak-BZZ">
+                                <rect key="frame" x="75" y="281" width="73.5" height="19.5"/>
+                                <fontDescription key="fontDescription" name="GlacialIndifference-Regular" family="Glacial Indifference" pointSize="16"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Date" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xQP-X3-u8a">
+                                <rect key="frame" x="10" y="325.5" width="300" height="19.5"/>
+                                <fontDescription key="fontDescription" name="GlacialIndifference-Bold" family="Glacial Indifference" pointSize="16"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CFx-KF-S2J">
+                                <rect key="frame" x="10" y="245.5" width="60" height="60"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="60" id="D1B-rL-ywd"/>
+                                    <constraint firstAttribute="width" constant="60" id="ZYT-lV-g2h"/>
+                                </constraints>
+                                <state key="normal" image="profile-pic "/>
                                 <connections>
-                                    <action selector="goToCreatorProfile:" destination="Afb-Q0-1cP" eventType="touchUpInside" id="Lum-Ut-Z0a"/>
+                                    <action selector="goToCreatorProfile:" destination="Afb-Q0-1cP" eventType="touchUpInside" id="zvU-MA-4E3"/>
                                 </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
-                            <constraint firstItem="Xzo-hS-p7t" firstAttribute="top" secondItem="Usx-oC-4p0" secondAttribute="bottom" constant="5" id="0pl-li-7GA"/>
-                            <constraint firstItem="Np0-X2-Xg2" firstAttribute="leading" secondItem="vv9-lj-62J" secondAttribute="leading" constant="20" id="3F8-Ue-9Om"/>
-                            <constraint firstItem="Xzo-hS-p7t" firstAttribute="leading" secondItem="vv9-lj-62J" secondAttribute="leading" constant="20" id="6aB-md-XvX"/>
-                            <constraint firstItem="Usx-oC-4p0" firstAttribute="leading" secondItem="vv9-lj-62J" secondAttribute="leading" constant="20" id="7II-9O-qMv"/>
-                            <constraint firstItem="vv9-lj-62J" firstAttribute="trailing" secondItem="xQP-X3-u8a" secondAttribute="trailing" constant="20" id="7vm-Dy-ylL"/>
+                            <constraint firstItem="1dU-xh-UrI" firstAttribute="leading" secondItem="vv9-lj-62J" secondAttribute="leading" constant="10" id="53F-Vz-iEP"/>
+                            <constraint firstItem="Np0-X2-Xg2" firstAttribute="leading" secondItem="vv9-lj-62J" secondAttribute="leading" constant="10" id="5u9-to-ddw"/>
+                            <constraint firstItem="CFx-KF-S2J" firstAttribute="leading" secondItem="vv9-lj-62J" secondAttribute="leading" constant="10" id="5ym-oc-vOp"/>
+                            <constraint firstItem="vv9-lj-62J" firstAttribute="trailing" secondItem="xQP-X3-u8a" secondAttribute="trailing" constant="10" id="7vm-Dy-ylL"/>
+                            <constraint firstItem="btm-2M-Gaa" firstAttribute="top" secondItem="zy3-jf-QsA" secondAttribute="bottom" constant="10" id="82a-oe-RhI"/>
+                            <constraint firstItem="xQP-X3-u8a" firstAttribute="top" secondItem="CFx-KF-S2J" secondAttribute="bottom" constant="20" id="83Z-WD-Q5m"/>
                             <constraint firstItem="vv9-lj-62J" firstAttribute="trailing" secondItem="lRb-FW-gpS" secondAttribute="trailing" constant="10" id="8Rn-v9-PTu"/>
+                            <constraint firstItem="Usx-oC-4p0" firstAttribute="top" secondItem="Np0-X2-Xg2" secondAttribute="bottom" constant="5" id="AgQ-tm-FeO"/>
                             <constraint firstItem="zfU-47-IQe" firstAttribute="top" secondItem="vv9-lj-62J" secondAttribute="top" constant="20" id="Atl-hX-0dR"/>
                             <constraint firstItem="vv9-lj-62J" firstAttribute="trailing" secondItem="zfU-47-IQe" secondAttribute="trailing" constant="20" id="B8K-kg-Sbf"/>
                             <constraint firstItem="lRb-FW-gpS" firstAttribute="top" secondItem="vv9-lj-62J" secondAttribute="top" constant="20" id="Daj-Cj-9VT"/>
-                            <constraint firstItem="oms-9V-b0R" firstAttribute="top" secondItem="zy3-jf-QsA" secondAttribute="bottom" constant="5" id="F1A-0g-KoZ"/>
+                            <constraint firstItem="vv9-lj-62J" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="TYW-Ak-BZZ" secondAttribute="trailing" symbolic="YES" id="EGx-nN-iTe"/>
+                            <constraint firstItem="vv9-lj-62J" firstAttribute="trailing" secondItem="1dU-xh-UrI" secondAttribute="trailing" constant="10" id="EyI-Ub-0aX"/>
+                            <constraint firstItem="btm-2M-Gaa" firstAttribute="leading" secondItem="CFx-KF-S2J" secondAttribute="trailing" constant="5" id="Fcb-9o-QSE"/>
+                            <constraint firstItem="Usx-oC-4p0" firstAttribute="leading" secondItem="vv9-lj-62J" secondAttribute="leading" constant="10" id="Fnr-OK-ubD"/>
                             <constraint firstItem="zfU-47-IQe" firstAttribute="leading" secondItem="vv9-lj-62J" secondAttribute="leading" constant="20" id="Hne-aY-oFL"/>
-                            <constraint firstItem="xQP-X3-u8a" firstAttribute="leading" secondItem="vv9-lj-62J" secondAttribute="leading" constant="20" id="Iaf-hv-kGg"/>
-                            <constraint firstItem="vv9-lj-62J" firstAttribute="trailing" secondItem="Xzo-hS-p7t" secondAttribute="trailing" constant="20" id="J9E-MN-rcz"/>
-                            <constraint firstItem="1dU-xh-UrI" firstAttribute="top" secondItem="xQP-X3-u8a" secondAttribute="bottom" constant="5" id="LCG-Q3-94T"/>
-                            <constraint firstItem="vv9-lj-62J" firstAttribute="trailing" secondItem="oms-9V-b0R" secondAttribute="trailing" constant="20" id="MWi-Je-nev"/>
-                            <constraint firstItem="vv9-lj-62J" firstAttribute="trailing" secondItem="1dU-xh-UrI" secondAttribute="trailing" constant="20" id="Nz7-nP-Iky"/>
-                            <constraint firstItem="3vq-5u-9Qh" firstAttribute="top" secondItem="oms-9V-b0R" secondAttribute="bottom" constant="4.5" id="VXH-Xd-oi4"/>
-                            <constraint firstItem="1dU-xh-UrI" firstAttribute="leading" secondItem="vv9-lj-62J" secondAttribute="leading" constant="20" id="WAI-ZQ-gY9"/>
-                            <constraint firstItem="24P-06-IuW" firstAttribute="leading" secondItem="vv9-lj-62J" secondAttribute="leading" constant="20" id="X52-mj-vK8"/>
+                            <constraint firstItem="xQP-X3-u8a" firstAttribute="leading" secondItem="vv9-lj-62J" secondAttribute="leading" constant="10" id="Iaf-hv-kGg"/>
+                            <constraint firstItem="TYW-Ak-BZZ" firstAttribute="top" secondItem="btm-2M-Gaa" secondAttribute="bottom" constant="15" id="Jfr-aH-Gix"/>
+                            <constraint firstItem="1dU-xh-UrI" firstAttribute="top" secondItem="Usx-oC-4p0" secondAttribute="bottom" constant="10" id="KM0-uy-MgT"/>
+                            <constraint firstItem="CFx-KF-S2J" firstAttribute="top" secondItem="zy3-jf-QsA" secondAttribute="bottom" constant="10" id="L7f-eb-wcU"/>
+                            <constraint firstItem="vv9-lj-62J" firstAttribute="trailing" secondItem="rrW-28-QJI" secondAttribute="trailing" constant="10" id="LR9-TY-jPX"/>
+                            <constraint firstItem="btm-2M-Gaa" firstAttribute="leading" secondItem="TYW-Ak-BZZ" secondAttribute="leading" id="PLT-sb-6zJ"/>
+                            <constraint firstItem="Np0-X2-Xg2" firstAttribute="top" secondItem="xQP-X3-u8a" secondAttribute="bottom" constant="20" id="QUK-44-nSa"/>
+                            <constraint firstItem="vv9-lj-62J" firstAttribute="trailing" secondItem="Np0-X2-Xg2" secondAttribute="trailing" constant="10" id="TbF-Wz-Hyr"/>
                             <constraint firstItem="vv9-lj-62J" firstAttribute="bottom" secondItem="APG-j2-al8" secondAttribute="bottom" constant="20" id="XjL-ZA-YNj"/>
-                            <constraint firstItem="Np0-X2-Xg2" firstAttribute="top" secondItem="24P-06-IuW" secondAttribute="bottom" constant="5" id="Y76-8u-Bhh"/>
-                            <constraint firstItem="vv9-lj-62J" firstAttribute="trailing" secondItem="Usx-oC-4p0" secondAttribute="trailing" constant="20" id="ade-IS-PEV"/>
-                            <constraint firstItem="vv9-lj-62J" firstAttribute="trailing" secondItem="24P-06-IuW" secondAttribute="trailing" constant="20" id="bQC-a0-8kp"/>
-                            <constraint firstItem="Usx-oC-4p0" firstAttribute="top" secondItem="Np0-X2-Xg2" secondAttribute="bottom" constant="5" id="dxx-YT-ZS1"/>
+                            <constraint firstItem="vv9-lj-62J" firstAttribute="trailing" secondItem="Usx-oC-4p0" secondAttribute="trailing" constant="10" id="YX7-aF-qf4"/>
                             <constraint firstItem="zy3-jf-QsA" firstAttribute="top" secondItem="vv9-lj-62J" secondAttribute="top" constant="65" id="eAQ-Rr-1NA"/>
                             <constraint firstItem="APG-j2-al8" firstAttribute="leading" secondItem="vv9-lj-62J" secondAttribute="leading" constant="70" id="iaq-SG-4ga"/>
-                            <constraint firstItem="oms-9V-b0R" firstAttribute="leading" secondItem="vv9-lj-62J" secondAttribute="leading" constant="20" id="ndp-04-9an"/>
-                            <constraint firstItem="rrW-28-QJI" firstAttribute="top" secondItem="1dU-xh-UrI" secondAttribute="bottom" constant="5" id="o55-mE-6HH"/>
-                            <constraint firstItem="24P-06-IuW" firstAttribute="top" secondItem="oms-9V-b0R" secondAttribute="bottom" constant="5" id="pJc-GB-4ib"/>
+                            <constraint firstItem="rrW-28-QJI" firstAttribute="top" secondItem="1dU-xh-UrI" secondAttribute="bottom" constant="5" id="jj5-5f-UhK"/>
                             <constraint firstItem="vv9-lj-62J" firstAttribute="trailing" secondItem="zy3-jf-QsA" secondAttribute="trailing" id="q8C-KN-YxE"/>
-                            <constraint firstItem="vv9-lj-62J" firstAttribute="trailing" secondItem="rrW-28-QJI" secondAttribute="trailing" constant="20" id="rhG-JK-1fC"/>
-                            <constraint firstItem="vv9-lj-62J" firstAttribute="trailing" secondItem="Np0-X2-Xg2" secondAttribute="trailing" constant="20" id="rhN-8u-cay"/>
                             <constraint firstItem="zy3-jf-QsA" firstAttribute="leading" secondItem="vv9-lj-62J" secondAttribute="leading" id="s2j-Yi-x03"/>
-                            <constraint firstItem="3vq-5u-9Qh" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="vv9-lj-62J" secondAttribute="leading" symbolic="YES" id="udr-0R-NdB"/>
-                            <constraint firstItem="vv9-lj-62J" firstAttribute="trailing" secondItem="3vq-5u-9Qh" secondAttribute="trailing" constant="14" id="uwK-fu-1o4"/>
-                            <constraint firstItem="xQP-X3-u8a" firstAttribute="top" secondItem="Xzo-hS-p7t" secondAttribute="bottom" constant="5" id="v3r-s4-sPA"/>
+                            <constraint firstItem="rrW-28-QJI" firstAttribute="leading" secondItem="vv9-lj-62J" secondAttribute="leading" constant="10" id="sI7-G3-8hB"/>
                             <constraint firstItem="vv9-lj-62J" firstAttribute="trailing" secondItem="APG-j2-al8" secondAttribute="trailing" constant="70" id="vqb-go-Wli"/>
-                            <constraint firstItem="rrW-28-QJI" firstAttribute="leading" secondItem="vv9-lj-62J" secondAttribute="leading" constant="20" id="xR5-Lv-zqh"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="vv9-lj-62J"/>
                     </view>
                     <navigationItem key="navigationItem" id="3lc-Z0-OcJ"/>
                     <connections>
+                        <outlet property="ageLabel" destination="ZSj-Zh-Pfk" id="YGH-9b-sbZ"/>
                         <outlet property="deleteButton" destination="lRb-FW-gpS" id="pkM-B7-7Bp"/>
+                        <outlet property="equipmentLabel" destination="TYW-Ak-BZZ" id="5aK-ev-664"/>
                         <outlet property="favoriteButton" destination="APG-j2-al8" id="saf-Qt-0aX"/>
                         <outlet property="imageView" destination="zy3-jf-QsA" id="Qcb-4I-Nbq"/>
                         <outlet property="pictureTakerName" destination="24P-06-IuW" id="B3r-hq-NJm"/>
+                        <outlet property="profileCreatorPictureButton" destination="CFx-KF-S2J" id="AJd-5s-3cv"/>
                         <outlet property="spotCoordinate" destination="rrW-28-QJI" id="DxX-q6-BhT"/>
                         <outlet property="spotDate" destination="xQP-X3-u8a" id="qS6-aS-5eg"/>
                         <outlet property="spotDescription" destination="Usx-oC-4p0" id="EtE-LE-lNt"/>

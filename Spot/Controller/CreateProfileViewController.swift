@@ -21,10 +21,10 @@ class CreateProfileViewController: UIViewController, UITextViewDelegate, UITextF
     let authService = AuthService()
     let firestoreService = FirestoreService<Profil>()
     var myImage: UIImage?
+    var profileDescription = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
-//        setupView()
         setupImageView()
         setupTextFields()
         handleTextView()
@@ -38,7 +38,7 @@ class CreateProfileViewController: UIViewController, UITextViewDelegate, UITextF
         fetchProfilInformation()
     }
     @IBAction func saveProfilData(_ sender: Any) {
-//        saveUserData()
+        ProgressHUD.showSuccess(NSLocalizedString("Profil mis à jour", comment: ""))
         updateEquipment()
         updateDescription()
         updateProfileImage()
@@ -63,6 +63,7 @@ class CreateProfileViewController: UIViewController, UITextViewDelegate, UITextF
     
     private func updateScreenWithProfil(_ profil: Profil) {
         descriptionTextView.text = profil.description
+        profileDescription = profil.description
     }
     
     private func fetchProfilInformation() {
@@ -129,7 +130,6 @@ class CreateProfileViewController: UIViewController, UITextViewDelegate, UITextF
                 self.firestoreService.updateData(endpoint: .currentUser, data: data) { [weak self] result in
                     switch result {
                     case .success(let successMessage):
-                        ProgressHUD.showSuccess(NSLocalizedString("Profil mis à jour", comment: ""))
                         print(successMessage)
                         self?.dismiss(animated: true, completion: nil)
                     case .failure(let error):
@@ -138,6 +138,8 @@ class CreateProfileViewController: UIViewController, UITextViewDelegate, UITextF
                     }
                 }
             }
+        } else {
+            self.dismiss(animated: true, completion: nil)
         }
     }
     
@@ -148,7 +150,6 @@ class CreateProfileViewController: UIViewController, UITextViewDelegate, UITextF
             self.firestoreService.updateData(endpoint: .currentUser, data: data) { [weak self] result in
                 switch result {
                 case .success(let successMessage):
-                    ProgressHUD.showSuccess(NSLocalizedString("Profil mis à jour", comment: ""))
                     print(successMessage)
                     self?.dismiss(animated: true, completion: nil)
                 case .failure(let error):
@@ -156,17 +157,18 @@ class CreateProfileViewController: UIViewController, UITextViewDelegate, UITextF
                     self?.presentAlert(with: "Erreur réseau")
                 }
             }
+        } else {
+          self.dismiss(animated: true, completion: nil)
         }
     }
     
     private func updateDescription() {
         guard let description = self.descriptionTextView.text else {return}
-        if description.isEmpty == false {
+        if description != profileDescription {
             let data = ["description": description]
             self.firestoreService.updateData(endpoint: .currentUser, data: data) { [weak self] result in
                 switch result {
                 case .success(let successMessage):
-                    ProgressHUD.showSuccess(NSLocalizedString("Profil mis à jour", comment: ""))
                     print(successMessage)
                     self?.dismiss(animated: true, completion: nil)
                 case .failure(let error):
@@ -174,6 +176,8 @@ class CreateProfileViewController: UIViewController, UITextViewDelegate, UITextF
                     self?.presentAlert(with: "Erreur réseau")
                 }
             }
+        } else {
+            self.dismiss(animated: true, completion: nil)
         }
     }
     

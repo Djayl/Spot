@@ -54,11 +54,7 @@ class ProfileViewController: UIViewController {
     }
     
     private func setupImageView() {
-//        profileImageView.contentMode = .scaleAspectFill
-//        profileImageView.layer.borderWidth = 3
-//        profileImageView.layer.cornerRadius = 6
         profileImageView.layer.cornerRadius = profileImageView.frame.height / 2
-//        profileImageView.layer.borderColor = UIColor.gray.cgColor
     }
     
     fileprivate func setupView() {

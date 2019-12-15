@@ -136,6 +136,15 @@ class SignUpViewController: UIViewController, UITextFieldDelegate, UITextViewDel
             }
         }
     }
+    
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        let maxLen:Int = 2
+        if(textField == ageTextField){
+            let currentText = textField.text! + string
+            return currentText.count <= maxLen
+        }
+        return true
+    }
         
         internal func handleTextView() {
             descriptionTextView.text = "Parlez-nous un peu de vous, de votre passion pour la photo..."

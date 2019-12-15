@@ -25,6 +25,10 @@ class DetailsViewController: UIViewController {
     @IBOutlet weak var spotCoordinate: UILabel!
     @IBOutlet weak var favoriteButton: FavoriteButton!
     @IBOutlet weak var deleteButton: UIButton!
+    @IBOutlet weak var profileCreatorPictureButton: UIButton!
+    @IBOutlet weak var equipmentLabel: UILabel!
+    @IBOutlet weak var ageLabel: UILabel!
+    
     
     
     // MARK: - Properties
@@ -41,6 +45,7 @@ class DetailsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         fetchProfilInformation()
+        setupImageView()
         getSpotDetails()
         getImage()
         reverseGeocodeCoordinate(spot.position)
@@ -54,6 +59,7 @@ class DetailsViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.setNavigationBarHidden(true, animated: false)
+        displaySpotOwnerProfile()
         getImage()
         listenToFavoriteSpot()
     }
@@ -102,6 +108,13 @@ class DetailsViewController: UIViewController {
         }
     }
     
+    private func setupImageView() {
+           profileCreatorPictureButton.layer.cornerRadius = profileCreatorPictureButton.frame.height / 2
+        profileCreatorPictureButton.clipsToBounds = true
+        profileCreatorPictureButton.layer.borderColor = UIColor.lightGray.cgColor
+        profileCreatorPictureButton.layer.borderWidth = 2
+       }
+    
     private func showSpotOwnerProfile(profil: Profil) {
         let vc = storyboard?.instantiateViewController(withIdentifier: "SpotCreatorVC") as! SpotCreatorProfileViewController
         let nc = UINavigationController(rootViewController: vc)
@@ -116,34 +129,65 @@ class DetailsViewController: UIViewController {
             switch result {
             case .success(let profil):
                 self?.showSpotOwnerProfile(profil: profil)
+//                self?.setSpotCreatorProfile(profil)
             case .failure(let error):
                 print(error.localizedDescription)
                 self?.presentAlert(with: "Erreur réseau")
             }
         }
-
     }
+    
+    private func displaySpotOwnerProfile() {
+        guard let identifier = (spot.userData as? CustomData)?.ownerId else {return}
+        let firestoreService = FirestoreService<Profil>()
+        firestoreService.fetchDocument(endpoint: .particularUser(userId: identifier)) { [weak self] result in
+            switch result {
+            case .success(let profil):
+                self?.setSpotCreatorProfile(profil)
+                self?.getProfileImage(profil)
+            case .failure(let error):
+                print(error.localizedDescription)
+                self?.presentAlert(with: "Erreur réseau")
+            }
+        }
+    }
+    
+    private func getProfileImage(_ profil: Profil) {
+           let urlString = profil.imageURL
+           guard let url = URL(string: urlString) else {return}
+           KingfisherManager.shared.retrieveImage(with: url, options: nil) { result in
+               let image = try? result.get().image
+               if let image = image {
+                self.profileCreatorPictureButton.setImage(image, for: .normal)            }
+           }
+       }
     
      private func setProfilData(_ profil: Profil){
          userName = profil.userName
          ownerId = profil.identifier
     }
+    
+    private func setSpotCreatorProfile(_ profil: Profil){
+        pictureTakerName.text = "\(profil.userName.capitalized), "
+        equipmentLabel.text = profil.equipment.capitalized
+        ageLabel.text = profil.age
+    }
      
      
     private func fetchProfilInformation() {
-           let firestoreService = FirestoreService<Profil>()
-           firestoreService.fetchDocument(endpoint: .currentUser) { [weak self] result in
-               switch result {
-               case .success(let profil):
+        let firestoreService = FirestoreService<Profil>()
+        firestoreService.fetchDocument(endpoint: .currentUser) { [weak self] result in
+            switch result {
+            case .success(let profil):
                 print(profil.userName)
-                   self?.setProfilData(profil)
-                   self?.handleDeleteButton()
-               case .failure(let error):
-                   print(error.localizedDescription)
-                   self?.presentAlert(with: "Erreur réseau")
-               }
-           }
-       }
+                self?.setProfilData(profil)
+                self?.handleDeleteButton()
+            case .failure(let error):
+                print(error.localizedDescription)
+                self?.presentAlert(with: "Erreur réseau")
+            }
+        }
+    }
     
     private func getSpotDetails() {
         guard let name = spot.title else {return}
@@ -156,7 +200,7 @@ class DetailsViewController: UIViewController {
 //            spotDescription.text = "Aucune description n'a été rédigée pour ce Spot"
 //        }
         guard let date  = (spot.userData as? CustomData)?.creationDate else {return}
-        spotDate.text = date.asString(style: .short)
+        spotDate.text = "Spot créé le \(date.asString(style: .short))"
         guard let creatorName = (spot.userData as? CustomData)?.creatorName else {return}
         pictureTakerName.text = creatorName
     }
