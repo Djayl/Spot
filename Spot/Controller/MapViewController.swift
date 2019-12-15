@@ -110,12 +110,12 @@ class MapViewController: UIViewController {
         alert.addColorInTitleAndMessage(color: UIColor.systemBlue, titleFontSize: 20, messageFontSize: 15)
         alert.addAction(UIAlertAction(title: "Les spots publics", style: .default, handler: { (_) in
             self.mapView.clear()
-            //            self.fetchPublicSpots()
+            self.fetchPublicSpots()
             self.listenToPublicSpots()
         }))
         alert.addAction(UIAlertAction(title: "Ma collection privée", style: .default, handler: { (_) in
             self.mapView.clear()
-            //            self.fetchPrivateSpots()
+            self.fetchPrivateSpots()
             self.listenToPrivateSpots()
         }))
         alert.addAction(UIAlertAction(title: "Mes favoris", style: .default, handler: { (_) in

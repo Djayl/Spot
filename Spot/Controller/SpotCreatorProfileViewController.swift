@@ -15,12 +15,15 @@ class SpotCreatorProfileViewController: UIViewController {
     @IBOutlet weak var creatorNameLabel: UILabel!
     @IBOutlet weak var creatorEquipmentLabel: UILabel!
     @IBOutlet weak var creatorDescriptionLabel: UILabel!
+    @IBOutlet weak var ageLabel: UILabel!
     
-    var profil: Profil?
+//    var profil: Profil?
+    var userId = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setupImageView()
+        creatorDescriptionLabel.sizeToFit()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -34,9 +37,10 @@ class SpotCreatorProfileViewController: UIViewController {
     }
     
     private func updateScreenWithProfil(_ profil: Profil) {
-        creatorNameLabel.text = profil.userName.capitalized
+        creatorNameLabel.text = "\(profil.userName.capitalized), "
         creatorDescriptionLabel.text = profil.description
-        creatorEquipmentLabel.text = profil.equipment
+        creatorEquipmentLabel.text = profil.equipment.capitalized
+        ageLabel.text = "\(profil.age) ans"
     }
     
     private func getImage(_ profil: Profil) {
@@ -52,7 +56,7 @@ class SpotCreatorProfileViewController: UIViewController {
     
     private func listenProfilInformation() {
         let firestoreService = FirestoreService<Profil>()
-        firestoreService.listenDocument(endpoint: .currentUser) { [weak self] result in
+        firestoreService.listenDocument(endpoint: .particularUser(userId: userId)) { [weak self] result in
             switch result {
             case .success(let profil):
                 self?.updateScreenWithProfil(profil)

@@ -13,4 +13,10 @@ extension String {
         let userInput: String = self
         return userInput.folding(options: .diacriticInsensitive, locale: .current)
     }
+        func isEmptyOrWhitespace() -> Bool {
+            if(self.isEmpty) {
+                return true
+            }
+            return (self.trimmingCharacters(in: NSCharacterSet.whitespaces) == "")
+        }
 }

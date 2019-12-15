@@ -12,6 +12,7 @@ import FirebaseFirestore
 import Kingfisher
 
 
+
 @available(iOS 13.0, *)
 final class CreateSpotViewController: UIViewController, UITextFieldDelegate, UITextViewDelegate {
     
@@ -233,24 +234,29 @@ final class CreateSpotViewController: UIViewController, UITextFieldDelegate, UIT
     internal func handleTextView() {
         descriptionTextView.text = "Décrivez votre Spot"
         descriptionTextView.textColor = UIColor.lightGray
-        descriptionTextView.font = UIFont(name: "ABeeZee-Regular", size: 14.0)
+        descriptionTextView.font = UIFont(name: "GlacialIndifference-Regular", size: 15.0)
         descriptionTextView.returnKeyType = .done
         descriptionTextView.delegate = self
+    }
+    
+    private func textViewShouldReturn(_ textView: UITextView) -> Bool {
+    descriptionTextView.resignFirstResponder()
+    return true
     }
     
     internal func textViewDidBeginEditing(_ textView: UITextView) {
         if textView.text == "Décrivez votre Spot" {
             textView.text = ""
             textView.textColor = UIColor.black
-            textView.font = UIFont(name: "ABeeZee-Regular", size: 14.0)
+            textView.font = UIFont(name: "GlacialIndifference-Regular", size: 15.0)
         }
     }
-    
+
     internal func textViewDidEndEditing(_ textView: UITextView) {
-        if textView.text == "" {
+        if textView.text == "" || textView.text == "\n"{
             textView.text = "Décrivez votre Spot"
             textView.textColor = UIColor.lightGray
-            textView.font = UIFont(name: "SarySoft-Regular", size: 14.0)
+            textView.font = UIFont(name: "GlacialIndifference-Regular", size: 15.0)
         }
     }
     

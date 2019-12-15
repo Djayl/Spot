@@ -17,6 +17,7 @@ class ProfileViewController: UIViewController {
     @IBOutlet weak var equipmentLabel: UILabel!
     @IBOutlet weak var descriptionLabel: UILabel!
     @IBOutlet weak var modifyButton: CustomButton!
+    @IBOutlet weak var ageLabel: UILabel!
     
     
 
@@ -58,8 +59,8 @@ class ProfileViewController: UIViewController {
     }
     
     fileprivate func setupView() {
-        descriptionLabel.text = "Décrivez-vous"
-        descriptionLabel.font = UIFont(name: "GlacialIndifference-Regular", size: 15)
+//        descriptionLabel.text = "Décrivez-vous"
+//        descriptionLabel.font = UIFont(name: "GlacialIndifference-Regular", size: 15)
         descriptionLabel.layer.cornerRadius = 5
         profileImageView.isUserInteractionEnabled = true
         profileImageView.layer.cornerRadius = 10
@@ -67,9 +68,10 @@ class ProfileViewController: UIViewController {
     }
     
     private func updateScreenWithProfil(_ profil: Profil) {
-        usernameLabel.text = profil.userName.capitalized
+        usernameLabel.text = "\(profil.userName.capitalized), "
         descriptionLabel.text = profil.description
-        equipmentLabel.text = profil.equipment
+        equipmentLabel.text = profil.equipment.capitalized
+        ageLabel.text = "\(profil.age) ans"
     }
     
     private func getImage(_ profil: Profil) {

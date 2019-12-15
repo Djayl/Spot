@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import ProgressHUD
 
 
 @available(iOS 13.0, *)
@@ -62,15 +63,6 @@ class SignUpViewController: UIViewController, UITextFieldDelegate, UITextViewDel
         profileImageView.layer.cornerRadius = profileImageView.frame.height / 2
     }
     
-    private func addGradient() {
-        gradient = CAGradientLayer()
-        gradient?.colors = [Colors.skyBlue.cgColor,UIColor.white]
-        gradient?.startPoint = CGPoint(x: 0, y: 0)
-        gradient?.endPoint = CGPoint(x: 0, y:1)
-        gradient?.frame = view.frame
-        self.view.layer.insertSublayer(gradient!, at: 0)
-    }
-    
     @objc private func addPhoto() {
         showImagePicckerControllerActionSheet()
     }
@@ -89,29 +81,43 @@ class SignUpViewController: UIViewController, UITextFieldDelegate, UITextViewDel
     }
     
     private func createUserAccount() {
+        guard myImage != nil else {
+                signUpButton.shake()
+                presentAlert(with: "Un Spot doit avoir une image")
+                return
+            }
            guard let userName = userNameTextField.text, !userName.isEmpty else {
+            signUpButton.shake()
                presentAlert(with: "Merci de renseigner un nom d'utilisateur")
                return}
            guard let email = emailTextField.text, !email.isEmpty else {
+            signUpButton.shake()
                presentAlert(with: "Merci de renseigner un email")
                return}
            guard let password = passwordTextField.text, !password.isEmpty else {
+            signUpButton.shake()
                presentAlert(with: "Merci de renseigner un mot de passe")
                return}
            guard let passwordConfirmed = passwordConfirmTextField.text, passwordConfirmed == password, !passwordConfirmed.isEmpty else {
+            signUpButton.shake()
                presentAlert(with: "Merci de confirmer votre mot de passe")
                return}
            guard let age = ageTextField.text, !age.isEmpty else {
+            signUpButton.shake()
                presentAlert(with: "Merci de renseigner un âge")
                return}
            guard let equipment = equipmentTextField.text, !equipment.isEmpty else {
+            signUpButton.shake()
                presentAlert(with: "Merci de renseigner un équipement")
                return}
-           guard let description = descriptionTextView.text, !description.isEmpty else {
+           guard let description = descriptionTextView.text, !description.isEmpty, description != "Parlez-nous un peu de vous, de votre passion pour la photo..." else {
+            signUpButton.shake()
                presentAlert(with: "Merci de renseigner une brève description de vous")
                return}
+        
            authService.signUp(email: email, password: password) { (authResult, error) in
                if error == nil && authResult != nil {
+                ProgressHUD.show()
                    guard let currentUser = AuthService.getCurrentUser() else { return }
                    self.getImage { (imageURL) in
                        let profil = Profil(identifier: currentUser.uid, email: email, userName: userName, imageURL: imageURL, equipment: equipment, age: age, description: description)
@@ -126,9 +132,11 @@ class SignUpViewController: UIViewController, UITextFieldDelegate, UITextViewDel
        }
     
     private func saveUserData(_ profil: Profil) {
+        ProgressHUD.showSuccess(NSLocalizedString("Votre compte a été créé", comment: ""))
         firestoreService.saveData(endpoint: .user, identifier: profil.identifier, data: profil.dictionary) { [weak self] result in
             switch result {
             case .success(let successMessage):
+                
                 print(successMessage)
             case .failure(let error):
                 print("Error adding document: \(error)")
@@ -152,16 +160,17 @@ class SignUpViewController: UIViewController, UITextFieldDelegate, UITextViewDel
             descriptionTextView.font = UIFont(name: "GlacialIndifference-Regular", size: 16.0)
             descriptionTextView.returnKeyType = .done
             descriptionTextView.delegate = self
+            descriptionTextView.backgroundColor = UIColor.systemBackground
             descriptionTextView.layer.cornerRadius = 5
             descriptionTextView.layer.borderWidth = 1
-            descriptionTextView.layer.borderColor = UIColor.secondarySystemBackground.cgColor
+            descriptionTextView.layer.borderColor = UIColor.systemBackground.cgColor
         }
         
         internal func textViewDidBeginEditing(_ textView: UITextView) {
             if textView.text == "Parlez-nous un peu de vous, de votre passion pour la photo..." {
                 textView.text = ""
-                textView.textColor = UIColor.black
-                textView.font = UIFont(name: "Parlez-nous un peu de vous, de votre passion pour la photo...", size: 16.0)
+                textView.textColor = UIColor.label
+                textView.font = UIFont(name: "GlacialIndifference-Regular", size: 16.0)
             }
         }
         

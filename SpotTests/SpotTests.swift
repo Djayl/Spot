@@ -77,7 +77,7 @@ class SpotTests: XCTestCase {
     
     func testFetchDocumentSuccessfully() {
         let firestoreServiceSpy = FirestoreServiceSpy<Profil>()
-        let profil = Profil(identifier: "yblp54LyxzLYhFYqjP3e06AJxAv1", email: "unitTests@test.fr", userName: "Unit Tests")
+        let profil = Profil(identifier: "yblp54LyxzLYhFYqjP3e06AJxAv1", email: "unitTests@test.fr", userName: "Unit Tests", imageURL: "test", equipment: "test", age: "test", description: "test")
         
         let exp = expectation(description: "Wait for load completion")
         

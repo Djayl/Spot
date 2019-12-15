@@ -118,7 +118,9 @@ class DetailsViewController: UIViewController {
     private func showSpotOwnerProfile(profil: Profil) {
         let vc = storyboard?.instantiateViewController(withIdentifier: "SpotCreatorVC") as! SpotCreatorProfileViewController
         let nc = UINavigationController(rootViewController: vc)
-        vc.profil = profil
+       
+        guard let userId = (spot.userData as? CustomData)?.ownerId else {return}
+        vc.userId = userId
         self.present(nc, animated: true, completion: nil)
     }
     
@@ -170,7 +172,7 @@ class DetailsViewController: UIViewController {
     private func setSpotCreatorProfile(_ profil: Profil){
         pictureTakerName.text = "\(profil.userName.capitalized), "
         equipmentLabel.text = profil.equipment.capitalized
-        ageLabel.text = profil.age
+        ageLabel.text = "\(profil.age) ans"
     }
      
      
@@ -196,9 +198,6 @@ class DetailsViewController: UIViewController {
             spotDescription.text = "Aucune description n'a été rédigée pour ce Spot"
             return}
         spotDescription.text = description
-//        if description.isEmpty {
-//            spotDescription.text = "Aucune description n'a été rédigée pour ce Spot"
-//        }
         guard let date  = (spot.userData as? CustomData)?.creationDate else {return}
         spotDate.text = "Spot créé le \(date.asString(style: .short))"
         guard let creatorName = (spot.userData as? CustomData)?.creatorName else {return}

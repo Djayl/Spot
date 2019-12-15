@@ -15,6 +15,8 @@ class CreateProfileViewController: UIViewController, UITextViewDelegate, UITextF
     
     @IBOutlet weak var profileImageView: UIImageView!
     @IBOutlet weak var equipmentTextField: UITextField!
+    @IBOutlet weak var userNameTextField: UITextField!
+    @IBOutlet weak var ageTextField: UITextField!
     @IBOutlet weak var descriptionTextView: UITextView!
     @IBOutlet weak var saveButton: CustomButton!
     
@@ -42,6 +44,8 @@ class CreateProfileViewController: UIViewController, UITextViewDelegate, UITextF
         updateEquipment()
         updateDescription()
         updateProfileImage()
+        updateUserName()
+        updateAge()
     }
     
     @objc private func addPhoto() {
@@ -77,6 +81,15 @@ class CreateProfileViewController: UIViewController, UITextViewDelegate, UITextF
                 self?.presentAlert(with: "Erreur réseau")
             }
         }
+    }
+    
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        let maxLen:Int = 2
+        if(textField == ageTextField){
+            let currentText = textField.text! + string
+            return currentText.count <= maxLen
+        }
+        return true
     }
     
     private func setupImageView() {
@@ -121,6 +134,8 @@ class CreateProfileViewController: UIViewController, UITextViewDelegate, UITextF
     fileprivate func setupTextFields() {
         equipmentTextField.delegate = self
         descriptionTextView.delegate = self
+        ageTextField.delegate = self
+        userNameTextField.delegate = self
     }
     
     private func updateProfileImage() {
@@ -140,6 +155,44 @@ class CreateProfileViewController: UIViewController, UITextViewDelegate, UITextF
             }
         } else {
             self.dismiss(animated: true, completion: nil)
+        }
+    }
+    
+    private func updateUserName() {
+        guard let userName = self.userNameTextField.text else {return}
+        if userName.isEmpty == false {
+            let data = ["userName": userName]
+            self.firestoreService.updateData(endpoint: .currentUser, data: data) { [weak self] result in
+                switch result {
+                case .success(let successMessage):
+                    print(successMessage)
+                    self?.dismiss(animated: true, completion: nil)
+                case .failure(let error):
+                    print("Error adding document: \(error)")
+                    self?.presentAlert(with: "Erreur réseau")
+                }
+            }
+        } else {
+          self.dismiss(animated: true, completion: nil)
+        }
+    }
+    
+    private func updateAge() {
+        guard let age = self.ageTextField.text else {return}
+        if age.isEmpty == false {
+            let data = ["age": age]
+            self.firestoreService.updateData(endpoint: .currentUser, data: data) { [weak self] result in
+                switch result {
+                case .success(let successMessage):
+                    print(successMessage)
+                    self?.dismiss(animated: true, completion: nil)
+                case .failure(let error):
+                    print("Error adding document: \(error)")
+                    self?.presentAlert(with: "Erreur réseau")
+                }
+            }
+        } else {
+          self.dismiss(animated: true, completion: nil)
         }
     }
     
