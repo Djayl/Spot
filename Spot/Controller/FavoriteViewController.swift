@@ -9,6 +9,7 @@
 import UIKit
 import GoogleMaps
 import Kingfisher
+import ProgressHUD
 
 
 @available(iOS 13.0, *)
@@ -27,12 +28,14 @@ class FavoriteViewController: UIViewController {
         setUpTableView()
     }
     
-   // MARK: - View Life Cycle
+    // MARK: - View Life Cycle
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        fetchFavoriteSpots()
         listenFavoriteCollection()
         print(markers.count)
+        tableView.register(UINib(nibName: "SpotTableViewCell", bundle: nil),forCellReuseIdentifier: "SpotTableViewCell")
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -52,6 +55,7 @@ class FavoriteViewController: UIViewController {
         firestoreService.fetchCollection(endpoint: .favoriteCollection) { [weak self] result in
             switch result {
             case .success(let markers):
+                self?.markers.removeAll()
                 for marker in markers {
                     self?.displaySpot(marker)
                 }
@@ -126,7 +130,7 @@ class FavoriteViewController: UIViewController {
             }
         }
     }
-        
+    
     @objc private func didTapSpot(spot: Spot) {
         let vc = storyboard?.instantiateViewController(withIdentifier: "DetailsVC") as! DetailsViewController
         let nc = UINavigationController(rootViewController: vc)
@@ -149,7 +153,7 @@ extension FavoriteViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if let cell = tableView.dequeueReusableCell(withIdentifier: "CustomCellIdentifier") as? CustomCell {
+        if let cell = tableView.dequeueReusableCell(withIdentifier: "SpotTableViewCell") as? SpotTableViewCell {
             cell.configureCell(spot: markers[indexPath.row])
             cell.contentView.layer.cornerRadius = 10
             return cell

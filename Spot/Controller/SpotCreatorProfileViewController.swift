@@ -43,7 +43,7 @@ class SpotCreatorProfileViewController: UIViewController {
     }
     
     private func updateScreenWithProfil(_ profil: Profil) {
-        creatorNameLabel.text = "\(profil.userName.capitalized), "
+        creatorNameLabel.text = "\(profil.userName.capitalized)"
         creatorDescriptionLabel.text = profil.description
         creatorEquipmentLabel.text = profil.equipment.capitalized
         ageLabel.text = "\(profil.age) ans"

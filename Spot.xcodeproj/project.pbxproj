@@ -47,6 +47,7 @@
 		F0695A232372E0D200F399B7 /* Marker.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0695A222372E0D200F399B7 /* Marker.swift */; };
 		F06B84C823A78023003E3A5F /* SpotTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F06B84C623A78023003E3A5F /* SpotTableViewCell.swift */; };
 		F06B84C923A78023003E3A5F /* SpotTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F06B84C723A78023003E3A5F /* SpotTableViewCell.xib */; };
+		F06B84CB23A7BADA003E3A5F /* SpotCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F06B84CA23A7BADA003E3A5F /* SpotCollectionViewCell.swift */; };
 		F096F51323857DC000DCD18A /* UIImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F096F51223857DC000DCD18A /* UIImageView.swift */; };
 		F096F51523857DF900DCD18A /* UILabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F096F51423857DF900DCD18A /* UILabel.swift */; };
 		F096F51723857E2F00DCD18A /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = F096F51623857E2F00DCD18A /* Date.swift */; };
@@ -123,6 +124,7 @@
 		F0695A222372E0D200F399B7 /* Marker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Marker.swift; sourceTree = "<group>"; };
 		F06B84C623A78023003E3A5F /* SpotTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpotTableViewCell.swift; sourceTree = "<group>"; };
 		F06B84C723A78023003E3A5F /* SpotTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SpotTableViewCell.xib; sourceTree = "<group>"; };
+		F06B84CA23A7BADA003E3A5F /* SpotCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpotCollectionViewCell.swift; sourceTree = "<group>"; };
 		F096F51223857DC000DCD18A /* UIImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImageView.swift; sourceTree = "<group>"; };
 		F096F51423857DF900DCD18A /* UILabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UILabel.swift; sourceTree = "<group>"; };
 		F096F51623857E2F00DCD18A /* Date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Date.swift; sourceTree = "<group>"; };
@@ -208,6 +210,7 @@
 				F0C1402A23686D1900341744 /* FavoriteButton.swift */,
 				F06B84C623A78023003E3A5F /* SpotTableViewCell.swift */,
 				F06B84C723A78023003E3A5F /* SpotTableViewCell.xib */,
+				F06B84CA23A7BADA003E3A5F /* SpotCollectionViewCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -569,6 +572,7 @@
 				F0695A1F2372D7BB00F399B7 /* Endpoint.swift in Sources */,
 				F04EBAA22384463E009B0074 /* String.swift in Sources */,
 				F096F51923857E7500DCD18A /* Bool.swift in Sources */,
+				F06B84CB23A7BADA003E3A5F /* SpotCollectionViewCell.swift in Sources */,
 				F06B84C823A78023003E3A5F /* SpotTableViewCell.swift in Sources */,
 				F096F51323857DC000DCD18A /* UIImageView.swift in Sources */,
 				F04EBA9E238444F4009B0074 /* UISearchBar.swift in Sources */,

@@ -170,7 +170,7 @@ class DetailsViewController: UIViewController {
     }
     
     private func setSpotCreatorProfile(_ profil: Profil){
-        pictureTakerName.text = "\(profil.userName.capitalized), "
+        pictureTakerName.text = "\(profil.userName.capitalized)"
         equipmentLabel.text = profil.equipment.capitalized
         ageLabel.text = "\(profil.age) ans"
     }

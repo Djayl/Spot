@@ -58,7 +58,6 @@ final class CreateSpotViewController: UIViewController, UITextFieldDelegate, UIT
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
     }
     
     override func viewWillDisappear(_ animated: Bool) {
