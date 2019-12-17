@@ -20,7 +20,6 @@ class SpotCreatorProfileViewController: UIViewController {
     @IBOutlet weak var ageLabel: UILabel!
     @IBOutlet weak var tableView: UITableView!
     
-//    var profil: Profil?
     var userId = ""
     var markers = [Spot]()
     
@@ -77,7 +76,7 @@ class SpotCreatorProfileViewController: UIViewController {
     private func displaySpot(_ marker: Marker) {
             let name = marker.name
             guard let url = URL.init(string: marker.imageURL ) else {return}
-            let mCustomData = CustomData(creationDate: marker.creationDate, uid: marker.identifier, ownerId: marker.ownerId, publicSpot: marker.publicSpot, creatorName: marker.creatorName)
+        let mCustomData = CustomData(creationDate: marker.creationDate, uid: marker.identifier, ownerId: marker.ownerId, publicSpot: marker.publicSpot, creatorName: marker.creatorName, imageID: marker.imageID)
             KingfisherManager.shared.retrieveImage(with: url, options: nil) { result in
                 let image = try? result.get().image
                 if let image = image {
@@ -104,6 +103,7 @@ class SpotCreatorProfileViewController: UIViewController {
                         self?.markers.removeAll()
                         if marker.publicSpot == true {
                         self?.displaySpot(marker)
+                            print(marker.name)
                     }
                     }
                     DispatchQueue.main.async {
@@ -115,28 +115,6 @@ class SpotCreatorProfileViewController: UIViewController {
                 }
             }
         }
-//
-//        private func removeFav(spot: Spot) {
-//            guard let spotUid = (spot.userData as! CustomData).uid else {return}
-//            deleteFavoriteFromFirestore(identifier: spotUid)
-//        }
-        
-//        private func deleteFavoriteFromFirestore(identifier: String) {
-//            let firestoreService = FirestoreService<Marker>()
-//            firestoreService.deleteDocumentData(endpoint: .favoriteCollection, identifier: identifier) { [weak self] result in
-//                switch result {
-//                case .success(let successMessage):
-//                    DispatchQueue.main.async {
-//                        self?.tableView.reloadData()
-//                    }
-//                    print(self?.markers as Any)
-//                    print(successMessage)
-//                case .failure(let error):
-//                    print("Error deleting document: \(error)")
-//                    self?.presentAlert(with: "Problème réseau")
-//                }
-//            }
-//        }
             
         @objc private func didTapSpot(spot: Spot) {
             let vc = storyboard?.instantiateViewController(withIdentifier: "DetailsVC") as! DetailsViewController

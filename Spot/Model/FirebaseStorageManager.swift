@@ -55,6 +55,23 @@ class FirebaseStorageManager {
             }
         }
     }
+    
+    public func deleteImageData(serverFileName: String) {
+        
+        let storage = Storage.storage()
+        let storageRef = storage.reference()
+        // Create a reference to the file you want to upload
+        let directory = "imagesFolder/"
+        let fileRef = storageRef.child(directory + serverFileName)
+        
+        fileRef.delete { (error) in
+            if let error = error {
+                print("Error removing document: \(error)")
+            } else {
+                print("Document successfully removed!")
+            }
+        }
+    }
 }
 
 

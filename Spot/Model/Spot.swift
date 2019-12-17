@@ -24,11 +24,13 @@ class CustomData{
     var ownerId: String?
     var publicSpot: Bool?
     var creatorName: String?
-    init(creationDate: Date, uid: String, ownerId: String, publicSpot: Bool, creatorName: String) {
+    var imageID: String?
+    init(creationDate: Date, uid: String, ownerId: String, publicSpot: Bool, creatorName: String, imageID: String) {
         self.creationDate = creationDate
         self.uid = uid
         self.ownerId = ownerId
         self.publicSpot = publicSpot
         self.creatorName = creatorName
+        self.imageID = imageID
     }
 }

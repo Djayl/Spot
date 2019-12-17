@@ -287,11 +287,18 @@ class DetailsViewController: UIViewController {
         }
     }
     
+    private func removeImageFromFirebase(spot: Spot) {
+        let firebaseStorageManager = FirebaseStorageManager()
+        guard let imageID = (spot.userData as? CustomData)?.imageID else {return}
+        firebaseStorageManager.deleteImageData(serverFileName: imageID)
+    }
+    
     private func deleteSpot() {
         guard let uid = (spot.userData as? CustomData)?.uid else {return}
         deleteSpotFromPrivate(identifier: uid)
         deleteSpotFromPublic(identifier: uid)
         deleteSpotFromFavorite(identifier: uid)
+        removeImageFromFirebase(spot: spot)
     }
     
     private func createFavorite() {
@@ -302,11 +309,12 @@ class DetailsViewController: UIViewController {
             let description = spot.snippet,
             let imageURL = spot.imageURL,
             let uid = (spot.userData as? CustomData)?.uid,
+            let imageId = (spot.userData as? CustomData)?.imageID,
             let creationDate = (spot.userData as? CustomData)?.creationDate,
             let creatorName = (spot.userData as? CustomData)?.creatorName,
             let publicSpot = (spot.userData as? CustomData)?.publicSpot,
             let ownerId = (spot.userData as? CustomData)?.ownerId else {return}
-        let favoriteSpot = Marker(identifier: uid, name: name, description: description, coordinate: GeoPoint(latitude: latitude, longitude: longitude), imageURL: imageURL, ownerId: ownerId, publicSpot: publicSpot, creatorName: creatorName, creationDate: creationDate)
+        let favoriteSpot = Marker(identifier: uid, name: name, description: description, coordinate: GeoPoint(latitude: latitude, longitude: longitude), imageURL: imageURL, ownerId: ownerId, publicSpot: publicSpot, creatorName: creatorName,creationDate: creationDate, imageID: imageId)
         setFavoriteInFirestore(identifier: uid, spot: favoriteSpot)
     }
     
@@ -339,7 +347,7 @@ class DetailsViewController: UIViewController {
     
     private func displaySpot(_ marker: Marker) {
         let name = marker.name
-        let mCustomData = CustomData(creationDate: marker.creationDate, uid: marker.identifier, ownerId: marker.ownerId, publicSpot: marker.publicSpot, creatorName: marker.creatorName)
+        let mCustomData = CustomData(creationDate: marker.creationDate, uid: marker.identifier, ownerId: marker.ownerId, publicSpot: marker.publicSpot, creatorName: marker.creatorName, imageID: marker.imageID)
         let spot = Spot()
         spot.position = CLLocationCoordinate2D(latitude: marker.coordinate.latitude, longitude: marker.coordinate.longitude)
         spot.title = name

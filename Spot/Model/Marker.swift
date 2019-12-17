@@ -20,6 +20,7 @@ struct Marker: Equatable {
     let publicSpot: Bool
     let creatorName: String
     let creationDate: Date
+    let imageID: String
     
    
     
@@ -33,6 +34,7 @@ struct Marker: Equatable {
             "ownerId": ownerId,
             "publicSpot": publicSpot,
             "creatorName": creatorName,
+            "imageID": imageID,
             "creationDate": creationDate
 
         ]
@@ -48,14 +50,15 @@ extension Marker: DocumentSerializableProtocol {
             let imageURL = dictionary["imageURL"] as? String, 
             let ownerId = dictionary["ownerId"] as? String,
             let publicSpot = dictionary["publicSpot"] as? Bool,
-            let creatorName = dictionary["creatorName"] as? String else {return nil}
+            let creatorName = dictionary["creatorName"] as? String,
+            let imageID = dictionary["imageID"] as? String else {return nil}
         var date = Date()
         if let creationDate = dictionary["creationDate"] as? Timestamp {
             date = creationDate.dateValue()
             
         }
        
-        self.init(identifier: identifier, name: name, description: description, coordinate: coordinate, imageURL: imageURL, ownerId: ownerId, publicSpot: publicSpot, creatorName: creatorName, creationDate: date)
+        self.init(identifier: identifier, name: name, description: description, coordinate: coordinate, imageURL: imageURL, ownerId: ownerId, publicSpot: publicSpot, creatorName: creatorName, creationDate: date, imageID: imageID)
     }
     
 }

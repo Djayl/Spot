@@ -231,7 +231,7 @@ class MapViewController: UIViewController {
     
     private func displaySpot(_ marker: Marker) {
         guard let url = URL.init(string: marker.imageURL ) else {return}
-        let mCustomData = CustomData(creationDate: marker.creationDate, uid: marker.identifier, ownerId: marker.ownerId, publicSpot: marker.publicSpot, creatorName: marker.creatorName)
+        let mCustomData = CustomData(creationDate: marker.creationDate, uid: marker.identifier, ownerId: marker.ownerId, publicSpot: marker.publicSpot, creatorName: marker.creatorName, imageID: marker.imageID)
         KingfisherManager.shared.retrieveImage(with: url, options: nil) { result in
             let image = try? result.get().image
             if let image = image {

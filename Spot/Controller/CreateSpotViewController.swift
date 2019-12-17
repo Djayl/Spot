@@ -38,6 +38,7 @@ final class CreateSpotViewController: UIViewController, UITextFieldDelegate, UIT
     var userName = ""
     var imageURL: String?
     private var ownerId = ""
+    private var imageId = ""
     
     // MARK: - View Life Cycle
     
@@ -155,8 +156,8 @@ final class CreateSpotViewController: UIViewController, UITextFieldDelegate, UIT
                 spot.snippet = description
                 spot.coordinate = coor
                 self.getImage { (imageUrl) in
-                    let privateSpot = Marker(identifier: identifier, name: name, description: description, coordinate: GeoPoint(latitude: coor.latitude, longitude: coor.longitude), imageURL: imageUrl, ownerId: self.ownerId,publicSpot: false , creatorName: creatorName, creationDate: Date())
-                    let publicSpot = Marker(identifier: identifier, name: name, description: description, coordinate: GeoPoint(latitude: coor.latitude, longitude: coor.longitude), imageURL: imageUrl, ownerId: self.ownerId,publicSpot: true , creatorName: creatorName, creationDate: Date())
+                    let privateSpot = Marker(identifier: identifier, name: name, description: description, coordinate: GeoPoint(latitude: coor.latitude, longitude: coor.longitude), imageURL: imageUrl, ownerId: self.ownerId,publicSpot: false , creatorName: creatorName, creationDate: Date(), imageID: self.imageId)
+                    let publicSpot = Marker(identifier: identifier, name: name, description: description, coordinate: GeoPoint(latitude: coor.latitude, longitude: coor.longitude), imageURL: imageUrl, ownerId: self.ownerId,publicSpot: true , creatorName: creatorName, creationDate: Date(), imageID: self.imageId)
                     DispatchQueue.main.async {
                         if self.stateSwitch.isOn {
                             self.savePublicSpotInFirestore(identifier: identifier, spot: publicSpot)
@@ -224,6 +225,7 @@ final class CreateSpotViewController: UIViewController, UITextFieldDelegate, UIT
                }
         let firebaseStorageManager = FirebaseStorageManager()
         let imageName = UUID().uuidString
+        imageId = imageName
         firebaseStorageManager.uploadImageData(data: data, serverFileName: imageName) { (isSuccess, url) in
             guard let imageUrl = url else {return}
             completion(imageUrl)
