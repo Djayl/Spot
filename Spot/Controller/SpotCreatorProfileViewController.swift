@@ -27,14 +27,15 @@ class SpotCreatorProfileViewController: UIViewController {
         super.viewDidLoad()
         setupImageView()
         creatorDescriptionLabel.sizeToFit()
-         tableView.register(UINib(nibName: "SpotTableViewCell", bundle: nil),forCellReuseIdentifier: "SpotTableViewCell")
+        listenUserCollection()
+        tableView.register(UINib(nibName: "SpotTableViewCell", bundle: nil),forCellReuseIdentifier: "SpotTableViewCell")
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.setNavigationBarHidden(true, animated: false)
         listenProfilInformation()
-        listenUserCollection()
+        
     }
     
     private func setupImageView() {
@@ -89,7 +90,7 @@ class SpotCreatorProfileViewController: UIViewController {
                     spot.imageURL = marker.imageURL
                     spot.image = image
                     self.markers.append(spot)
-                    
+                    self.tableView.reloadData()
                 }
             }
         }
@@ -100,7 +101,7 @@ class SpotCreatorProfileViewController: UIViewController {
                 switch result {
                 case .success(let markers):
                     for marker in markers {
-                        self?.markers.removeAll()
+//                        self?.markers.removeAll()
                         if marker.publicSpot == true {
                         self?.displaySpot(marker)
                             print(marker.name)
