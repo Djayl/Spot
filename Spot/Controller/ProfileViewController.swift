@@ -30,13 +30,14 @@ class ProfileViewController: UIViewController {
         descriptionLabel.sizeToFit()
         setupImageView()
         tableView.register(UINib(nibName: "SpotTableViewCell", bundle: nil),forCellReuseIdentifier: "SpotTableViewCell")
-        listenUserCollection()
+//        listenUserCollection()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.setNavigationBarHidden(true, animated: false)
         listenProfilInformation()
+        listenUserCollection()
     }
     
     
@@ -161,6 +162,7 @@ class ProfileViewController: UIViewController {
         firestoreService.listenCollection(endpoint: .spot) { [weak self] result in
             switch result {
             case .success(let markers):
+                self?.markers.removeAll()
                 for marker in markers {
                     self?.displaySpot(marker)
                     print(marker.name)
@@ -183,12 +185,12 @@ class ProfileViewController: UIViewController {
     
     private func removeFav(spot: Spot) {
         guard let spotUid = (spot.userData as! CustomData).uid else {return}
-        deleteFavoriteFromFirestore(identifier: spotUid)
+        deletePrivateSpotFromFirestore(identifier: spotUid)
+        deletePublicSpotFromFirestore(identifier: spotUid)
         removeImageFromFirebase(spot: spot)
-        
     }
     
-    private func deleteFavoriteFromFirestore(identifier: String) {
+    private func deletePrivateSpotFromFirestore(identifier: String) {
         let firestoreService = FirestoreService<Marker>()
         firestoreService.deleteDocumentData(endpoint: .spot, identifier: identifier) { [weak self] result in
             switch result {
@@ -196,7 +198,6 @@ class ProfileViewController: UIViewController {
                 DispatchQueue.main.async {
                     self?.tableView.reloadData()
                 }
-                print(self?.markers as Any)
                 print(successMessage)
             case .failure(let error):
                 print("Error deleting document: \(error)")
@@ -204,6 +205,23 @@ class ProfileViewController: UIViewController {
             }
         }
     }
+    
+    private func deletePublicSpotFromFirestore(identifier: String) {
+        let firestoreService = FirestoreService<Marker>()
+        firestoreService.deleteDocumentData(endpoint: .publicCollection, identifier: identifier) { [weak self] result in
+            switch result {
+            case .success(let successMessage):
+                DispatchQueue.main.async {
+                    self?.tableView.reloadData()
+                }
+                print(successMessage)
+            case .failure(let error):
+                print("Error deleting document: \(error)")
+                self?.presentAlert(with: "Problème réseau")
+            }
+        }
+    }
+    
 }
 
 // MARK: - Table View delegate and data source
