@@ -36,8 +36,9 @@ class SpotTableViewCell: UITableViewCell {
             cellLabel.text = spot.name?.capitalized
             cellLabel.font = UIFont(name: "LeagueSpartan-Bold", size: 15)
             cellImageView.image = spot.image
-            cellImageView.layer.cornerRadius = 15
-            cellImageView.layer.borderWidth = 2
+//            cellImageView.layer.cornerRadius = 15
+//            cellImageView.layer.masksToBounds = true
+            cellImageView.layer.cornerRadius = 5
             cellImageView.layer.borderColor = UIColor.secondarySystemBackground.cgColor
         }
     

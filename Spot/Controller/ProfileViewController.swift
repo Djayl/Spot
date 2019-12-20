@@ -72,8 +72,6 @@ class ProfileViewController: UIViewController {
     }
     
     fileprivate func setupView() {
-        //        descriptionLabel.text = "Décrivez-vous"
-        //        descriptionLabel.font = UIFont(name: "GlacialIndifference-Regular", size: 15)
         descriptionLabel.layer.cornerRadius = 5
         profileImageView.isUserInteractionEnabled = true
         profileImageView.layer.cornerRadius = 10
@@ -113,10 +111,14 @@ class ProfileViewController: UIViewController {
     }
     
     @objc private func didTapSpot(spot: Spot) {
-        let vc = storyboard?.instantiateViewController(withIdentifier: "DetailsVC") as! DetailsViewController
-        let nc = UINavigationController(rootViewController: vc)
+//        let vc = storyboard?.instantiateViewController(withIdentifier: "DetailsVC") as! DetailsViewController
+//        let nc = UINavigationController(rootViewController: vc)
+//        vc.spot = spot
+//        self.present(nc, animated: true, completion: nil)
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let vc = storyboard.instantiateViewController(identifier: "DetailsVC") as! DetailsViewController
         vc.spot = spot
-        self.present(nc, animated: true, completion: nil)
+        navigationController?.pushViewController(vc, animated: true)
     }
     
     

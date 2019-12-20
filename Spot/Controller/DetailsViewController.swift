@@ -20,7 +20,8 @@ class DetailsViewController: UIViewController {
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var pictureTakerName: UILabel!
     @IBOutlet weak var spotTitle: UILabel!
-    @IBOutlet weak var spotDescription: UILabel!
+    @IBOutlet weak var spotDescriptionTextView: UITextView!
+    
     @IBOutlet weak var spotDate: UILabel!
     @IBOutlet weak var spotCoordinate: UILabel!
     @IBOutlet weak var favoriteButton: FavoriteButton!
@@ -49,7 +50,7 @@ class DetailsViewController: UIViewController {
         getSpotDetails()
         getImage()
         reverseGeocodeCoordinate(spot.position)
-        spotDescription.sizeToFit()
+        
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(imageTapped(_:)))
         navigationController?.setNavigationBarHidden(true, animated: false)
         imageView.addGestureRecognizer(tapGestureRecognizer)
@@ -116,12 +117,17 @@ class DetailsViewController: UIViewController {
        }
     
     private func showSpotOwnerProfile(profil: Profil) {
-        let vc = storyboard?.instantiateViewController(withIdentifier: "SpotCreatorVC") as! SpotCreatorProfileViewController
-        let nc = UINavigationController(rootViewController: vc)
-       
+//        let vc = storyboard?.instantiateViewController(withIdentifier: "SpotCreatorVC") as! SpotCreatorProfileViewController
+//        let nc = UINavigationController(rootViewController: vc)
+//
+//        guard let userId = (spot.userData as? CustomData)?.ownerId else {return}
+//        vc.userId = userId
+//        self.present(nc, animated: true, completion: nil)
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let vc = storyboard.instantiateViewController(identifier: "SpotCreatorVC") as! SpotCreatorProfileViewController
         guard let userId = (spot.userData as? CustomData)?.ownerId else {return}
         vc.userId = userId
-        self.present(nc, animated: true, completion: nil)
+        navigationController?.pushViewController(vc, animated: true)
     }
     
     private func fetchSpotOwnerProfile() {
@@ -195,9 +201,9 @@ class DetailsViewController: UIViewController {
         guard let name = spot.title else {return}
         spotTitle.text = name.capitalized.toNoSmartQuotes()
         guard let description = spot.snippet, !description.isEmpty else {
-            spotDescription.text = "Aucune description n'a été rédigée pour ce Spot"
+            spotDescriptionTextView.text = "Aucune description n'a été rédigée pour ce Spot"
             return}
-        spotDescription.text = description
+        spotDescriptionTextView.text = description
         guard let date  = (spot.userData as? CustomData)?.creationDate else {return}
         spotDate.text = "Spot créé le \(date.asString(style: .short))"
         guard let creatorName = (spot.userData as? CustomData)?.creatorName else {return}
@@ -379,7 +385,7 @@ class DetailsViewController: UIViewController {
         let imageView = sender.view as! UIImageView
         newImageView = UIImageView(image: imageView.image)
         newImageView.frame = UIScreen.main.bounds
-        newImageView.backgroundColor = UIColor.white
+        newImageView.backgroundColor = UIColor.systemBackground
         newImageView.contentMode = .scaleAspectFit
         newImageView.isUserInteractionEnabled = true
         let tap = UITapGestureRecognizer(target: self, action: #selector(dismissFullscreenImage))
@@ -399,15 +405,6 @@ class DetailsViewController: UIViewController {
         UIView.transition(with: self.view, duration: 0.25, options: [.transitionCrossDissolve], animations: {
             sender.view?.removeFromSuperview()
         }, completion: nil)
-    }
-    
-    private func addGradient() {
-        gradient = CAGradientLayer()
-        gradient?.colors = [Colors.nicoDarkPurple.cgColor, UIColor.white]
-        gradient?.startPoint = CGPoint(x: 0, y: 0)
-        gradient?.endPoint = CGPoint(x: 0, y:1)
-        gradient?.frame = view.frame
-        self.view.layer.insertSublayer(gradient!, at: 0)
     }
     
     @objc private func goToMapView() {

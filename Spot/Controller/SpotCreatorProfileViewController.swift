@@ -19,6 +19,7 @@ class SpotCreatorProfileViewController: UIViewController {
     @IBOutlet weak var creatorDescriptionLabel: UILabel!
     @IBOutlet weak var ageLabel: UILabel!
     @IBOutlet weak var tableView: UITableView!
+   
     
     var userId = ""
     var markers = [Spot]()
@@ -27,15 +28,16 @@ class SpotCreatorProfileViewController: UIViewController {
         super.viewDidLoad()
         setupImageView()
         creatorDescriptionLabel.sizeToFit()
-        listenUserCollection()
+//        listenUserCollection()
         tableView.register(UINib(nibName: "SpotTableViewCell", bundle: nil),forCellReuseIdentifier: "SpotTableViewCell")
+
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.setNavigationBarHidden(true, animated: false)
         listenProfilInformation()
-        
+        listenUserCollection()
     }
     
     private func setupImageView() {
@@ -100,8 +102,8 @@ class SpotCreatorProfileViewController: UIViewController {
             firestoreService.listenCollection(endpoint: .particularUserCollection(userId: userId)) { [weak self] result in
                 switch result {
                 case .success(let markers):
+                    self?.markers.removeAll()
                     for marker in markers {
-//                        self?.markers.removeAll()
                         if marker.publicSpot == true {
                         self?.displaySpot(marker)
                             print(marker.name)
@@ -118,27 +120,32 @@ class SpotCreatorProfileViewController: UIViewController {
         }
             
         @objc private func didTapSpot(spot: Spot) {
-            let vc = storyboard?.instantiateViewController(withIdentifier: "DetailsVC") as! DetailsViewController
-            let nc = UINavigationController(rootViewController: vc)
+//            let vc = storyboard?.instantiateViewController(withIdentifier: "DetailsVC") as! DetailsViewController
+//            let nc = UINavigationController(rootViewController: vc)
+//            vc.spot = spot
+//            self.present(nc, animated: true, completion: nil)
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            let vc = storyboard.instantiateViewController(identifier: "DetailsVC") as! DetailsViewController
             vc.spot = spot
-            self.present(nc, animated: true, completion: nil)
+            navigationController?.pushViewController(vc, animated: true)
         }
+  
     }
 
     // MARK: - Table View delegate and data source
 
-    
+
 @available(iOS 13.0, *)
 extension SpotCreatorProfileViewController: UITableViewDataSource, UITableViewDelegate {
-        
+
         func tableView(_ tableView: UITableView, numberOfRowsInSection    section: Int) -> Int {
             return markers.count
         }
-        
+
         func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
             return 100
         }
-        
+
         func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
             if let cell = tableView.dequeueReusableCell(withIdentifier: "SpotTableViewCell") as? SpotTableViewCell {
                 cell.configureCell(spot: markers[indexPath.row])
@@ -147,11 +154,11 @@ extension SpotCreatorProfileViewController: UITableViewDataSource, UITableViewDe
             }
             return UITableViewCell()
         }
-        
+
         func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
             return true
         }
-        
+
 //        func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle,
 //                       forRowAt indexPath: IndexPath) {
 //            if editingStyle == .delete {
@@ -160,25 +167,26 @@ extension SpotCreatorProfileViewController: UITableViewDataSource, UITableViewDe
 //                tableView.deleteRows(at: [indexPath], with: .automatic)
 //            }
 //        }
-        
+
         func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
             let label = UILabel()
-            label.text = "Ajoutez ici vos favoris"
+            label.text = "Pas de Spots ici"
             label.font = UIFont(name: "LeagueSpartan-Bold", size: 20)
             label.textAlignment = .center
             label.textColor = .label
             return label
         }
-        
+
         func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
             return markers.isEmpty ? 200 : 0
         }
-        
+
         func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
             tableView.deselectRow(at: indexPath, animated: true)
             didTapSpot(spot: markers[indexPath.row])
         }
     }
+
 
 
 

@@ -235,7 +235,7 @@ final class CreateSpotViewController: UIViewController, UITextFieldDelegate, UIT
     internal func handleTextView() {
         descriptionTextView.text = "Décrivez votre Spot"
         descriptionTextView.textColor = UIColor.lightGray
-        descriptionTextView.font = UIFont(name: "GlacialIndifference-Regular", size: 15.0)
+        descriptionTextView.font = UIFont(name: "GlacialIndifference-Regular", size: 17.0)
         descriptionTextView.returnKeyType = .done
         descriptionTextView.delegate = self
     }
@@ -249,7 +249,7 @@ final class CreateSpotViewController: UIViewController, UITextFieldDelegate, UIT
         if textView.text == "Décrivez votre Spot" {
             textView.text = ""
             textView.textColor = UIColor.black
-            textView.font = UIFont(name: "GlacialIndifference-Regular", size: 15.0)
+            textView.font = UIFont(name: "GlacialIndifference-Regular", size: 17.0)
         }
     }
 
@@ -257,20 +257,20 @@ final class CreateSpotViewController: UIViewController, UITextFieldDelegate, UIT
         if textView.text == "" || textView.text == "\n"{
             textView.text = "Décrivez votre Spot"
             textView.textColor = UIColor.lightGray
-            textView.font = UIFont(name: "GlacialIndifference-Regular", size: 15.0)
+            textView.font = UIFont(name: "GlacialIndifference-Regular", size: 17.0)
         }
     }
     
-    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
-        // Get the current text, or use an empty string if that failed
-        let currentText = textView.text ?? ""
-        // Attempt to read the range they are trying to change, or exit if we can't
-        guard let stringRange = Range(range, in: currentText) else { return false }
-        // Add their new text to the existing text
-        let updatedText = currentText.replacingCharacters(in: stringRange, with: text)
-        // Make sure the result is under 16 characters
-        return updatedText.count <= 140
-    }
+//    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+//        // Get the current text, or use an empty string if that failed
+//        let currentText = textView.text ?? ""
+//        // Attempt to read the range they are trying to change, or exit if we can't
+//        guard let stringRange = Range(range, in: currentText) else { return false }
+//        // Add their new text to the existing text
+//        let updatedText = currentText.replacingCharacters(in: stringRange, with: text)
+//        // Make sure the result is under 16 characters
+//        return updatedText.count <= 140
+//    }
 }
 
 // MARK: - ImagePicker Delegate

@@ -71,7 +71,10 @@ class MapViewController: UIViewController {
     
     
     @IBAction func goToExplanation(_ sender: Any) {
-        let vc = storyboard?.instantiateViewController(withIdentifier: "ExplanationVC") as! ExplanationViewController
+//        let vc = storyboard?.instantiateViewController(withIdentifier: "ExplanationVC") as! ExplanationViewController
+//        let nc = UINavigationController(rootViewController: vc)
+//        self.present(nc, animated: true, completion: nil)
+        let vc = storyboard?.instantiateViewController(withIdentifier: "ScrollVC") as! ScrollViewController
         let nc = UINavigationController(rootViewController: vc)
         self.present(nc, animated: true, completion: nil)
     }
@@ -202,18 +205,22 @@ class MapViewController: UIViewController {
     }
     
     @objc private func didTapSpot(spot: Spot) {
-        let vc = storyboard?.instantiateViewController(withIdentifier: "DetailsVC") as! DetailsViewController
+//        let vc = storyboard?.instantiateViewController(withIdentifier: "DetailsVC") as! DetailsViewController
+//        let nc = UINavigationController(rootViewController: vc)
+//        vc.spot = spot
+//        self.present(nc, animated: true, completion: nil)
+        let vc = storyboard?.instantiateViewController(withIdentifier: "ScrollVC") as! ScrollViewController
         let nc = UINavigationController(rootViewController: vc)
         vc.spot = spot
         self.present(nc, animated: true, completion: nil)
     }
     
-    @objc private func buttonTapped(marker: GMSMarker) {
-        let vc = storyboard?.instantiateViewController(withIdentifier: "DetailsVC") as! DetailsViewController
-        let nc = UINavigationController(rootViewController: vc)
-        vc.spot = marker as! Spot
-        self.present(nc, animated: true, completion: nil)
-    }
+//    @objc private func buttonTapped(marker: GMSMarker) {
+//        let vc = storyboard?.instantiateViewController(withIdentifier: "DetailsVC") as! DetailsViewController
+//        let nc = UINavigationController(rootViewController: vc)
+//        vc.spot = marker as! Spot
+//        self.present(nc, animated: true, completion: nil)
+//    }
     
     private func listenToASpot(spot: Spot) {
         guard let spotUid = (spot.userData as! CustomData).uid else {return}
@@ -331,11 +338,11 @@ extension MapViewController: GMSMapViewDelegate, AddSpotDelegate {
     }
     
     func mapView(_ mapView: GMSMapView, markerInfoWindow marker: GMSMarker) -> UIView? {
-        let view = UIView(frame: CGRect.init(x: 0, y: 0, width: 200, height: 70))
-        view.backgroundColor = UIColor.systemBackground
-        view.layer.cornerRadius = 6
-        view.layer.borderWidth = 3.0
-        view.layer.borderColor = UIColor.systemBackground.cgColor
+        let view = UIView(frame: CGRect.init(x: 0, y: 0, width: 150, height: 70))
+        view.backgroundColor = UIColor.systemBackground.withAlphaComponent(0.8)
+        view.layer.cornerRadius = 5
+//        view.layer.borderWidth = 3.0
+//        view.layer.borderColor = UIColor.systemBackground.cgColor
         
         let lbl1 = UILabel(frame: CGRect.init(x: 8, y: 8, width: view.frame.size.width - 16, height: 17))
         lbl1.font = UIFont(name: "LeagueSpartan-Bold", size: 15)
@@ -346,6 +353,10 @@ extension MapViewController: GMSMapViewDelegate, AddSpotDelegate {
         lbl2.text = marker.snippet
         lbl2.font = UIFont(name: "GlacialIndifference-Regular", size: 14)
         lbl2.textColor = UIColor.label
+        lbl2.numberOfLines = 0
+        lbl2.contentMode = .scaleToFill
+//        lbl2.lineBreakMode = .byWordWrapping
+//        lbl2.adjustsFontSizeToFitWidth = false
         view.addSubview(lbl2)
         return view
     }

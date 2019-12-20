@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		0484491BBCC92E3E18A37759 /* Pods_Spot.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 69D45E66E98844E453A429FB /* Pods_Spot.framework */; };
 		17635541185BEDF82A4E1645 /* Pods_SpotTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8C4C4DD508EB3330BF832A53 /* Pods_SpotTests.framework */; };
+		F011600523AB6F43009DF7D2 /* ScrollViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F011600423AB6F43009DF7D2 /* ScrollViewController.swift */; };
 		F016EA002330E58200214C4E /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F016E9FF2330E58200214C4E /* LoginViewController.swift */; };
 		F016EA022330E5A400214C4E /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F016EA012330E5A400214C4E /* SignUpViewController.swift */; };
 		F01B3AC8232F8F4800B62D88 /* AlertService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F01B3AC7232F8F4800B62D88 /* AlertService.swift */; };
@@ -83,6 +84,7 @@
 		BDC02235817325F6A3E1ECAE /* Pods-Spot.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Spot.debug.xcconfig"; path = "Target Support Files/Pods-Spot/Pods-Spot.debug.xcconfig"; sourceTree = "<group>"; };
 		D45C6BA2F0BC67C37477B12B /* Pods-Spot-SpotTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Spot-SpotTests.release.xcconfig"; path = "Target Support Files/Pods-Spot-SpotTests/Pods-Spot-SpotTests.release.xcconfig"; sourceTree = "<group>"; };
 		E3E35D4DCEAD0AB15A59E2A4 /* Pods-SpotTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SpotTests.release.xcconfig"; path = "Target Support Files/Pods-SpotTests/Pods-SpotTests.release.xcconfig"; sourceTree = "<group>"; };
+		F011600423AB6F43009DF7D2 /* ScrollViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollViewController.swift; sourceTree = "<group>"; };
 		F016E9FF2330E58200214C4E /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		F016EA012330E5A400214C4E /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 		F01B3AC7232F8F4800B62D88 /* AlertService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertService.swift; sourceTree = "<group>"; };
@@ -183,6 +185,7 @@
 				F055FB5C239FB6D00005EEE5 /* ProfileViewController.swift */,
 				F055FB5E239FCC3B0005EEE5 /* CreateProfileViewController.swift */,
 				F04FC19C23A430FC00766C73 /* SpotCreatorProfileViewController.swift */,
+				F011600423AB6F43009DF7D2 /* ScrollViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -560,6 +563,7 @@
 				F04E3CFA235DB2F70048D18A /* DetailsViewController.swift in Sources */,
 				F0695A232372E0D200F399B7 /* Marker.swift in Sources */,
 				F01B3AC8232F8F4800B62D88 /* AlertService.swift in Sources */,
+				F011600523AB6F43009DF7D2 /* ScrollViewController.swift in Sources */,
 				F0CDE0A923279719007126DE /* Spot.swift in Sources */,
 				F0695A212372D88300F399B7 /* DocumentSerializableProtocol.swift in Sources */,
 				F016EA022330E5A400214C4E /* SignUpViewController.swift in Sources */,
