@@ -21,7 +21,6 @@ class DetailsViewController: UIViewController {
     @IBOutlet weak var pictureTakerName: UILabel!
     @IBOutlet weak var spotTitle: UILabel!
     @IBOutlet weak var spotDescriptionTextView: UITextView!
-    
     @IBOutlet weak var spotDate: UILabel!
     @IBOutlet weak var spotCoordinate: UILabel!
     @IBOutlet weak var favoriteButton: FavoriteButton!
@@ -50,7 +49,7 @@ class DetailsViewController: UIViewController {
         getSpotDetails()
         getImage()
         reverseGeocodeCoordinate(spot.position)
-        
+        textViewDidChange(spotDescriptionTextView)
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(imageTapped(_:)))
         navigationController?.setNavigationBarHidden(true, animated: false)
         imageView.addGestureRecognizer(tapGestureRecognizer)
@@ -137,7 +136,7 @@ class DetailsViewController: UIViewController {
             switch result {
             case .success(let profil):
                 self?.showSpotOwnerProfile(profil: profil)
-//                self?.setSpotCreatorProfile(profil)
+                self?.setSpotCreatorProfile(profil)
             case .failure(let error):
                 print(error.localizedDescription)
                 self?.presentAlert(with: "Erreur réseau")
@@ -412,3 +411,15 @@ class DetailsViewController: UIViewController {
     }
 }
 
+@available(iOS 13.0, *)
+extension DetailsViewController: UITextViewDelegate {
+    func textViewDidChange(_ textView: UITextView) {
+        let size = CGSize(width: view.frame.width, height: .infinity)
+        let estimatedSize = textView.sizeThatFits(size)
+        textView.constraints.forEach { (constraint) in
+            if constraint.firstAttribute == .height {
+                constraint.constant = estimatedSize.height
+            }
+        }
+    }
+}

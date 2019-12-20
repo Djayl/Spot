@@ -16,7 +16,8 @@ class SpotCreatorProfileViewController: UIViewController {
     @IBOutlet weak var profileImageView: UIImageView!
     @IBOutlet weak var creatorNameLabel: UILabel!
     @IBOutlet weak var creatorEquipmentLabel: UILabel!
-    @IBOutlet weak var creatorDescriptionLabel: UILabel!
+    @IBOutlet weak var creatorDescriptionTextView: UITextView!
+    
     @IBOutlet weak var ageLabel: UILabel!
     @IBOutlet weak var tableView: UITableView!
    
@@ -27,7 +28,7 @@ class SpotCreatorProfileViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupImageView()
-        creatorDescriptionLabel.sizeToFit()
+        textViewDidChange(creatorDescriptionTextView)
 //        listenUserCollection()
         tableView.register(UINib(nibName: "SpotTableViewCell", bundle: nil),forCellReuseIdentifier: "SpotTableViewCell")
 
@@ -46,7 +47,7 @@ class SpotCreatorProfileViewController: UIViewController {
     
     private func updateScreenWithProfil(_ profil: Profil) {
         creatorNameLabel.text = "\(profil.userName.capitalized)"
-        creatorDescriptionLabel.text = profil.description
+        creatorDescriptionTextView.text = profil.description
         creatorEquipmentLabel.text = profil.equipment.capitalized
         ageLabel.text = "\(profil.age) ans"
     }
@@ -187,7 +188,18 @@ extension SpotCreatorProfileViewController: UITableViewDataSource, UITableViewDe
         }
     }
 
-
+@available(iOS 13.0, *)
+extension SpotCreatorProfileViewController: UITextViewDelegate {
+    func textViewDidChange(_ textView: UITextView) {
+        let size = CGSize(width: view.frame.width, height: .infinity)
+        let estimatedSize = textView.sizeThatFits(size)
+        textView.constraints.forEach { (constraint) in
+            if constraint.firstAttribute == .height {
+                constraint.constant = estimatedSize.height
+            }
+        }
+    }
+}
 
 
     

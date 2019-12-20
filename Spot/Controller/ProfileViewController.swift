@@ -26,6 +26,7 @@ class ProfileViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+//        textViewDidChange(<#T##textView: UITextView##UITextView#>)
         setUpTableView()
         descriptionLabel.sizeToFit()
         setupImageView()
@@ -280,4 +281,15 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
     }
 }
 
-
+@available(iOS 13.0, *)
+extension ProfileViewController: UITextViewDelegate {
+    func textViewDidChange(_ textView: UITextView) {
+        let size = CGSize(width: view.frame.width, height: .infinity)
+        let estimatedSize = textView.sizeThatFits(size)
+        textView.constraints.forEach { (constraint) in
+            if constraint.firstAttribute == .height {
+                constraint.constant = estimatedSize.height
+            }
+        }
+    }
+}

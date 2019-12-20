@@ -71,12 +71,10 @@ class MapViewController: UIViewController {
     
     
     @IBAction func goToExplanation(_ sender: Any) {
-//        let vc = storyboard?.instantiateViewController(withIdentifier: "ExplanationVC") as! ExplanationViewController
-//        let nc = UINavigationController(rootViewController: vc)
-//        self.present(nc, animated: true, completion: nil)
-        let vc = storyboard?.instantiateViewController(withIdentifier: "ScrollVC") as! ScrollViewController
+        let vc = storyboard?.instantiateViewController(withIdentifier: "ExplanationVC") as! ExplanationViewController
         let nc = UINavigationController(rootViewController: vc)
         self.present(nc, animated: true, completion: nil)
+        
     }
     
     
@@ -209,7 +207,7 @@ class MapViewController: UIViewController {
 //        let nc = UINavigationController(rootViewController: vc)
 //        vc.spot = spot
 //        self.present(nc, animated: true, completion: nil)
-        let vc = storyboard?.instantiateViewController(withIdentifier: "ScrollVC") as! ScrollViewController
+        let vc = storyboard?.instantiateViewController(withIdentifier: "DetailsVC") as! DetailsViewController
         let nc = UINavigationController(rootViewController: vc)
         vc.spot = spot
         self.present(nc, animated: true, completion: nil)
