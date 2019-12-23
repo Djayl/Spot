@@ -33,10 +33,11 @@
 		F05048E2236D87C200F6F660 /* CustomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F05048E1236D87C200F6F660 /* CustomCell.swift */; };
 		F050CF67239E8D7E00D31800 /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = F050CF66239E8D7E00D31800 /* UIColor.swift */; };
 		F050CF69239E97CD00D31800 /* GlacialIndifference-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = F050CF68239E97B500D31800 /* GlacialIndifference-Bold.otf */; };
+		F052692323B02A9B0052D114 /* MainCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F052692223B02A9B0052D114 /* MainCell.swift */; };
+		F052692523B02D070052D114 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F052692423B02D070052D114 /* ProfileViewController.swift */; };
 		F0528FAA23716EBB00845538 /* IndigoOutline.otf in Resources */ = {isa = PBXBuildFile; fileRef = F0528FA823716EB800845538 /* IndigoOutline.otf */; };
 		F0528FAB23716EBB00845538 /* IndigoRegular.otf in Resources */ = {isa = PBXBuildFile; fileRef = F0528FA923716EBB00845538 /* IndigoRegular.otf */; };
 		F0528FAE2371799200845538 /* SarySoft.otf in Resources */ = {isa = PBXBuildFile; fileRef = F0528FAD2371797A00845538 /* SarySoft.otf */; };
-		F055FB5D239FB6D00005EEE5 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F055FB5C239FB6D00005EEE5 /* ProfileViewController.swift */; };
 		F055FB5F239FCC3B0005EEE5 /* CreateProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F055FB5E239FCC3B0005EEE5 /* CreateProfileViewController.swift */; };
 		F05751F8236A20230051F777 /* AuthenticationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F05751F7236A20230051F777 /* AuthenticationService.swift */; };
 		F05E72642396663500F6E61A /* SpotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F05E72632396663500F6E61A /* SpotTests.swift */; };
@@ -62,6 +63,8 @@
 		F0D5280E232786770023B226 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F0D5280C232786770023B226 /* Main.storyboard */; };
 		F0D52810232786780023B226 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F0D5280F232786780023B226 /* Assets.xcassets */; };
 		F0D52813232786780023B226 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F0D52811232786780023B226 /* LaunchScreen.storyboard */; };
+		F0E6746123B11584007B84E9 /* CollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0E6745F23B11584007B84E9 /* CollectionViewCell.swift */; };
+		F0E6746223B11584007B84E9 /* CollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F0E6746023B11584007B84E9 /* CollectionViewCell.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -107,10 +110,11 @@
 		F05048E1236D87C200F6F660 /* CustomCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomCell.swift; sourceTree = "<group>"; };
 		F050CF66239E8D7E00D31800 /* UIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
 		F050CF68239E97B500D31800 /* GlacialIndifference-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "GlacialIndifference-Bold.otf"; sourceTree = "<group>"; };
+		F052692223B02A9B0052D114 /* MainCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainCell.swift; sourceTree = "<group>"; };
+		F052692423B02D070052D114 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		F0528FA823716EB800845538 /* IndigoOutline.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = IndigoOutline.otf; sourceTree = "<group>"; };
 		F0528FA923716EBB00845538 /* IndigoRegular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = IndigoRegular.otf; sourceTree = "<group>"; };
 		F0528FAD2371797A00845538 /* SarySoft.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = SarySoft.otf; sourceTree = "<group>"; };
-		F055FB5C239FB6D00005EEE5 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		F055FB5E239FCC3B0005EEE5 /* CreateProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateProfileViewController.swift; sourceTree = "<group>"; };
 		F05751F7236A20230051F777 /* AuthenticationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationService.swift; sourceTree = "<group>"; };
 		F05E72612396663500F6E61A /* SpotTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SpotTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -140,6 +144,8 @@
 		F0D5280F232786780023B226 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		F0D52812232786780023B226 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		F0D52814232786780023B226 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F0E6745F23B11584007B84E9 /* CollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewCell.swift; sourceTree = "<group>"; };
+		F0E6746023B11584007B84E9 /* CollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CollectionViewCell.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -180,9 +186,9 @@
 				F04E3CF9235DB2F70048D18A /* DetailsViewController.swift */,
 				F0CE143A236C42E60025446B /* FavoriteViewController.swift */,
 				F02AA33B2386D59100D67E73 /* ExplanationViewController.swift */,
-				F055FB5C239FB6D00005EEE5 /* ProfileViewController.swift */,
 				F055FB5E239FCC3B0005EEE5 /* CreateProfileViewController.swift */,
 				F04FC19C23A430FC00766C73 /* SpotCreatorProfileViewController.swift */,
+				F052692423B02D070052D114 /* ProfileViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -208,6 +214,9 @@
 				F0C1402A23686D1900341744 /* FavoriteButton.swift */,
 				F06B84C623A78023003E3A5F /* SpotTableViewCell.swift */,
 				F06B84C723A78023003E3A5F /* SpotTableViewCell.xib */,
+				F052692223B02A9B0052D114 /* MainCell.swift */,
+				F0E6745F23B11584007B84E9 /* CollectionViewCell.swift */,
+				F0E6746023B11584007B84E9 /* CollectionViewCell.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -426,6 +435,7 @@
 				F0986B24239D5DB7006B3813 /* Simpel-Medium.otf in Resources */,
 				F0986B26239D5E4C006B3813 /* GlacialIndifference-Regular.otf in Resources */,
 				F0D52813232786780023B226 /* LaunchScreen.storyboard in Resources */,
+				F0E6746223B11584007B84E9 /* CollectionViewCell.xib in Resources */,
 				F0D52810232786780023B226 /* Assets.xcassets in Resources */,
 				F0D5280E232786770023B226 /* Main.storyboard in Resources */,
 				F06B84C923A78023003E3A5F /* SpotTableViewCell.xib in Resources */,
@@ -540,13 +550,14 @@
 				F04EBA9A23844465009B0074 /* CLLocation.swift in Sources */,
 				F0C1402B23686D1900341744 /* FavoriteButton.swift in Sources */,
 				F04EBA9C238444C3009B0074 /* UINavigationController.swift in Sources */,
-				F055FB5D239FB6D00005EEE5 /* ProfileViewController.swift in Sources */,
 				F02AA3382386C47300D67E73 /* UIAlertController.swift in Sources */,
 				F04FC23C2387105400EA857A /* FirebaseStorageManager.swift in Sources */,
 				F04EBAA423844664009B0074 /* Array.swift in Sources */,
 				F096F51723857E2F00DCD18A /* Date.swift in Sources */,
 				F01E4C0523338BD700F7ADB6 /* Colors.swift in Sources */,
 				F04E3CF8235DB06E0048D18A /* CustomMarkerView.swift in Sources */,
+				F052692323B02A9B0052D114 /* MainCell.swift in Sources */,
+				F052692523B02D070052D114 /* ProfileViewController.swift in Sources */,
 				F050CF67239E8D7E00D31800 /* UIColor.swift in Sources */,
 				F02F751A2373128800610F1B /* Profil.swift in Sources */,
 				F01E4C0323338BB500F7ADB6 /* CustomButton.swift in Sources */,
@@ -566,6 +577,7 @@
 				F02AA33C2386D59100D67E73 /* ExplanationViewController.swift in Sources */,
 				F05751F8236A20230051F777 /* AuthenticationService.swift in Sources */,
 				F096F51523857DF900DCD18A /* UILabel.swift in Sources */,
+				F0E6746123B11584007B84E9 /* CollectionViewCell.swift in Sources */,
 				F0695A1F2372D7BB00F399B7 /* Endpoint.swift in Sources */,
 				F04EBAA22384463E009B0074 /* String.swift in Sources */,
 				F096F51923857E7500DCD18A /* Bool.swift in Sources */,

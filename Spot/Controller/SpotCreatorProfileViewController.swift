@@ -19,7 +19,8 @@ class SpotCreatorProfileViewController: UIViewController {
     @IBOutlet weak var creatorDescriptionTextView: UITextView!
     
     @IBOutlet weak var ageLabel: UILabel!
-    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var collectionView: UICollectionView!
+    
    
     
     var userId = ""
@@ -27,10 +28,13 @@ class SpotCreatorProfileViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        collectionView.dataSource = self
+        collectionView.delegate = self
         setupImageView()
         textViewDidChange(creatorDescriptionTextView)
 //        listenUserCollection()
-        tableView.register(UINib(nibName: "SpotTableViewCell", bundle: nil),forCellReuseIdentifier: "SpotTableViewCell")
+        collectionView.register(UINib.init(nibName: "CollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "collectionCell")
+       
 
     }
     
@@ -93,7 +97,7 @@ class SpotCreatorProfileViewController: UIViewController {
                     spot.imageURL = marker.imageURL
                     spot.image = image
                     self.markers.append(spot)
-                    self.tableView.reloadData()
+                    self.collectionView.reloadData()
                 }
             }
         }
@@ -111,7 +115,7 @@ class SpotCreatorProfileViewController: UIViewController {
                     }
                     }
                     DispatchQueue.main.async {
-                        self?.tableView.reloadData()
+                        self?.collectionView.reloadData()
                     }
                 case .failure(let error):
                     print(error.localizedDescription)
@@ -121,10 +125,6 @@ class SpotCreatorProfileViewController: UIViewController {
         }
             
         @objc private func didTapSpot(spot: Spot) {
-//            let vc = storyboard?.instantiateViewController(withIdentifier: "DetailsVC") as! DetailsViewController
-//            let nc = UINavigationController(rootViewController: vc)
-//            vc.spot = spot
-//            self.present(nc, animated: true, completion: nil)
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
             let vc = storyboard.instantiateViewController(identifier: "DetailsVC") as! DetailsViewController
             vc.spot = spot
@@ -135,57 +135,33 @@ class SpotCreatorProfileViewController: UIViewController {
 
     // MARK: - Table View delegate and data source
 
-
-@available(iOS 13.0, *)
-extension SpotCreatorProfileViewController: UITableViewDataSource, UITableViewDelegate {
-
-        func tableView(_ tableView: UITableView, numberOfRowsInSection    section: Int) -> Int {
+    @available(iOS 13.0, *)
+    extension SpotCreatorProfileViewController: UICollectionViewDelegateFlowLayout, UICollectionViewDataSource, UICollectionViewDelegate {
+        
+        func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
             return markers.count
         }
-
-        func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-            return 100
-        }
-
-        func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-            if let cell = tableView.dequeueReusableCell(withIdentifier: "SpotTableViewCell") as? SpotTableViewCell {
+        
+        func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+            if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "collectionCell", for: indexPath) as? CollectionViewCell {
                 cell.configureCell(spot: markers[indexPath.row])
-                cell.contentView.layer.cornerRadius = 10
+                cell.contentView.frame = cell.bounds
                 return cell
             }
-            return UITableViewCell()
+            return UICollectionViewCell()
         }
-
-        func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-            return true
+        
+        func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+            return CGSize(width: collectionView.frame.height / 6 * 5, height: collectionView.frame.height / 6 * 5)
+            //        return CGSize(width: collectionView.frame.width / 2.5, height: collectionView.frame.height)
+            //        return CGSize(width: collectionView.frame.width, height: collectionView.frame.height)
         }
-
-//        func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle,
-//                       forRowAt indexPath: IndexPath) {
-//            if editingStyle == .delete {
-//                removeFav(spot: markers[indexPath.row])
-//                markers.remove(at: indexPath.row)
-//                tableView.deleteRows(at: [indexPath], with: .automatic)
-//            }
-//        }
-
-        func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-            let label = UILabel()
-            label.text = "Pas de Spots ici"
-            label.font = UIFont(name: "LeagueSpartan-Bold", size: 20)
-            label.textAlignment = .center
-            label.textColor = .label
-            return label
-        }
-
-        func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-            return markers.isEmpty ? 200 : 0
-        }
-
-        func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-            tableView.deselectRow(at: indexPath, animated: true)
+        
+        func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
             didTapSpot(spot: markers[indexPath.row])
         }
+        
+        
     }
 
 @available(iOS 13.0, *)

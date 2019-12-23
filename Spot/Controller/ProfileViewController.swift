@@ -1,37 +1,41 @@
 //
-//  ProfileViewController.swift
+//  CollectionViewController.swift
 //  Spot
 //
-//  Created by MacBook DS on 10/12/2019.
+//  Created by MacBook DS on 23/12/2019.
 //  Copyright © 2019 Djilali Sakkar. All rights reserved.
 //
 
 import UIKit
-import Kingfisher
 import GoogleMaps
+import Kingfisher
 
 @available(iOS 13.0, *)
 class ProfileViewController: UIViewController {
     
+    // MARK: - Outlets
+    
+    @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var profileImageView: UIImageView!
     @IBOutlet weak var usernameLabel: UILabel!
     @IBOutlet weak var equipmentLabel: UILabel!
-    @IBOutlet weak var descriptionLabel: UILabel!
     @IBOutlet weak var modifyButton: CustomButton!
     @IBOutlet weak var ageLabel: UILabel!
-    @IBOutlet weak var tableView: UITableView! { didSet{ tableView.tableFooterView = UIView() } }
+    @IBOutlet weak var descriptionTextView: UITextView!
     
+    // MARK: - Properties
     
     var markers = [Spot]()
     
+    // MARK: - View Life Cycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-//        textViewDidChange(<#T##textView: UITextView##UITextView#>)
-        setUpTableView()
-        descriptionLabel.sizeToFit()
+        collectionView.dataSource = self
+        collectionView.delegate = self
+        textViewDidChange(descriptionTextView)
         setupImageView()
-        tableView.register(UINib(nibName: "SpotTableViewCell", bundle: nil),forCellReuseIdentifier: "SpotTableViewCell")
-//        listenUserCollection()
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -41,6 +45,7 @@ class ProfileViewController: UIViewController {
         listenUserCollection()
     }
     
+    // MARK: - Actions
     
     @IBAction func goToCreateProfile(_ sender: Any) {
         let vc = storyboard?.instantiateViewController(withIdentifier: "createProfileVC") as! CreateProfileViewController
@@ -62,18 +67,13 @@ class ProfileViewController: UIViewController {
         }
     }
     
-    fileprivate func setUpTableView() {
-        tableView.dataSource = self
-        tableView.delegate = self
-        tableView.separatorStyle = .none
-    }
+    // MARK: - Methods
     
     private func setupImageView() {
         profileImageView.layer.cornerRadius = profileImageView.frame.height / 2
     }
     
     fileprivate func setupView() {
-        descriptionLabel.layer.cornerRadius = 5
         profileImageView.isUserInteractionEnabled = true
         profileImageView.layer.cornerRadius = 10
         profileImageView.layer.masksToBounds = true
@@ -81,7 +81,7 @@ class ProfileViewController: UIViewController {
     
     private func updateScreenWithProfil(_ profil: Profil) {
         usernameLabel.text = "\(profil.userName.capitalized)"
-        descriptionLabel.text = profil.description
+        descriptionTextView.text = profil.description
         equipmentLabel.text = profil.equipment.capitalized
         ageLabel.text = "\(profil.age) ans"
     }
@@ -111,18 +111,6 @@ class ProfileViewController: UIViewController {
         }
     }
     
-    @objc private func didTapSpot(spot: Spot) {
-//        let vc = storyboard?.instantiateViewController(withIdentifier: "DetailsVC") as! DetailsViewController
-//        let nc = UINavigationController(rootViewController: vc)
-//        vc.spot = spot
-//        self.present(nc, animated: true, completion: nil)
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let vc = storyboard.instantiateViewController(identifier: "DetailsVC") as! DetailsViewController
-        vc.spot = spot
-        navigationController?.pushViewController(vc, animated: true)
-    }
-    
-    
     private func displaySpot(_ marker: Marker) {
         let name = marker.name
         guard let url = URL.init(string: marker.imageURL ) else {return}
@@ -139,23 +127,7 @@ class ProfileViewController: UIViewController {
                 spot.imageURL = marker.imageURL
                 spot.image = image
                 self.markers.append(spot)
-                self.tableView.reloadData()
-            }
-        }
-    }
-    
-    private func fetchUserCollection() {
-        let firestoreService = FirestoreService<Marker>()
-        firestoreService.fetchCollection(endpoint: .spot) { [weak self] result in
-            switch result {
-            case .success(let markers):
-                for marker in markers {
-                    self?.markers.removeAll()
-                    self?.displaySpot(marker)
-                }
-            case .failure(let error):
-                print(error.localizedDescription)
-                self?.presentAlert(with: "Erreur serveur")
+                self.collectionView.reloadData()
             }
         }
     }
@@ -167,11 +139,13 @@ class ProfileViewController: UIViewController {
             case .success(let markers):
                 self?.markers.removeAll()
                 for marker in markers {
-                    self?.displaySpot(marker)
-                    print(marker.name)
+                    if marker.publicSpot == true {
+                        self?.displaySpot(marker)
+                        print(marker.name)
+                    }
                 }
                 DispatchQueue.main.async {
-                    self?.tableView.reloadData()
+                    self?.collectionView.reloadData()
                 }
             case .failure(let error):
                 print(error.localizedDescription)
@@ -180,110 +154,49 @@ class ProfileViewController: UIViewController {
         }
     }
     
-    private func removeImageFromFirebase(spot: Spot) {
-        let firebaseStorageManager = FirebaseStorageManager()
-        guard let imageID = (spot.userData as? CustomData)?.imageID else {return}
-        firebaseStorageManager.deleteImageData(serverFileName: imageID)
+    @objc private func didTapSpot(spot: Spot) {
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let vc = storyboard.instantiateViewController(identifier: "DetailsVC") as! DetailsViewController
+        vc.spot = spot
+        navigationController?.pushViewController(vc, animated: true)
     }
-    
-    private func removeFav(spot: Spot) {
-        guard let spotUid = (spot.userData as! CustomData).uid else {return}
-        deletePrivateSpotFromFirestore(identifier: spotUid)
-        deletePublicSpotFromFirestore(identifier: spotUid)
-        removeImageFromFirebase(spot: spot)
-    }
-    
-    private func deletePrivateSpotFromFirestore(identifier: String) {
-        let firestoreService = FirestoreService<Marker>()
-        firestoreService.deleteDocumentData(endpoint: .spot, identifier: identifier) { [weak self] result in
-            switch result {
-            case .success(let successMessage):
-                DispatchQueue.main.async {
-                    self?.tableView.reloadData()
-                }
-                print(successMessage)
-            case .failure(let error):
-                print("Error deleting document: \(error)")
-                self?.presentAlert(with: "Problème réseau")
-            }
-        }
-    }
-    
-    private func deletePublicSpotFromFirestore(identifier: String) {
-        let firestoreService = FirestoreService<Marker>()
-        firestoreService.deleteDocumentData(endpoint: .publicCollection, identifier: identifier) { [weak self] result in
-            switch result {
-            case .success(let successMessage):
-                DispatchQueue.main.async {
-                    self?.tableView.reloadData()
-                }
-                print(successMessage)
-            case .failure(let error):
-                print("Error deleting document: \(error)")
-                self?.presentAlert(with: "Problème réseau")
-            }
-        }
-    }
-    
 }
 
 // MARK: - Table View delegate and data source
 
 @available(iOS 13.0, *)
-extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
+extension ProfileViewController: UICollectionViewDelegateFlowLayout, UICollectionViewDataSource, UICollectionViewDelegate {
     
-    func tableView(_ tableView: UITableView, numberOfRowsInSection    section: Int) -> Int {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return markers.count
     }
     
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 100
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if let cell = tableView.dequeueReusableCell(withIdentifier: "SpotTableViewCell") as? SpotTableViewCell {
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as? MainCell {
             cell.configureCell(spot: markers[indexPath.row])
-            cell.contentView.layer.cornerRadius = 10
+            cell.contentView.frame = cell.bounds
             return cell
         }
-        return UITableViewCell()
+        return UICollectionViewCell()
     }
     
-    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        return true
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: collectionView.frame.height / 6 * 5, height: collectionView.frame.height / 6 * 5)
+        //        return CGSize(width: collectionView.frame.width / 2.5, height: collectionView.frame.height)
+        //        return CGSize(width: collectionView.frame.width, height: collectionView.frame.height)
     }
     
-    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle,
-                   forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            removeFav(spot: markers[indexPath.row])
-            markers.remove(at: indexPath.row)
-            tableView.deleteRows(at: [indexPath], with: .automatic)
-        }
-    }
-    
-    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-        let label = UILabel()
-        label.text = "Vous n'avez pas de Spots"
-        label.font = UIFont(name: "LeagueSpartan-Bold", size: 20)
-        label.textAlignment = .center
-        label.textColor = .label
-        return label
-    }
-    
-    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        return markers.isEmpty ? 200 : 0
-    }
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: true)
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         didTapSpot(spot: markers[indexPath.row])
     }
+    
+    
 }
 
 @available(iOS 13.0, *)
 extension ProfileViewController: UITextViewDelegate {
     func textViewDidChange(_ textView: UITextView) {
+        textView.delegate = self
         let size = CGSize(width: view.frame.width, height: .infinity)
         let estimatedSize = textView.sizeThatFits(size)
         textView.constraints.forEach { (constraint) in

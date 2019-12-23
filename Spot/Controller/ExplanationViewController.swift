@@ -35,19 +35,19 @@ class ExplanationViewController: UIViewController {
     // MARK: - Methods
     
     private func handleFirstLabel() {
-        textLabel.layer.masksToBounds = true
-        textLabel.layer.cornerRadius = 10
-        textLabel.font = UIFont(name: "GlacialIndifference-Regular", size: 18)
-        textLabel.sizeToFit()
-        textLabel.text = "Pour créer un Spot, il suffit d'un appui long sur la carte à l'endroit souhaité. \nUne nouvelle page de création apparaitra dans laquelle vous pourrez:\n\n - Choisir votre image \n - Nommer votre Spot \n - Décrire votre Spot "
+//        textLabel.layer.masksToBounds = true
+//        textLabel.layer.cornerRadius = 10
+        textLabel.font = UIFont(name: "GlacialIndifference-Regular", size: 17)
+//        textLabel.sizeToFit()
+        textLabel.text = "Pour créer un Spot, il suffit d'un appui long sur la carte à l'endroit souhaité. \nUne nouvelle page de création apparaitra dans laquelle vous pourrez:\n - Choisir votre image \n - Nommer votre Spot \n - Décrire votre Spot "
     }
     
     private func handleSecondLabel() {
-        textLabel2.layer.masksToBounds = true
-        textLabel2.layer.cornerRadius = 10
-        textLabel2.font = UIFont(name: "GlacialIndifference-Regular", size: 18)
-        textLabel2.sizeToFit()
-        textLabel2.text = "Une fois tous les champs renseignés, vous pourrez choisir de partager votre Spot ou de le conserver dans votre collection privée.\n\nSi vous choisissez de le garder pour vous, vous serez alors le seul à pouvoir le voir.\n\nSi vous préférez le partager, il deviendra public et l'ensemble des utilisateurs y aura accès."
+//        textLabel2.layer.masksToBounds = true
+//        textLabel2.layer.cornerRadius = 10
+        textLabel2.font = UIFont(name: "GlacialIndifference-Regular", size: 17)
+//        textLabel2.sizeToFit()
+        textLabel2.text = "Une fois tous les champs renseignés, vous pourrez choisir de partager votre Spot ou de le conserver dans votre collection privée.\n\nSi vous choisissez de le garder pour vous, vous serez alors le seul à pouvoir le voir.\nSi vous préférez le partager, il deviendra public et l'ensemble des utilisateurs y aura accès."
     }
 
 }

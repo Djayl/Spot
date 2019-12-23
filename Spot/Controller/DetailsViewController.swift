@@ -48,11 +48,11 @@ class DetailsViewController: UIViewController {
         super.viewDidLoad()
         fetchProfilInformation()
         setupImageView()
-        getSpotDetails()
+//        getSpotDetails()
         getImage()
         reverseGeocodeCoordinate(spot.position)
-       
-        textViewDidChange(spotDescriptionTextView)
+        spotCoordinate.isUserInteractionEnabled = true
+//        textViewDidChange(spotDescriptionTextView)
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(imageTapped(_:)))
         navigationController?.setNavigationBarHidden(true, animated: false)
         imageView.addGestureRecognizer(tapGestureRecognizer)
@@ -61,7 +61,8 @@ class DetailsViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-//        textViewDidChange(spotDescriptionTextView)
+        getSpotDetails()
+        textViewDidChange(spotDescriptionTextView)
         navigationController?.setNavigationBarHidden(true, animated: false)
         displaySpotOwnerProfile()
         getImage()
@@ -87,68 +88,6 @@ class DetailsViewController: UIViewController {
     }
     
     // MARK: - Methods
-    
-//    private func resizeTextViewFrame() {
-//        spotDescriptionTextView.delegate = self
-//        let fixedWidth = spotDescriptionTextView.frame.size.width
-//        let newSize: CGSize = spotDescriptionTextView.sizeThatFits(CGSize(width: fixedWidth, height: CGFloat(MAXFLOAT)))
-//        var newFrame = spotDescriptionTextView.frame
-//        newFrame.size = CGSize(width: CGFloat(fmaxf(Float(newSize.width), Float(fixedWidth))), height: newSize.height)
-//        spotDescriptionTextView.frame = newFrame
-//
-//    }
-//
-//    private func reloadViewHoldingTextView() {
-//        guard let description = spot.snippet, !description.isEmpty else {
-//            spotDescriptionTextView.text = "Aucune description n'a été rédigée pour ce Spot"
-//            return}
-//        spotDescriptionTextView.text = description
-//        resizeTextViewFrame()
-//        alternateView.layoutIfNeeded()
-//    }
-    
-//    func textViewDidChange(_ textView: UITextView) {
-//        let maxHeight: CGFloat = 100.0
-//        let minHeight: CGFloat = 20
-//        textViewHeight.constant = min(maxHeight, max(minHeight, textView.contentSize.height))
-//        self.view.layoutIfNeeded()
-//    }
-//    
-//   func textViewDidChange(_ textView: UITextView)
-//    {
-//        if spotDescriptionTextView.contentSize.height >= 120.0
-//        {
-//            spotDescriptionTextView.isScrollEnabled = true
-//        }
-//        else
-//        {
-//            let size = CGSize(width: view.frame.width, height: .infinity)
-//            let approxSize = spotDescriptionTextView.sizeThatFits(size)
-//
-//            textView.constraints.forEach {(constraint) in
-//
-//                        if constraint.firstAttribute == .height{
-//                                constraint.constant = approxSize.height
-//                            }
-//                        }
-//            spotDescriptionTextView.isScrollEnabled = false
-//        }
-////        self.view.layoutIfNeeded()
-//    }
-    
-//    func textViewDidChange(_ textView: UITextView){
-//        let fixedWidth = textView.frame.size.width
-//        textView.sizeThatFits(CGSize(width: fixedWidth, height: CGFloat.greatestFiniteMagnitude))
-//        let newSize = textView.sizeThatFits(CGSize(width: fixedWidth, height: CGFloat.greatestFiniteMagnitude))
-//        var newFrame = textView.frame
-//        newFrame.size = CGSize(width: max(newSize.width, fixedWidth), height: newSize.height)
-//        textView.frame = newFrame
-//
-//    }
-    
-
-   
- 
 
     private func getSpotCreatorName(_ profil: Profil) {
         pictureTakerName.text = profil.userName
@@ -183,14 +122,8 @@ class DetailsViewController: UIViewController {
        }
     
     private func showSpotOwnerProfile(profil: Profil) {
-//        let vc = storyboard?.instantiateViewController(withIdentifier: "SpotCreatorVC") as! SpotCreatorProfileViewController
-//        let nc = UINavigationController(rootViewController: vc)
-//
-//        guard let userId = (spot.userData as? CustomData)?.ownerId else {return}
-//        vc.userId = userId
-//        self.present(nc, animated: true, completion: nil)
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let vc = storyboard.instantiateViewController(identifier: "SpotCreatorVC") as! SpotCreatorProfileViewController
+        let vc = storyboard.instantiateViewController(identifier: "spotCreatorVC") as! SpotCreatorProfileViewController
         guard let userId = (spot.userData as? CustomData)?.ownerId else {return}
         vc.userId = userId
         navigationController?.pushViewController(vc, animated: true)
@@ -266,10 +199,8 @@ class DetailsViewController: UIViewController {
     private func getSpotDetails() {
         guard let name = spot.title else {return}
         spotTitle.text = name.capitalized.toNoSmartQuotes()
-//        guard let description = spot.snippet, !description.isEmpty else {
-//            spotDescriptionTextView.text = "Aucune description n'a été rédigée pour ce Spot"
-//            return}
-//        spotDescriptionTextView.text = description
+        guard let description = spot.snippet else {return}
+        spotDescriptionTextView.text = description
         guard let date  = (spot.userData as? CustomData)?.creationDate else {return}
         spotDate.text = "Spot créé le \(date.asString(style: .short))"
         guard let creatorName = (spot.userData as? CustomData)?.creatorName else {return}

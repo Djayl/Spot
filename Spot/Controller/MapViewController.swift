@@ -62,7 +62,7 @@ class MapViewController: UIViewController {
     }
     
     @IBAction func goToProfile() {
-        let vc = storyboard?.instantiateViewController(withIdentifier: "ProfileVC") as! ProfileViewController
+        let vc = storyboard?.instantiateViewController(withIdentifier: "profileVC") as! ProfileViewController
                let nc = UINavigationController(rootViewController: vc)
                self.present(nc, animated: true, completion: nil)
     }
@@ -73,7 +73,6 @@ class MapViewController: UIViewController {
         let vc = storyboard?.instantiateViewController(withIdentifier: "ExplanationVC") as! ExplanationViewController
         let nc = UINavigationController(rootViewController: vc)
         self.present(nc, animated: true, completion: nil)
-        
     }
     
     
