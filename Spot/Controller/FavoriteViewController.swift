@@ -23,12 +23,12 @@ class FavoriteViewController: UIViewController {
     
     var markers = [Spot]()
     
+    // MARK: - View Life Cycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setUpTableView()
     }
-    
-    // MARK: - View Life Cycle
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)

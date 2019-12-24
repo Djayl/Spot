@@ -13,18 +13,21 @@ import GoogleMaps
 @available(iOS 13.0, *)
 class SpotCreatorProfileViewController: UIViewController {
     
+    // MARK: - Outlets
+    
     @IBOutlet weak var profileImageView: UIImageView!
     @IBOutlet weak var creatorNameLabel: UILabel!
     @IBOutlet weak var creatorEquipmentLabel: UILabel!
     @IBOutlet weak var creatorDescriptionTextView: UITextView!
-    
     @IBOutlet weak var ageLabel: UILabel!
     @IBOutlet weak var collectionView: UICollectionView!
     
-   
-    
+    // MARK: - Properties
+
     var userId = ""
     var markers = [Spot]()
+    
+    // MARK: - View Life Cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,10 +35,7 @@ class SpotCreatorProfileViewController: UIViewController {
         collectionView.delegate = self
         setupImageView()
         textViewDidChange(creatorDescriptionTextView)
-//        listenUserCollection()
         collectionView.register(UINib.init(nibName: "CollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "collectionCell")
-       
-
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -44,6 +44,8 @@ class SpotCreatorProfileViewController: UIViewController {
         listenProfilInformation()
         listenUserCollection()
     }
+    
+    // MARK: - Methods
     
     private func setupImageView() {
         profileImageView.layer.cornerRadius = profileImageView.frame.height / 2
@@ -153,14 +155,11 @@ class SpotCreatorProfileViewController: UIViewController {
         
         func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
             return CGSize(width: collectionView.frame.height / 6 * 5, height: collectionView.frame.height / 6 * 5)
-            //        return CGSize(width: collectionView.frame.width / 2.5, height: collectionView.frame.height)
-            //        return CGSize(width: collectionView.frame.width, height: collectionView.frame.height)
         }
         
         func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
             didTapSpot(spot: markers[indexPath.row])
         }
-
     }
 
 @available(iOS 13.0, *)

@@ -33,7 +33,6 @@
 		F05048E2236D87C200F6F660 /* CustomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F05048E1236D87C200F6F660 /* CustomCell.swift */; };
 		F050CF67239E8D7E00D31800 /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = F050CF66239E8D7E00D31800 /* UIColor.swift */; };
 		F050CF69239E97CD00D31800 /* GlacialIndifference-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = F050CF68239E97B500D31800 /* GlacialIndifference-Bold.otf */; };
-		F052692323B02A9B0052D114 /* MainCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F052692223B02A9B0052D114 /* MainCell.swift */; };
 		F052692523B02D070052D114 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F052692423B02D070052D114 /* ProfileViewController.swift */; };
 		F0528FAA23716EBB00845538 /* IndigoOutline.otf in Resources */ = {isa = PBXBuildFile; fileRef = F0528FA823716EB800845538 /* IndigoOutline.otf */; };
 		F0528FAB23716EBB00845538 /* IndigoRegular.otf in Resources */ = {isa = PBXBuildFile; fileRef = F0528FA923716EBB00845538 /* IndigoRegular.otf */; };
@@ -110,7 +109,6 @@
 		F05048E1236D87C200F6F660 /* CustomCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomCell.swift; sourceTree = "<group>"; };
 		F050CF66239E8D7E00D31800 /* UIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
 		F050CF68239E97B500D31800 /* GlacialIndifference-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "GlacialIndifference-Bold.otf"; sourceTree = "<group>"; };
-		F052692223B02A9B0052D114 /* MainCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainCell.swift; sourceTree = "<group>"; };
 		F052692423B02D070052D114 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		F0528FA823716EB800845538 /* IndigoOutline.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = IndigoOutline.otf; sourceTree = "<group>"; };
 		F0528FA923716EBB00845538 /* IndigoRegular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = IndigoRegular.otf; sourceTree = "<group>"; };
@@ -214,7 +212,6 @@
 				F0C1402A23686D1900341744 /* FavoriteButton.swift */,
 				F06B84C623A78023003E3A5F /* SpotTableViewCell.swift */,
 				F06B84C723A78023003E3A5F /* SpotTableViewCell.xib */,
-				F052692223B02A9B0052D114 /* MainCell.swift */,
 				F0E6745F23B11584007B84E9 /* CollectionViewCell.swift */,
 				F0E6746023B11584007B84E9 /* CollectionViewCell.xib */,
 			);
@@ -556,7 +553,6 @@
 				F096F51723857E2F00DCD18A /* Date.swift in Sources */,
 				F01E4C0523338BD700F7ADB6 /* Colors.swift in Sources */,
 				F04E3CF8235DB06E0048D18A /* CustomMarkerView.swift in Sources */,
-				F052692323B02A9B0052D114 /* MainCell.swift in Sources */,
 				F052692523B02D070052D114 /* ProfileViewController.swift in Sources */,
 				F050CF67239E8D7E00D31800 /* UIColor.swift in Sources */,
 				F02F751A2373128800610F1B /* Profil.swift in Sources */,

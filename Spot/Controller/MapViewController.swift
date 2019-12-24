@@ -148,7 +148,6 @@ class MapViewController: UIViewController {
         })
     }
     
-    
     @objc private func gotoCreateAnnotation() {
         let createSpotVC = CreateSpotViewController()
         createSpotVC.delegate = self

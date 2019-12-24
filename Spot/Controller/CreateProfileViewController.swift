@@ -13,6 +13,8 @@ import ProgressHUD
 @available(iOS 13.0, *)
 class CreateProfileViewController: UIViewController, UITextViewDelegate, UITextFieldDelegate {
     
+    // MARK: - Outlets
+    
     @IBOutlet weak var profileImageView: UIImageView!
     @IBOutlet weak var equipmentTextField: UITextField!
     @IBOutlet weak var userNameTextField: UITextField!
@@ -20,10 +22,14 @@ class CreateProfileViewController: UIViewController, UITextViewDelegate, UITextF
     @IBOutlet weak var descriptionTextView: UITextView!
     @IBOutlet weak var saveButton: CustomButton!
     
+    // MARK: - Properties
+    
     let authService = AuthService()
     let firestoreService = FirestoreService<Profil>()
     var myImage: UIImage?
     var profileDescription = ""
+    
+    // MARK: - View Life Cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -39,6 +45,9 @@ class CreateProfileViewController: UIViewController, UITextViewDelegate, UITextF
         navigationController?.setNavigationBarHidden(true, animated: false)
         fetchProfilInformation()
     }
+    
+    // MARK: - Actions
+    
     @IBAction func saveProfilData(_ sender: Any) {
         ProgressHUD.showSuccess(NSLocalizedString("Profil mis à jour", comment: ""))
         updateEquipment()
@@ -47,6 +56,8 @@ class CreateProfileViewController: UIViewController, UITextViewDelegate, UITextF
         updateUserName()
         updateAge()
     }
+    
+    // MARK: - Methods
     
     @objc private func addPhoto() {
         showImagePicckerControllerActionSheet()
@@ -99,7 +110,6 @@ class CreateProfileViewController: UIViewController, UITextViewDelegate, UITextF
     }
     
     internal func handleTextView() {
-//        descriptionTextView.text = "Décrivez votre Spot"
         descriptionTextView.textColor = UIColor.lightGray
         descriptionTextView.font = UIFont(name: "GlacialIndifference-Regular", size: 15.0)
         descriptionTextView.returnKeyType = .done
@@ -233,7 +243,6 @@ class CreateProfileViewController: UIViewController, UITextViewDelegate, UITextF
             self.dismiss(animated: true, completion: nil)
         }
     }
-    
     
     
     private func saveUserData() {

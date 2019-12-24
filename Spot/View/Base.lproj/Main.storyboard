@@ -742,11 +742,7 @@ Tx7DuSBzZSB0cm91dmUgbGUgU3BvdD8gA
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qA7-q1-F36" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-                <pinchGestureRecognizer id="avy-lo-BgT">
-                    <connections>
-                        <action selector="scaleImage:" destination="Afb-Q0-1cP" id="xuH-SN-7b1"/>
-                    </connections>
-                </pinchGestureRecognizer>
+                <pinchGestureRecognizer id="avy-lo-BgT"/>
             </objects>
             <point key="canvasLocation" x="3753.75" y="734.15492957746483"/>
         </scene>

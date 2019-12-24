@@ -29,7 +29,7 @@ class DetailsViewController: UIViewController {
     @IBOutlet weak var profileCreatorPictureButton: UIButton!
     @IBOutlet weak var equipmentLabel: UILabel!
     @IBOutlet weak var ageLabel: UILabel!
-    @IBOutlet weak var textViewHeight: NSLayoutConstraint!
+    
    
     
     
@@ -49,11 +49,9 @@ class DetailsViewController: UIViewController {
         super.viewDidLoad()
         fetchProfilInformation()
         setupImageView()
-//        getSpotDetails()
-        getImage()
         reverseGeocodeCoordinate(spot.position)
         spotCoordinate.isUserInteractionEnabled = true
-//        textViewDidChange(spotDescriptionTextView)
+        textViewDidChange(spotDescriptionTextView)
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(imageTapped(_:)))
         navigationController?.setNavigationBarHidden(true, animated: false)
         imageView.addGestureRecognizer(tapGestureRecognizer)
@@ -63,7 +61,6 @@ class DetailsViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         getSpotDetails()
-        textViewDidChange(spotDescriptionTextView)
         navigationController?.setNavigationBarHidden(true, animated: false)
         displaySpotOwnerProfile()
         getImage()
@@ -378,7 +375,8 @@ class DetailsViewController: UIViewController {
             }
         }
     }
-    
+
+        
     @objc private func imageTapped(_ sender: UITapGestureRecognizer) {
         let imageView = sender.view as! UIImageView
         newImageView = UIImageView(image: imageView.image)

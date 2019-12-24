@@ -18,10 +18,7 @@ final class LoginViewController: UIViewController {
     @IBOutlet private weak var emailTextField: UITextField!
     @IBOutlet private weak var passwordTextField: UITextField!
     
-    // MARK: - Methods
-    
-    var gradient: CAGradientLayer?
-    
+ 
     // MARK: - View Life Cycle
     
     override func viewDidLoad() {
@@ -82,16 +79,6 @@ final class LoginViewController: UIViewController {
                }
            }
        }
-    
-    private func addGradient() {
-        gradient = CAGradientLayer()
-        gradient?.colors = [Colors.skyBlue.cgColor,UIColor.white]
-        gradient?.startPoint = CGPoint(x: 0, y: 0)
-        gradient?.endPoint = CGPoint(x: 0, y:1)
-        gradient?.frame = view.frame
-        self.view.layer.insertSublayer(gradient!, at: 0)
-    }
-    
 }
 
 // MARK: - UITextfield Delegate

@@ -28,7 +28,6 @@ class SignUpViewController: UIViewController, UITextFieldDelegate, UITextViewDel
     // MARK: - Properties
     
     var myImage: UIImage?
-    var gradient: CAGradientLayer?
     let authService = AuthService()
     let firestoreService = FirestoreService<Profil>()
     
@@ -181,15 +180,6 @@ class SignUpViewController: UIViewController, UITextFieldDelegate, UITextViewDel
                 textView.font = UIFont(name: "GlacialIndifference-Regular", size: 16.0)
             }
         }
-        
-//        fileprivate func setupView() {
-//            descriptionTextView.text = "Décrivez-vous"
-//            descriptionTextView.font = UIFont(name: "GlacialIndifference-Regular", size: 15)
-//            descriptionTextView.layer.cornerRadius = 5
-//            profileImageView.isUserInteractionEnabled = true
-//            profileImageView.layer.cornerRadius = 10
-//            profileImageView.layer.masksToBounds = true
-//        }
         
         fileprivate func setupTextFields() {
             equipmentTextField.delegate = self
