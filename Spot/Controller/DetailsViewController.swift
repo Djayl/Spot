@@ -12,6 +12,7 @@ import Kingfisher
 import GoogleMaps
 
 
+
 @available(iOS 13.0, *)
 class DetailsViewController: UIViewController {
     

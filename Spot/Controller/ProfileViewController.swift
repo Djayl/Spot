@@ -35,6 +35,7 @@ class ProfileViewController: UIViewController {
         collectionView.delegate = self
         textViewDidChange(descriptionTextView)
         setupImageView()
+        collectionView.register(UINib.init(nibName: "CollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "collectionCell")
         
     }
     
@@ -172,7 +173,7 @@ extension ProfileViewController: UICollectionViewDelegateFlowLayout, UICollectio
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as? MainCell {
+        if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "collectionCell", for: indexPath) as? CollectionViewCell {
             cell.configureCell(spot: markers[indexPath.row])
             cell.contentView.frame = cell.bounds
             return cell

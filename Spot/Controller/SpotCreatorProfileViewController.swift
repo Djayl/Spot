@@ -160,8 +160,7 @@ class SpotCreatorProfileViewController: UIViewController {
         func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
             didTapSpot(spot: markers[indexPath.row])
         }
-        
-        
+
     }
 
 @available(iOS 13.0, *)
