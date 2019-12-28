@@ -191,6 +191,7 @@ extension FavoriteViewController: UITableViewDataSource, UITableViewDelegate {
         tableView.deselectRow(at: indexPath, animated: true)
         didTapSpot(spot: markers[indexPath.row])
     }
+    
 }
 
 

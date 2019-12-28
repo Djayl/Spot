@@ -31,6 +31,8 @@ class SpotCreatorProfileViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        listenProfilInformation()
+        listenUserCollection()
         collectionView.dataSource = self
         collectionView.delegate = self
         setupImageView()
@@ -41,8 +43,8 @@ class SpotCreatorProfileViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.setNavigationBarHidden(true, animated: false)
-        listenProfilInformation()
-        listenUserCollection()
+//        listenProfilInformation()
+//        listenUserCollection()
     }
     
     // MARK: - Methods

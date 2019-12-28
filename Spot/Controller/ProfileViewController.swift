@@ -31,6 +31,8 @@ class ProfileViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        listenProfilInformation()
+        listenUserCollection()
         collectionView.dataSource = self
         collectionView.delegate = self
         textViewDidChange(descriptionTextView)
@@ -42,8 +44,8 @@ class ProfileViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.setNavigationBarHidden(true, animated: false)
-        listenProfilInformation()
-        listenUserCollection()
+//        listenProfilInformation()
+//        listenUserCollection()
     }
     
     // MARK: - Actions

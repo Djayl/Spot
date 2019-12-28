@@ -200,7 +200,7 @@ class DetailsViewController: UIViewController {
         guard let description = spot.snippet else {return}
         spotDescriptionTextView.text = description
         guard let date  = (spot.userData as? CustomData)?.creationDate else {return}
-        spotDate.text = "Spot créé le \(date.asString(style: .short))"
+        spotDate.text = "Spot créé le \(date.asString(style: .long))"
         guard let creatorName = (spot.userData as? CustomData)?.creatorName else {return}
         pictureTakerName.text = creatorName
     }
