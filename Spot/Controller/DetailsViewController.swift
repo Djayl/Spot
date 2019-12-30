@@ -10,7 +10,7 @@ import UIKit
 import FirebaseFirestore
 import Kingfisher
 import GoogleMaps
-
+import MapKit
 
 
 @available(iOS 13.0, *)
@@ -56,6 +56,7 @@ class DetailsViewController: UIViewController {
         navigationController?.setNavigationBarHidden(true, animated: false)
         imageView.addGestureRecognizer(tapGestureRecognizer)
         imageView.isUserInteractionEnabled = true
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -83,6 +84,9 @@ class DetailsViewController: UIViewController {
     }
     @IBAction func goToCreatorProfile(_ sender: Any) {
         fetchSpotOwnerProfile()
+    }
+    @IBAction func getDirection(_ sender: Any) {
+        gps()
     }
     
     // MARK: - Methods
@@ -406,6 +410,17 @@ class DetailsViewController: UIViewController {
     @objc private func goToMapView() {
         self.dismiss(animated: true, completion: nil)
     }
+    
+    @objc func gps() {
+            let coordinate = spot.position 
+            print(coordinate)
+          let placemark = MKPlacemark(coordinate: coordinate)
+          let options = [MKLaunchOptionsDirectionsModeKey:
+                        MKLaunchOptionsDirectionsModeDriving]
+          let map = MKMapItem(placemark: placemark)
+          map.openInMaps(launchOptions: options)
+    }
+    
 }
 
 @available(iOS 13.0, *)

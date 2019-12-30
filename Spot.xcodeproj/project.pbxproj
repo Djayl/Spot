@@ -37,6 +37,7 @@
 		F0528FAA23716EBB00845538 /* IndigoOutline.otf in Resources */ = {isa = PBXBuildFile; fileRef = F0528FA823716EB800845538 /* IndigoOutline.otf */; };
 		F0528FAB23716EBB00845538 /* IndigoRegular.otf in Resources */ = {isa = PBXBuildFile; fileRef = F0528FA923716EBB00845538 /* IndigoRegular.otf */; };
 		F0528FAE2371799200845538 /* SarySoft.otf in Resources */ = {isa = PBXBuildFile; fileRef = F0528FAD2371797A00845538 /* SarySoft.otf */; };
+		F0548EC923B974760083E354 /* CopyableLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0548EC823B974760083E354 /* CopyableLabel.swift */; };
 		F055FB5F239FCC3B0005EEE5 /* CreateProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F055FB5E239FCC3B0005EEE5 /* CreateProfileViewController.swift */; };
 		F05751F8236A20230051F777 /* AuthenticationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F05751F7236A20230051F777 /* AuthenticationService.swift */; };
 		F05E72642396663500F6E61A /* SpotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F05E72632396663500F6E61A /* SpotTests.swift */; };
@@ -113,6 +114,7 @@
 		F0528FA823716EB800845538 /* IndigoOutline.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = IndigoOutline.otf; sourceTree = "<group>"; };
 		F0528FA923716EBB00845538 /* IndigoRegular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = IndigoRegular.otf; sourceTree = "<group>"; };
 		F0528FAD2371797A00845538 /* SarySoft.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = SarySoft.otf; sourceTree = "<group>"; };
+		F0548EC823B974760083E354 /* CopyableLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CopyableLabel.swift; sourceTree = "<group>"; };
 		F055FB5E239FCC3B0005EEE5 /* CreateProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateProfileViewController.swift; sourceTree = "<group>"; };
 		F05751F7236A20230051F777 /* AuthenticationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationService.swift; sourceTree = "<group>"; };
 		F05E72612396663500F6E61A /* SpotTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SpotTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -214,6 +216,7 @@
 				F06B84C723A78023003E3A5F /* SpotTableViewCell.xib */,
 				F0E6745F23B11584007B84E9 /* CollectionViewCell.swift */,
 				F0E6746023B11584007B84E9 /* CollectionViewCell.xib */,
+				F0548EC823B974760083E354 /* CopyableLabel.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -569,6 +572,7 @@
 				F01B3AC8232F8F4800B62D88 /* AlertService.swift in Sources */,
 				F0CDE0A923279719007126DE /* Spot.swift in Sources */,
 				F0695A212372D88300F399B7 /* DocumentSerializableProtocol.swift in Sources */,
+				F0548EC923B974760083E354 /* CopyableLabel.swift in Sources */,
 				F016EA022330E5A400214C4E /* SignUpViewController.swift in Sources */,
 				F02AA33C2386D59100D67E73 /* ExplanationViewController.swift in Sources */,
 				F05751F8236A20230051F777 /* AuthenticationService.swift in Sources */,
