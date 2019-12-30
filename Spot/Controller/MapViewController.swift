@@ -14,6 +14,7 @@ protocol AddSpotDelegate: class {
     func addSpotToMapView(marker: Spot)
 }
 
+
 @available(iOS 13.0, *)
 class MapViewController: UIViewController {
     
@@ -86,8 +87,8 @@ class MapViewController: UIViewController {
     }
     
     fileprivate func setUpTapBarController() {
-        tabBarController?.tabBar.tintColor = UIColor.green
-        tabBarController?.tabBar.unselectedItemTintColor = UIColor.lightGray
+//        tabBarController?.tabBar.tintColor = UIColor.green
+//        tabBarController?.tabBar.unselectedItemTintColor = UIColor.lightGray
         tabBarController?.tabBar.barTintColor = UIColor.systemBackground
         
     }
@@ -104,7 +105,7 @@ class MapViewController: UIViewController {
     }
     
     
-    private func chooseData(controller: UIViewController) {
+     func chooseData(controller: UIViewController) {
         let alert = UIAlertController(title: "Choisissez ce que vous voulez voir", message: "Sélectionnez une option", preferredStyle: .actionSheet)
         alert.addColorInTitleAndMessage(color: UIColor.systemBlue, titleFontSize: 20, messageFontSize: 15)
         alert.addAction(UIAlertAction(title: "Les spots publics", style: .default, handler: { (_) in
@@ -284,6 +285,37 @@ class MapViewController: UIViewController {
             }
         }
     }
+    
+//    private struct Constants {
+//           static let actionButtonSize = CGSize(width: 64, height: 64)
+//       }
+//
+//    private let actionButton: UIButton = {
+//           let button = UIButton(type: .custom)
+//           button.translatesAutoresizingMaskIntoConstraints = false
+//
+//           button.backgroundColor = UIColor.darkGray
+//           button.layer.cornerRadius = Constants.actionButtonSize.height/2
+//
+//           button.addTarget(self, action: #selector(actionButtonTapped(sender:)), for: .touchUpInside)
+//
+//           return button
+//       }()
+//
+//    private func setupConstraints() {
+//        actionButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+//        actionButton.widthAnchor.constraint(equalToConstant: Constants.actionButtonSize.width).isActive = true
+//        actionButton.heightAnchor.constraint(equalToConstant: Constants.actionButtonSize.height).isActive = true
+//        actionButton.bottomAnchor.constraint(equalTo: (tabBarController?.tabBar.safeAreaLayoutGuide.bottomAnchor)!).isActive = true
+//    }
+//
+//     private func setupSubviews() {
+//            view.addSubview(actionButton)
+//        }
+//
+//     @objc private func actionButtonTapped(sender: UIButton) {
+//            chooseData(controller: MapViewController())
+//        }
 }
 
 // MARK: - CLLocationManagerDelegate
@@ -356,7 +388,6 @@ extension MapViewController: GMSMapViewDelegate, AddSpotDelegate {
         return view
     }
 }
-
 
 
 

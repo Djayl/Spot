@@ -19,14 +19,16 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Z8j-Ld-nTG">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                 <subviews>
-                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo spot" translatesAutoresizingMaskIntoConstraints="NO" id="aZl-mf-ZIU">
-                                        <rect key="frame" x="-120.5" y="86" width="561" height="396"/>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Spoteoshadow" translatesAutoresizingMaskIntoConstraints="NO" id="aZl-mf-ZIU">
+                                        <rect key="frame" x="20" y="20" width="280" height="548"/>
                                     </imageView>
                                 </subviews>
                                 <color key="backgroundColor" red="0.96861833330000002" green="0.96862131360000003" blue="0.96862787009999995" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <constraints>
-                                    <constraint firstItem="aZl-mf-ZIU" firstAttribute="centerY" secondItem="Z8j-Ld-nTG" secondAttribute="centerY" id="LL6-xA-3A1"/>
-                                    <constraint firstItem="aZl-mf-ZIU" firstAttribute="centerX" secondItem="Z8j-Ld-nTG" secondAttribute="centerX" id="UB4-IN-a15"/>
+                                    <constraint firstAttribute="trailing" secondItem="aZl-mf-ZIU" secondAttribute="trailing" constant="20" symbolic="YES" id="CC1-br-PBA"/>
+                                    <constraint firstItem="aZl-mf-ZIU" firstAttribute="leading" secondItem="Z8j-Ld-nTG" secondAttribute="leading" constant="20" symbolic="YES" id="CRi-lI-DGW"/>
+                                    <constraint firstAttribute="bottom" secondItem="aZl-mf-ZIU" secondAttribute="bottom" id="cGm-Sf-GEL"/>
+                                    <constraint firstItem="aZl-mf-ZIU" firstAttribute="top" secondItem="Z8j-Ld-nTG" secondAttribute="top" constant="20" symbolic="YES" id="sG4-Lo-lu5"/>
                                 </constraints>
                             </view>
                         </subviews>
@@ -46,6 +48,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="logo spot" width="280.5" height="198"/>
+        <image name="Spoteoshadow" width="1133" height="322"/>
     </resources>
 </document>
