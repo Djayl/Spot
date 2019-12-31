@@ -37,6 +37,7 @@ class MapViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupNavigationBar()
         locationManager.delegate = self
         locationManager.requestWhenInUseAuthorization()
         mapView.delegate = self
@@ -91,6 +92,16 @@ class MapViewController: UIViewController {
 //        tabBarController?.tabBar.unselectedItemTintColor = UIColor.lightGray
         tabBarController?.tabBar.barTintColor = UIColor.systemBackground
         
+    }
+    
+    fileprivate func setupNavigationBar() {
+        let logoContainer = UIView(frame: CGRect(x: 0, y: 0, width: 270, height: 30))
+        let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 270, height: 30))
+        imageView.contentMode = .scaleAspectFit
+        let image = UIImage(named: "Spoteoshadow")
+        imageView.image = image
+        logoContainer.addSubview(imageView)
+        navigationItem.titleView = logoContainer
     }
     
     private func checkIfUserLoggedIn() {
@@ -245,7 +256,7 @@ class MapViewController: UIViewController {
                     spot.snippet = marker.description
                     spot.userData = mCustomData
                     spot.imageURL = marker.imageURL
-                    let customMarker = CustomMarkerView(frame: CGRect(x: 0, y: 0, width: self.customMarkerWidth, height: self.customMarkerHeight), image: image, borderColor: Colors.nicoDarkBlue.withAlphaComponent(0.8))
+                    let customMarker = CustomMarkerView(frame: CGRect(x: 0, y: 0, width: self.customMarkerWidth, height: self.customMarkerHeight), image: image, borderColor: Colors.customBlue.withAlphaComponent(0.8))
                     spot.iconView = customMarker
                     spot.map = self.mapView
                 }
