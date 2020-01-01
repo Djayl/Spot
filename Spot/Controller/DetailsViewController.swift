@@ -30,7 +30,7 @@ class DetailsViewController: UIViewController {
     @IBOutlet weak var equipmentLabel: UILabel!
     @IBOutlet weak var ageLabel: UILabel!
     
-   
+    
     
     
     // MARK: - Properties
@@ -90,7 +90,7 @@ class DetailsViewController: UIViewController {
     }
     
     // MARK: - Methods
-
+    
     private func getSpotCreatorName(_ profil: Profil) {
         pictureTakerName.text = profil.userName
     }
@@ -117,11 +117,11 @@ class DetailsViewController: UIViewController {
     }
     
     private func setupImageView() {
-           profileCreatorPictureButton.layer.cornerRadius = profileCreatorPictureButton.frame.height / 2
+        profileCreatorPictureButton.layer.cornerRadius = profileCreatorPictureButton.frame.height / 2
         profileCreatorPictureButton.clipsToBounds = true
         profileCreatorPictureButton.layer.borderColor = UIColor.lightGray.cgColor
         profileCreatorPictureButton.layer.borderWidth = 2
-       }
+    }
     
     private func showSpotOwnerProfile(profil: Profil) {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
@@ -162,18 +162,20 @@ class DetailsViewController: UIViewController {
     }
     
     private func getProfileImage(_ profil: Profil) {
-           let urlString = profil.imageURL
-           guard let url = URL(string: urlString) else {return}
-           KingfisherManager.shared.retrieveImage(with: url, options: nil) { result in
-               let image = try? result.get().image
-               if let image = image {
-                self.profileCreatorPictureButton.setImage(image, for: .normal)            }
-           }
-       }
+        let urlString = profil.imageURL
+        print("*****"+"\(urlString)")
+        guard let url = URL(string: urlString) else {return}
+        KingfisherManager.shared.retrieveImage(with: url, options: nil) { result in
+            let image = try? result.get().image
+            if let image = image {
+                self.profileCreatorPictureButton.setImage(image, for: .normal)
+            }
+        }
+    }
     
-     private func setProfilData(_ profil: Profil){
-         userName = profil.userName
-         ownerId = profil.identifier
+    private func setProfilData(_ profil: Profil){
+        userName = profil.userName
+        ownerId = profil.identifier
     }
     
     private func setSpotCreatorProfile(_ profil: Profil){
@@ -181,14 +183,13 @@ class DetailsViewController: UIViewController {
         equipmentLabel.text = profil.equipment.capitalized
         ageLabel.text = "\(profil.age) ans"
     }
-     
-     
+    
+    
     private func fetchProfilInformation() {
         let firestoreService = FirestoreService<Profil>()
         firestoreService.fetchDocument(endpoint: .currentUser) { [weak self] result in
             switch result {
             case .success(let profil):
-                print(profil.userName)
                 self?.setProfilData(profil)
                 self?.handleDeleteButton()
             case .failure(let error):
@@ -379,8 +380,8 @@ class DetailsViewController: UIViewController {
             }
         }
     }
-
-        
+    
+    
     @objc private func imageTapped(_ sender: UITapGestureRecognizer) {
         let imageView = sender.view as! UIImageView
         newImageView = UIImageView(image: imageView.image)
@@ -412,13 +413,13 @@ class DetailsViewController: UIViewController {
     }
     
     @objc func gps() {
-            let coordinate = spot.position 
-            print(coordinate)
-          let placemark = MKPlacemark(coordinate: coordinate)
-          let options = [MKLaunchOptionsDirectionsModeKey:
-                        MKLaunchOptionsDirectionsModeDriving]
-          let map = MKMapItem(placemark: placemark)
-          map.openInMaps(launchOptions: options)
+        let coordinate = spot.position
+        print(coordinate)
+        let placemark = MKPlacemark(coordinate: coordinate)
+        let options = [MKLaunchOptionsDirectionsModeKey:
+            MKLaunchOptionsDirectionsModeDriving]
+        let map = MKMapItem(placemark: placemark)
+        map.openInMaps(launchOptions: options)
     }
     
 }
@@ -433,8 +434,8 @@ extension DetailsViewController: UITextViewDelegate {
             if constraint.firstAttribute == .height {
                 constraint.constant = estimatedSize.height
             }
-
+            
         }
-
+        
     }
 }

@@ -91,6 +91,7 @@ class ProfileViewController: UIViewController {
     
     private func getImage(_ profil: Profil) {
         let urlString = profil.imageURL
+        print("+++++++"+"\(urlString)")
         guard let url = URL(string: urlString) else {return}
         KingfisherManager.shared.retrieveImage(with: url, options: nil) { result in
             let image = try? result.get().image

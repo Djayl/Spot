@@ -82,7 +82,7 @@ class SignUpViewController: UIViewController, UITextFieldDelegate, UITextViewDel
     private func createUserAccount() {
         guard myImage != nil else {
                 signUpButton.shake()
-                presentAlert(with: "Un Spot doit avoir une image")
+                presentAlert(with: "Merci de choisir une photo de profil")
                 return
             }
            guard let userName = userNameTextField.text, !userName.isEmpty else {
@@ -107,7 +107,7 @@ class SignUpViewController: UIViewController, UITextFieldDelegate, UITextViewDel
                return}
            guard let equipment = equipmentTextField.text, !equipment.isEmpty else {
             signUpButton.shake()
-               presentAlert(with: "Merci de renseigner un équipement")
+               presentAlert(with: "Merci de préciser l'appareil que vous utilisez pour vos photos")
                return}
            guard let description = descriptionTextView.text, !description.isEmpty, description != "Parlez-nous un peu de vous, de votre passion pour la photo..." else {
             signUpButton.shake()
