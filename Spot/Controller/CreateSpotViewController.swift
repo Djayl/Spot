@@ -86,12 +86,12 @@ final class CreateSpotViewController: UIViewController, UITextFieldDelegate, UIT
     fileprivate func setUpNavigationController() {
         navigationController?.navigationBar.barTintColor = Colors.skyBlue
         navigationController?.navigationBar.tintColor = Colors.coolRed
-        navigationItem.leftBarButtonItem?.setTitleTextAttributes([.font : UIFont(name: "IndigoRegular-Regular", size: 15)!, .foregroundColor : Colors.coolRed], for: .normal)
+        navigationItem.leftBarButtonItem?.setTitleTextAttributes([.font : UIFont(name: "Quicksand-Regular", size: 15)!, .foregroundColor : Colors.coolRed], for: .normal)
     }
     
     fileprivate func setupView() {
         descriptionTextView.text = "Type your description"
-        descriptionTextView.font = UIFont(name: "ABeeZee-Regular", size: 15)
+        descriptionTextView.font = UIFont(name: "Quicksand-Regular", size: 15)
         descriptionTextView.layer.cornerRadius = 5
         pictureImageView.isUserInteractionEnabled = true
         pictureImageView.layer.cornerRadius = 10
@@ -235,7 +235,7 @@ final class CreateSpotViewController: UIViewController, UITextFieldDelegate, UIT
     internal func handleTextView() {
         descriptionTextView.text = "Décrivez votre Spot"
         descriptionTextView.textColor = UIColor.lightGray
-        descriptionTextView.font = UIFont(name: "GlacialIndifference-Regular", size: 17.0)
+        descriptionTextView.font = UIFont(name: "Quicksand-Regular", size: 17.0)
         descriptionTextView.returnKeyType = .done
         descriptionTextView.delegate = self
     }
@@ -249,7 +249,7 @@ final class CreateSpotViewController: UIViewController, UITextFieldDelegate, UIT
         if textView.text == "Décrivez votre Spot" {
             textView.text = ""
             textView.textColor = UIColor.black
-            textView.font = UIFont(name: "GlacialIndifference-Regular", size: 17.0)
+            textView.font = UIFont(name: "Quicksand-Regular", size: 17.0)
         }
     }
 
@@ -257,8 +257,19 @@ final class CreateSpotViewController: UIViewController, UITextFieldDelegate, UIT
         if textView.text == "" || textView.text == "\n"{
             textView.text = "Décrivez votre Spot"
             textView.textColor = UIColor.lightGray
-            textView.font = UIFont(name: "GlacialIndifference-Regular", size: 17.0)
+            textView.font = UIFont(name: "Quicksand-Regular", size: 17.0)
         }
+    }
+    
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        // Get the current text, or use an empty string if that failed
+        let currentText = textField.text ?? ""
+        // Attempt to read the range they are trying to change, or exit if we can't
+        guard let stringRange = Range(range, in: currentText) else { return false }
+        // Add their new text to the existing text
+        let updatedText = currentText.replacingCharacters(in: stringRange, with: string)
+        // Make sure the result is under 16 characters
+        return updatedText.count <= 25
     }
     
 //    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
@@ -269,7 +280,7 @@ final class CreateSpotViewController: UIViewController, UITextFieldDelegate, UIT
 //        // Add their new text to the existing text
 //        let updatedText = currentText.replacingCharacters(in: stringRange, with: text)
 //        // Make sure the result is under 16 characters
-//        return updatedText.count <= 140
+//        return updatedText.count <= 30
 //    }
 }
 

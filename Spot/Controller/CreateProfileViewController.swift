@@ -111,7 +111,7 @@ class CreateProfileViewController: UIViewController, UITextViewDelegate, UITextF
     
     internal func handleTextView() {
         descriptionTextView.textColor = UIColor.lightGray
-        descriptionTextView.font = UIFont(name: "GlacialIndifference-Regular", size: 15.0)
+//        descriptionTextView.font = UIFont(name: "GlacialIndifference-Regular", size: 15.0)
         descriptionTextView.returnKeyType = .done
         descriptionTextView.delegate = self
     }
@@ -134,7 +134,7 @@ class CreateProfileViewController: UIViewController, UITextViewDelegate, UITextF
     
     fileprivate func setupView() {
         descriptionTextView.text = "Type your description"
-        descriptionTextView.font = UIFont(name: "GlacialIndifference-Regular", size: 15)
+//        descriptionTextView.font = UIFont(name: "GlacialIndifference-Regular", size: 15)
         descriptionTextView.layer.cornerRadius = 5
         profileImageView.isUserInteractionEnabled = true
         profileImageView.layer.cornerRadius = 10

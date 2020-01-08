@@ -34,9 +34,6 @@
 		F050CF67239E8D7E00D31800 /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = F050CF66239E8D7E00D31800 /* UIColor.swift */; };
 		F050CF69239E97CD00D31800 /* GlacialIndifference-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = F050CF68239E97B500D31800 /* GlacialIndifference-Bold.otf */; };
 		F052692523B02D070052D114 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F052692423B02D070052D114 /* ProfileViewController.swift */; };
-		F0528FAA23716EBB00845538 /* IndigoOutline.otf in Resources */ = {isa = PBXBuildFile; fileRef = F0528FA823716EB800845538 /* IndigoOutline.otf */; };
-		F0528FAB23716EBB00845538 /* IndigoRegular.otf in Resources */ = {isa = PBXBuildFile; fileRef = F0528FA923716EBB00845538 /* IndigoRegular.otf */; };
-		F0528FAE2371799200845538 /* SarySoft.otf in Resources */ = {isa = PBXBuildFile; fileRef = F0528FAD2371797A00845538 /* SarySoft.otf */; };
 		F0548EC923B974760083E354 /* CopyableLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0548EC823B974760083E354 /* CopyableLabel.swift */; };
 		F055FB5F239FCC3B0005EEE5 /* CreateProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F055FB5E239FCC3B0005EEE5 /* CreateProfileViewController.swift */; };
 		F05751F8236A20230051F777 /* AuthenticationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F05751F7236A20230051F777 /* AuthenticationService.swift */; };
@@ -53,8 +50,9 @@
 		F096F51723857E2F00DCD18A /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = F096F51623857E2F00DCD18A /* Date.swift */; };
 		F096F51923857E7500DCD18A /* Bool.swift in Sources */ = {isa = PBXBuildFile; fileRef = F096F51823857E7500DCD18A /* Bool.swift */; };
 		F0986B23239D5D6E006B3813 /* LeagueSpartan-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = F0C95BC7239D599900CF5254 /* LeagueSpartan-Bold.otf */; };
-		F0986B24239D5DB7006B3813 /* Simpel-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = F0C95BC6239D55D500CF5254 /* Simpel-Medium.otf */; };
 		F0986B26239D5E4C006B3813 /* GlacialIndifference-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = F0986B25239D5E48006B3813 /* GlacialIndifference-Regular.otf */; };
+		F0A3C81423C4C965008CF54B /* Quicksand-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = F0A3C81323C4C8B1008CF54B /* Quicksand-Bold.otf */; };
+		F0A3C81523C4C968008CF54B /* Quicksand-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = F0A3C81223C4C8AF008CF54B /* Quicksand-Regular.otf */; };
 		F0C1402B23686D1900341744 /* FavoriteButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0C1402A23686D1900341744 /* FavoriteButton.swift */; };
 		F0CDE0A923279719007126DE /* Spot.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0CDE0A823279719007126DE /* Spot.swift */; };
 		F0CDE0AB2327A99C007126DE /* CreateSpotViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0CDE0AA2327A99C007126DE /* CreateSpotViewController.swift */; };
@@ -111,9 +109,6 @@
 		F050CF66239E8D7E00D31800 /* UIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
 		F050CF68239E97B500D31800 /* GlacialIndifference-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "GlacialIndifference-Bold.otf"; sourceTree = "<group>"; };
 		F052692423B02D070052D114 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
-		F0528FA823716EB800845538 /* IndigoOutline.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = IndigoOutline.otf; sourceTree = "<group>"; };
-		F0528FA923716EBB00845538 /* IndigoRegular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = IndigoRegular.otf; sourceTree = "<group>"; };
-		F0528FAD2371797A00845538 /* SarySoft.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = SarySoft.otf; sourceTree = "<group>"; };
 		F0548EC823B974760083E354 /* CopyableLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CopyableLabel.swift; sourceTree = "<group>"; };
 		F055FB5E239FCC3B0005EEE5 /* CreateProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateProfileViewController.swift; sourceTree = "<group>"; };
 		F05751F7236A20230051F777 /* AuthenticationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationService.swift; sourceTree = "<group>"; };
@@ -132,8 +127,9 @@
 		F096F51623857E2F00DCD18A /* Date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Date.swift; sourceTree = "<group>"; };
 		F096F51823857E7500DCD18A /* Bool.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bool.swift; sourceTree = "<group>"; };
 		F0986B25239D5E48006B3813 /* GlacialIndifference-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "GlacialIndifference-Regular.otf"; sourceTree = "<group>"; };
+		F0A3C81223C4C8AF008CF54B /* Quicksand-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Quicksand-Regular.otf"; sourceTree = "<group>"; };
+		F0A3C81323C4C8B1008CF54B /* Quicksand-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Quicksand-Bold.otf"; sourceTree = "<group>"; };
 		F0C1402A23686D1900341744 /* FavoriteButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteButton.swift; sourceTree = "<group>"; };
-		F0C95BC6239D55D500CF5254 /* Simpel-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Simpel-Medium.otf"; sourceTree = "<group>"; };
 		F0C95BC7239D599900CF5254 /* LeagueSpartan-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "LeagueSpartan-Bold.otf"; sourceTree = "<group>"; };
 		F0CDE0A823279719007126DE /* Spot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Spot.swift; sourceTree = "<group>"; };
 		F0CDE0AA2327A99C007126DE /* CreateSpotViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateSpotViewController.swift; sourceTree = "<group>"; };
@@ -245,12 +241,10 @@
 			isa = PBXGroup;
 			children = (
 				F0C95BC7239D599900CF5254 /* LeagueSpartan-Bold.otf */,
-				F0C95BC6239D55D500CF5254 /* Simpel-Medium.otf */,
-				F0528FA823716EB800845538 /* IndigoOutline.otf */,
-				F0528FA923716EBB00845538 /* IndigoRegular.otf */,
-				F0528FAD2371797A00845538 /* SarySoft.otf */,
 				F0986B25239D5E48006B3813 /* GlacialIndifference-Regular.otf */,
 				F050CF68239E97B500D31800 /* GlacialIndifference-Bold.otf */,
+				F0A3C81323C4C8B1008CF54B /* Quicksand-Bold.otf */,
+				F0A3C81223C4C8AF008CF54B /* Quicksand-Regular.otf */,
 			);
 			path = Fonts;
 			sourceTree = "<group>";
@@ -386,7 +380,7 @@
 		F0D527FD232786770023B226 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 1120;
+				LastSwiftUpdateCheck = 1130;
 				LastUpgradeCheck = 1030;
 				ORGANIZATIONNAME = "Djilali Sakkar";
 				TargetAttributes = {
@@ -431,16 +425,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				F050CF69239E97CD00D31800 /* GlacialIndifference-Bold.otf in Resources */,
-				F0528FAB23716EBB00845538 /* IndigoRegular.otf in Resources */,
-				F0986B24239D5DB7006B3813 /* Simpel-Medium.otf in Resources */,
 				F0986B26239D5E4C006B3813 /* GlacialIndifference-Regular.otf in Resources */,
 				F0D52813232786780023B226 /* LaunchScreen.storyboard in Resources */,
 				F0E6746223B11584007B84E9 /* CollectionViewCell.xib in Resources */,
+				F0A3C81423C4C965008CF54B /* Quicksand-Bold.otf in Resources */,
 				F0D52810232786780023B226 /* Assets.xcassets in Resources */,
+				F0A3C81523C4C968008CF54B /* Quicksand-Regular.otf in Resources */,
 				F0D5280E232786770023B226 /* Main.storyboard in Resources */,
 				F06B84C923A78023003E3A5F /* SpotTableViewCell.xib in Resources */,
-				F0528FAE2371799200845538 /* SarySoft.otf in Resources */,
-				F0528FAA23716EBB00845538 /* IndigoOutline.otf in Resources */,
 				F01CDA4F239273DB00A34E8E /* GoogleService-Info.plist in Resources */,
 				F0986B23239D5D6E006B3813 /* LeagueSpartan-Bold.otf in Resources */,
 			);

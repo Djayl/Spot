@@ -35,7 +35,6 @@ class DetailsViewController: UIViewController {
     
     // MARK: - Properties
     
-    var gradient: CAGradientLayer?
     var spot = Spot()
     var newImageView = UIImageView()
     var favoriteSpots = [Spot]()
@@ -163,7 +162,6 @@ class DetailsViewController: UIViewController {
     
     private func getProfileImage(_ profil: Profil) {
         let urlString = profil.imageURL
-        print("*****"+"\(urlString)")
         guard let url = URL(string: urlString) else {return}
         KingfisherManager.shared.retrieveImage(with: url, options: nil) { result in
             let image = try? result.get().image
@@ -201,6 +199,7 @@ class DetailsViewController: UIViewController {
     
     private func getSpotDetails() {
         guard let name = spot.title else {return}
+        spotTitle.numberOfLines = 0
         spotTitle.text = name.capitalized.toNoSmartQuotes()
         guard let description = spot.snippet else {return}
         spotDescriptionTextView.text = description
@@ -414,7 +413,6 @@ class DetailsViewController: UIViewController {
     
     @objc func gps() {
         let coordinate = spot.position
-        print(coordinate)
         let placemark = MKPlacemark(coordinate: coordinate)
         let options = [MKLaunchOptionsDirectionsModeKey:
             MKLaunchOptionsDirectionsModeDriving]
@@ -434,8 +432,6 @@ extension DetailsViewController: UITextViewDelegate {
             if constraint.firstAttribute == .height {
                 constraint.constant = estimatedSize.height
             }
-            
         }
-        
     }
 }

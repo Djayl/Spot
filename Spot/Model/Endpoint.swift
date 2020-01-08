@@ -18,8 +18,7 @@ public enum Endpoint {
     case favoriteCollection
     case favoriteSpot(spotId: String)
     case particularUser(userId: String)
-    case particularUserCollection(userId: String)
-    
+    case particularUserCollection(userId: String)    
 }
 
 extension Endpoint {

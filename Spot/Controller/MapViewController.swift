@@ -37,6 +37,7 @@ class MapViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        chooseDataButton.accessibilityIdentifier = "show"
         setupNavigationBar()
         locationManager.delegate = self
         locationManager.requestWhenInUseAuthorization()
@@ -383,13 +384,14 @@ extension MapViewController: GMSMapViewDelegate, AddSpotDelegate {
 //        view.layer.borderColor = UIColor.systemBackground.cgColor
         
         let lbl1 = UILabel(frame: CGRect.init(x: 8, y: 8, width: view.frame.size.width - 16, height: 17))
-        lbl1.font = UIFont(name: "LeagueSpartan-Bold", size: 15)
+        lbl1.font = UIFont(name: "Quicksand-Bold", size: 15)
         lbl1.textColor = UIColor.label
+        lbl1.numberOfLines = 0
         lbl1.text = marker.title
         view.addSubview(lbl1)
         let lbl2 = UILabel(frame: CGRect.init(x: lbl1.frame.origin.x, y: lbl1.frame.origin.y + lbl1.frame.size.height + 3, width: view.frame.size.width - 16, height: 15))
         lbl2.text = marker.snippet
-        lbl2.font = UIFont(name: "GlacialIndifference-Regular", size: 14)
+        lbl2.font = UIFont(name: "Quicksand-Regular", size: 15)
         lbl2.textColor = UIColor.label
         lbl2.numberOfLines = 0
         lbl2.contentMode = .scaleToFill

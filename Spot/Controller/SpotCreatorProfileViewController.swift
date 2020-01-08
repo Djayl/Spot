@@ -46,7 +46,7 @@ class SpotCreatorProfileViewController: UIViewController {
 //        listenProfilInformation()
 //        listenUserCollection()
     }
-    
+  
     // MARK: - Methods
     
     private func setupImageView() {

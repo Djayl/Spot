@@ -10,6 +10,7 @@ target 'Spot' do
     pod 'Firebase/Firestore'
     pod 'Kingfisher', '~> 5.0'
     pod 'Firebase/Storage'
+    pod 'Firebase/Database' 
     pod 'GoogleMaps'
     pod 'GooglePlaces'
     pod 'ProgressHUD'

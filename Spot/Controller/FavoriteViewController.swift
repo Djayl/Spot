@@ -177,7 +177,7 @@ extension FavoriteViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         let label = UILabel()
         label.text = "Ajoutez ici vos favoris"
-        label.font = UIFont(name: "LeagueSpartan-Bold", size: 20)
+        label.font = UIFont(name: "Quicksand-Bold", size: 20)
         label.textAlignment = .center
         label.textColor = .label
         return label

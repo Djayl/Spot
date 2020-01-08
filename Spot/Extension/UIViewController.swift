@@ -62,4 +62,28 @@ extension UIViewController {
         self.present(alert, animated: true, completion: nil)
     }
     
+    func showKeyboard() {
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardShowing), name: UIApplication.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardHiding), name: UIApplication.keyboardWillHideNotification, object: nil)
+        view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(hideKeyboard)))
+    }
+    
+    @objc func keyboardShowing(notification: Notification){
+        if let keyboardFrame = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue, view.frame.minY == 0 {
+            UIView.animate(withDuration: 0.25, animations: {
+                self.view.frame.origin.y -= keyboardFrame.height
+            })
+        }
+    }
+    
+    @objc func keyboardHiding(notification: Notification){
+        UIView.animate(withDuration: 0.25) {
+            self.view.frame = CGRect(x: 0, y: 0, width: self.view.frame.width, height: self.view.frame.height)
+        }
+    }
+    
+    @objc func hideKeyboard() {
+        view.endEditing(true)
+    }
+    
 }

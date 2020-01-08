@@ -21,7 +21,7 @@ class CollectionViewCell: UICollectionViewCell {
 
     func configureCell(spot:Spot) {
         imageView.layer.cornerRadius = 5
-        label.font = UIFont(name: "LeagueSpartan-Bold", size: 15)
+        label.font = UIFont(name: "Quicksand-Regular", size: 14)
         imageView.clipsToBounds = true
         label.text = spot.title?.capitalized
         imageView.image = spot.image

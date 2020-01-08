@@ -29,7 +29,7 @@ class CustomButton: UIButton {
         setShadow()
         setTitleColor(UIColor.label, for: .normal)
         backgroundColor      = UIColor.systemBackground
-        titleLabel?.font     = UIFont(name: "LeagueSpartan-Bold", size: 17)
+        titleLabel?.font     = UIFont(name: "Quicksand-Bold", size: 17)
         layer.cornerRadius   = 25
         layer.borderWidth    = 3.0
         layer.borderColor    = UIColor.tertiarySystemBackground.cgColor

@@ -26,20 +26,22 @@ class FavoriteButton: UIButton {
     
     var isOn = false {
         didSet {
-            let color = isOn ? Colors.twitterBlue: .clear
+            let color = isOn ? Colors.customBlue: .clear
             let title = isOn ? "Favori" : "Mettre en favori"
-            let titleColor = isOn ? . white : Colors.twitterBlue
+            let titleColor = isOn ? . white : Colors.customBlue
             
             setTitle(title, for: .normal)
             setTitleColor(titleColor, for: .normal)
             backgroundColor = color
+            
         }
     }
     
     func initButton() {
+        titleLabel?.font = UIFont(name: "Quicksand", size: 15)
         layer.borderWidth = 2.0
-        layer.borderColor = Colors.twitterBlue.cgColor
+        layer.borderColor = Colors.customBlue.cgColor
         layer.cornerRadius = frame.size.height/2
-        setTitleColor(Colors.twitterBlue, for: .normal)
+        setTitleColor(Colors.customBlue, for: .normal)
     }
 }

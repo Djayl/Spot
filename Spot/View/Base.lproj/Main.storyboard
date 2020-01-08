@@ -8,14 +8,11 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
-        <array key="GlacialIndifference-Bold.otf">
-            <string>GlacialIndifference-Bold</string>
+        <array key="Quicksand-Bold.otf">
+            <string>Quicksand-Bold</string>
         </array>
-        <array key="GlacialIndifference-Regular.otf">
-            <string>GlacialIndifference-Regular</string>
-        </array>
-        <array key="LeagueSpartan-Bold.otf">
-            <string>LeagueSpartan-Bold</string>
+        <array key="Quicksand-Regular.otf">
+            <string>Quicksand-Regular</string>
         </array>
     </customFonts>
     <scenes>
@@ -34,7 +31,7 @@
                                     <constraint firstAttribute="height" constant="50" id="iha-Yd-KHN"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="Futura-Bold" family="Futura" pointSize="17"/>
-                                <state key="normal" title="Login"/>
+                                <state key="normal" title="Se connecter"/>
                                 <connections>
                                     <action selector="loginAction:" destination="dZb-P3-DcI" eventType="touchUpInside" id="vd3-9w-MfS"/>
                                 </connections>
@@ -56,8 +53,8 @@
                                 <textInputTraits key="textInputTraits" enablesReturnKeyAutomatically="YES" secureTextEntry="YES" textContentType="password"/>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eC9-4d-VOW">
-                                <rect key="frame" x="30" y="300" width="260" height="34"/>
-                                <fontDescription key="fontDescription" name="LeagueSpartan-Bold" family="League Spartan" pointSize="17"/>
+                                <rect key="frame" x="30" y="300" width="260" height="32"/>
+                                <fontDescription key="fontDescription" name="Quicksand-Bold" family="Quicksand" pointSize="17"/>
                                 <state key="normal" title="J'ai oublié mon mot de passe">
                                     <color key="titleColor" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
                                 </state>
@@ -66,8 +63,8 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nbj-va-SAO">
-                                <rect key="frame" x="50" y="514" width="220" height="34"/>
-                                <fontDescription key="fontDescription" name="LeagueSpartan-Bold" family="League Spartan" pointSize="17"/>
+                                <rect key="frame" x="50" y="516" width="220" height="32"/>
+                                <fontDescription key="fontDescription" name="Quicksand-Bold" family="Quicksand" pointSize="17"/>
                                 <state key="normal" title="Je n'ai pas de compte">
                                     <color key="titleColor" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
                                 </state>
@@ -123,7 +120,7 @@
                                     <constraint firstAttribute="height" constant="50" id="hfE-42-ykT"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="Futura-Bold" family="Futura" pointSize="17"/>
-                                <state key="normal" title="Sign Up"/>
+                                <state key="normal" title="S'inscrire"/>
                                 <connections>
                                     <action selector="signUpAction:" destination="iXz-oc-wbf" eventType="touchUpInside" id="XZo-pK-hPl"/>
                                 </connections>
@@ -286,25 +283,25 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gHf-xd-cVk">
-                                <rect key="frame" x="5" y="40" width="310" height="200"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="" textAlignment="justified" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gHf-xd-cVk">
+                                <rect key="frame" x="5" y="38.5" width="310" height="200"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="200" id="uMM-NX-cfN"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
+                                <fontDescription key="fontDescription" name="Quicksand-Regular" family="Quicksand" pointSize="17"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mXB-mk-11g">
-                                <rect key="frame" x="5" y="245" width="310" height="220"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="justified" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mXB-mk-11g">
+                                <rect key="frame" x="5" y="243.5" width="310" height="240"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="220" id="zn8-S7-kHY"/>
+                                    <constraint firstAttribute="height" constant="240" id="zn8-S7-kHY"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <fontDescription key="fontDescription" name="Quicksand-Regular" family="Quicksand" pointSize="17"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Comment créer un Spot ?" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7VZ-9E-1un">
-                                <rect key="frame" x="5" y="10" width="310" height="25"/>
-                                <fontDescription key="fontDescription" name="LeagueSpartan-Bold" family="League Spartan" pointSize="20"/>
+                                <rect key="frame" x="5" y="10" width="310" height="23.5"/>
+                                <fontDescription key="fontDescription" name="Quicksand-Bold" family="Quicksand" pointSize="20"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
@@ -426,14 +423,14 @@
                                 </connections>
                             </button>
                             <imageView clipsSubviews="YES" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="L3e-aV-XtQ">
-                                <rect key="frame" x="30" y="50" width="260" height="195"/>
+                                <rect key="frame" x="30" y="30" width="260" height="195"/>
                                 <color key="backgroundColor" red="0.75294117650000003" green="0.76862745099999996" blue="0.78823529410000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="L3e-aV-XtQ" secondAttribute="height" multiplier="4:3" id="Ehp-nP-OLI"/>
                                 </constraints>
                             </imageView>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="h6f-YZ-qhd">
-                                <rect key="frame" x="20" y="380" width="280" height="60"/>
+                                <rect key="frame" x="20" y="330" width="280" height="60"/>
                                 <color key="backgroundColor" red="0.75294117650000003" green="0.76862745099999996" blue="0.78823529410000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="60" id="ltH-4p-60m"/>
@@ -442,7 +439,7 @@
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Donnez un titre à votre Spot" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="s62-Cm-ycZ">
-                                <rect key="frame" x="20" y="295" width="280" height="34"/>
+                                <rect key="frame" x="20" y="245" width="280" height="34"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <textInputTraits key="textInputTraits"/>
                                 <connections>
@@ -450,11 +447,11 @@
                                 </connections>
                             </textField>
                             <stackView opaque="NO" contentMode="scaleToFill" spacing="60" translatesAutoresizingMaskIntoConstraints="NO" id="4gs-Im-hsx">
-                                <rect key="frame" x="20" y="339" width="280" height="31"/>
+                                <rect key="frame" x="20" y="289" width="280" height="31"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Je partage mon Spot" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="r9r-l2-sR9">
                                         <rect key="frame" x="0.0" y="0.0" width="171" height="31"/>
-                                        <fontDescription key="fontDescription" name="LeagueSpartan-Bold" family="League Spartan" pointSize="15"/>
+                                        <fontDescription key="fontDescription" name="Quicksand-Bold" family="Quicksand" pointSize="15"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
@@ -466,7 +463,7 @@
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
-                            <constraint firstItem="L3e-aV-XtQ" firstAttribute="top" secondItem="fEV-DR-6iG" secondAttribute="top" constant="50" id="3Cv-SR-f5Z"/>
+                            <constraint firstItem="L3e-aV-XtQ" firstAttribute="top" secondItem="fEV-DR-6iG" secondAttribute="top" constant="30" id="3Cv-SR-f5Z"/>
                             <constraint firstItem="hnm-he-RsY" firstAttribute="leading" secondItem="fEV-DR-6iG" secondAttribute="leading" constant="50" id="4Vg-82-BlL"/>
                             <constraint firstItem="fEV-DR-6iG" firstAttribute="bottom" secondItem="hnm-he-RsY" secondAttribute="bottom" constant="20" id="4Xj-F0-qWd"/>
                             <constraint firstItem="fEV-DR-6iG" firstAttribute="trailing" secondItem="hnm-he-RsY" secondAttribute="trailing" constant="50" id="Gvc-99-rUh"/>
@@ -474,7 +471,7 @@
                             <constraint firstItem="4gs-Im-hsx" firstAttribute="top" secondItem="s62-Cm-ycZ" secondAttribute="bottom" constant="10" id="JRm-6O-WLS"/>
                             <constraint firstItem="L3e-aV-XtQ" firstAttribute="leading" secondItem="fEV-DR-6iG" secondAttribute="leading" constant="30" id="RlR-39-8KK"/>
                             <constraint firstItem="fEV-DR-6iG" firstAttribute="trailing" secondItem="s62-Cm-ycZ" secondAttribute="trailing" constant="20" id="TrE-fd-AgH"/>
-                            <constraint firstItem="s62-Cm-ycZ" firstAttribute="top" secondItem="L3e-aV-XtQ" secondAttribute="bottom" constant="50" id="lgz-40-QHN"/>
+                            <constraint firstItem="s62-Cm-ycZ" firstAttribute="top" secondItem="L3e-aV-XtQ" secondAttribute="bottom" constant="20" id="lgz-40-QHN"/>
                             <constraint firstItem="4gs-Im-hsx" firstAttribute="leading" secondItem="fEV-DR-6iG" secondAttribute="leading" constant="20" id="p2P-pj-mDR"/>
                             <constraint firstItem="h6f-YZ-qhd" firstAttribute="leading" secondItem="fEV-DR-6iG" secondAttribute="leading" constant="20" id="pmA-Gh-cbB"/>
                             <constraint firstItem="s62-Cm-ycZ" firstAttribute="leading" secondItem="fEV-DR-6iG" secondAttribute="leading" constant="20" id="rxy-CN-iVz"/>
@@ -551,7 +548,7 @@
                                     <constraint firstAttribute="width" secondItem="2RV-Ae-ulT" secondAttribute="height" multiplier="150:53" id="RH8-OY-hcF"/>
                                 </constraints>
                                 <color key="textColor" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <fontDescription key="fontDescription" name="GlacialIndifference-Regular" family="Glacial Indifference" pointSize="16"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
                         </subviews>
@@ -607,12 +604,12 @@
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="AM7-uD-V3O"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" name="LeagueSpartan-Bold" family="League Spartan" pointSize="27"/>
+                                <fontDescription key="fontDescription" name="Quicksand-Bold" family="Quicksand" pointSize="22"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="APG-j2-al8" customClass="FavoriteButton" customModule="Spot" customModuleProvider="target">
-                                <rect key="frame" x="70" y="518" width="180" height="30"/>
+                                <rect key="frame" x="70" y="528" width="180" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="VWX-vz-fZb"/>
                                 </constraints>
@@ -623,7 +620,7 @@
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lRb-FW-gpS">
                                 <rect key="frame" x="289" y="20" width="21" height="22"/>
-                                <state key="normal" image="trash-bin">
+                                <state key="normal" image="bin">
                                     <color key="titleColor" systemColor="systemPinkColor" red="1" green="0.1764705882" blue="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
                                 <connections>
@@ -631,12 +628,12 @@
                                 </connections>
                             </button>
                             <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Date" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xQP-X3-u8a">
-                                <rect key="frame" x="10" y="315.5" width="300" height="20.5"/>
-                                <fontDescription key="fontDescription" name="GlacialIndifference-Regular" family="Glacial Indifference" pointSize="17"/>
+                                <rect key="frame" x="10" y="315.5" width="300" height="20"/>
+                                <fontDescription key="fontDescription" name="Quicksand-Regular" family="Quicksand" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CFx-KF-S2J">
+                            <button opaque="NO" contentMode="scaleAspectFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CFx-KF-S2J">
                                 <rect key="frame" x="10" y="245.5" width="60" height="60"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="60" id="D1B-rL-ywd"/>
@@ -648,67 +645,67 @@
                                 </connections>
                             </button>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="Taz-2V-HB1" userLabel="Profile Stack View">
-                                <rect key="frame" x="75" y="245.5" width="74.5" height="60"/>
+                                <rect key="frame" x="75" y="245.5" width="92" height="60"/>
                                 <subviews>
                                     <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" text="Name" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="24P-06-IuW">
-                                        <rect key="frame" x="0.0" y="0.0" width="74.5" height="17"/>
-                                        <fontDescription key="fontDescription" name="GlacialIndifference-Bold" family="Glacial Indifference" pointSize="15"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="92" height="17"/>
+                                        <fontDescription key="fontDescription" name="Quicksand-Regular" family="Quicksand" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Age" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZSj-Zh-Pfk">
-                                        <rect key="frame" x="0.0" y="22" width="74.5" height="16.5"/>
-                                        <fontDescription key="fontDescription" name="GlacialIndifference-Bold" family="Glacial Indifference" pointSize="15"/>
+                                        <rect key="frame" x="0.0" y="22" width="92" height="16.5"/>
+                                        <fontDescription key="fontDescription" name="Quicksand-Regular" family="Quicksand" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="749" text="equipment" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TYW-Ak-BZZ">
-                                        <rect key="frame" x="0.0" y="43.5" width="74.5" height="16.5"/>
-                                        <fontDescription key="fontDescription" name="GlacialIndifference-Bold" family="Glacial Indifference" pointSize="15"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="749" text="equipment" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TYW-Ak-BZZ">
+                                        <rect key="frame" x="0.0" y="43.5" width="92" height="16.5"/>
+                                        <fontDescription key="fontDescription" name="Quicksand-Regular" family="Quicksand" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
                             </stackView>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" spacing="3" translatesAutoresizingMaskIntoConstraints="NO" id="oLA-Lr-wbY">
-                                <rect key="frame" x="10" y="346" width="300" height="103.5"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" spacing="1" translatesAutoresizingMaskIntoConstraints="NO" id="oLA-Lr-wbY">
+                                <rect key="frame" x="10" y="345.5" width="300" height="95"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1dU-xh-UrI">
-                                        <rect key="frame" x="0.0" y="0.0" width="300" height="20.5"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="300" height="20"/>
                                         <string key="text" base64-UTF8="YES">
 Tx7DuSBzZSB0cm91dmUgbGUgU3BvdD8gA
 </string>
-                                        <fontDescription key="fontDescription" name="GlacialIndifference-Bold" family="Glacial Indifference" pointSize="17"/>
+                                        <fontDescription key="fontDescription" name="Quicksand-Bold" family="Quicksand" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Coordinate" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rrW-28-QJI" customClass="CopyableLabel" customModule="Spot" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="23.5" width="300" height="20.5"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <rect key="frame" x="0.0" y="21" width="300" height="20"/>
+                                        <fontDescription key="fontDescription" name="Quicksand-Regular" family="Quicksand" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Wff-zr-cyR">
-                                        <rect key="frame" x="0.0" y="47" width="300" height="33"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <rect key="frame" x="0.0" y="42" width="300" height="32"/>
+                                        <fontDescription key="fontDescription" name="Quicksand-Regular" family="Quicksand" pointSize="17"/>
                                         <state key="normal" title="Itinéraire vers le Spot"/>
                                         <connections>
                                             <action selector="getDirection:" destination="Afb-Q0-1cP" eventType="touchUpInside" id="lgh-ml-Chm"/>
                                         </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" text="A propos du Spot: " textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Np0-X2-Xg2">
-                                        <rect key="frame" x="0.0" y="83" width="300" height="20.5"/>
-                                        <fontDescription key="fontDescription" name="GlacialIndifference-Bold" family="Glacial Indifference" pointSize="17"/>
+                                        <rect key="frame" x="0.0" y="75" width="300" height="20"/>
+                                        <fontDescription key="fontDescription" name="Quicksand-Bold" family="Quicksand" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
                             </stackView>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" text="Aucune description pour ce Spot" textAlignment="justified" translatesAutoresizingMaskIntoConstraints="NO" id="T6X-cw-hyi">
-                                <rect key="frame" x="5" y="449.5" width="310" height="59"/>
+                                <rect key="frame" x="5" y="440.5" width="310" height="82.5"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <color key="textColor" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <fontDescription key="fontDescription" name="Quicksand-Regular" family="Quicksand" pointSize="17"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
                         </subviews>
@@ -730,16 +727,16 @@ Tx7DuSBzZSB0cm91dmUgbGUgU3BvdD8gA
                             <constraint firstItem="T6X-cw-hyi" firstAttribute="top" secondItem="oLA-Lr-wbY" secondAttribute="bottom" id="LpB-9m-Pke"/>
                             <constraint firstItem="oLA-Lr-wbY" firstAttribute="leading" secondItem="vv9-lj-62J" secondAttribute="leading" constant="10" id="Rc0-bo-fgQ"/>
                             <constraint firstItem="Taz-2V-HB1" firstAttribute="top" secondItem="zy3-jf-QsA" secondAttribute="bottom" constant="10" id="VNu-1g-0bG"/>
-                            <constraint firstItem="vv9-lj-62J" firstAttribute="bottom" secondItem="APG-j2-al8" secondAttribute="bottom" constant="20" id="XjL-ZA-YNj"/>
+                            <constraint firstItem="vv9-lj-62J" firstAttribute="bottom" secondItem="APG-j2-al8" secondAttribute="bottom" constant="10" id="XjL-ZA-YNj"/>
                             <constraint firstItem="Taz-2V-HB1" firstAttribute="leading" secondItem="CFx-KF-S2J" secondAttribute="trailing" constant="5" id="ci2-ed-xyp"/>
                             <constraint firstItem="zy3-jf-QsA" firstAttribute="top" secondItem="vv9-lj-62J" secondAttribute="top" constant="65" id="eAQ-Rr-1NA"/>
                             <constraint firstItem="APG-j2-al8" firstAttribute="leading" secondItem="vv9-lj-62J" secondAttribute="leading" constant="70" id="iaq-SG-4ga"/>
                             <constraint firstItem="Taz-2V-HB1" firstAttribute="centerY" secondItem="CFx-KF-S2J" secondAttribute="centerY" id="mPi-SY-EIZ"/>
                             <constraint firstItem="vv9-lj-62J" firstAttribute="trailing" secondItem="zy3-jf-QsA" secondAttribute="trailing" id="q8C-KN-YxE"/>
                             <constraint firstItem="zy3-jf-QsA" firstAttribute="leading" secondItem="vv9-lj-62J" secondAttribute="leading" id="s2j-Yi-x03"/>
+                            <constraint firstItem="APG-j2-al8" firstAttribute="top" secondItem="T6X-cw-hyi" secondAttribute="bottom" constant="5" id="sTT-Bg-hIr"/>
                             <constraint firstItem="vv9-lj-62J" firstAttribute="trailing" secondItem="APG-j2-al8" secondAttribute="trailing" constant="70" id="vqb-go-Wli"/>
                             <constraint firstItem="vv9-lj-62J" firstAttribute="trailing" secondItem="oLA-Lr-wbY" secondAttribute="trailing" constant="10" id="wod-Yz-U0P"/>
-                            <constraint firstItem="APG-j2-al8" firstAttribute="firstBaseline" secondItem="T6X-cw-hyi" secondAttribute="baseline" constant="30" id="xhr-mT-tvv"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="vv9-lj-62J"/>
                     </view>
@@ -771,7 +768,7 @@ Tx7DuSBzZSB0cm91dmUgbGUgU3BvdD8gA
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="JrX-pq-OWW">
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="JrX-pq-OWW">
                                 <rect key="frame" x="10" y="40" width="100" height="100"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="100" id="97H-Fg-Q0U"/>
@@ -783,27 +780,27 @@ Tx7DuSBzZSB0cm91dmUgbGUgU3BvdD8gA
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="userName" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7k5-pf-Yek">
                                         <rect key="frame" x="0.0" y="0.0" width="195" height="28.5"/>
-                                        <fontDescription key="fontDescription" name="GlacialIndifference-Bold" family="Glacial Indifference" pointSize="17"/>
+                                        <fontDescription key="fontDescription" name="Quicksand-Bold" family="Quicksand" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="age" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CCA-14-9fh">
-                                        <rect key="frame" x="0.0" y="33.5" width="195" height="29"/>
-                                        <fontDescription key="fontDescription" name="GlacialIndifference-Bold" family="Glacial Indifference" pointSize="17"/>
+                                        <rect key="frame" x="0.0" y="33.5" width="195" height="28.5"/>
+                                        <fontDescription key="fontDescription" name="Quicksand-Bold" family="Quicksand" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="equipment" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4xb-8A-3wc">
-                                        <rect key="frame" x="0.0" y="67.5" width="195" height="32.5"/>
-                                        <fontDescription key="fontDescription" name="GlacialIndifference-Bold" family="Glacial Indifference" pointSize="17"/>
+                                        <rect key="frame" x="0.0" y="67" width="195" height="33"/>
+                                        <fontDescription key="fontDescription" name="Quicksand-Bold" family="Quicksand" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
                             </stackView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5vQ-nK-gj3">
-                                <rect key="frame" x="289" y="10" width="21" height="22"/>
-                                <state key="normal" image="logout"/>
+                                <rect key="frame" x="289" y="20" width="21" height="22"/>
+                                <state key="normal" image="exit"/>
                                 <connections>
                                     <action selector="logOut" destination="hgE-aX-OAu" eventType="touchUpInside" id="3V0-K9-m8I"/>
                                 </connections>
@@ -811,9 +808,8 @@ Tx7DuSBzZSB0cm91dmUgbGUgU3BvdD8gA
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" textAlignment="justified" translatesAutoresizingMaskIntoConstraints="NO" id="tTN-eD-skg">
                                 <rect key="frame" x="5" y="155" width="310" height="88"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                                <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
                                 <color key="textColor" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <fontDescription key="fontDescription" name="Quicksand-Regular" family="Quicksand" pointSize="17"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gAh-1k-3Xc" customClass="CustomButton" customModule="Spot" customModuleProvider="target">
@@ -858,7 +854,7 @@ Tx7DuSBzZSB0cm91dmUgbGUgU3BvdD8gA
                             <constraint firstItem="tTN-eD-skg" firstAttribute="top" secondItem="JrX-pq-OWW" secondAttribute="bottom" constant="15" id="Zua-iM-OvR"/>
                             <constraint firstItem="ctD-hh-8uS" firstAttribute="top" secondItem="DE8-6t-cwF" secondAttribute="top" constant="40" id="gZW-8z-8aU"/>
                             <constraint firstItem="tTN-eD-skg" firstAttribute="leading" secondItem="DE8-6t-cwF" secondAttribute="leading" constant="5" id="liq-Hs-BkH"/>
-                            <constraint firstItem="5vQ-nK-gj3" firstAttribute="top" secondItem="DE8-6t-cwF" secondAttribute="top" constant="10" id="oOM-in-uhM"/>
+                            <constraint firstItem="5vQ-nK-gj3" firstAttribute="top" secondItem="DE8-6t-cwF" secondAttribute="top" constant="20" id="oOM-in-uhM"/>
                             <constraint firstItem="gAh-1k-3Xc" firstAttribute="top" secondItem="tsh-TG-Emo" secondAttribute="bottom" constant="50" id="rSJ-tN-NlA"/>
                             <constraint firstItem="ctD-hh-8uS" firstAttribute="leading" secondItem="JrX-pq-OWW" secondAttribute="trailing" constant="5" id="rYE-cm-3qb"/>
                             <constraint firstItem="gAh-1k-3Xc" firstAttribute="leading" secondItem="DE8-6t-cwF" secondAttribute="leading" constant="50" id="t8i-Jn-KVn"/>
@@ -922,8 +918,8 @@ Tx7DuSBzZSB0cm91dmUgbGUgU3BvdD8gA
                                                     <rect key="frame" x="5" y="5" width="310" height="80.5"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="R3c-KO-57M">
-                                                            <rect key="frame" x="0.0" y="29.5" width="110" height="21.5"/>
-                                                            <fontDescription key="fontDescription" name="LeagueSpartan-Bold" family="League Spartan" pointSize="17"/>
+                                                            <rect key="frame" x="0.0" y="30.5" width="110" height="20"/>
+                                                            <fontDescription key="fontDescription" name="Quicksand-Bold" family="Quicksand" pointSize="17"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="8kE-RB-aIh">
@@ -977,7 +973,7 @@ Tx7DuSBzZSB0cm91dmUgbGUgU3BvdD8gA
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="yCv-bs-eTN">
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="yCv-bs-eTN">
                                 <rect key="frame" x="10" y="40" width="100" height="100"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="100" id="5ni-bs-kgM"/>
@@ -989,19 +985,19 @@ Tx7DuSBzZSB0cm91dmUgbGUgU3BvdD8gA
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="userName" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7ln-zl-Hri">
                                         <rect key="frame" x="0.0" y="0.0" width="195" height="28.5"/>
-                                        <fontDescription key="fontDescription" name="GlacialIndifference-Bold" family="Glacial Indifference" pointSize="17"/>
+                                        <fontDescription key="fontDescription" name="Quicksand-Bold" family="Quicksand" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="age" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hi6-Eg-4Dy">
-                                        <rect key="frame" x="0.0" y="33.5" width="195" height="29"/>
-                                        <fontDescription key="fontDescription" name="GlacialIndifference-Bold" family="Glacial Indifference" pointSize="17"/>
+                                        <rect key="frame" x="0.0" y="33.5" width="195" height="28.5"/>
+                                        <fontDescription key="fontDescription" name="Quicksand-Bold" family="Quicksand" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="equipment" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XdF-wu-79P">
-                                        <rect key="frame" x="0.0" y="67.5" width="195" height="32.5"/>
-                                        <fontDescription key="fontDescription" name="GlacialIndifference-Bold" family="Glacial Indifference" pointSize="17"/>
+                                        <rect key="frame" x="0.0" y="67" width="195" height="33"/>
+                                        <fontDescription key="fontDescription" name="Quicksand-Bold" family="Quicksand" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
@@ -1010,9 +1006,8 @@ Tx7DuSBzZSB0cm91dmUgbGUgU3BvdD8gA
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" textAlignment="justified" translatesAutoresizingMaskIntoConstraints="NO" id="zGm-dL-VKg">
                                 <rect key="frame" x="5" y="155" width="310" height="168"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                                <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
                                 <color key="textColor" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <fontDescription key="fontDescription" name="Quicksand-Regular" family="Quicksand" pointSize="17"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="Sbf-P6-0ve">
@@ -1072,10 +1067,10 @@ Tx7DuSBzZSB0cm91dmUgbGUgU3BvdD8gA
         <image name="Map" width="21" height="21"/>
         <image name="Profile" width="21" height="21"/>
         <image name="Spot" width="166.5" height="166.5"/>
+        <image name="bin" width="21" height="21"/>
+        <image name="exit" width="21" height="21"/>
         <image name="globe" width="21" height="21"/>
-        <image name="logout" width="21" height="21"/>
         <image name="photo-camera (1)" width="170.5" height="170.5"/>
         <image name="profile-pic " width="170.5" height="170.5"/>
-        <image name="trash-bin" width="21" height="21"/>
     </resources>
 </document>

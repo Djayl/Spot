@@ -21,7 +21,7 @@ class CustomCell: UITableViewCell {
     
     func configureCell(spot:Spot) {
         cellLabel.text = spot.name?.capitalized
-        cellLabel.font = UIFont(name: "LeagueSpartan-Bold", size: 15)
+        cellLabel.font = UIFont(name: "Quicksand-Bold", size: 15)
         cellImageView.image = spot.image
         cellImageView.layer.cornerRadius = 15
         cellImageView.layer.borderWidth = 2
