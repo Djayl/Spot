@@ -43,7 +43,8 @@ class ProfileViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        navigationController?.setNavigationBarHidden(true, animated: false)
+        navigationController?.setNavigationBarHidden(false, animated: false)
+        tabBarController?.tabBar.isHidden = true
 //        listenProfilInformation()
 //        listenUserCollection()
     }
@@ -51,9 +52,12 @@ class ProfileViewController: UIViewController {
     // MARK: - Actions
     
     @IBAction func goToCreateProfile(_ sender: Any) {
-        let vc = storyboard?.instantiateViewController(withIdentifier: "createProfileVC") as! CreateProfileViewController
-        let nc = UINavigationController(rootViewController: vc)
-        self.present(nc, animated: true, completion: nil)
+        let secondViewController = self.storyboard?.instantiateViewController(withIdentifier: "createProfileVC") as! CreateProfileViewController
+               
+               self.navigationController?.pushViewController(secondViewController, animated: true)
+//        let vc = storyboard?.instantiateViewController(withIdentifier: "createProfileVC") as! CreateProfileViewController
+//        let nc = UINavigationController(rootViewController: vc)
+//        self.present(nc, animated: true, completion: nil)
     }
     
     @IBAction func logOut() {
@@ -158,10 +162,13 @@ class ProfileViewController: UIViewController {
     }
     
     @objc private func didTapSpot(spot: Spot) {
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let vc = storyboard.instantiateViewController(identifier: "DetailsVC") as! DetailsViewController
-        vc.spot = spot
-        navigationController?.pushViewController(vc, animated: true)
+        let secondViewController = self.storyboard?.instantiateViewController(withIdentifier: "DetailsVC") as! DetailsViewController
+        secondViewController.spot = spot
+        self.navigationController?.pushViewController(secondViewController, animated: true)
+//        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+//        let vc = storyboard.instantiateViewController(identifier: "DetailsVC") as! DetailsViewController
+//        vc.spot = spot
+//        navigationController?.pushViewController(vc, animated: true)
     }
 }
 

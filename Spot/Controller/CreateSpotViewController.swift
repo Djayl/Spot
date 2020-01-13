@@ -233,11 +233,11 @@ final class CreateSpotViewController: UIViewController, UITextFieldDelegate, UIT
     }
  
     internal func handleTextView() {
+//        descriptionTextView.translatesAutoresizingMaskIntoConstraints = false
         descriptionTextView.text = "Décrivez votre Spot"
-        descriptionTextView.textColor = UIColor.lightGray
-        descriptionTextView.font = UIFont(name: "Quicksand-Regular", size: 17.0)
+        descriptionTextView.textColor = UIColor.systemGray
+        descriptionTextView.font = UIFont.systemFont(ofSize: 17)
         descriptionTextView.returnKeyType = .done
-        descriptionTextView.delegate = self
     }
     
     private func textViewShouldReturn(_ textView: UITextView) -> Bool {
@@ -249,15 +249,15 @@ final class CreateSpotViewController: UIViewController, UITextFieldDelegate, UIT
         if textView.text == "Décrivez votre Spot" {
             textView.text = ""
             textView.textColor = UIColor.black
-            textView.font = UIFont(name: "Quicksand-Regular", size: 17.0)
+            textView.font = UIFont.systemFont(ofSize: 17)
         }
     }
 
     internal func textViewDidEndEditing(_ textView: UITextView) {
         if textView.text == "" || textView.text == "\n"{
             textView.text = "Décrivez votre Spot"
-            textView.textColor = UIColor.lightGray
-            textView.font = UIFont(name: "Quicksand-Regular", size: 17.0)
+            textView.textColor = UIColor.systemGray
+            textView.font = UIFont.systemFont(ofSize: 17)
         }
     }
     
@@ -318,7 +318,6 @@ extension CreateSpotViewController: UIImagePickerControllerDelegate, UINavigatio
         dismiss(animated: true, completion: nil)
     }
 }
-
 
 
 

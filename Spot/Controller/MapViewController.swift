@@ -37,20 +37,21 @@ class MapViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        chooseDataButton.accessibilityIdentifier = "show"
         setupNavigationBar()
         locationManager.delegate = self
         locationManager.requestWhenInUseAuthorization()
         mapView.delegate = self
-        setUpNavigationController()
+//        setUpNavigationController()
         setUpTapBarController()
         mapView.addSubview(chooseDataButton)
         mapView.addSubview(chooseMapTypeButton)
-        checkIfUserLoggedIn()        
+        checkIfUserLoggedIn()
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        tabBarController?.tabBar.isHidden = false
     }
     
     // MARK: - Actions
@@ -65,9 +66,11 @@ class MapViewController: UIViewController {
     }
     
     @IBAction func goToProfile() {
-        let vc = storyboard?.instantiateViewController(withIdentifier: "profileVC") as! ProfileViewController
-               let nc = UINavigationController(rootViewController: vc)
-               self.present(nc, animated: true, completion: nil)
+        let secondViewController = self.storyboard?.instantiateViewController(withIdentifier: "profileVC") as! ProfileViewController
+        self.present(secondViewController, animated: true, completion: nil)
+//        let vc = storyboard?.instantiateViewController(withIdentifier: "profileVC") as! ProfileViewController
+//               let nc = UINavigationController(rootViewController: vc)
+//               self.present(nc, animated: true, completion: nil)
     }
     
     
@@ -91,10 +94,11 @@ class MapViewController: UIViewController {
     fileprivate func setUpTapBarController() {
 //        tabBarController?.tabBar.tintColor = UIColor.green
 //        tabBarController?.tabBar.unselectedItemTintColor = UIColor.lightGray
-        tabBarController?.tabBar.barTintColor = UIColor.systemBackground
+//        tabBarController?.tabBar.barTintColor = UIColor.systemBackground
         
     }
-    
+   
+  
     fileprivate func setupNavigationBar() {
         let logoContainer = UIView(frame: CGRect(x: 0, y: 0, width: 270, height: 30))
         let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 270, height: 30))
@@ -217,10 +221,13 @@ class MapViewController: UIViewController {
 //        let nc = UINavigationController(rootViewController: vc)
 //        vc.spot = spot
 //        self.present(nc, animated: true, completion: nil)
-        let vc = storyboard?.instantiateViewController(withIdentifier: "DetailsVC") as! DetailsViewController
-        let nc = UINavigationController(rootViewController: vc)
-        vc.spot = spot
-        self.present(nc, animated: true, completion: nil)
+//        let vc = storyboard?.instantiateViewController(withIdentifier: "DetailsVC") as! DetailsViewController
+//        let nc = UINavigationController(rootViewController: vc)
+//        vc.spot = spot
+//        self.present(nc, animated: true, completion: nil)
+        let secondViewController = self.storyboard?.instantiateViewController(withIdentifier: "DetailsVC") as! DetailsViewController
+        secondViewController.spot = spot
+        self.navigationController?.pushViewController(secondViewController, animated: true)
     }
     
 //    @objc private func buttonTapped(marker: GMSMarker) {
@@ -378,21 +385,21 @@ extension MapViewController: GMSMapViewDelegate, AddSpotDelegate {
     
     func mapView(_ mapView: GMSMapView, markerInfoWindow marker: GMSMarker) -> UIView? {
         let view = UIView(frame: CGRect.init(x: 0, y: 0, width: 150, height: 70))
-        view.backgroundColor = UIColor.systemBackground.withAlphaComponent(0.8)
+        view.backgroundColor = Colors.customBlue.withAlphaComponent(0.8)
         view.layer.cornerRadius = 5
 //        view.layer.borderWidth = 3.0
 //        view.layer.borderColor = UIColor.systemBackground.cgColor
         
         let lbl1 = UILabel(frame: CGRect.init(x: 8, y: 8, width: view.frame.size.width - 16, height: 17))
         lbl1.font = UIFont(name: "Quicksand-Bold", size: 15)
-        lbl1.textColor = UIColor.label
+//        lbl1.textColor = UIColor.label
         lbl1.numberOfLines = 0
         lbl1.text = marker.title
         view.addSubview(lbl1)
         let lbl2 = UILabel(frame: CGRect.init(x: lbl1.frame.origin.x, y: lbl1.frame.origin.y + lbl1.frame.size.height + 3, width: view.frame.size.width - 16, height: 15))
         lbl2.text = marker.snippet
         lbl2.font = UIFont(name: "Quicksand-Regular", size: 15)
-        lbl2.textColor = UIColor.label
+//        lbl2.textColor = UIColor.label
         lbl2.numberOfLines = 0
         lbl2.contentMode = .scaleToFill
 //        lbl2.lineBreakMode = .byWordWrapping

@@ -52,7 +52,7 @@ class DetailsViewController: UIViewController {
         spotCoordinate.isUserInteractionEnabled = true
         textViewDidChange(spotDescriptionTextView)
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(imageTapped(_:)))
-        navigationController?.setNavigationBarHidden(true, animated: false)
+//        navigationController?.setNavigationBarHidden(true, animated: false)
         imageView.addGestureRecognizer(tapGestureRecognizer)
         imageView.isUserInteractionEnabled = true
         
@@ -60,12 +60,17 @@ class DetailsViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+//        let backButton = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(goBack))
+        let backButton = UIBarButtonItem(title: "Carte", style: .done, target: self, action: #selector(goBack))
+        self.navigationItem.leftBarButtonItem = backButton
         getSpotDetails()
-        navigationController?.setNavigationBarHidden(true, animated: false)
+        navigationController?.setNavigationBarHidden(false, animated: false)
+        tabBarController?.tabBar.isHidden = true
         displaySpotOwnerProfile()
         getImage()
         listenToFavoriteSpot()
     }
+    
     
     
     // MARK: - Actions
@@ -92,6 +97,11 @@ class DetailsViewController: UIViewController {
     
     private func getSpotCreatorName(_ profil: Profil) {
         pictureTakerName.text = profil.userName
+    }
+    
+    @objc func goBack() {
+//        self.navigationController?.popViewController(animated: true)
+        self.navigationController?.popToRootViewController(animated: true)
     }
     
     @objc func scaleImage(_ sender: UIPinchGestureRecognizer) {
@@ -122,12 +132,16 @@ class DetailsViewController: UIViewController {
         profileCreatorPictureButton.layer.borderWidth = 2
     }
     
-    private func showSpotOwnerProfile(profil: Profil) {
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let vc = storyboard.instantiateViewController(identifier: "spotCreatorVC") as! SpotCreatorProfileViewController
+    func showSpotOwnerProfile(profil: Profil) {
+//        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+//        let vc = storyboard.instantiateViewController(identifier: "spotCreatorVC") as! SpotCreatorProfileViewController
+//        guard let userId = (spot.userData as? CustomData)?.ownerId else {return}
+//        vc.userId = userId
+//        navigationController?.pushViewController(vc, animated: true)
+        let secondViewController = self.storyboard?.instantiateViewController(withIdentifier: "spotCreatorVC") as! SpotCreatorProfileViewController
         guard let userId = (spot.userData as? CustomData)?.ownerId else {return}
-        vc.userId = userId
-        navigationController?.pushViewController(vc, animated: true)
+        secondViewController.userId = userId
+        self.navigationController?.pushViewController(secondViewController, animated: true)
     }
     
     private func fetchSpotOwnerProfile() {
@@ -385,7 +399,7 @@ class DetailsViewController: UIViewController {
         let imageView = sender.view as! UIImageView
         newImageView = UIImageView(image: imageView.image)
         newImageView.frame = UIScreen.main.bounds
-        newImageView.backgroundColor = UIColor.systemBackground
+        newImageView.backgroundColor = Colors.customBlue
         newImageView.contentMode = .scaleAspectFit
         newImageView.isUserInteractionEnabled = true
         let tap = UITapGestureRecognizer(target: self, action: #selector(dismissFullscreenImage))
@@ -400,8 +414,8 @@ class DetailsViewController: UIViewController {
     }
     
     @objc private func dismissFullscreenImage(_ sender: UITapGestureRecognizer) {
-        self.navigationController?.isNavigationBarHidden = true
-        self.tabBarController?.tabBar.isHidden = false
+        self.navigationController?.isNavigationBarHidden = false
+        self.tabBarController?.tabBar.isHidden = true
         UIView.transition(with: self.view, duration: 0.25, options: [.transitionCrossDissolve], animations: {
             sender.view?.removeFromSuperview()
         }, completion: nil)

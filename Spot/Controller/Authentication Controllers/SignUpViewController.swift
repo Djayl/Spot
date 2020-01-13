@@ -37,10 +37,10 @@ class SignUpViewController: UIViewController, UITextFieldDelegate, UITextViewDel
         super.viewDidLoad()
         setupTextFields()
         setupImageView()
-        
         handleTextView()
         hideKeyboardWhenTappedAround()
         profileImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(addPhoto)))
+//        descriptionTextView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(showKeyboard)))
     }
     
     // MARK: - Actions
@@ -51,6 +51,14 @@ class SignUpViewController: UIViewController, UITextFieldDelegate, UITextViewDel
     
     // MARK: - Methods
     
+//    func textViewShouldBeginEditing(_ textView: UITextView) -> Bool {
+//        if textView == descriptionTextView {
+//            showKeyboard()
+//        }
+//        hideKeyboard()
+//        return true
+//    }
+
     internal func textFieldShouldReturn(_ textField: UITextField) -> Bool {   //delegate method
         textField.resignFirstResponder()
         return true
@@ -58,7 +66,7 @@ class SignUpViewController: UIViewController, UITextFieldDelegate, UITextViewDel
     
     private func setupImageView() {
         profileImageView.layer.borderWidth = 2
-        profileImageView.layer.borderColor = UIColor.secondarySystemBackground.cgColor
+//        profileImageView.layer.borderColor = UIColor.secondarySystemBackground.cgColor
         profileImageView.layer.cornerRadius = profileImageView.frame.height / 2
     }
     
@@ -159,16 +167,16 @@ class SignUpViewController: UIViewController, UITextFieldDelegate, UITextViewDel
             descriptionTextView.font = UIFont.systemFont(ofSize: 16)
             descriptionTextView.returnKeyType = .done
             descriptionTextView.delegate = self
-            descriptionTextView.backgroundColor = UIColor.systemBackground
+//            descriptionTextView.backgroundColor = UIColor.systemBackground
             descriptionTextView.layer.cornerRadius = 5
             descriptionTextView.layer.borderWidth = 1
-            descriptionTextView.layer.borderColor = UIColor.systemBackground.cgColor
+//            descriptionTextView.layer.borderColor = UIColor.systemBackground.cgColor
         }
         
         internal func textViewDidBeginEditing(_ textView: UITextView) {
             if textView.text == "Parlez-nous un peu de vous, de votre passion pour la photo..." {
                 textView.text = ""
-                textView.textColor = UIColor.label
+//                textView.textColor = UIColor.label
                 textView.font = UIFont.systemFont(ofSize: 16)
             }
         }

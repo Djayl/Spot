@@ -62,7 +62,7 @@ extension UIViewController {
         self.present(alert, animated: true, completion: nil)
     }
     
-    func showKeyboard() {
+    @objc func showKeyboard() {
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardShowing), name: UIApplication.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardHiding), name: UIApplication.keyboardWillHideNotification, object: nil)
         view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(hideKeyboard)))

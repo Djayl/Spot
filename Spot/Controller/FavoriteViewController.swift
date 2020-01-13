@@ -179,7 +179,7 @@ extension FavoriteViewController: UITableViewDataSource, UITableViewDelegate {
         label.text = "Ajoutez ici vos favoris"
         label.font = UIFont(name: "Quicksand-Bold", size: 20)
         label.textAlignment = .center
-        label.textColor = .label
+//        label.textColor = .label
         return label
     }
     

@@ -25,7 +25,7 @@ class CustomCell: UITableViewCell {
         cellImageView.image = spot.image
         cellImageView.layer.cornerRadius = 15
         cellImageView.layer.borderWidth = 2
-        cellImageView.layer.borderColor = UIColor.secondarySystemBackground.cgColor
+//        cellImageView.layer.borderColor = UIColor.secondarySystemBackground.cgColor
     }
 }
 

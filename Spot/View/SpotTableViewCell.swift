@@ -39,7 +39,7 @@ class SpotTableViewCell: UITableViewCell {
 //            cellImageView.layer.cornerRadius = 15
 //            cellImageView.layer.masksToBounds = true
             cellImageView.layer.cornerRadius = 5
-            cellImageView.layer.borderColor = UIColor.secondarySystemBackground.cgColor
+//            cellImageView.layer.borderColor = UIColor.secondarySystemBackground.cgColor
         }
     
 }

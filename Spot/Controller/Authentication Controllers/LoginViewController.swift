@@ -23,9 +23,6 @@ final class LoginViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        emailTextField.accessibilityIdentifier = "email"
-        passwordTextField.accessibilityIdentifier = "password"
-        loginButton.accessibilityIdentifier = "login"
         hideKeyboardWhenTappedAround()
         emailTextField.delegate = self
         passwordTextField.delegate = self   

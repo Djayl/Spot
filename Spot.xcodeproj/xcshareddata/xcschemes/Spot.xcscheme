@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "F0D52804232786770023B226"
-               BuildableName = "Spot.app"
+               BuildableName = "Spoteo.app"
                BlueprintName = "Spot"
                ReferencedContainer = "container:Spot.xcodeproj">
             </BuildableReference>
@@ -33,7 +33,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "F0D52804232786770023B226"
-            BuildableName = "Spot.app"
+            BuildableName = "Spoteo.app"
             BlueprintName = "Spot"
             ReferencedContainer = "container:Spot.xcodeproj">
          </BuildableReference>
@@ -57,7 +57,7 @@
             </BuildableReference>
          </TestableReference>
          <TestableReference
-            skipped = "NO">
+            skipped = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "F0ABA93C23BD102D00818AA2"
@@ -83,7 +83,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "F0D52804232786770023B226"
-            BuildableName = "Spot.app"
+            BuildableName = "Spoteo.app"
             BlueprintName = "Spot"
             ReferencedContainer = "container:Spot.xcodeproj">
          </BuildableReference>
@@ -100,7 +100,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "F0D52804232786770023B226"
-            BuildableName = "Spot.app"
+            BuildableName = "Spoteo.app"
             BlueprintName = "Spot"
             ReferencedContainer = "container:Spot.xcodeproj">
          </BuildableReference>

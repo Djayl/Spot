@@ -33,6 +33,8 @@ class CreateProfileViewController: UIViewController, UITextViewDelegate, UITextF
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        fetchProfilInformation()
+//        showKeyboard()
         setupImageView()
         setupTextFields()
         handleTextView()
@@ -42,8 +44,7 @@ class CreateProfileViewController: UIViewController, UITextViewDelegate, UITextF
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        navigationController?.setNavigationBarHidden(true, animated: false)
-        fetchProfilInformation()
+        navigationController?.setNavigationBarHidden(false, animated: false)
     }
     
     // MARK: - Actions
