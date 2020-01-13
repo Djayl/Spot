@@ -61,7 +61,7 @@ class DetailsViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 //        let backButton = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(goBack))
-        let backButton = UIBarButtonItem(title: "Carte", style: .done, target: self, action: #selector(goBack))
+        let backButton = UIBarButtonItem(title: "Retour", style: .done, target: self, action: #selector(goBack))
         self.navigationItem.leftBarButtonItem = backButton
         getSpotDetails()
         navigationController?.setNavigationBarHidden(false, animated: false)

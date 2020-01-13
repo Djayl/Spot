@@ -27,12 +27,12 @@ class CustomButton: UIButton {
     
     func setupButton() {
         setShadow()
-//        setTitleColor(UIColor.label, for: .normal)
-//        backgroundColor      = UIColor.systemBackground
+        setTitleColor(Colors.customBlue, for: .normal)
+        backgroundColor      = UIColor.clear
         titleLabel?.font     = UIFont(name: "Quicksand-Bold", size: 17)
         layer.cornerRadius   = 20
         layer.borderWidth    = 3.0
-//        layer.borderColor    = UIColor.tertiarySystemBackground.cgColor
+        layer.borderColor    = Colors.customBlue.cgColor
     }
     
     private func setShadow() {

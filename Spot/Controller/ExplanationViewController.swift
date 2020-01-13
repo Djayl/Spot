@@ -26,7 +26,8 @@ class ExplanationViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-         self.navigationController?.setNavigationBarHidden(true, animated: false)
+         self.navigationController?.setNavigationBarHidden(false, animated: false)
+        tabBarController?.tabBar.isHidden = true
     }
     
     // MARK: - Methods
