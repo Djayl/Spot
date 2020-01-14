@@ -46,21 +46,19 @@ class MapViewController: UIViewController {
         locationManager.delegate = self
         locationManager.requestWhenInUseAuthorization()
         mapView.delegate = self
-//        setUpNavigationController()
+        setUpNavigationController()
         setUpTapBarController()
-//        mapView.addSubview(chooseDataButton)
-        
         mapView.addSubview(refreshView)
         mapView.addSubview(chooseView)
         mapView.addSubview(chooseMapTypeView)
         checkIfUserLoggedIn()
-        fetchPublicSpots()
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         tabBarController?.tabBar.isHidden = false
-        
+        fetchPublicSpots()
     }
     
     // MARK: - Actions
@@ -94,7 +92,8 @@ class MapViewController: UIViewController {
     }
     
     @IBAction func didTapRefresh(_ sender: Any) {
-        ProgressHUD.showSuccess(NSLocalizedString("Spots publics à jour!", comment: ""))
+        ProgressHUD.showSuccess(NSLocalizedString("Spots publics à jour", comment: ""))
+        self.mapView.clear()
         fetchPublicSpots()
     }
     
@@ -104,16 +103,16 @@ class MapViewController: UIViewController {
     // MARK: - Methods
     
     fileprivate func setUpNavigationController() {
-        navigationController?.navigationBar.barTintColor = UIColor.systemBackground.withAlphaComponent(0.5)
-        navigationController?.navigationBar.isTranslucent = true
-        navigationItem.rightBarButtonItem?.setTitleTextAttributes([.font : UIFont(name: "LeagueSpartan-Bold", size: 15)!, .foregroundColor : UIColor.red], for: .normal)
-        navigationItem.leftBarButtonItem?.setTitleTextAttributes([.font : UIFont(name: "LeagueSpartan-Bold", size: 15)!, .foregroundColor : UIColor.label], for: .normal)
+        navigationController?.navigationBar.barTintColor = UIColor.white.withAlphaComponent(0.9)
+//        navigationController?.navigationBar.isTranslucent = true
+//        navigationItem.rightBarButtonItem?.setTitleTextAttributes([.font : UIFont(name: "LeagueSpartan-Bold", size: 15)!, .foregroundColor : UIColor.red], for: .normal)
+//        navigationItem.leftBarButtonItem?.setTitleTextAttributes([.font : UIFont(name: "LeagueSpartan-Bold", size: 15)!, .foregroundColor : UIColor.label], for: .normal)
     }
     
     fileprivate func setUpTapBarController() {
 //        tabBarController?.tabBar.tintColor = UIColor.green
 //        tabBarController?.tabBar.unselectedItemTintColor = UIColor.lightGray
-//        tabBarController?.tabBar.barTintColor = UIColor.systemBackground
+        tabBarController?.tabBar.barTintColor = UIColor.white.withAlphaComponent(0.9)
         
     }
     
@@ -157,13 +156,13 @@ class MapViewController: UIViewController {
         }))
         alert.addAction(UIAlertAction(title: "Ma collection privée", style: .default, handler: { (_) in
             self.mapView.clear()
-            ProgressHUD.showSuccess(NSLocalizedString("Spots privés à jour!", comment: ""))
+            ProgressHUD.showSuccess(NSLocalizedString("Spots privés à jour", comment: ""))
             self.fetchPrivateSpots()
 //            self.listenToPrivateSpots()
         }))
         alert.addAction(UIAlertAction(title: "Mes favoris", style: .default, handler: { (_) in
             self.mapView.clear()
-            ProgressHUD.showSuccess(NSLocalizedString("Spots favoris à jour!", comment: ""))
+            ProgressHUD.showSuccess(NSLocalizedString("Spots favoris à jour", comment: ""))
             self.listenToFavoriteSpots()
         }))
         alert.addAction(UIAlertAction(title: "Annuler", style: .cancel, handler: { (_) in
@@ -250,21 +249,15 @@ class MapViewController: UIViewController {
 //        let nc = UINavigationController(rootViewController: vc)
 //        vc.spot = spot
 //        self.present(nc, animated: true, completion: nil)
+        
+        let secondViewController = self.storyboard?.instantiateViewController(withIdentifier: "DetailsVC") as! DetailsViewController
+        secondViewController.spot = spot
+        self.navigationController?.pushViewController(secondViewController, animated: true)
 //        let vc = storyboard?.instantiateViewController(withIdentifier: "DetailsVC") as! DetailsViewController
 //        let nc = UINavigationController(rootViewController: vc)
 //        vc.spot = spot
 //        self.present(nc, animated: true, completion: nil)
-        let secondViewController = self.storyboard?.instantiateViewController(withIdentifier: "DetailsVC") as! DetailsViewController
-        secondViewController.spot = spot
-        self.navigationController?.pushViewController(secondViewController, animated: true)
     }
-    
-//    @objc private func buttonTapped(marker: GMSMarker) {
-//        let vc = storyboard?.instantiateViewController(withIdentifier: "DetailsVC") as! DetailsViewController
-//        let nc = UINavigationController(rootViewController: vc)
-//        vc.spot = marker as! Spot
-//        self.present(nc, animated: true, completion: nil)
-//    }
     
     private func listenToASpot(spot: Spot) {
         guard let spotUid = (spot.userData as! CustomData).uid else {return}
@@ -394,12 +387,17 @@ extension MapViewController: GMSMapViewDelegate, AddSpotDelegate {
     }
     
     func mapView(_ mapView: GMSMapView, didLongPressAt coordinate: CLLocationCoordinate2D) {
-        let vc = storyboard?.instantiateViewController(withIdentifier: "CreationVC") as! CreateSpotViewController
-        let nc = UINavigationController(rootViewController: vc)
+//        let vc = storyboard?.instantiateViewController(withIdentifier: "CreationVC") as! CreateSpotViewController
+//        let nc = UINavigationController(rootViewController: vc)
+//        let location = coordinate
+//        vc.location = location
+//        vc.delegate = self
+//        self.present(nc, animated: true, completion: nil)
+        let secondViewController = self.storyboard?.instantiateViewController(withIdentifier: "CreationVC") as! CreateSpotViewController
         let location = coordinate
-        vc.location = location
-        vc.delegate = self
-        self.present(nc, animated: true, completion: nil)
+        secondViewController.location = location
+        secondViewController.delegate = self
+        self.navigationController?.pushViewController(secondViewController, animated: true)
     }
     
     func mapView(_ mapView: GMSMapView, didTapInfoWindowOf marker: GMSMarker) {
@@ -413,7 +411,7 @@ extension MapViewController: GMSMapViewDelegate, AddSpotDelegate {
     }
     
     func mapView(_ mapView: GMSMapView, markerInfoWindow marker: GMSMarker) -> UIView? {
-        let view = UIView(frame: CGRect.init(x: 0, y: 0, width: 150, height: 70))
+        let view = UIView(frame: CGRect.init(x: 0, y: 0, width: 170, height: 80))
         view.backgroundColor = Colors.customBlue.withAlphaComponent(0.9)
         view.layer.cornerRadius = 5
 //        view.layer.borderWidth = 3.0

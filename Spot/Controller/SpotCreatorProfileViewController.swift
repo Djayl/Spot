@@ -38,12 +38,15 @@ class SpotCreatorProfileViewController: UIViewController {
         setupImageView()
         textViewDidChange(creatorDescriptionTextView)
         collectionView.register(UINib.init(nibName: "CollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "collectionCell")
+        creatorDescriptionTextView.backgroundColor = UIColor.white
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        navigationController?.navigationBar.barTintColor = UIColor.white
         navigationController?.setNavigationBarHidden(false, animated: false)
         tabBarController?.tabBar.isHidden = true
+        
 //        listenProfilInformation()
 //        listenUserCollection()
     }
@@ -131,11 +134,9 @@ class SpotCreatorProfileViewController: UIViewController {
             
         @objc private func didTapSpot(spot: Spot) {
             
-            
-            let secondViewController = self.storyboard?.instantiateViewController(withIdentifier: "DetailsVC") as! DetailsViewController
-            secondViewController.spot = spot
-            
-            self.navigationController?.pushViewController(secondViewController, animated: true)
+           let secondViewController = self.storyboard?.instantiateViewController(withIdentifier: "DetailsVC") as! DetailsViewController
+           secondViewController.spot = spot
+           self.navigationController?.pushViewController(secondViewController, animated: true)
             
             
 //            let storyboard = UIStoryboard(name: "Main", bundle: nil)

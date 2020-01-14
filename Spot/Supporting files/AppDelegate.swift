@@ -13,6 +13,7 @@ import Firebase
 
 let googleApiKey = "AIzaSyAr9KfQyhGZKpzXAHhd0_PHzzXQR4br6yA"
 
+@available(iOS 13.0, *)
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 

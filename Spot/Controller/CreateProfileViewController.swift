@@ -34,7 +34,6 @@ class CreateProfileViewController: UIViewController, UITextViewDelegate, UITextF
     override func viewDidLoad() {
         super.viewDidLoad()
         fetchProfilInformation()
-//        showKeyboard()
         setupImageView()
         setupTextFields()
         handleTextView()
@@ -45,6 +44,7 @@ class CreateProfileViewController: UIViewController, UITextViewDelegate, UITextF
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.setNavigationBarHidden(false, animated: false)
+        navigationController?.navigationBar.barTintColor = UIColor.white
     }
     
     // MARK: - Actions
@@ -80,6 +80,9 @@ class CreateProfileViewController: UIViewController, UITextViewDelegate, UITextF
     private func updateScreenWithProfil(_ profil: Profil) {
         descriptionTextView.text = profil.description
         profileDescription = profil.description
+        equipmentTextField.placeholder = profil.equipment
+        ageTextField.placeholder = profil.age
+        userNameTextField.placeholder = profil.userName
     }
     
     private func fetchProfilInformation() {
@@ -111,7 +114,9 @@ class CreateProfileViewController: UIViewController, UITextViewDelegate, UITextF
     }
     
     internal func handleTextView() {
-        descriptionTextView.textColor = UIColor.lightGray
+        descriptionTextView.textColor = UIColor.lightText
+        descriptionTextView.backgroundColor = UIColor.lightGray
+        descriptionTextView.layer.cornerRadius = 5
 //        descriptionTextView.font = UIFont(name: "GlacialIndifference-Regular", size: 15.0)
         descriptionTextView.returnKeyType = .done
         descriptionTextView.delegate = self
@@ -132,15 +137,7 @@ class CreateProfileViewController: UIViewController, UITextViewDelegate, UITextF
 //            textView.font = UIFont(name: "GlacialIndifference-Regular", size: 14.0)
 //        }
 //    }
-    
-    fileprivate func setupView() {
-        descriptionTextView.text = "Type your description"
-//        descriptionTextView.font = UIFont(name: "GlacialIndifference-Regular", size: 15)
-        descriptionTextView.layer.cornerRadius = 5
-        profileImageView.isUserInteractionEnabled = true
-        profileImageView.layer.cornerRadius = 10
-        profileImageView.layer.masksToBounds = true
-    }
+  
     
     fileprivate func setupTextFields() {
         equipmentTextField.delegate = self
@@ -148,6 +145,7 @@ class CreateProfileViewController: UIViewController, UITextViewDelegate, UITextF
         ageTextField.delegate = self
         userNameTextField.delegate = self
     }
+    
     
     private func updateProfileImage() {
         if myImage != nil {

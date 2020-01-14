@@ -25,7 +25,8 @@ final class LoginViewController: UIViewController {
         super.viewDidLoad()
         hideKeyboardWhenTappedAround()
         emailTextField.delegate = self
-        passwordTextField.delegate = self   
+        passwordTextField.delegate = self
+        navigationController?.navigationBar.barTintColor = UIColor.white
     }
     
     // MARK: - Actions

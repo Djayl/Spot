@@ -59,11 +59,12 @@ final class CreateSpotViewController: UIViewController, UITextFieldDelegate, UIT
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        tabBarController?.tabBar.isHidden = true
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
-        self.navigationController?.isNavigationBarHidden = false
-    }
+//    override func viewWillDisappear(_ animated: Bool) {
+//        self.navigationController?.isNavigationBarHidden = false
+//    }
     
     // MARK: - Actions
     
@@ -84,15 +85,15 @@ final class CreateSpotViewController: UIViewController, UITextFieldDelegate, UIT
     }
     
     fileprivate func setUpNavigationController() {
-        navigationController?.navigationBar.barTintColor = Colors.skyBlue
-        navigationController?.navigationBar.tintColor = Colors.coolRed
+        navigationController?.navigationBar.barTintColor = UIColor.white
+//        navigationController?.navigationBar.tintColor = Colors.coolRed
         navigationItem.leftBarButtonItem?.setTitleTextAttributes([.font : UIFont(name: "Quicksand-Regular", size: 15)!, .foregroundColor : Colors.coolRed], for: .normal)
     }
     
     fileprivate func setupView() {
-        descriptionTextView.text = "Type your description"
-        descriptionTextView.font = UIFont(name: "Quicksand-Regular", size: 15)
-        descriptionTextView.layer.cornerRadius = 5
+//        descriptionTextView.text = "Type your description"
+//        descriptionTextView.font = UIFont(name: "Quicksand-Regular", size: 15)
+//        descriptionTextView.layer.cornerRadius = 5
         pictureImageView.isUserInteractionEnabled = true
         pictureImageView.layer.cornerRadius = 10
         pictureImageView.layer.masksToBounds = true
@@ -104,7 +105,7 @@ final class CreateSpotViewController: UIViewController, UITextFieldDelegate, UIT
     }
     
     @objc private func goBack() {
-        dismiss(animated: true, completion: nil)
+         self.navigationController?.popToRootViewController(animated: true)
     }
      
     private func setProfilData(_ profil: Profil){
@@ -204,7 +205,8 @@ final class CreateSpotViewController: UIViewController, UITextFieldDelegate, UIT
     }
 
     @objc private func goToMapView() {
-        self.dismiss(animated: true, completion: nil)
+//        self.dismiss(animated: true, completion: nil)
+        self.navigationController?.popToRootViewController(animated: true)
     }
     
     deinit {
@@ -233,7 +235,7 @@ final class CreateSpotViewController: UIViewController, UITextFieldDelegate, UIT
     }
  
     internal func handleTextView() {
-//        descriptionTextView.translatesAutoresizingMaskIntoConstraints = false
+        descriptionTextView.layer.cornerRadius = 5
         descriptionTextView.text = "Décrivez votre Spot"
         descriptionTextView.textColor = UIColor.systemGray
         descriptionTextView.font = UIFont.systemFont(ofSize: 17)
@@ -248,7 +250,7 @@ final class CreateSpotViewController: UIViewController, UITextFieldDelegate, UIT
     internal func textViewDidBeginEditing(_ textView: UITextView) {
         if textView.text == "Décrivez votre Spot" {
             textView.text = ""
-            textView.textColor = UIColor.black
+            textView.textColor = UIColor.white
             textView.font = UIFont.systemFont(ofSize: 17)
         }
     }

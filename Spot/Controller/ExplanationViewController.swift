@@ -22,12 +22,14 @@ class ExplanationViewController: UIViewController {
         super.viewDidLoad()
         handleFirstLabel()
         handleSecondLabel()
+        navigationController?.navigationBar.barTintColor = UIColor.white
+        navigationController?.setNavigationBarHidden(false, animated: false)
+        tabBarController?.tabBar.isHidden = true
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-         self.navigationController?.setNavigationBarHidden(false, animated: false)
-        tabBarController?.tabBar.isHidden = true
+        
     }
     
     // MARK: - Methods

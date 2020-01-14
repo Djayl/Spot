@@ -38,11 +38,13 @@ class ProfileViewController: UIViewController {
         textViewDidChange(descriptionTextView)
         setupImageView()
         collectionView.register(UINib.init(nibName: "CollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "collectionCell")
-        
+        descriptionTextView.backgroundColor = UIColor.white
+        setDeleteButton()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        navigationController?.navigationBar.barTintColor = UIColor.white
         navigationController?.setNavigationBarHidden(false, animated: false)
         tabBarController?.tabBar.isHidden = true
 //        listenProfilInformation()
@@ -60,7 +62,10 @@ class ProfileViewController: UIViewController {
 //        self.present(nc, animated: true, completion: nil)
     }
     
-    @IBAction func logOut() {
+    
+    // MARK: - Methods
+    
+    @objc private func logOut() {
         presentAlertWithAction(message: "Êtes-vous sûr de vouloir vous déconnecter?") {
             let authService = AuthService()
             do {
@@ -74,7 +79,13 @@ class ProfileViewController: UIViewController {
         }
     }
     
-    // MARK: - Methods
+    private func setDeleteButton() {
+        let button = UIButton(type: .system)
+        button.setImage(UIImage(named: "exit"), for: .normal)
+        button.sizeToFit()
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: button)
+        button.addTarget(self, action: #selector(logOut), for: .touchUpInside)
+    }
     
     private func setupImageView() {
         profileImageView.layer.cornerRadius = profileImageView.frame.height / 2
@@ -146,10 +157,10 @@ class ProfileViewController: UIViewController {
             case .success(let markers):
                 self?.markers.removeAll()
                 for marker in markers {
-                    if marker.publicSpot == true {
+//                    if marker.publicSpot == true {
                         self?.displaySpot(marker)
                         print(marker.name)
-                    }
+//                    }
                 }
                 DispatchQueue.main.async {
                     self?.collectionView.reloadData()
@@ -162,7 +173,7 @@ class ProfileViewController: UIViewController {
     }
     
     @objc private func didTapSpot(spot: Spot) {
-        let secondViewController = self.storyboard?.instantiateViewController(withIdentifier: "DetailsVC") as! DetailsViewController
+       let secondViewController = self.storyboard?.instantiateViewController(withIdentifier: "DetailsVC") as! DetailsViewController
         secondViewController.spot = spot
         self.navigationController?.pushViewController(secondViewController, animated: true)
 //        let storyboard = UIStoryboard(name: "Main", bundle: nil)

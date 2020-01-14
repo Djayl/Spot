@@ -32,6 +32,7 @@ class FavoriteViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        navigationController?.navigationBar.barTintColor = UIColor.white
         tabBarController?.tabBar.isHidden = false
         fetchFavoriteSpots()
         listenFavoriteCollection()
@@ -49,6 +50,7 @@ class FavoriteViewController: UIViewController {
         tableView.dataSource = self
         tableView.delegate = self
         tableView.separatorStyle = .none
+        tableView.backgroundColor = UIColor.white
     }
     
     private func fetchFavoriteSpots() {
@@ -136,10 +138,7 @@ class FavoriteViewController: UIViewController {
         let secondViewController = self.storyboard?.instantiateViewController(withIdentifier: "DetailsVC") as! DetailsViewController
         secondViewController.spot = spot
         self.navigationController?.pushViewController(secondViewController, animated: true)
-        //        let vc = storyboard?.instantiateViewController(withIdentifier: "DetailsVC") as! DetailsViewController
-        //        let nc = UINavigationController(rootViewController: vc)
-        //        vc.spot = spot
-        //        self.present(nc, animated: true, completion: nil)
+       
     }
 }
 
@@ -159,7 +158,8 @@ extension FavoriteViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if let cell = tableView.dequeueReusableCell(withIdentifier: "SpotTableViewCell") as? SpotTableViewCell {
             cell.configureCell(spot: markers[indexPath.row])
-            cell.contentView.layer.cornerRadius = 10
+//            cell.contentView.layer.cornerRadius = 10
+            cell.backgroundColor = UIColor.white
             return cell
         }
         return UITableViewCell()
@@ -183,7 +183,7 @@ extension FavoriteViewController: UITableViewDataSource, UITableViewDelegate {
         label.text = "Ajoutez ici vos favoris"
         label.font = UIFont(name: "Quicksand-Bold", size: 20)
         label.textAlignment = .center
-//        label.textColor = .label
+        label.textColor = .black
         return label
     }
     

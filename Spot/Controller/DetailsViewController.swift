@@ -25,7 +25,6 @@ class DetailsViewController: UIViewController {
     @IBOutlet weak var spotDate: UILabel!
     @IBOutlet weak var spotCoordinate: UILabel!
     @IBOutlet weak var favoriteButton: FavoriteButton!
-    @IBOutlet weak var deleteButton: UIButton!
     @IBOutlet weak var profileCreatorPictureButton: UIButton!
     @IBOutlet weak var equipmentLabel: UILabel!
     @IBOutlet weak var ageLabel: UILabel!
@@ -52,23 +51,23 @@ class DetailsViewController: UIViewController {
         spotCoordinate.isUserInteractionEnabled = true
         textViewDidChange(spotDescriptionTextView)
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(imageTapped(_:)))
-//        navigationController?.setNavigationBarHidden(true, animated: false)
         imageView.addGestureRecognizer(tapGestureRecognizer)
         imageView.isUserInteractionEnabled = true
-        
+        spotDescriptionTextView.backgroundColor = UIColor.white
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-//        let backButton = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(goBack))
         let backButton = UIBarButtonItem(title: "Retour", style: .done, target: self, action: #selector(goBack))
         self.navigationItem.leftBarButtonItem = backButton
         getSpotDetails()
         navigationController?.setNavigationBarHidden(false, animated: false)
+        navigationController?.navigationBar.barTintColor = UIColor.white
         tabBarController?.tabBar.isHidden = true
         displaySpotOwnerProfile()
         getImage()
         listenToFavoriteSpot()
+        setDeleteButton()
     }
     
     
@@ -78,14 +77,7 @@ class DetailsViewController: UIViewController {
     @IBAction func putSpotToFavorite(_ sender: Any) {
         handleCustomButton()
     }
-    
-    @IBAction func remove(_ sender: Any) {
-        presentAlertWithAction(message: "Etes-vous sûr de vouloir effacer ce Spot?") {
-            self.spot.map = nil
-            self.deleteSpot()
-            self.goToMapView()
-        }
-    }
+
     @IBAction func goToCreatorProfile(_ sender: Any) {
         fetchSpotOwnerProfile()
     }
@@ -95,6 +87,26 @@ class DetailsViewController: UIViewController {
     
     // MARK: - Methods
     
+    private func setDeleteButton() {
+        let button = UIButton(type: .system)
+        button.setImage(UIImage(named: "trash"), for: .normal)
+        button.sizeToFit()
+        if (spot.userData as? CustomData)?.ownerId == ownerId {
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: button)
+        button.addTarget(self, action: #selector(removeSpot), for: .touchUpInside)
+        } else {
+            self.navigationItem.rightBarButtonItem = nil
+        }
+    }
+    
+    @objc private func removeSpot() {
+        presentAlertWithAction(message: "Etes-vous sûr de vouloir effacer ce Spot?") {
+            self.spot.map = nil
+            self.deleteSpot()
+            self.goToMapView()
+        }
+    }
+    
     private func getSpotCreatorName(_ profil: Profil) {
         pictureTakerName.text = profil.userName
     }
@@ -102,6 +114,7 @@ class DetailsViewController: UIViewController {
     @objc func goBack() {
 //        self.navigationController?.popViewController(animated: true)
         self.navigationController?.popToRootViewController(animated: true)
+//        dismiss(animated: true, completion: nil)
     }
     
     @objc func scaleImage(_ sender: UIPinchGestureRecognizer) {
@@ -203,7 +216,8 @@ class DetailsViewController: UIViewController {
             switch result {
             case .success(let profil):
                 self?.setProfilData(profil)
-                self?.handleDeleteButton()
+//                self?.handleDeleteButton()
+                self?.setDeleteButton()
             case .failure(let error):
                 print(error.localizedDescription)
                 self?.presentAlert(with: "Erreur réseau")
@@ -259,13 +273,13 @@ class DetailsViewController: UIViewController {
         }
     }
     
-    private func handleDeleteButton() {
-        if (spot.userData as? CustomData)?.ownerId == ownerId {
-            deleteButton.isHidden = false
-        } else {
-            deleteButton.isHidden = true
-        }
-    }
+//    private func handleDeleteButton() {
+//        if (spot.userData as? CustomData)?.ownerId == ownerId {
+//            deleteButton.isHidden = false
+//        } else {
+//            deleteButton.isHidden = true
+//        }
+//    }
     
     private func deleteSpotFromPrivate(identifier: String) {
         let firestoreService = FirestoreService<Marker>()
@@ -399,7 +413,7 @@ class DetailsViewController: UIViewController {
         let imageView = sender.view as! UIImageView
         newImageView = UIImageView(image: imageView.image)
         newImageView.frame = UIScreen.main.bounds
-        newImageView.backgroundColor = Colors.customBlue
+        newImageView.backgroundColor = UIColor.white
         newImageView.contentMode = .scaleAspectFit
         newImageView.isUserInteractionEnabled = true
         let tap = UITapGestureRecognizer(target: self, action: #selector(dismissFullscreenImage))
