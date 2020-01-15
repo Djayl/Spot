@@ -66,9 +66,9 @@ class CreateProfileViewController: UIViewController, UITextViewDelegate, UITextF
     
     private func getImage(_ completion: @escaping (String)->Void) {
         guard let image = myImage, let data = image.jpegData(compressionQuality: 1.0) else {
-                   presentAlert(with: "Il semble y avoir une erreur")
-                   return
-               }
+            presentAlert(with: "Il semble y avoir une erreur")
+            return
+        }
         let firebaseStorageManager = FirebaseStorageManager()
         let imageName = UUID().uuidString
         firebaseStorageManager.uploadImageData(data: data, serverFileName: imageName) { (isSuccess, url) in
@@ -117,27 +117,27 @@ class CreateProfileViewController: UIViewController, UITextViewDelegate, UITextF
         descriptionTextView.textColor = UIColor.lightText
         descriptionTextView.backgroundColor = UIColor.lightGray
         descriptionTextView.layer.cornerRadius = 5
-//        descriptionTextView.font = UIFont(name: "GlacialIndifference-Regular", size: 15.0)
+        //        descriptionTextView.font = UIFont(name: "GlacialIndifference-Regular", size: 15.0)
         descriptionTextView.returnKeyType = .done
         descriptionTextView.delegate = self
     }
     
-//    internal func textViewDidBeginEditing(_ textView: UITextView) {
-//        if textView.text == "Décrivez votre Spot" {
-//            textView.text = ""
-//            textView.textColor = UIColor.black
-//            textView.font = UIFont(name: "GlacialIndifference-Regular", size: 14.0)
-//        }
-//    }
-//
-//    internal func textViewDidEndEditing(_ textView: UITextView) {
-//        if textView.text == "" {
-//            textView.text = "Décrivez votre Spot"
-//            textView.textColor = UIColor.lightGray
-//            textView.font = UIFont(name: "GlacialIndifference-Regular", size: 14.0)
-//        }
-//    }
-  
+    //    internal func textViewDidBeginEditing(_ textView: UITextView) {
+    //        if textView.text == "Décrivez votre Spot" {
+    //            textView.text = ""
+    //            textView.textColor = UIColor.black
+    //            textView.font = UIFont(name: "GlacialIndifference-Regular", size: 14.0)
+    //        }
+    //    }
+    //
+    //    internal func textViewDidEndEditing(_ textView: UITextView) {
+    //        if textView.text == "" {
+    //            textView.text = "Décrivez votre Spot"
+    //            textView.textColor = UIColor.lightGray
+    //            textView.font = UIFont(name: "GlacialIndifference-Regular", size: 14.0)
+    //        }
+    //    }
+    
     
     fileprivate func setupTextFields() {
         equipmentTextField.delegate = self
@@ -182,7 +182,7 @@ class CreateProfileViewController: UIViewController, UITextViewDelegate, UITextF
                 }
             }
         } else {
-          self.dismiss(animated: true, completion: nil)
+            self.dismiss(animated: true, completion: nil)
         }
     }
     
@@ -201,7 +201,7 @@ class CreateProfileViewController: UIViewController, UITextViewDelegate, UITextF
                 }
             }
         } else {
-          self.dismiss(animated: true, completion: nil)
+            self.dismiss(animated: true, completion: nil)
         }
     }
     
@@ -220,7 +220,7 @@ class CreateProfileViewController: UIViewController, UITextViewDelegate, UITextF
                 }
             }
         } else {
-          self.dismiss(animated: true, completion: nil)
+            self.dismiss(animated: true, completion: nil)
         }
     }
     

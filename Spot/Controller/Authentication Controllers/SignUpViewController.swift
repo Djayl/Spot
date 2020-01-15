@@ -164,7 +164,7 @@ class SignUpViewController: UIViewController, UITextFieldDelegate, UITextViewDel
         internal func handleTextView() {
             descriptionTextView.text = "Parlez-nous un peu de vous, de votre passion pour la photo..."
             descriptionTextView.textColor = UIColor.white
-            descriptionTextView.font = UIFont.systemFont(ofSize: 16)
+            descriptionTextView.font = UIFont.systemFont(ofSize: 17)
             descriptionTextView.returnKeyType = .done
             descriptionTextView.delegate = self
 //            descriptionTextView.backgroundColor = UIColor.systemBackground
@@ -177,7 +177,7 @@ class SignUpViewController: UIViewController, UITextFieldDelegate, UITextViewDel
             if textView.text == "Parlez-nous un peu de vous, de votre passion pour la photo..." {
                 textView.text = ""
                 textView.textColor = UIColor.white
-                textView.font = UIFont.systemFont(ofSize: 16)
+                textView.font = UIFont.systemFont(ofSize: 17)
             }
         }
         
@@ -185,7 +185,7 @@ class SignUpViewController: UIViewController, UITextFieldDelegate, UITextViewDel
             if textView.text == "" {
                 textView.text = "Parlez-nous un peu de vous, de votre passion pour la photo..."
                 textView.textColor = UIColor.white
-                textView.font = UIFont.systemFont(ofSize: 16)
+                textView.font = UIFont.systemFont(ofSize: 17)
             }
         }
         

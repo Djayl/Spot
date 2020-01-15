@@ -138,7 +138,7 @@ class FavoriteViewController: UIViewController {
         let secondViewController = self.storyboard?.instantiateViewController(withIdentifier: "DetailsVC") as! DetailsViewController
         secondViewController.spot = spot
         self.navigationController?.pushViewController(secondViewController, animated: true)
-       
+        
     }
 }
 
@@ -158,7 +158,7 @@ extension FavoriteViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if let cell = tableView.dequeueReusableCell(withIdentifier: "SpotTableViewCell") as? SpotTableViewCell {
             cell.configureCell(spot: markers[indexPath.row])
-//            cell.contentView.layer.cornerRadius = 10
+            //            cell.contentView.layer.cornerRadius = 10
             cell.backgroundColor = UIColor.white
             return cell
         }

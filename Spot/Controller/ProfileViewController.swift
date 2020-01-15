@@ -47,23 +47,30 @@ class ProfileViewController: UIViewController {
         navigationController?.navigationBar.barTintColor = UIColor.white
         navigationController?.setNavigationBarHidden(false, animated: false)
         tabBarController?.tabBar.isHidden = true
-//        listenProfilInformation()
-//        listenUserCollection()
+        //        listenProfilInformation()
+        //        listenUserCollection()
     }
     
     // MARK: - Actions
     
     @IBAction func goToCreateProfile(_ sender: Any) {
         let secondViewController = self.storyboard?.instantiateViewController(withIdentifier: "createProfileVC") as! CreateProfileViewController
-               
-               self.navigationController?.pushViewController(secondViewController, animated: true)
-//        let vc = storyboard?.instantiateViewController(withIdentifier: "createProfileVC") as! CreateProfileViewController
-//        let nc = UINavigationController(rootViewController: vc)
-//        self.present(nc, animated: true, completion: nil)
+        
+        self.navigationController?.pushViewController(secondViewController, animated: true)
+        
     }
     
     
     // MARK: - Methods
+    
+    //    fileprivate func setBackground() {
+    //        let backgroundImage = UIImageView(frame: UIScreen.main.bounds)
+    //        backgroundImage.image = UIImage(named: "Spoteoshadow")
+    //        backgroundImage.alpha = 0.2
+    //        backgroundImage.contentMode = UIView.ContentMode.scaleAspectFit
+    //        self.view.insertSubview(backgroundImage, at: 0)
+    //        backgroundImage.center = view.center
+    //    }
     
     @objc private func logOut() {
         presentAlertWithAction(message: "Êtes-vous sûr de vouloir vous déconnecter?") {
@@ -157,10 +164,8 @@ class ProfileViewController: UIViewController {
             case .success(let markers):
                 self?.markers.removeAll()
                 for marker in markers {
-//                    if marker.publicSpot == true {
-                        self?.displaySpot(marker)
-                        print(marker.name)
-//                    }
+                    self?.displaySpot(marker)
+                    print(marker.name)
                 }
                 DispatchQueue.main.async {
                     self?.collectionView.reloadData()
@@ -173,13 +178,9 @@ class ProfileViewController: UIViewController {
     }
     
     @objc private func didTapSpot(spot: Spot) {
-       let secondViewController = self.storyboard?.instantiateViewController(withIdentifier: "DetailsVC") as! DetailsViewController
+        let secondViewController = self.storyboard?.instantiateViewController(withIdentifier: "DetailsVC") as! DetailsViewController
         secondViewController.spot = spot
         self.navigationController?.pushViewController(secondViewController, animated: true)
-//        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-//        let vc = storyboard.instantiateViewController(identifier: "DetailsVC") as! DetailsViewController
-//        vc.spot = spot
-//        navigationController?.pushViewController(vc, animated: true)
     }
 }
 

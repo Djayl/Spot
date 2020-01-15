@@ -30,8 +30,6 @@ class DetailsViewController: UIViewController {
     @IBOutlet weak var ageLabel: UILabel!
     
     
-    
-    
     // MARK: - Properties
     
     var spot = Spot()
@@ -54,6 +52,8 @@ class DetailsViewController: UIViewController {
         imageView.addGestureRecognizer(tapGestureRecognizer)
         imageView.isUserInteractionEnabled = true
         spotDescriptionTextView.backgroundColor = UIColor.white
+        spotCoordinate.minimumScaleFactor = 0.1
+        spotCoordinate.adjustsFontSizeToFitWidth = true
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -77,7 +77,7 @@ class DetailsViewController: UIViewController {
     @IBAction func putSpotToFavorite(_ sender: Any) {
         handleCustomButton()
     }
-
+    
     @IBAction func goToCreatorProfile(_ sender: Any) {
         fetchSpotOwnerProfile()
     }
@@ -92,8 +92,8 @@ class DetailsViewController: UIViewController {
         button.setImage(UIImage(named: "trash"), for: .normal)
         button.sizeToFit()
         if (spot.userData as? CustomData)?.ownerId == ownerId {
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: button)
-        button.addTarget(self, action: #selector(removeSpot), for: .touchUpInside)
+            self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: button)
+            button.addTarget(self, action: #selector(removeSpot), for: .touchUpInside)
         } else {
             self.navigationItem.rightBarButtonItem = nil
         }
@@ -112,9 +112,8 @@ class DetailsViewController: UIViewController {
     }
     
     @objc func goBack() {
-//        self.navigationController?.popViewController(animated: true)
+        //        self.navigationController?.popViewController(animated: true)
         self.navigationController?.popToRootViewController(animated: true)
-//        dismiss(animated: true, completion: nil)
     }
     
     @objc func scaleImage(_ sender: UIPinchGestureRecognizer) {
@@ -141,16 +140,12 @@ class DetailsViewController: UIViewController {
     private func setupImageView() {
         profileCreatorPictureButton.layer.cornerRadius = profileCreatorPictureButton.frame.height / 2
         profileCreatorPictureButton.clipsToBounds = true
-        profileCreatorPictureButton.layer.borderColor = UIColor.lightGray.cgColor
+        profileCreatorPictureButton.layer.borderColor = Colors.customBlue.cgColor
         profileCreatorPictureButton.layer.borderWidth = 2
     }
     
     func showSpotOwnerProfile(profil: Profil) {
-//        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-//        let vc = storyboard.instantiateViewController(identifier: "spotCreatorVC") as! SpotCreatorProfileViewController
-//        guard let userId = (spot.userData as? CustomData)?.ownerId else {return}
-//        vc.userId = userId
-//        navigationController?.pushViewController(vc, animated: true)
+        
         let secondViewController = self.storyboard?.instantiateViewController(withIdentifier: "spotCreatorVC") as! SpotCreatorProfileViewController
         guard let userId = (spot.userData as? CustomData)?.ownerId else {return}
         secondViewController.userId = userId
@@ -216,7 +211,6 @@ class DetailsViewController: UIViewController {
             switch result {
             case .success(let profil):
                 self?.setProfilData(profil)
-//                self?.handleDeleteButton()
                 self?.setDeleteButton()
             case .failure(let error):
                 print(error.localizedDescription)
@@ -273,13 +267,13 @@ class DetailsViewController: UIViewController {
         }
     }
     
-//    private func handleDeleteButton() {
-//        if (spot.userData as? CustomData)?.ownerId == ownerId {
-//            deleteButton.isHidden = false
-//        } else {
-//            deleteButton.isHidden = true
-//        }
-//    }
+    //    private func handleDeleteButton() {
+    //        if (spot.userData as? CustomData)?.ownerId == ownerId {
+    //            deleteButton.isHidden = false
+    //        } else {
+    //            deleteButton.isHidden = true
+    //        }
+    //    }
     
     private func deleteSpotFromPrivate(identifier: String) {
         let firestoreService = FirestoreService<Marker>()
