@@ -11,6 +11,7 @@ import FirebaseFirestore
 import Kingfisher
 import GoogleMaps
 import MapKit
+import ProgressHUD
 
 
 @available(iOS 13.0, *)
@@ -37,7 +38,7 @@ class DetailsViewController: UIViewController {
     var favoriteSpots = [Spot]()
     private var userName = ""
     private var ownerId = ""
-    
+    weak var delegate: AddSpotDelegate?
     
     // MARK: - View Life Cycle
     
@@ -101,9 +102,10 @@ class DetailsViewController: UIViewController {
     
     @objc private func removeSpot() {
         presentAlertWithAction(message: "Etes-vous sûr de vouloir effacer ce Spot?") {
-            self.spot.map = nil
             self.deleteSpot()
+            NotificationCenter.default.post(name: Notification.Name("showMySpot"), object: nil)
             self.goToMapView()
+            
         }
     }
     
@@ -322,6 +324,7 @@ class DetailsViewController: UIViewController {
     
     private func deleteSpot() {
         guard let uid = (spot.userData as? CustomData)?.uid else {return}
+        ProgressHUD.showSuccess(NSLocalizedString("Le Spot a bien été effacé", comment: ""))
         deleteSpotFromPrivate(identifier: uid)
         deleteSpotFromPublic(identifier: uid)
         deleteSpotFromFavorite(identifier: uid)
@@ -430,7 +433,8 @@ class DetailsViewController: UIViewController {
     }
     
     @objc private func goToMapView() {
-        self.dismiss(animated: true, completion: nil)
+//        self.dismiss(animated: true, completion: nil)
+        self.navigationController?.popViewController(animated: true)
     }
     
     @objc func gps() {

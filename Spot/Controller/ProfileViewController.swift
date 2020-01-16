@@ -32,7 +32,7 @@ class ProfileViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         listenProfilInformation()
-        listenUserCollection()
+//        listenUserCollection()
         collectionView.dataSource = self
         collectionView.delegate = self
         textViewDidChange(descriptionTextView)
@@ -44,6 +44,7 @@ class ProfileViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        fetchUserCollection()
         navigationController?.navigationBar.barTintColor = UIColor.white
         navigationController?.setNavigationBarHidden(false, animated: false)
         tabBarController?.tabBar.isHidden = true
@@ -55,7 +56,6 @@ class ProfileViewController: UIViewController {
     
     @IBAction func goToCreateProfile(_ sender: Any) {
         let secondViewController = self.storyboard?.instantiateViewController(withIdentifier: "createProfileVC") as! CreateProfileViewController
-        
         self.navigationController?.pushViewController(secondViewController, animated: true)
         
     }
@@ -176,6 +176,26 @@ class ProfileViewController: UIViewController {
             }
         }
     }
+    
+    private func fetchUserCollection() {
+           let firestoreService = FirestoreService<Marker>()
+           firestoreService.fetchCollection(endpoint: .spot) { [weak self] result in
+               switch result {
+               case .success(let markers):
+                   self?.markers.removeAll()
+                   for marker in markers {
+                       self?.displaySpot(marker)
+                       print(marker.name)
+                   }
+                   DispatchQueue.main.async {
+                       self?.collectionView.reloadData()
+                   }
+               case .failure(let error):
+                   print(error.localizedDescription)
+                   self?.presentAlert(with: "Erreur serveur")
+               }
+           }
+       }
     
     @objc private func didTapSpot(spot: Spot) {
         let secondViewController = self.storyboard?.instantiateViewController(withIdentifier: "DetailsVC") as! DetailsViewController

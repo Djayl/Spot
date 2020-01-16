@@ -35,7 +35,7 @@ class FavoriteViewController: UIViewController {
         navigationController?.navigationBar.barTintColor = UIColor.white
         tabBarController?.tabBar.isHidden = false
         fetchFavoriteSpots()
-        listenFavoriteCollection()
+//        listenFavoriteCollection()
         print(markers.count)
         tableView.register(UINib(nibName: "SpotTableViewCell", bundle: nil),forCellReuseIdentifier: "SpotTableViewCell")
     }
@@ -55,7 +55,7 @@ class FavoriteViewController: UIViewController {
     
     private func fetchFavoriteSpots() {
         let firestoreService = FirestoreService<Marker>()
-        firestoreService.fetchCollection(endpoint: .favoriteCollection) { [weak self] result in
+        firestoreService.fetchCollectionUnordered(endpoint: .favoriteCollection) { [weak self] result in
             switch result {
             case .success(let markers):
                 self?.markers.removeAll()

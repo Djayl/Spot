@@ -13,6 +13,8 @@ import ProgressHUD
 
 protocol AddSpotDelegate: class {
     func addSpotToMapView(marker: Spot)
+    func addPublicSpotToMapView(marker: Spot)
+    func removeSpotFromMap(from coordinate: CLLocationCoordinate2D)
 }
 
 
@@ -35,6 +37,7 @@ class MapViewController: UIViewController {
     let locationManager = CLLocationManager()
     let customMarkerWidth: Int = 50
     let customMarkerHeight: Int = 70
+    var spotId = ""
     
     
     // MARK: - View Life Cycle
@@ -60,6 +63,7 @@ class MapViewController: UIViewController {
         super.viewWillAppear(animated)
         tabBarController?.tabBar.isHidden = false
         NotificationCenter.default.addObserver(self, selector: #selector(fetchSpots), name: Notification.Name("showSpots"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(fetchMySpot), name: Notification.Name("showMySpot"), object: nil)
     }
     
     // MARK: - Actions
@@ -101,7 +105,13 @@ class MapViewController: UIViewController {
     
     
     @objc func fetchSpots (notification: NSNotification){
+        self.mapView.clear()
         fetchPublicSpots()
+    }
+    
+    @objc func fetchMySpot (notification: NSNotification){
+        self.mapView.clear()
+        fetchPrivateSpots()
     }
     
     fileprivate func setUpNavigationController() {
@@ -160,7 +170,7 @@ class MapViewController: UIViewController {
             self.mapView.clear()
             ProgressHUD.showSuccess(NSLocalizedString("Spots privés à jour", comment: ""))
             self.fetchPrivateSpots()
-            //            self.listenToPrivateSpots()
+//                        self.listenToPrivateSpots()
         }))
         alert.addAction(UIAlertAction(title: "Mes favoris", style: .default, handler: { (_) in
             self.mapView.clear()
@@ -281,6 +291,34 @@ class MapViewController: UIViewController {
         }
     }
     
+    private func fetchPrivateSpot(spot: Spot) {
+        guard let spotUid = (spot.userData as! CustomData).uid else {return}
+        let firestoreService = FirestoreService<Marker>()
+        firestoreService.fetchDocument(endpoint: .privateSpot(spotId: spotUid)) { [weak self] result in
+            switch result {
+            case .success(let successMessage):
+                print(successMessage)
+            case .failure(let error):
+                print("Error updating document: \(error)")
+                self?.presentAlert(with: "Erreur réseau")
+            }
+        }
+    }
+    
+    private func fetchPublicSpot(spot: Spot) {
+        guard let spotUid = (spot.userData as! CustomData).uid else {return}
+        let firestoreService = FirestoreService<Marker>()
+        firestoreService.fetchDocument(endpoint: .publicSpot(spotId: spotUid)) { [weak self] result in
+            switch result {
+            case .success(let successMessage):
+                print(successMessage)
+            case .failure(let error):
+                print("Error updating document: \(error)")
+                self?.presentAlert(with: "Erreur réseau")
+            }
+        }
+    }
+    
     private func displaySpot(_ marker: Marker) {
         guard let url = URL.init(string: marker.imageURL ) else {return}
         let mCustomData = CustomData(creationDate: marker.creationDate, uid: marker.identifier, ownerId: marker.ownerId, publicSpot: marker.publicSpot, creatorName: marker.creatorName, imageID: marker.imageID)
@@ -359,8 +397,22 @@ extension MapViewController: CLLocationManagerDelegate {
 @available(iOS 13.0, *)
 extension MapViewController: GMSMapViewDelegate, AddSpotDelegate {
     
+    func removeSpotFromMap(from coordinate: CLLocationCoordinate2D) {
+        
+         let marker = GMSMarker(position: coordinate)
+         print(coordinate)
+         marker.map = nil
+        
+    }
+    
     func addSpotToMapView(marker: Spot) {
         //        marker.map = mapView
+//        guard let uid = (marker.userData as? CustomData)?.uid else {return}
+        fetchPrivateSpot(spot: marker)
+    }
+    
+    func addPublicSpotToMapView(marker: Spot){
+        fetchPublicSpot(spot: marker)
     }
     
     func mapView(_ mapView: GMSMapView, didLongPressAt coordinate: CLLocationCoordinate2D) {

@@ -18,7 +18,8 @@ public enum Endpoint {
     case favoriteCollection
     case favoriteSpot(spotId: String)
     case particularUser(userId: String)
-    case particularUserCollection(userId: String)    
+    case particularUserCollection(userId: String)
+    case privateSpot(spotId: String)
 }
 
 extension Endpoint {
@@ -51,6 +52,8 @@ extension Endpoint {
             return "users/\(userId)"
         case let .particularUserCollection(userId):
             return "users/\(userId)/spots"
+        case let .privateSpot(spotId):
+        return "users/\(userId)/favorites/\(spotId)"
         }
     }
 }
