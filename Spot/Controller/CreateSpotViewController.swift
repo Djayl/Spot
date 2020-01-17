@@ -163,11 +163,13 @@ final class CreateSpotViewController: UIViewController, UITextFieldDelegate, UIT
                     let publicSpot = Marker(identifier: identifier, name: name, description: description, coordinate: GeoPoint(latitude: coor.latitude, longitude: coor.longitude), imageURL: imageUrl, ownerId: self.ownerId,publicSpot: true , creatorName: creatorName, creationDate: Date(), imageID: self.imageId)
                     DispatchQueue.main.async {
                         if self.stateSwitch.isOn {
+                            ProgressHUD.showSuccess(NSLocalizedString("Spot public créé!", comment: ""))
                             self.savePublicSpotInFirestore(identifier: identifier, spot: publicSpot)
                             self.saveSpotInFirestore(identifier: identifier, spot: publicSpot)
                             NotificationCenter.default.post(name: Notification.Name("showSpots"), object: nil)
                             print("Public Spot successfully added in private and public BDD")
                         } else {
+                            ProgressHUD.showSuccess(NSLocalizedString("Spot privé créé!", comment: ""))
                             self.saveSpotInFirestore(identifier: identifier, spot: privateSpot)
                             NotificationCenter.default.post(name: Notification.Name("showMySpot"), object: nil)
                             print("Private Spot successfully added")
@@ -181,7 +183,7 @@ final class CreateSpotViewController: UIViewController, UITextFieldDelegate, UIT
     }
     
     private func saveSpotInFirestore(identifier: String, spot: Marker) {
-        ProgressHUD.showSuccess(NSLocalizedString("Spot privé créé!", comment: ""))
+//        ProgressHUD.showSuccess(NSLocalizedString("Spot privé créé!", comment: ""))
         let firestoreService = FirestoreService<Marker>()
         firestoreService.saveData(endpoint: .spot, identifier: identifier, data: spot.dictionary) { [weak self] result in
             switch result {
@@ -197,7 +199,7 @@ final class CreateSpotViewController: UIViewController, UITextFieldDelegate, UIT
     
     private func savePublicSpotInFirestore(identifier: String, spot: Marker) {
         let firestoreService = FirestoreService<Marker>()
-        ProgressHUD.showSuccess(NSLocalizedString("Spot public créé!", comment: ""))
+//        ProgressHUD.showSuccess(NSLocalizedString("Spot public créé!", comment: ""))
         firestoreService.saveData(endpoint: .publicCollection, identifier: identifier, data: spot.dictionary) { [weak self] result in
             switch result {
             case .success(let successMessage):
