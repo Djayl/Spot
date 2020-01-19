@@ -198,7 +198,7 @@ class ProfileViewController: UIViewController {
        }
     
     @objc private func didTapSpot(spot: Spot) {
-        let secondViewController = self.storyboard?.instantiateViewController(withIdentifier: "DetailsVC") as! DetailsViewController
+        let secondViewController = self.storyboard?.instantiateViewController(withIdentifier: "SpotDetailsVC") as! SpotDetailsViewController
         secondViewController.spot = spot
         self.navigationController?.pushViewController(secondViewController, animated: true)
     }

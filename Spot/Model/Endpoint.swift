@@ -53,7 +53,7 @@ extension Endpoint {
         case let .particularUserCollection(userId):
             return "users/\(userId)/spots"
         case let .privateSpot(spotId):
-        return "users/\(userId)/favorites/\(spotId)"
+        return "users/\(userId)/spots/\(spotId)"
         }
     }
 }

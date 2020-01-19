@@ -272,7 +272,7 @@ class MapViewController: UIViewController {
     }
     
     @objc private func didTapSpot(spot: Spot) {
-        let secondViewController = self.storyboard?.instantiateViewController(withIdentifier: "DetailsVC") as! DetailsViewController
+        let secondViewController = self.storyboard?.instantiateViewController(withIdentifier: "SpotDetailsVC") as! SpotDetailsViewController
         secondViewController.spot = spot
         self.navigationController?.pushViewController(secondViewController, animated: true)
     }
@@ -422,7 +422,7 @@ extension MapViewController: GMSMapViewDelegate, AddSpotDelegate {
         //        vc.location = location
         //        vc.delegate = self
         //        self.present(nc, animated: true, completion: nil)
-        let secondViewController = self.storyboard?.instantiateViewController(withIdentifier: "CreationVC") as! CreateSpotViewController
+        let secondViewController = self.storyboard?.instantiateViewController(withIdentifier: "SpotCreationVC") as! SpotCreationViewController
         let location = coordinate
         secondViewController.location = location
         secondViewController.delegate = self

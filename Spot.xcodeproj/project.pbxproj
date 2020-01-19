@@ -63,6 +63,8 @@
 		F0D52813232786780023B226 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F0D52811232786780023B226 /* LaunchScreen.storyboard */; };
 		F0E6746123B11584007B84E9 /* CollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0E6745F23B11584007B84E9 /* CollectionViewCell.swift */; };
 		F0E6746223B11584007B84E9 /* CollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F0E6746023B11584007B84E9 /* CollectionViewCell.xib */; };
+		F0F9D6B023D337620014E060 /* SpotDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0F9D6AF23D337620014E060 /* SpotDetailsViewController.swift */; };
+		F0F9D6B223D349EF0014E060 /* SpotCreationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0F9D6B123D349EF0014E060 /* SpotCreationViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -142,6 +144,8 @@
 		F0D52814232786780023B226 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F0E6745F23B11584007B84E9 /* CollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewCell.swift; sourceTree = "<group>"; };
 		F0E6746023B11584007B84E9 /* CollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CollectionViewCell.xib; sourceTree = "<group>"; };
+		F0F9D6AF23D337620014E060 /* SpotDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpotDetailsViewController.swift; sourceTree = "<group>"; };
+		F0F9D6B123D349EF0014E060 /* SpotCreationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpotCreationViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -185,6 +189,8 @@
 				F055FB5E239FCC3B0005EEE5 /* CreateProfileViewController.swift */,
 				F04FC19C23A430FC00766C73 /* SpotCreatorProfileViewController.swift */,
 				F052692423B02D070052D114 /* ProfileViewController.swift */,
+				F0F9D6AF23D337620014E060 /* SpotDetailsViewController.swift */,
+				F0F9D6B123D349EF0014E060 /* SpotCreationViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -543,6 +549,7 @@
 				F0C1402B23686D1900341744 /* FavoriteButton.swift in Sources */,
 				F04EBA9C238444C3009B0074 /* UINavigationController.swift in Sources */,
 				F02AA3382386C47300D67E73 /* UIAlertController.swift in Sources */,
+				F0F9D6B223D349EF0014E060 /* SpotCreationViewController.swift in Sources */,
 				F04FC23C2387105400EA857A /* FirebaseStorageManager.swift in Sources */,
 				F04EBAA423844664009B0074 /* Array.swift in Sources */,
 				F096F51723857E2F00DCD18A /* Date.swift in Sources */,
@@ -554,6 +561,7 @@
 				F01E4C0323338BB500F7ADB6 /* CustomButton.swift in Sources */,
 				F0CDE0AB2327A99C007126DE /* CreateSpotViewController.swift in Sources */,
 				F04E3CF6235DAB4F0048D18A /* MapViewController.swift in Sources */,
+				F0F9D6B023D337620014E060 /* SpotDetailsViewController.swift in Sources */,
 				F055FB5F239FCC3B0005EEE5 /* CreateProfileViewController.swift in Sources */,
 				F0D52809232786770023B226 /* AppDelegate.swift in Sources */,
 				F04EBAA0238445EA009B0074 /* UITextField.swift in Sources */,
