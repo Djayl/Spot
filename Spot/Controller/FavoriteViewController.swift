@@ -42,6 +42,7 @@ class FavoriteViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        fetchFavoriteSpots()
     }
     
     // MARK: - Methods
@@ -88,7 +89,6 @@ class FavoriteViewController: UIViewController {
                 spot.imageURL = marker.imageURL
                 spot.image = image
                 self.markers.append(spot)
-                
             }
         }
     }

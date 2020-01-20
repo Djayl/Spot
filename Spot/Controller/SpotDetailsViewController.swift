@@ -252,23 +252,6 @@ class SpotDetailsViewController: UIViewController {
         ageLabel.text = "\(profil.age) ans"
     }
     
-//    private func fetchSpotInformation() {
-//        guard let spotId = (spot.userData as? CustomData)?.uid else {return}
-//            let firestoreService = FirestoreService<Marker>()
-//            firestoreService.fetchDocument(endpoint: .privateSpot(spotId: spotId)) { [weak self] result in
-//                switch result {
-//                case .success(let marker):
-//                    DispatchQueue.main.async {
-//                        self?.handleUpdateButton(marker)
-//                    }
-//
-//                case .failure(let error):
-//                    print(error.localizedDescription)
-//                    self?.presentAlert(with: "Erreur réseau")
-//                }
-//            }
-//        }
-    
     
     private func fetchProfilInformation() {
         let firestoreService = FirestoreService<Profil>()
@@ -302,6 +285,7 @@ class SpotDetailsViewController: UIViewController {
     
     private func deleteSpotAfterSwitching() {
         guard let uid = (spot.userData as? CustomData)?.uid else {return}
+        ProgressHUD.showSuccess("Ce Spot est désormais privé")
         deleteSpotFromPublic(identifier: uid)
     }
     
@@ -362,7 +346,7 @@ class SpotDetailsViewController: UIViewController {
         guard let name = spot.title else {return}
         spotTitle.numberOfLines = 0
         spotTitle.text = name.capitalized.toNoSmartQuotes()
-        guard let description = spot.snippet else {return}
+        guard let description = spot.snippet, !description.isEmpty else {return}
         spotDescriptionTextView.text = description
         guard let date  = (spot.userData as? CustomData)?.creationDate else {return}
         spotDate.text = "Spot créé le \(date.asString(style: .long))"

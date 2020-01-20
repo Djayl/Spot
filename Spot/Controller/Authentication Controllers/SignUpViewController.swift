@@ -30,18 +30,21 @@ class SignUpViewController: UIViewController, UITextFieldDelegate, UITextViewDel
     var myImage: UIImage?
     let authService = AuthService()
     let firestoreService = FirestoreService<Profil>()
+    var placeholderLabel = UILabel()
     
     // MARK: - View Life Cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupInputTextView()
         setupTextFields()
         setupImageView()
         handleTextView()
         hideKeyboardWhenTappedAround()
         profileImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(addPhoto)))
-//        descriptionTextView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(showKeyboard)))
+
     }
+
     
     // MARK: - Actions
     
@@ -51,14 +54,6 @@ class SignUpViewController: UIViewController, UITextFieldDelegate, UITextViewDel
     
     // MARK: - Methods
     
-//    func textViewShouldBeginEditing(_ textView: UITextView) -> Bool {
-//        if textView == descriptionTextView {
-//            showKeyboard()
-//        }
-//        hideKeyboard()
-//        return true
-//    }
-
     internal func textFieldShouldReturn(_ textField: UITextField) -> Bool {   //delegate method
         textField.resignFirstResponder()
         return true
@@ -66,7 +61,6 @@ class SignUpViewController: UIViewController, UITextFieldDelegate, UITextViewDel
     
     private func setupImageView() {
         profileImageView.layer.borderWidth = 2
-//        profileImageView.layer.borderColor = UIColor.secondarySystemBackground.cgColor
         profileImageView.layer.cornerRadius = profileImageView.frame.height / 2
     }
     
@@ -117,7 +111,7 @@ class SignUpViewController: UIViewController, UITextFieldDelegate, UITextViewDel
             signUpButton.shake()
                presentAlert(with: "Merci de préciser l'appareil que vous utilisez pour vos photos")
                return}
-           guard let description = descriptionTextView.text, !description.isEmpty, description != "Parlez-nous un peu de vous, de votre passion pour la photo..." else {
+           guard let description = descriptionTextView.text, validate(textView: descriptionTextView) else {
             signUpButton.shake()
                presentAlert(with: "Merci de renseigner une brève description de vous")
                return}
@@ -162,32 +156,57 @@ class SignUpViewController: UIViewController, UITextFieldDelegate, UITextViewDel
     }
         
         internal func handleTextView() {
-            descriptionTextView.text = "Parlez-nous un peu de vous, de votre passion pour la photo..."
             descriptionTextView.textColor = UIColor.white
             descriptionTextView.font = UIFont.systemFont(ofSize: 17)
             descriptionTextView.returnKeyType = .done
             descriptionTextView.delegate = self
-//            descriptionTextView.backgroundColor = UIColor.systemBackground
+
             descriptionTextView.layer.cornerRadius = 5
-//            descriptionTextView.layer.borderWidth = 1
-//            descriptionTextView.layer.borderColor = UIColor.systemBackground.cgColor
+
         }
-        
-        internal func textViewDidBeginEditing(_ textView: UITextView) {
-            if textView.text == "Parlez-nous un peu de vous, de votre passion pour la photo..." {
-                textView.text = ""
-                textView.textColor = UIColor.white
-                textView.font = UIFont.systemFont(ofSize: 17)
-            }
+
+    
+    func validate(textView: UITextView) -> Bool {
+        guard let text = textView.text,
+            !text.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines).isEmpty else {
+            // this will be reached if the text is nil (unlikely)
+            // or if the text only contains white spaces
+            // or no text at all
+            return false
         }
-        
-        internal func textViewDidEndEditing(_ textView: UITextView) {
-            if textView.text == "" {
-                textView.text = "Parlez-nous un peu de vous, de votre passion pour la photo..."
-                textView.textColor = UIColor.white
-                textView.font = UIFont.systemFont(ofSize: 17)
-            }
+        return true
+    }
+    
+    func setupInputTextView() {
+            
+            descriptionTextView.delegate = self
+            placeholderLabel.isHidden = false
+            let placeholderX: CGFloat = self.view.frame.size.width / 75
+            let placeholderY: CGFloat = 0
+            let placeholderWidth: CGFloat = descriptionTextView.bounds.width - placeholderX
+            let placeholderHeight: CGFloat = descriptionTextView.bounds.height
+            let placeholderFontSize = self.view.frame.size.width / 25
+            
+            placeholderLabel.frame = CGRect(x: placeholderX, y: placeholderY, width: placeholderWidth, height: placeholderHeight)
+            placeholderLabel.text = "Parlez-nous un peu de vous, de votre passion pour la photo..."
+            placeholderLabel.font = UIFont.systemFont(ofSize: placeholderFontSize)
+            placeholderLabel.textColor = .white
+        placeholderLabel.textAlignment = .left
+        placeholderLabel.numberOfLines = 2
+         
+            descriptionTextView.addSubview(placeholderLabel)
+            
         }
+     
+     func textViewDidChange(_ textView: UITextView) {
+         let spacing = CharacterSet.whitespacesAndNewlines
+         if !textView.text.trimmingCharacters(in: spacing).isEmpty {
+             _ = textView.text.trimmingCharacters(in: spacing)
+             placeholderLabel.isHidden = true
+         } else {
+             placeholderLabel.isHidden = false
+         }
+     }
         
         fileprivate func setupTextFields() {
             equipmentTextField.delegate = self

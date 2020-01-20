@@ -66,9 +66,9 @@ final class SpotCreationViewController: UIViewController, UITextFieldDelegate, U
         tabBarController?.tabBar.isHidden = true
     }
     
-//    override func viewWillDisappear(_ animated: Bool) {
-//        self.navigationController?.isNavigationBarHidden = false
-//    }
+    //    override func viewWillDisappear(_ animated: Bool) {
+    //        self.navigationController?.isNavigationBarHidden = false
+    //    }
     
     // MARK: - Actions
     
@@ -90,14 +90,14 @@ final class SpotCreationViewController: UIViewController, UITextFieldDelegate, U
     
     fileprivate func setUpNavigationController() {
         navigationController?.navigationBar.barTintColor = UIColor.white
-//        navigationController?.navigationBar.tintColor = Colors.coolRed
+        //        navigationController?.navigationBar.tintColor = Colors.coolRed
         navigationItem.leftBarButtonItem?.setTitleTextAttributes([.font : UIFont(name: "Quicksand-Regular", size: 15)!, .foregroundColor : Colors.coolRed], for: .normal)
     }
     
     fileprivate func setupView() {
-//        descriptionTextView.text = "Type your description"
-//        descriptionTextView.font = UIFont(name: "Quicksand-Regular", size: 15)
-//        descriptionTextView.layer.cornerRadius = 5
+        //        descriptionTextView.text = "Type your description"
+        //        descriptionTextView.font = UIFont(name: "Quicksand-Regular", size: 15)
+        //        descriptionTextView.layer.cornerRadius = 5
         pictureImageView.isUserInteractionEnabled = true
         pictureImageView.layer.cornerRadius = 10
         pictureImageView.layer.masksToBounds = true
@@ -109,26 +109,38 @@ final class SpotCreationViewController: UIViewController, UITextFieldDelegate, U
     }
     
     @objc private func goBack() {
-         self.navigationController?.popToRootViewController(animated: true)
+        self.navigationController?.popToRootViewController(animated: true)
     }
-     
+    
     private func setProfilData(_ profil: Profil){
         userName = profil.userName
         ownerId = profil.identifier
-   }
+    }
     
-   private func fetchProfilInformation() {
-          let firestoreService = FirestoreService<Profil>()
-          firestoreService.fetchDocument(endpoint: .currentUser) { [weak self] result in
-              switch result {
-              case .success(let profil):
-                  self?.setProfilData(profil)
-              case .failure(let error):
-                  print(error.localizedDescription)
-                  self?.presentAlert(with: "Erreur réseau")
-              }
-          }
-      }
+    private func fetchProfilInformation() {
+        let firestoreService = FirestoreService<Profil>()
+        firestoreService.fetchDocument(endpoint: .currentUser) { [weak self] result in
+            switch result {
+            case .success(let profil):
+                self?.setProfilData(profil)
+            case .failure(let error):
+                print(error.localizedDescription)
+                self?.presentAlert(with: "Erreur réseau")
+            }
+        }
+    }
+    
+    func validate(textView: UITextView) -> Bool {
+        guard let text = textView.text,
+            !text.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines).isEmpty else {
+                // this will be reached if the text is nil (unlikely)
+                // or if the text only contains white spaces
+                // or no text at all
+                return false
+        }
+        
+        return true
+    }
     
     private func saveNewSpot() {
         let geocoder = GMSGeocoder()
@@ -147,7 +159,7 @@ final class SpotCreationViewController: UIViewController, UITextFieldDelegate, U
                     self.presentAlert(with: "Un spot doit avoir un titre")
                     return
                 }
-                guard let description = self.descriptionTextView.text, description != "Décrivez votre Spot", !description.isEmpty else {
+                guard let description = self.descriptionTextView.text, self.validate(textView: self.descriptionTextView) else {
                     self.creationButton.shake()
                     self.presentAlert(with: "Un spot doit avoir une description")
                     return
@@ -179,14 +191,14 @@ final class SpotCreationViewController: UIViewController, UITextFieldDelegate, U
                         }
                     }
                 }
-//                self.delegate.addSpotToMapView(marker: spot)
+                //                self.delegate.addSpotToMapView(marker: spot)
                 self.goToMapView()
             }
         }
     }
     
     private func saveSpotInFirestore(identifier: String, spot: Marker) {
-//        ProgressHUD.showSuccess(NSLocalizedString("Spot privé créé!", comment: ""))
+        //        ProgressHUD.showSuccess(NSLocalizedString("Spot privé créé!", comment: ""))
         let firestoreService = FirestoreService<Marker>()
         firestoreService.saveData(endpoint: .spot, identifier: identifier, data: spot.dictionary) { [weak self] result in
             switch result {
@@ -202,7 +214,7 @@ final class SpotCreationViewController: UIViewController, UITextFieldDelegate, U
     
     private func savePublicSpotInFirestore(identifier: String, spot: Marker) {
         let firestoreService = FirestoreService<Marker>()
-//        ProgressHUD.showSuccess(NSLocalizedString("Spot public créé!", comment: ""))
+        //        ProgressHUD.showSuccess(NSLocalizedString("Spot public créé!", comment: ""))
         firestoreService.saveData(endpoint: .publicCollection, identifier: identifier, data: spot.dictionary) { [weak self] result in
             switch result {
             case .success(let successMessage):
@@ -214,9 +226,9 @@ final class SpotCreationViewController: UIViewController, UITextFieldDelegate, U
             }
         }
     }
-
+    
     @objc private func goToMapView() {
-//        self.dismiss(animated: true, completion: nil)
+        //        self.dismiss(animated: true, completion: nil)
         self.navigationController?.popToRootViewController(animated: true)
     }
     
@@ -233,9 +245,9 @@ final class SpotCreationViewController: UIViewController, UITextFieldDelegate, U
     
     private func getImage(_ completion: @escaping (String)->Void) {
         guard let image = myImage, let data = image.jpegData(compressionQuality: 1.0) else {
-                   presentAlert(with: "Il semble y avoir une erreur")
-                   return
-               }
+            presentAlert(with: "Il semble y avoir une erreur")
+            return
+        }
         let firebaseStorageManager = FirebaseStorageManager()
         let imageName = UUID().uuidString
         imageId = imageName
@@ -246,26 +258,26 @@ final class SpotCreationViewController: UIViewController, UITextFieldDelegate, U
     }
     
     func setupInputTextView() {
-           
-           descriptionTextView.delegate = self
-           placeholderLbl.isHidden = false
-           let placeholderX: CGFloat = self.view.frame.size.width / 75
-           let placeholderY: CGFloat = 0
-           let placeholderWidth: CGFloat = descriptionTextView.bounds.width - placeholderX
-           
-           let placeholderHeight: CGFloat = descriptionTextView.bounds.height
-           
-           let placeholderFontSize = self.view.frame.size.width / 25
-           
-           placeholderLbl.frame = CGRect(x: placeholderX, y: placeholderY, width: placeholderWidth, height: placeholderHeight)
-           placeholderLbl.text = "Décrivez votre Spot"
-           placeholderLbl.font = UIFont(name: "Quicksand-Regular", size: placeholderFontSize)
-           placeholderLbl.textColor = .white
-           placeholderLbl.textAlignment = .left
         
-           descriptionTextView.addSubview(placeholderLbl)
-           
-       }
+        descriptionTextView.delegate = self
+        placeholderLbl.isHidden = false
+        let placeholderX: CGFloat = self.view.frame.size.width / 75
+        let placeholderY: CGFloat = 0
+        let placeholderWidth: CGFloat = descriptionTextView.bounds.width - placeholderX
+        
+        let placeholderHeight: CGFloat = descriptionTextView.bounds.height
+        
+        let placeholderFontSize = self.view.frame.size.width / 25
+        
+        placeholderLbl.frame = CGRect(x: placeholderX, y: placeholderY, width: placeholderWidth, height: placeholderHeight)
+        placeholderLbl.text = "Décrivez votre Spot"
+        placeholderLbl.font = UIFont.systemFont(ofSize: placeholderFontSize)
+        placeholderLbl.textColor = .white
+        placeholderLbl.textAlignment = .left
+        
+        descriptionTextView.addSubview(placeholderLbl)
+        
+    }
     
     func textViewDidChange(_ textView: UITextView) {
         let spacing = CharacterSet.whitespacesAndNewlines
@@ -276,35 +288,35 @@ final class SpotCreationViewController: UIViewController, UITextFieldDelegate, U
             placeholderLbl.isHidden = false
         }
     }
- 
+    
     internal func handleTextView() {
         descriptionTextView.layer.cornerRadius = 5
-//        descriptionTextView.text = "Décrivez votre Spot"
-//        descriptionTextView.textColor = UIColor.systemGray
+        //        descriptionTextView.text = "Décrivez votre Spot"
+        //        descriptionTextView.textColor = UIColor.systemGray
         descriptionTextView.font = UIFont.systemFont(ofSize: 17)
         descriptionTextView.returnKeyType = .done
     }
     
     private func textViewShouldReturn(_ textView: UITextView) -> Bool {
-    descriptionTextView.resignFirstResponder()
-    return true
+        descriptionTextView.resignFirstResponder()
+        return true
     }
     
-//    internal func textViewDidBeginEditing(_ textView: UITextView) {
-//        if textView.text == "Décrivez votre Spot" {
-//            textView.text = ""
-//            textView.textColor = UIColor.white
-//            textView.font = UIFont.systemFont(ofSize: 17)
-//        }
-//    }
-//
-//    internal func textViewDidEndEditing(_ textView: UITextView) {
-//        if textView.text == "" || textView.text == "\n"{
-//            textView.text = "Décrivez votre Spot"
-//            textView.textColor = UIColor.systemGray
-//            textView.font = UIFont.systemFont(ofSize: 17)
-//        }
-//    }
+    //    internal func textViewDidBeginEditing(_ textView: UITextView) {
+    //        if textView.text == "Décrivez votre Spot" {
+    //            textView.text = ""
+    //            textView.textColor = UIColor.white
+    //            textView.font = UIFont.systemFont(ofSize: 17)
+    //        }
+    //    }
+    //
+    //    internal func textViewDidEndEditing(_ textView: UITextView) {
+    //        if textView.text == "" || textView.text == "\n"{
+    //            textView.text = "Décrivez votre Spot"
+    //            textView.textColor = UIColor.systemGray
+    //            textView.font = UIFont.systemFont(ofSize: 17)
+    //        }
+    //    }
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         // Get the current text, or use an empty string if that failed
@@ -317,16 +329,16 @@ final class SpotCreationViewController: UIViewController, UITextFieldDelegate, U
         return updatedText.count <= 25
     }
     
-//    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
-//        // Get the current text, or use an empty string if that failed
-//        let currentText = textView.text ?? ""
-//        // Attempt to read the range they are trying to change, or exit if we can't
-//        guard let stringRange = Range(range, in: currentText) else { return false }
-//        // Add their new text to the existing text
-//        let updatedText = currentText.replacingCharacters(in: stringRange, with: text)
-//        // Make sure the result is under 16 characters
-//        return updatedText.count <= 30
-//    }
+    //    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+    //        // Get the current text, or use an empty string if that failed
+    //        let currentText = textView.text ?? ""
+    //        // Attempt to read the range they are trying to change, or exit if we can't
+    //        guard let stringRange = Range(range, in: currentText) else { return false }
+    //        // Add their new text to the existing text
+    //        let updatedText = currentText.replacingCharacters(in: stringRange, with: text)
+    //        // Make sure the result is under 16 characters
+    //        return updatedText.count <= 30
+    //    }
 }
 
 // MARK: - ImagePicker Delegate
@@ -364,16 +376,3 @@ extension SpotCreationViewController: UIImagePickerControllerDelegate, UINavigat
     }
 }
 
-//@available(iOS 13.0, *)
-//extension SpotCreationViewController: UITextViewDelegate {
-//    func textViewDidChange(_ textView: UITextView) {
-//        
-//        let size = CGSize(width: view.frame.width, height: .infinity)
-//        let estimatedSize = textView.sizeThatFits(size)
-//        textView.constraints.forEach { (constraint) in
-//            if constraint.firstAttribute == .height {
-//                constraint.constant = estimatedSize.height
-//            }
-//        }
-//    }
-//}
