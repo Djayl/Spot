@@ -205,11 +205,11 @@ class MapViewController: UIViewController {
         })
     }
     
-    @objc private func gotoCreateAnnotation() {
-        let createSpotVC = CreateSpotViewController()
-        createSpotVC.delegate = self
-        navigationController?.pushViewController(createSpotVC, animated: false)
-    }
+//    @objc private func gotoCreateAnnotation() {
+//        let createSpotVC = CreateSpotViewController()
+//        createSpotVC.delegate = self
+//        navigationController?.pushViewController(createSpotVC, animated: false)
+//    }
     
     private func fetchPrivateSpots() {
         let firestoreService = FirestoreService<Marker>()
@@ -440,7 +440,7 @@ extension MapViewController: GMSMapViewDelegate, AddSpotDelegate {
     }
     
     func mapView(_ mapView: GMSMapView, markerInfoWindow marker: GMSMarker) -> UIView? {
-        let view = UIView(frame: CGRect.init(x: 0, y: 0, width: 170, height: 80))
+        let view = UIView(frame: CGRect.init(x: 0, y: 0, width: 180, height: 80))
         view.backgroundColor = Colors.customBlue.withAlphaComponent(0.9)
         view.layer.cornerRadius = 5
         //        view.layer.borderWidth = 3.0
@@ -448,17 +448,19 @@ extension MapViewController: GMSMapViewDelegate, AddSpotDelegate {
         
         let lbl1 = UILabel(frame: CGRect.init(x: 8, y: 8, width: view.frame.size.width - 16, height: 17))
         lbl1.font = UIFont(name: "Quicksand-Bold", size: 15)
+        lbl1.adjustsFontSizeToFitWidth = true
         lbl1.textColor = UIColor.black
         lbl1.numberOfLines = 0
         lbl1.text = marker.title
         view.addSubview(lbl1)
-        let lbl2 = UILabel(frame: CGRect.init(x: lbl1.frame.origin.x, y: lbl1.frame.origin.y + lbl1.frame.size.height + 3, width: view.frame.size.width - 16, height: 15))
+        let lbl2 = UILabel(frame: CGRect.init(x: lbl1.frame.origin.x, y: lbl1.frame.origin.y + lbl1.frame.size.height + 3, width: view.frame.size.width - 16, height: 40))
         lbl2.text = marker.snippet
-        lbl2.font = UIFont(name: "Quicksand-Regular", size: 15)
+        lbl2.font = UIFont(name: "Quicksand-Regular", size: 14)
         lbl2.textColor = UIColor.black
         lbl2.numberOfLines = 0
-        lbl2.contentMode = .scaleToFill
-        //        lbl2.adjustsFontSizeToFitWidth = false
+//        lbl2.lineBreakMode = .byWordWrapping
+//        lbl2.contentMode = .scaleToFill
+        
         view.addSubview(lbl2)
         return view
     }

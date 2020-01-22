@@ -197,4 +197,16 @@ final public class FirestoreService<FirestoreObject: DocumentSerializableProtoco
         })
     }
     
+    public func updateDataIfExists(endpoint: Endpoint, data: [String: Any], result: @escaping (FirestoreUpdateResult) -> Void) {
+           document = dataBase.document(endpoint.path)
+            document?.setData(data, merge: true, completion: { error in
+               if let error = error {
+                   print("Error updating document: \(error)")
+                   result(.failure(.offline))
+               } else {
+                   result(.success("Document updated with success"))
+               }
+           })
+       }
+    
 }

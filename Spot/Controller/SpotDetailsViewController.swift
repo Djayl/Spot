@@ -329,7 +329,7 @@ class SpotDetailsViewController: UIViewController {
 //        guard let spotId = (spot.userData as? CustomData)?.uid else {return}
         let firestoreService = FirestoreService<Marker>()
         let data = ["publicSpot":data]
-        firestoreService.updateData(endpoint: endpoint, data: data) { [weak self] result in
+        firestoreService.updateDataIfExists(endpoint: endpoint, data: data) { [weak self] result in
             switch result {
             case .success(let successMessage):
                 print(successMessage)
@@ -422,6 +422,7 @@ class SpotDetailsViewController: UIViewController {
             case .failure(let error):
                 print("Error deleting document: \(error)")
                 self?.presentAlert(with: "Erreur réseau")
+                self?.presentAlert(with: "DELETE SPOT FROM PUBLIC")
             }
         }
     }
