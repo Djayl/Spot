@@ -87,7 +87,13 @@ class SpotDetailsViewController: UIViewController {
     }
     
     @IBAction func goToCreatorProfile(_ sender: Any) {
+        guard let currentUser = AuthService.getCurrentUser() else { return }
+        if currentUser.uid != (spot.userData as? CustomData)?.ownerId {
         fetchSpotOwnerProfile()
+        } else {
+            let secondViewController = self.storyboard?.instantiateViewController(withIdentifier: "profileVC") as! ProfileViewController
+            self.navigationController?.pushViewController(secondViewController, animated: true)
+        }
     }
     @IBAction func getDirection(_ sender: Any) {
         gps()
@@ -191,6 +197,7 @@ class SpotDetailsViewController: UIViewController {
         profileCreatorPictureButton.layer.borderColor = Colors.customBlue.cgColor
         profileCreatorPictureButton.layer.borderWidth = 2
     }
+    
     
     func showSpotOwnerProfile(profil: Profil) {
         

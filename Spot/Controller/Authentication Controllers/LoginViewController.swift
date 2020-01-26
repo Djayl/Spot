@@ -27,6 +27,8 @@ final class LoginViewController: UIViewController {
         emailTextField.delegate = self
         passwordTextField.delegate = self
         navigationController?.navigationBar.barTintColor = UIColor.white
+        setupTextFields()
+        
     }
     
     // MARK: - Actions
@@ -58,6 +60,15 @@ final class LoginViewController: UIViewController {
     }
     
     // MARK: - Methods
+    
+    private func setupTextFields() {
+        emailTextField.layer.borderWidth = 1
+        emailTextField.layer.borderColor = Colors.blueBalloon.cgColor
+        emailTextField.layer.cornerRadius = 5
+        passwordTextField.layer.cornerRadius = 5
+        passwordTextField.layer.borderWidth = 1
+        passwordTextField.layer.borderColor = Colors.blueBalloon.cgColor
+    }
     
     private func logIn() {
            guard let email = emailTextField.text, !email.isEmpty else {

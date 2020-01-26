@@ -37,4 +37,5 @@ extension String {
         let rect = self.boundingRect(with: size, options: .usesLineFragmentOrigin, attributes: [.font: font], context: nil)
         return ceil(rect.width)
     }
+   
 }

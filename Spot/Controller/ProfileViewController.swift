@@ -31,6 +31,10 @@ class ProfileViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.navigationController?.navigationBar.titleTextAttributes =
+            [NSAttributedString.Key.foregroundColor: UIColor.black,
+             NSAttributedString.Key.font: UIFont(name: "Quicksand-Bold", size: 21)!]
+        self.navigationItem.title = "Profil"
         listenProfilInformation()
 //        listenUserCollection()
         collectionView.dataSource = self

@@ -36,6 +36,11 @@ class SignUpViewController: UIViewController, UITextFieldDelegate, UITextViewDel
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.navigationController?.navigationBar.titleTextAttributes =
+            [NSAttributedString.Key.foregroundColor: UIColor.black,
+             NSAttributedString.Key.font: UIFont(name: "Quicksand-Bold", size: 21)!]
+        self.navigationItem.title = "Inscription"
+        setupTextFieldsLayer()
         setupInputTextView()
         setupTextFields()
         setupImageView()
@@ -53,6 +58,28 @@ class SignUpViewController: UIViewController, UITextFieldDelegate, UITextViewDel
     }
     
     // MARK: - Methods
+    
+    private func setupTextFieldsLayer() {
+        equipmentTextField.layer.borderWidth = 1
+        equipmentTextField.layer.borderColor = Colors.blueBalloon.cgColor
+        userNameTextField.layer.borderWidth = 1
+        userNameTextField.layer.borderColor = Colors.blueBalloon.cgColor
+        emailTextField.layer.borderWidth = 1
+        emailTextField.layer.borderColor = Colors.blueBalloon.cgColor
+        passwordTextField.layer.borderWidth = 1
+        passwordTextField.layer.borderColor = Colors.blueBalloon.cgColor
+        passwordConfirmTextField.layer.borderWidth = 1
+        passwordConfirmTextField.layer.borderColor = Colors.blueBalloon.cgColor
+        ageTextField.layer.borderWidth = 1
+        ageTextField.layer.borderColor = Colors.blueBalloon.cgColor
+        equipmentTextField.layer.cornerRadius = 5
+        descriptionTextView.layer.cornerRadius = 5
+        emailTextField.layer.cornerRadius = 5
+        passwordTextField.layer.cornerRadius = 5
+        passwordConfirmTextField.layer.cornerRadius = 5
+        ageTextField.layer.cornerRadius = 5
+        userNameTextField.layer.cornerRadius = 5
+    }
     
     internal func textFieldShouldReturn(_ textField: UITextField) -> Bool {   //delegate method
         textField.resignFirstResponder()
@@ -87,27 +114,27 @@ class SignUpViewController: UIViewController, UITextFieldDelegate, UITextViewDel
                 presentAlert(with: "Merci de choisir une photo de profil")
                 return
             }
-           guard let userName = userNameTextField.text, !userName.isEmpty else {
+        guard let userName = userNameTextField.text, userName.isEmptyOrWhitespace() == false else {
             signUpButton.shake()
                presentAlert(with: "Merci de renseigner un nom d'utilisateur")
                return}
-           guard let email = emailTextField.text, !email.isEmpty else {
+           guard let email = emailTextField.text, email.isEmptyOrWhitespace() == false else {
             signUpButton.shake()
                presentAlert(with: "Merci de renseigner un email")
                return}
-           guard let password = passwordTextField.text, !password.isEmpty else {
+           guard let password = passwordTextField.text, password.isEmptyOrWhitespace() == false else {
             signUpButton.shake()
                presentAlert(with: "Merci de renseigner un mot de passe")
                return}
-           guard let passwordConfirmed = passwordConfirmTextField.text, passwordConfirmed == password, !passwordConfirmed.isEmpty else {
+           guard let passwordConfirmed = passwordConfirmTextField.text, passwordConfirmed == password, passwordConfirmed.isEmptyOrWhitespace() == false else {
             signUpButton.shake()
                presentAlert(with: "Merci de confirmer votre mot de passe")
                return}
-           guard let age = ageTextField.text, !age.isEmpty else {
+           guard let age = ageTextField.text, age.isEmptyOrWhitespace() == false else {
             signUpButton.shake()
                presentAlert(with: "Merci de renseigner un âge")
                return}
-           guard let equipment = equipmentTextField.text, !equipment.isEmpty else {
+           guard let equipment = equipmentTextField.text, equipment.isEmptyOrWhitespace() == false else {
             signUpButton.shake()
                presentAlert(with: "Merci de préciser l'appareil que vous utilisez pour vos photos")
                return}
@@ -156,11 +183,12 @@ class SignUpViewController: UIViewController, UITextFieldDelegate, UITextViewDel
     }
         
         internal func handleTextView() {
-            descriptionTextView.textColor = UIColor.white
+//            descriptionTextView.textColor = UIColor.white
             descriptionTextView.font = UIFont.systemFont(ofSize: 17)
             descriptionTextView.returnKeyType = .done
             descriptionTextView.delegate = self
-
+            descriptionTextView.layer.borderWidth = 1
+            descriptionTextView.layer.borderColor = Colors.blueBalloon.cgColor
             descriptionTextView.layer.cornerRadius = 5
 
         }
@@ -185,12 +213,12 @@ class SignUpViewController: UIViewController, UITextFieldDelegate, UITextViewDel
             let placeholderY: CGFloat = 0
             let placeholderWidth: CGFloat = descriptionTextView.bounds.width - placeholderX
             let placeholderHeight: CGFloat = descriptionTextView.bounds.height
-            let placeholderFontSize = self.view.frame.size.width / 25
+//            let placeholderFontSize = self.view.frame.size.width / 25
             
             placeholderLabel.frame = CGRect(x: placeholderX, y: placeholderY, width: placeholderWidth, height: placeholderHeight)
             placeholderLabel.text = "Parlez-nous un peu de vous, de votre passion pour la photo..."
-            placeholderLabel.font = UIFont.systemFont(ofSize: placeholderFontSize)
-            placeholderLabel.textColor = .white
+            placeholderLabel.font = UIFont.systemFont(ofSize: 17)
+            placeholderLabel.textColor = .systemGray
         placeholderLabel.textAlignment = .left
         placeholderLabel.numberOfLines = 2
          

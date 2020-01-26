@@ -26,7 +26,7 @@
 		<true/>
 	</dict>
 	<key>NSCameraUsageDescription</key>
-	<string></string>
+	<string>$(PRODUCT_NAME) a besoin de votre appareil photo pour la création de spots et votre photo de profil</string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
 	<string>Votre localisation est nécessaire pour la création de spots selon votre position</string>
 	<key>NSLocationWhenInUseUsageDescription</key>

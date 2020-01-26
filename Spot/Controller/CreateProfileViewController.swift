@@ -33,9 +33,14 @@ class CreateProfileViewController: UIViewController, UITextViewDelegate, UITextF
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.navigationController?.navigationBar.titleTextAttributes =
+            [NSAttributedString.Key.foregroundColor: UIColor.black,
+             NSAttributedString.Key.font: UIFont(name: "Quicksand-Bold", size: 21)!]
+        self.navigationItem.title = "Modifier mon profil"
         fetchProfilInformation()
         setupImageView()
         setupTextFields()
+        setupTextFieldLayer()
         handleTextView()
         hideKeyboardWhenTappedAround()
         profileImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(addPhoto)))
@@ -114,12 +119,12 @@ class CreateProfileViewController: UIViewController, UITextViewDelegate, UITextF
     }
     
     internal func handleTextView() {
-        descriptionTextView.textColor = UIColor.lightText
-        descriptionTextView.backgroundColor = UIColor.lightGray
-        descriptionTextView.layer.cornerRadius = 5
+        descriptionTextView.textColor = UIColor.systemGray
+//        descriptionTextView.backgroundColor = UIColor.systemGray
+//        descriptionTextView.layer.cornerRadius = 5
         //        descriptionTextView.font = UIFont(name: "GlacialIndifference-Regular", size: 15.0)
         descriptionTextView.returnKeyType = .done
-        descriptionTextView.delegate = self
+//        descriptionTextView.delegate = self
     }
     
     //    internal func textViewDidBeginEditing(_ textView: UITextView) {
@@ -144,6 +149,21 @@ class CreateProfileViewController: UIViewController, UITextViewDelegate, UITextF
         descriptionTextView.delegate = self
         ageTextField.delegate = self
         userNameTextField.delegate = self
+    }
+    
+    fileprivate func setupTextFieldLayer() {
+        equipmentTextField.layer.borderWidth = 1
+        equipmentTextField.layer.cornerRadius = 5
+        equipmentTextField.layer.borderColor = Colors.blueBalloon.cgColor
+        descriptionTextView.layer.borderWidth = 1
+        descriptionTextView.layer.cornerRadius = 5
+        descriptionTextView.layer.borderColor = Colors.blueBalloon.cgColor
+        ageTextField.layer.borderWidth = 1
+        ageTextField.layer.cornerRadius = 5
+        ageTextField.layer.borderColor = Colors.blueBalloon.cgColor
+        userNameTextField.layer.borderWidth = 1
+        userNameTextField.layer.cornerRadius = 5
+        userNameTextField.layer.borderColor = Colors.blueBalloon.cgColor
     }
     
     

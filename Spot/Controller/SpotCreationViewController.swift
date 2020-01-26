@@ -46,8 +46,12 @@ final class SpotCreationViewController: UIViewController, UITextFieldDelegate, U
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.navigationItem.title = "Je crée mon Spot"
-        setupInputTextView()
+        self.navigationController?.navigationBar.titleTextAttributes =
+            [NSAttributedString.Key.foregroundColor: UIColor.black,
+             NSAttributedString.Key.font: UIFont(name: "Quicksand-Bold", size: 21)!]
+        self.navigationItem.title = "Création de Spot"
+        setupPictureImageView()
+        //        setupInputTextView()
         showKeyboard()
         fetchProfilInformation()
         setUpNavigationController()
@@ -80,11 +84,18 @@ final class SpotCreationViewController: UIViewController, UITextFieldDelegate, U
     
     // MARK: - Methods
     
+    
+    fileprivate func setupPictureImageView() {
+        pictureImageView.contentMode = .center
+        pictureImageView.layer.borderWidth = 1
+        pictureImageView.layer.borderColor = Colors.blueBalloon.cgColor
+    }
+    
     @objc private func stateChanged(switchState: UISwitch) {
         if switchState.isOn {
-            switchLabel.text = "Je partage mon Spot"
+            switchLabel.text = "Spot public"
         } else {
-            switchLabel.text = "Je garde mon Spot pour moi"
+            switchLabel.text = "Spot privé"
         }
     }
     
@@ -93,6 +104,7 @@ final class SpotCreationViewController: UIViewController, UITextFieldDelegate, U
         //        navigationController?.navigationBar.tintColor = Colors.coolRed
         navigationItem.leftBarButtonItem?.setTitleTextAttributes([.font : UIFont(name: "Quicksand-Regular", size: 15)!, .foregroundColor : Colors.coolRed], for: .normal)
     }
+    
     
     fileprivate func setupView() {
         //        descriptionTextView.text = "Type your description"
@@ -106,6 +118,13 @@ final class SpotCreationViewController: UIViewController, UITextFieldDelegate, U
     fileprivate func setupTextFields() {
         titleTextfield.delegate = self
         descriptionTextView.delegate = self
+        titleTextfield.layer.borderColor = Colors.blueBalloon.cgColor
+        titleTextfield.layer.borderWidth = 1
+        titleTextfield.layer.cornerRadius = 5
+        descriptionTextView.layer.borderWidth = 1
+        descriptionTextView.layer.borderColor = Colors.blueBalloon.cgColor
+        descriptionTextView.layer.cornerRadius = 5
+        
     }
     
     @objc private func goBack() {
@@ -154,7 +173,7 @@ final class SpotCreationViewController: UIViewController, UITextFieldDelegate, U
                     self.presentAlert(with: "Un Spot doit avoir une image")
                     return
                 }
-                guard let name = self.titleTextfield.text, !name.isEmpty else {
+                guard let name = self.titleTextfield.text, name.isEmptyOrWhitespace() == false else {
                     self.creationButton.shake()
                     self.presentAlert(with: "Un spot doit avoir un titre")
                     return
@@ -257,37 +276,37 @@ final class SpotCreationViewController: UIViewController, UITextFieldDelegate, U
         }
     }
     
-    func setupInputTextView() {
-        
-        descriptionTextView.delegate = self
-        placeholderLbl.isHidden = false
-        let placeholderX: CGFloat = self.view.frame.size.width / 75
-        let placeholderY: CGFloat = 0
-        let placeholderWidth: CGFloat = descriptionTextView.bounds.width - placeholderX
-        
-        let placeholderHeight: CGFloat = descriptionTextView.bounds.height
-        
-        let placeholderFontSize = self.view.frame.size.width / 25
-        
-        placeholderLbl.frame = CGRect(x: placeholderX, y: placeholderY, width: placeholderWidth, height: placeholderHeight)
-        placeholderLbl.text = "Décrivez votre Spot"
-        placeholderLbl.font = UIFont.systemFont(ofSize: placeholderFontSize)
-        placeholderLbl.textColor = .white
-        placeholderLbl.textAlignment = .left
-        
-        descriptionTextView.addSubview(placeholderLbl)
-        
-    }
+    //    func setupInputTextView() {
+    //
+    //        descriptionTextView.delegate = self
+    //        placeholderLbl.isHidden = false
+    //        let placeholderX: CGFloat = self.view.frame.size.width / 75
+    //        let placeholderY: CGFloat = 0
+    //        let placeholderWidth: CGFloat = descriptionTextView.bounds.width - placeholderX
+    //
+    //        let placeholderHeight: CGFloat = descriptionTextView.bounds.height
+    //
+    //        let placeholderFontSize = self.view.frame.size.width / 25
+    //
+    //        placeholderLbl.frame = CGRect(x: placeholderX, y: placeholderY, width: placeholderWidth, height: placeholderHeight)
+    //        placeholderLbl.text = "Décrivez votre Spot"
+    //        placeholderLbl.font = UIFont.systemFont(ofSize: placeholderFontSize)
+    //        placeholderLbl.textColor = .lightGray
+    //        placeholderLbl.textAlignment = .left
+    //
+    //        descriptionTextView.addSubview(placeholderLbl)
+    //
+    //    }
     
-    func textViewDidChange(_ textView: UITextView) {
-        let spacing = CharacterSet.whitespacesAndNewlines
-        if !textView.text.trimmingCharacters(in: spacing).isEmpty {
-            _ = textView.text.trimmingCharacters(in: spacing)
-            placeholderLbl.isHidden = true
-        } else {
-            placeholderLbl.isHidden = false
-        }
-    }
+    //    func textViewDidChange(_ textView: UITextView) {
+    //        let spacing = CharacterSet.whitespacesAndNewlines
+    //        if !textView.text.trimmingCharacters(in: spacing).isEmpty {
+    //            _ = textView.text.trimmingCharacters(in: spacing)
+    //            placeholderLbl.isHidden = true
+    //        } else {
+    //            placeholderLbl.isHidden = false
+    //        }
+    //    }
     
     internal func handleTextView() {
         descriptionTextView.layer.cornerRadius = 5
@@ -365,11 +384,14 @@ extension SpotCreationViewController: UIImagePickerControllerDelegate, UINavigat
     }
     
     internal func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        //        pictureImageView.contentMode = .center
         if let editedImage = info[UIImagePickerController.InfoKey.editedImage] as? UIImage {
             pictureImageView.image = editedImage
+            pictureImageView.contentMode = .scaleAspectFill
             myImage = editedImage
         } else if let originalImage = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
             myImage = originalImage
+            pictureImageView.contentMode = .scaleAspectFill
             pictureImageView.image = originalImage
         }
         dismiss(animated: true, completion: nil)

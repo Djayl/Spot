@@ -39,6 +39,7 @@
 		F05751F8236A20230051F777 /* AuthenticationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F05751F7236A20230051F777 /* AuthenticationService.swift */; };
 		F05E72642396663500F6E61A /* SpotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F05E72632396663500F6E61A /* SpotTests.swift */; };
 		F05E726C2396668700F6E61A /* FirestoreServiceSpy.swift in Sources */ = {isa = PBXBuildFile; fileRef = F05E726B2396668700F6E61A /* FirestoreServiceSpy.swift */; };
+		F061B5A623DDD7BD00C858C6 /* UINavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = F061B5A523DDD7BD00C858C6 /* UINavigationBar.swift */; };
 		F0695A1D2372D5CB00F399B7 /* FirestoreService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0695A1C2372D5CB00F399B7 /* FirestoreService.swift */; };
 		F0695A1F2372D7BB00F399B7 /* Endpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0695A1E2372D7BB00F399B7 /* Endpoint.swift */; };
 		F0695A212372D88300F399B7 /* DocumentSerializableProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0695A202372D88300F399B7 /* DocumentSerializableProtocol.swift */; };
@@ -118,6 +119,7 @@
 		F05E72632396663500F6E61A /* SpotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpotTests.swift; sourceTree = "<group>"; };
 		F05E72652396663500F6E61A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F05E726B2396668700F6E61A /* FirestoreServiceSpy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirestoreServiceSpy.swift; sourceTree = "<group>"; };
+		F061B5A523DDD7BD00C858C6 /* UINavigationBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UINavigationBar.swift; sourceTree = "<group>"; };
 		F0695A1C2372D5CB00F399B7 /* FirestoreService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreService.swift; sourceTree = "<group>"; };
 		F0695A1E2372D7BB00F399B7 /* Endpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Endpoint.swift; sourceTree = "<group>"; };
 		F0695A202372D88300F399B7 /* DocumentSerializableProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentSerializableProtocol.swift; sourceTree = "<group>"; };
@@ -239,6 +241,7 @@
 				F096F51823857E7500DCD18A /* Bool.swift */,
 				F02AA3372386C47300D67E73 /* UIAlertController.swift */,
 				F050CF66239E8D7E00D31800 /* UIColor.swift */,
+				F061B5A523DDD7BD00C858C6 /* UINavigationBar.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -572,6 +575,7 @@
 				F01B3AC8232F8F4800B62D88 /* AlertService.swift in Sources */,
 				F0CDE0A923279719007126DE /* Spot.swift in Sources */,
 				F0695A212372D88300F399B7 /* DocumentSerializableProtocol.swift in Sources */,
+				F061B5A623DDD7BD00C858C6 /* UINavigationBar.swift in Sources */,
 				F0548EC923B974760083E354 /* CopyableLabel.swift in Sources */,
 				F016EA022330E5A400214C4E /* SignUpViewController.swift in Sources */,
 				F02AA33C2386D59100D67E73 /* ExplanationViewController.swift in Sources */,
@@ -790,7 +794,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.11;
+				MARKETING_VERSION = 1.14;
 				PRODUCT_BUNDLE_IDENTIFIER = fr.djilalisakkar.Spot;
 				PRODUCT_NAME = Spoteo;
 				SWIFT_VERSION = 5.0;
@@ -811,7 +815,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.11;
+				MARKETING_VERSION = 1.14;
 				PRODUCT_BUNDLE_IDENTIFIER = fr.djilalisakkar.Spot;
 				PRODUCT_NAME = Spoteo;
 				SWIFT_VERSION = 5.0;
