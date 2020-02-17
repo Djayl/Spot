@@ -25,7 +25,7 @@ class SpotCreatorProfileViewController: UIViewController {
     // MARK: - Properties
     
     var userId = ""
-    var markers = [Spot]()
+    var markers = [CustomAnnotation]()
     
     // MARK: - View Life Cycle
     
@@ -89,22 +89,57 @@ class SpotCreatorProfileViewController: UIViewController {
         }
     }
     
-    private func displaySpot(_ marker: Marker) {
+//    private func displaySpot(_ marker: Marker) {
+//        let name = marker.name
+//        guard let url = URL.init(string: marker.imageURL ) else {return}
+//        let mCustomData = CustomData(creationDate: marker.creationDate, uid: marker.identifier, ownerId: marker.ownerId, publicSpot: marker.publicSpot, creatorName: marker.creatorName, imageID: marker.imageID)
+//        KingfisherManager.shared.retrieveImage(with: url, options: nil) { result in
+//            let image = try? result.get().image
+//            if let image = image {
+//                let spot = Spot()
+//                spot.position = CLLocationCoordinate2D(latitude: marker.coordinate.latitude, longitude: marker.coordinate.longitude)
+//                spot.name = name
+//                spot.title = name
+//                spot.snippet = marker.description
+//                spot.userData = mCustomData
+//                spot.imageURL = marker.imageURL
+//                spot.image = image
+//                self.markers.append(spot)
+//                self.collectionView.reloadData()
+//            }
+//        }
+//    }
+    
+    private func displayAnnotation(_ marker: Marker) {
         let name = marker.name
+        let latitude = marker.coordinate.latitude
+        let longitude = marker.coordinate.longitude
+        let identifier = marker.identifier
+        let imageURL = marker.imageURL
+        let summary = marker.description
+        let creationDate = marker.creationDate
+        let creatorName = marker.creatorName
+        let imageId = marker.imageID
+        let publicSpot = marker.publicSpot
+        let ownerId = marker.ownerId
+        
         guard let url = URL.init(string: marker.imageURL ) else {return}
-        let mCustomData = CustomData(creationDate: marker.creationDate, uid: marker.identifier, ownerId: marker.ownerId, publicSpot: marker.publicSpot, creatorName: marker.creatorName, imageID: marker.imageID)
+       
         KingfisherManager.shared.retrieveImage(with: url, options: nil) { result in
             let image = try? result.get().image
             if let image = image {
-                let spot = Spot()
-                spot.position = CLLocationCoordinate2D(latitude: marker.coordinate.latitude, longitude: marker.coordinate.longitude)
-                spot.name = name
-                spot.title = name
-                spot.snippet = marker.description
-                spot.userData = mCustomData
-                spot.imageURL = marker.imageURL
-                spot.image = image
-                self.markers.append(spot)
+                let annotation = CustomAnnotation(coordinate: CLLocationCoordinate2D(latitude: latitude, longitude: longitude))
+               annotation.creationDate = creationDate
+                 annotation.creatorName = creatorName
+                 annotation.imageID = imageId
+                 annotation.ownerId = ownerId
+                 annotation.publicSpot = publicSpot
+                 annotation.uid = identifier
+                 annotation.subtitle = summary
+                 annotation.title = name
+                 annotation.image = image
+                annotation.imageURL = imageURL
+                self.markers.append(annotation)
                 self.collectionView.reloadData()
             }
         }
@@ -118,7 +153,7 @@ class SpotCreatorProfileViewController: UIViewController {
                 self?.markers.removeAll()
                 for marker in markers {
                     if marker.publicSpot == true {
-                        self?.displaySpot(marker)
+                        self?.displayAnnotation(marker)
                         print(marker.name)
                     }
                 }
@@ -132,10 +167,10 @@ class SpotCreatorProfileViewController: UIViewController {
         }
     }
     
-    @objc private func didTapSpot(spot: Spot) {
+    @objc private func didTapSpot(annotation: CustomAnnotation) {
         
         let secondViewController = self.storyboard?.instantiateViewController(withIdentifier: "SpotDetailsVC") as! SpotDetailsViewController
-        secondViewController.spot = spot
+        secondViewController.annotation = annotation
         self.navigationController?.pushViewController(secondViewController, animated: true)
         
         
@@ -158,7 +193,7 @@ extension SpotCreatorProfileViewController: UICollectionViewDelegateFlowLayout, 
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "collectionCell", for: indexPath) as? CollectionViewCell {
-            cell.configureCell(spot: markers[indexPath.row])
+            cell.configureCell(annotation: markers[indexPath.row])
             cell.contentView.frame = cell.bounds
             return cell
         }
@@ -170,7 +205,7 @@ extension SpotCreatorProfileViewController: UICollectionViewDelegateFlowLayout, 
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        didTapSpot(spot: markers[indexPath.row])
+        didTapSpot(annotation: markers[indexPath.row])
     }
 }
 

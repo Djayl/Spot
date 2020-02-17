@@ -19,11 +19,11 @@ class CollectionViewCell: UICollectionViewCell {
         // Initialization code
     }
 
-    func configureCell(spot:Spot) {
+    func configureCell(annotation:CustomAnnotation) {
         imageView.layer.cornerRadius = 5
         label.font = UIFont(name: "Quicksand-Regular", size: 14)
         imageView.clipsToBounds = true
-        label.text = spot.title?.capitalized
-        imageView.image = spot.image
+        label.text = annotation.title?.capitalized
+        imageView.image = annotation.image
     }
 }

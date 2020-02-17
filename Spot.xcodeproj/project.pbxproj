@@ -37,6 +37,10 @@
 		F0548EC923B974760083E354 /* CopyableLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0548EC823B974760083E354 /* CopyableLabel.swift */; };
 		F055FB5F239FCC3B0005EEE5 /* CreateProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F055FB5E239FCC3B0005EEE5 /* CreateProfileViewController.swift */; };
 		F05751F8236A20230051F777 /* AuthenticationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F05751F7236A20230051F777 /* AuthenticationService.swift */; };
+		F05A0FD923F80A27004C148E /* MapKitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F05A0FD823F80A27004C148E /* MapKitViewController.swift */; };
+		F05A0FDB23F80BEE004C148E /* CustomAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = F05A0FDA23F80BEE004C148E /* CustomAnnotation.swift */; };
+		F05A0FDD23F80E91004C148E /* MyAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F05A0FDC23F80E91004C148E /* MyAnnotationView.swift */; };
+		F05A0FDF23F80EB8004C148E /* MyAnnotationView.xib in Resources */ = {isa = PBXBuildFile; fileRef = F05A0FDE23F80EB8004C148E /* MyAnnotationView.xib */; };
 		F05E72642396663500F6E61A /* SpotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F05E72632396663500F6E61A /* SpotTests.swift */; };
 		F05E726C2396668700F6E61A /* FirestoreServiceSpy.swift in Sources */ = {isa = PBXBuildFile; fileRef = F05E726B2396668700F6E61A /* FirestoreServiceSpy.swift */; };
 		F061B5A623DDD7BD00C858C6 /* UINavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = F061B5A523DDD7BD00C858C6 /* UINavigationBar.swift */; };
@@ -115,6 +119,10 @@
 		F0548EC823B974760083E354 /* CopyableLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CopyableLabel.swift; sourceTree = "<group>"; };
 		F055FB5E239FCC3B0005EEE5 /* CreateProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateProfileViewController.swift; sourceTree = "<group>"; };
 		F05751F7236A20230051F777 /* AuthenticationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationService.swift; sourceTree = "<group>"; };
+		F05A0FD823F80A27004C148E /* MapKitViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapKitViewController.swift; sourceTree = "<group>"; };
+		F05A0FDA23F80BEE004C148E /* CustomAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAnnotation.swift; sourceTree = "<group>"; };
+		F05A0FDC23F80E91004C148E /* MyAnnotationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyAnnotationView.swift; sourceTree = "<group>"; };
+		F05A0FDE23F80EB8004C148E /* MyAnnotationView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MyAnnotationView.xib; sourceTree = "<group>"; };
 		F05E72612396663500F6E61A /* SpotTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SpotTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		F05E72632396663500F6E61A /* SpotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpotTests.swift; sourceTree = "<group>"; };
 		F05E72652396663500F6E61A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -193,6 +201,7 @@
 				F052692423B02D070052D114 /* ProfileViewController.swift */,
 				F0F9D6AF23D337620014E060 /* SpotDetailsViewController.swift */,
 				F0F9D6B123D349EF0014E060 /* SpotCreationViewController.swift */,
+				F05A0FD823F80A27004C148E /* MapKitViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -221,6 +230,8 @@
 				F0E6745F23B11584007B84E9 /* CollectionViewCell.swift */,
 				F0E6746023B11584007B84E9 /* CollectionViewCell.xib */,
 				F0548EC823B974760083E354 /* CopyableLabel.swift */,
+				F05A0FDC23F80E91004C148E /* MyAnnotationView.swift */,
+				F05A0FDE23F80EB8004C148E /* MyAnnotationView.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -281,6 +292,7 @@
 				F0695A222372E0D200F399B7 /* Marker.swift */,
 				F02F75192373128800610F1B /* Profil.swift */,
 				F04FC23B2387105400EA857A /* FirebaseStorageManager.swift */,
+				F05A0FDA23F80BEE004C148E /* CustomAnnotation.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -442,6 +454,7 @@
 				F0A3C81523C4C968008CF54B /* Quicksand-Regular.otf in Resources */,
 				F0D5280E232786770023B226 /* Main.storyboard in Resources */,
 				F06B84C923A78023003E3A5F /* SpotTableViewCell.xib in Resources */,
+				F05A0FDF23F80EB8004C148E /* MyAnnotationView.xib in Resources */,
 				F01CDA4F239273DB00A34E8E /* GoogleService-Info.plist in Resources */,
 				F0986B23239D5D6E006B3813 /* LeagueSpartan-Bold.otf in Resources */,
 			);
@@ -544,6 +557,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F05A0FDD23F80E91004C148E /* MyAnnotationView.swift in Sources */,
 				F05048E2236D87C200F6F660 /* CustomCell.swift in Sources */,
 				F04FC19D23A430FC00766C73 /* SpotCreatorProfileViewController.swift in Sources */,
 				F016EA002330E58200214C4E /* LoginViewController.swift in Sources */,
@@ -565,6 +579,7 @@
 				F0CDE0AB2327A99C007126DE /* CreateSpotViewController.swift in Sources */,
 				F04E3CF6235DAB4F0048D18A /* MapViewController.swift in Sources */,
 				F0F9D6B023D337620014E060 /* SpotDetailsViewController.swift in Sources */,
+				F05A0FD923F80A27004C148E /* MapKitViewController.swift in Sources */,
 				F055FB5F239FCC3B0005EEE5 /* CreateProfileViewController.swift in Sources */,
 				F0D52809232786770023B226 /* AppDelegate.swift in Sources */,
 				F04EBAA0238445EA009B0074 /* UITextField.swift in Sources */,
@@ -580,6 +595,7 @@
 				F016EA022330E5A400214C4E /* SignUpViewController.swift in Sources */,
 				F02AA33C2386D59100D67E73 /* ExplanationViewController.swift in Sources */,
 				F05751F8236A20230051F777 /* AuthenticationService.swift in Sources */,
+				F05A0FDB23F80BEE004C148E /* CustomAnnotation.swift in Sources */,
 				F096F51523857DF900DCD18A /* UILabel.swift in Sources */,
 				F0E6746123B11584007B84E9 /* CollectionViewCell.swift in Sources */,
 				F0695A1F2372D7BB00F399B7 /* Endpoint.swift in Sources */,

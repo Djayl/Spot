@@ -52,8 +52,8 @@ extension UIViewController {
         present(alertVC, animated: true, completion: nil)
     }
   
-    func showSimpleAlert() {
-        let alert = UIAlertController(title: "Email oublié", message: "Un mail vient de vous être transmis",preferredStyle: UIAlertController.Style.alert)
+    func showSimpleAlert(message: String) {
+        let alert = UIAlertController(title: "Email oublié", message: message,preferredStyle: UIAlertController.Style.alert)
         
         alert.addAction(UIAlertAction(title: "OK",
                                       style: UIAlertAction.Style.default,

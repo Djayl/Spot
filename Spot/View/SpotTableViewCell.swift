@@ -32,10 +32,10 @@ class SpotTableViewCell: UITableViewCell {
        
         // MARK: - Methods
         
-        func configureCell(spot:Spot) {
-            cellLabel.text = spot.name?.capitalized
+        func configureCell(annotation:CustomAnnotation) {
+            cellLabel.text = annotation.title?.capitalized
             cellLabel.font = UIFont(name: "Quicksand-Bold", size: 17)
-            cellImageView.image = spot.image
+            cellImageView.image = annotation.image
 //            cellImageView.layer.cornerRadius = 15
 //            cellImageView.layer.masksToBounds = true
             cellImageView.layer.cornerRadius = 5

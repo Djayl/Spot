@@ -37,6 +37,7 @@ class SpotDetailsViewController: UIViewController {
     // MARK: - Properties
     
     var spot = Spot()
+    var annotation : CustomAnnotation?
     var newImageView = UIImageView()
     var favoriteSpots = [Spot]()
     private var userName = ""
@@ -65,7 +66,8 @@ class SpotDetailsViewController: UIViewController {
         super.viewWillAppear(animated)
         let backButton = UIBarButtonItem(title: "Retour", style: .done, target: self, action: #selector(goBack))
         self.navigationItem.leftBarButtonItem = backButton
-        getSpotDetails()
+//        getSpotDetails()
+        getAnnotationDetails()
         navigationController?.setNavigationBarHidden(false, animated: false)
         navigationController?.navigationBar.barTintColor = UIColor.white
         tabBarController?.tabBar.isHidden = true
@@ -88,7 +90,7 @@ class SpotDetailsViewController: UIViewController {
     
     @IBAction func goToCreatorProfile(_ sender: Any) {
         guard let currentUser = AuthService.getCurrentUser() else { return }
-        if currentUser.uid != (spot.userData as? CustomData)?.ownerId {
+        if currentUser.uid != annotation?.ownerId {
         fetchSpotOwnerProfile()
         } else {
             let secondViewController = self.storyboard?.instantiateViewController(withIdentifier: "profileVC") as! ProfileViewController
@@ -99,7 +101,7 @@ class SpotDetailsViewController: UIViewController {
         gps()
     }
     @IBAction func didChangedStatus(_ sender: Any) {
-        guard let spotId = (spot.userData as? CustomData)?.uid else {return}
+        guard let spotId = annotation?.uid else {return}
         let alert1 = UIAlertController(title: "Êtes-vous sûr de vouloir rendre ce Spot public?", message: "", preferredStyle: .alert)
         let alert2 = UIAlertController(title: "Êtes-vous sûr de vouloir rendre ce Spot privé?", message: "", preferredStyle: .alert)
         if statusSwitch.isOn {
@@ -144,7 +146,7 @@ class SpotDetailsViewController: UIViewController {
         let button = UIButton(type: .system)
         button.setImage(UIImage(named: "trash"), for: .normal)
         button.sizeToFit()
-        if (spot.userData as? CustomData)?.ownerId == ownerId {
+        if annotation?.ownerId == ownerId {
             self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: button)
             button.addTarget(self, action: #selector(removeSpot), for: .touchUpInside)
         } else {
@@ -202,13 +204,13 @@ class SpotDetailsViewController: UIViewController {
     func showSpotOwnerProfile(profil: Profil) {
         
         let secondViewController = self.storyboard?.instantiateViewController(withIdentifier: "spotCreatorVC") as! SpotCreatorProfileViewController
-        guard let userId = (spot.userData as? CustomData)?.ownerId else {return}
+        guard let userId = annotation?.ownerId else {return}
         secondViewController.userId = userId
         self.navigationController?.pushViewController(secondViewController, animated: true)
     }
     
     private func fetchSpotOwnerProfile() {
-        guard let identifier = (spot.userData as? CustomData)?.ownerId else {return}
+        guard let identifier = annotation?.ownerId else {return}
         let firestoreService = FirestoreService<Profil>()
         firestoreService.fetchDocument(endpoint: .particularUser(userId: identifier)) { [weak self] result in
             switch result {
@@ -223,7 +225,7 @@ class SpotDetailsViewController: UIViewController {
     }
     
     private func displaySpotOwnerProfile() {
-        guard let identifier = (spot.userData as? CustomData)?.ownerId else {return}
+        guard let identifier = annotation?.ownerId else {return}
         let firestoreService = FirestoreService<Profil>()
         firestoreService.fetchDocument(endpoint: .particularUser(userId: identifier)) { [weak self] result in
             switch result {
@@ -291,26 +293,26 @@ class SpotDetailsViewController: UIViewController {
         }
     
     private func deleteSpotAfterSwitching() {
-        guard let uid = (spot.userData as? CustomData)?.uid else {return}
+        guard let uid = annotation?.uid else {return}
         ProgressHUD.showSuccess("Ce Spot est désormais privé")
         deleteSpotFromPublic(identifier: uid)
     }
     
     private func createNewPubliSpot() {
         
-        let latitude = spot.position.latitude
-        let longitude = spot.position.longitude
-        let publicSpot = true
+        guard let latitude = annotation?.coordinate.latitude ,
+            let longitude = annotation?.coordinate.longitude else {return}
+            let publicSpot = true
         
-        guard let identifier = (spot.userData as? CustomData)?.uid,
-        let name = spot.title,
-        let description = spot.snippet,
-        let imageURL = spot.imageURL,
-        let ownerId = (spot.userData as? CustomData)?.ownerId,
+        guard let identifier = annotation?.uid,
+        let name = annotation?.title,
+        let description = annotation?.subtitle,
+        let imageURL = annotation?.imageURL,
+        let ownerId = annotation?.ownerId,
         
-        let creatorName = (spot.userData as? CustomData)?.creatorName,
-        let creationDate = (spot.userData as? CustomData)?.creationDate,
-        let imageID = (spot.userData as? CustomData)?.imageID else {return}
+        let creatorName = annotation?.creatorName,
+        let creationDate = annotation?.creationDate,
+        let imageID = annotation?.imageID else {return}
         
         
         let marker = Marker(identifier: identifier, name: name, description: description, coordinate: GeoPoint(latitude: latitude, longitude: longitude), imageURL: imageURL, ownerId: ownerId, publicSpot: publicSpot, creatorName: creatorName, creationDate: creationDate, imageID: imageID)
@@ -323,7 +325,7 @@ class SpotDetailsViewController: UIViewController {
     }
     
     private func handleSwitch() {
-        if (spot.userData as? CustomData)?.publicSpot == true {
+        if annotation?.publicSpot == true {
             statusSwitch.isOn = true
             switchLabel.text = "Spot public"
         } else {
@@ -361,8 +363,20 @@ class SpotDetailsViewController: UIViewController {
         pictureTakerName.text = creatorName
     }
     
+    private func getAnnotationDetails() {
+        guard let name = annotation?.title else {return}
+        spotTitle.text = name.capitalized.toNoSmartQuotes()
+        guard let description = annotation?.subtitle, !description.isEmpty else {return}
+        spotDescriptionTextView.text = description
+        guard let date = annotation?.creationDate else {return}
+        spotDate.text = "Spot créé le \(date.asString(style: .long))"
+        guard let creatorName = annotation?.creatorName else {return}
+        pictureTakerName.text = creatorName
+    }
+    
+    
     private func getImage() {
-        guard let urlString = spot.imageURL else {return}
+        guard let urlString = annotation?.imageURL else {return}
         guard let url = URL(string: urlString) else {return}
         KingfisherManager.shared.retrieveImage(with: url, options: nil) { result in
             let image = try? result.get().image
@@ -398,7 +412,7 @@ class SpotDetailsViewController: UIViewController {
     }
     
     private func handleUpdateButton() {
-        if (spot.userData as? CustomData)?.ownerId == ownerId  {
+        if annotation?.ownerId == ownerId  {
                 updateStatusStackView.isHidden = false
                 handleSwitch()
             } else {
@@ -449,12 +463,12 @@ class SpotDetailsViewController: UIViewController {
     
     private func removeImageFromFirebase(spot: Spot) {
         let firebaseStorageManager = FirebaseStorageManager()
-        guard let imageID = (spot.userData as? CustomData)?.imageID else {return}
+        guard let imageID = annotation?.imageID else {return}
         firebaseStorageManager.deleteImageData(serverFileName: imageID)
     }
     
     private func deleteSpot() {
-        guard let uid = (spot.userData as? CustomData)?.uid else {return}
+        guard let uid = annotation?.uid else {return}
         ProgressHUD.showSuccess(NSLocalizedString("Le Spot a bien été effacé", comment: ""))
         deleteSpotFromPrivate(identifier: uid)
         deleteSpotFromPublic(identifier: uid)
@@ -463,18 +477,18 @@ class SpotDetailsViewController: UIViewController {
     }
     
     private func createFavorite() {
-        let coordinate = spot.position
+        guard let coordinate = annotation?.coordinate else {return}
         let longitude = coordinate.longitude
         let latitude = coordinate.latitude
-        guard let name = spot.title,
-            let description = spot.snippet,
-            let imageURL = spot.imageURL,
-            let uid = (spot.userData as? CustomData)?.uid,
-            let imageId = (spot.userData as? CustomData)?.imageID,
-            let creationDate = (spot.userData as? CustomData)?.creationDate,
-            let creatorName = (spot.userData as? CustomData)?.creatorName,
-            let publicSpot = (spot.userData as? CustomData)?.publicSpot,
-            let ownerId = (spot.userData as? CustomData)?.ownerId else {return}
+        guard let name = annotation?.title,
+            let description = annotation?.subtitle,
+            let imageURL = annotation?.imageURL,
+            let uid = annotation?.uid,
+            let imageId = annotation?.imageID,
+            let creationDate = annotation?.creationDate,
+            let creatorName = annotation?.creatorName,
+            let publicSpot = annotation?.publicSpot,
+            let ownerId = annotation?.ownerId else {return}
         let favoriteSpot = Marker(identifier: uid, name: name, description: description, coordinate: GeoPoint(latitude: latitude, longitude: longitude), imageURL: imageURL, ownerId: ownerId, publicSpot: publicSpot, creatorName: creatorName,creationDate: creationDate, imageID: imageId)
         setFavoriteInFirestore(identifier: uid, spot: favoriteSpot)
     }
@@ -493,7 +507,7 @@ class SpotDetailsViewController: UIViewController {
     }
     
     private func removeFavorite() {
-        guard let identifier = (spot.userData as? CustomData)?.uid else {return}
+        guard let identifier = annotation?.uid else {return}
         deleteFavoriteFromFirestore(identifier: identifier)
     }
     
@@ -519,7 +533,7 @@ class SpotDetailsViewController: UIViewController {
     }
     
     private func listenToFavoriteSpot() {
-        guard let uid = (spot.userData as! CustomData).uid else {return}
+        guard let uid = annotation?.uid else {return}
         let firestoreService = FirestoreService<Marker>()
         firestoreService.listenCollection(endpoint: .favoriteCollection) { [weak self] result in
             switch result {
@@ -569,7 +583,7 @@ class SpotDetailsViewController: UIViewController {
     }
     
     @objc func gps() {
-        let coordinate = spot.position
+        guard let coordinate = annotation?.coordinate else {return}
         let placemark = MKPlacemark(coordinate: coordinate)
         let options = [MKLaunchOptionsDirectionsModeKey:
             MKLaunchOptionsDirectionsModeDriving]

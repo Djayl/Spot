@@ -21,7 +21,7 @@ class FavoriteViewController: UIViewController {
     
     // MARK: - Properties
     
-    var markers = [Spot]()
+    var markers = [CustomAnnotation]()
     
     // MARK: - View Life Cycle
     
@@ -72,7 +72,7 @@ class FavoriteViewController: UIViewController {
             case .success(let markers):
                 self?.markers.removeAll()
                 for marker in markers {
-                    self?.displaySpot(marker)
+                    self?.displayAnnotation(marker)
                 }
                 DispatchQueue.main.async {
                     self?.tableView.reloadData()
@@ -84,25 +84,61 @@ class FavoriteViewController: UIViewController {
         }
     }
     
-    private func displaySpot(_ marker: Marker) {
+//    private func displaySpot(_ marker: Marker) {
+//        let name = marker.name
+//        guard let url = URL.init(string: marker.imageURL ) else {return}
+//        let mCustomData = CustomData(creationDate: marker.creationDate, uid: marker.identifier, ownerId: marker.ownerId, publicSpot: marker.publicSpot, creatorName: marker.creatorName, imageID: marker.imageID)
+//        KingfisherManager.shared.retrieveImage(with: url, options: nil) { result in
+//            let image = try? result.get().image
+//            if let image = image {
+//                let spot = Spot()
+//                spot.position = CLLocationCoordinate2D(latitude: marker.coordinate.latitude, longitude: marker.coordinate.longitude)
+//                spot.name = name
+//                spot.title = name
+//                spot.snippet = marker.description
+//                spot.userData = mCustomData
+//                spot.imageURL = marker.imageURL
+//                spot.image = image
+//                self.markers.append(spot)
+//            }
+//        }
+//    }
+    
+    private func displayAnnotation(_ marker: Marker) {
         let name = marker.name
+        let latitude = marker.coordinate.latitude
+        let longitude = marker.coordinate.longitude
+        let identifier = marker.identifier
+        let imageURL = marker.imageURL
+        let summary = marker.description
+        let creationDate = marker.creationDate
+        let creatorName = marker.creatorName
+        let imageId = marker.imageID
+        let publicSpot = marker.publicSpot
+        let ownerId = marker.ownerId
+        
         guard let url = URL.init(string: marker.imageURL ) else {return}
-        let mCustomData = CustomData(creationDate: marker.creationDate, uid: marker.identifier, ownerId: marker.ownerId, publicSpot: marker.publicSpot, creatorName: marker.creatorName, imageID: marker.imageID)
+       
         KingfisherManager.shared.retrieveImage(with: url, options: nil) { result in
             let image = try? result.get().image
             if let image = image {
-                let spot = Spot()
-                spot.position = CLLocationCoordinate2D(latitude: marker.coordinate.latitude, longitude: marker.coordinate.longitude)
-                spot.name = name
-                spot.title = name
-                spot.snippet = marker.description
-                spot.userData = mCustomData
-                spot.imageURL = marker.imageURL
-                spot.image = image
-                self.markers.append(spot)
+                let annotation = CustomAnnotation(coordinate: CLLocationCoordinate2D(latitude: latitude, longitude: longitude))
+               annotation.creationDate = creationDate
+                 annotation.creatorName = creatorName
+                 annotation.imageID = imageId
+                 annotation.ownerId = ownerId
+                 annotation.publicSpot = publicSpot
+                 annotation.uid = identifier
+                 annotation.subtitle = summary
+                 annotation.title = name
+                 annotation.image = image
+                annotation.imageURL = imageURL
+                self.markers.append(annotation)
             }
         }
     }
+    
+    
     
     private func listenFavoriteCollection() {
         let firestoreService = FirestoreService<Marker>()
@@ -111,7 +147,7 @@ class FavoriteViewController: UIViewController {
             case .success(let markers):
                 self?.markers.removeAll()
                 for marker in markers {
-                    self?.displaySpot(marker)
+                    self?.displayAnnotation(marker)
                 }
                 DispatchQueue.main.async {
                     self?.tableView.reloadData()
@@ -123,8 +159,8 @@ class FavoriteViewController: UIViewController {
         }
     }
     
-    private func removeFav(spot: Spot) {
-        guard let spotUid = (spot.userData as! CustomData).uid else {return}
+    private func removeFav(annotation: CustomAnnotation) {
+        guard let spotUid = annotation.uid else {return}
         deleteFavoriteFromFirestore(identifier: spotUid)
     }
     
@@ -145,9 +181,9 @@ class FavoriteViewController: UIViewController {
         }
     }
     
-    @objc private func didTapSpot(spot: Spot) {
+    @objc private func didTapSpot(annotation: CustomAnnotation) {
         let secondViewController = self.storyboard?.instantiateViewController(withIdentifier: "SpotDetailsVC") as! SpotDetailsViewController
-        secondViewController.spot = spot
+        secondViewController.annotation = annotation
         self.navigationController?.pushViewController(secondViewController, animated: true)
         
     }
@@ -168,7 +204,7 @@ extension FavoriteViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if let cell = tableView.dequeueReusableCell(withIdentifier: "SpotTableViewCell") as? SpotTableViewCell {
-            cell.configureCell(spot: markers[indexPath.row])
+            cell.configureCell(annotation: markers[indexPath.row])
             //            cell.contentView.layer.cornerRadius = 10
             cell.backgroundColor = UIColor.white
             return cell
@@ -183,7 +219,7 @@ extension FavoriteViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle,
                    forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            removeFav(spot: markers[indexPath.row])
+            removeFav(annotation: markers[indexPath.row])
             markers.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .automatic)
         }
@@ -204,7 +240,7 @@ extension FavoriteViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        didTapSpot(spot: markers[indexPath.row])
+        didTapSpot(annotation: markers[indexPath.row])
     }
     
 }

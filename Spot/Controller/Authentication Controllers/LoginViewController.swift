@@ -46,7 +46,7 @@ final class LoginViewController: UIViewController {
         let authService = AuthService()
         authService.resetPassword(email: email) { [weak self] authDataResult, error in
             if error == nil && authDataResult != nil {
-                self?.showSimpleAlert()
+                self?.showSimpleAlert(message: "Un mail vient de vous être transmis")
                 print("password send")
             } else {
                 print("thers is an error")
