@@ -30,6 +30,7 @@ final class SpotCreationViewController: UIViewController, UITextFieldDelegate, U
     // MARK: - Properties
     
     var location: CLLocationCoordinate2D!
+    var newLocation: CLLocation!
     private var controller: MapViewController?
     weak var delegate: AddSpotDelegate!
     let customMarkerWidth: Int = 50
@@ -46,6 +47,7 @@ final class SpotCreationViewController: UIViewController, UITextFieldDelegate, U
     
     override func viewDidLoad() {
         super.viewDidLoad()
+//        print("This is" + "\(newLocation as Any)")
         self.navigationController?.navigationBar.titleTextAttributes =
             [NSAttributedString.Key.foregroundColor: UIColor.black,
              NSAttributedString.Key.font: UIFont(name: "Quicksand-Bold", size: 21)!]
@@ -162,13 +164,19 @@ final class SpotCreationViewController: UIViewController, UITextFieldDelegate, U
     }
     
     private func saveNewSpot() {
-        let geocoder = GMSGeocoder()
-        geocoder.reverseGeocodeCoordinate(location) { (placemarks, error) in
-            if error != nil {
-                print(error!)
-            }
-            if let coor = placemarks?.firstResult()?.coordinate {
-                guard let image = self.myImage else {
+//        let geocoder = GMSGeocoder()
+//        geocoder.reverseGeocodeCoordinate(location) { (placemarks, error) in
+//            if error != nil {
+//                print(error!)
+//            }
+//            if let coor = placemarks?.firstResult()?.coordinate {
+        let geocoder = CLGeocoder()
+                geocoder.reverseGeocodeLocation(newLocation) { (placemarks, error) in
+                    if error != nil {
+                        print(error!)
+                    }
+                    if let coor = placemarks?.first?.location?.coordinate {
+                        guard self.myImage != nil else {
                     self.creationButton.shake()
                     self.presentAlert(with: "Un Spot doit avoir une image")
                     return
@@ -185,12 +193,12 @@ final class SpotCreationViewController: UIViewController, UITextFieldDelegate, U
                 }
                 let creatorName = self.userName
                 let identifier = UUID().uuidString
-                let spot = Spot(position: coor)
-                let customMarker = CustomMarkerView(frame: CGRect(x: 0, y: 0, width: self.customMarkerWidth, height: self.customMarkerHeight), image: image, borderColor: UIColor.darkGray)
-                spot.iconView = customMarker
-                spot.title = name
-                spot.snippet = description
-                spot.coordinate = coor
+//                let spot = Spot(position: coor)
+//                let customMarker = CustomMarkerView(frame: CGRect(x: 0, y: 0, width: self.customMarkerWidth, height: self.customMarkerHeight), image: image, borderColor: UIColor.darkGray)
+//                spot.iconView = customMarker
+//                spot.title = name
+//                spot.snippet = description
+//                spot.coordinate = coor
                 self.getImage { (imageUrl) in
                     ProgressHUD.show()
                     let privateSpot = Marker(identifier: identifier, name: name, description: description, coordinate: GeoPoint(latitude: coor.latitude, longitude: coor.longitude), imageURL: imageUrl, ownerId: self.ownerId,publicSpot: false , creatorName: creatorName, creationDate: Date(), imageID: self.imageId)

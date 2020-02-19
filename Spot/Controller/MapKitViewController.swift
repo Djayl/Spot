@@ -13,42 +13,62 @@ import Kingfisher
 import FirebaseFirestore
 
 @available(iOS 13.0, *)
-class MapKitViewController: UIViewController {
+class MapKitViewController: UIViewController, UISearchBarDelegate {
 
     
     @IBOutlet weak var mapView: MKMapView!
+    var resultSearchController:UISearchController? = nil
+    var selectedPin: MKPlacemark? = nil
+    var myAnnotation = CustomAnnotation(coordinate: CLLocationCoordinate2D(latitude: 0.00, longitude: 0.00))
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        mapView.delegate = self
         
+        setUpTapBarController()
+        setUpNavigationController()
+        let locationSearchTable = storyboard!.instantiateViewController(withIdentifier: "LocationSearchTable") as! LocationSearchTable
+        resultSearchController = UISearchController(searchResultsController: locationSearchTable)
+        resultSearchController?.searchResultsUpdater = locationSearchTable
+        
+        let searchBar = resultSearchController!.searchBar
+        searchBar.set(textColor: .black)
+        searchBar.sizeToFit()
+        searchBar.placeholder = "Rechercher un lieu"
+        navigationItem.titleView = resultSearchController?.searchBar
+        locationSearchTable.mapView = mapView
+        locationSearchTable.handleMapSearchDelegate = self
+        resultSearchController?.hidesNavigationBarDuringPresentation = false
+//        resultSearchController?.dimsBackgroundDuringPresentation = true
+        definesPresentationContext = true
+    
+        mapView.delegate = self
+        let longTapGesture = UILongPressGestureRecognizer(target: self, action: #selector(longTap))
+        mapView.addGestureRecognizer(longTapGesture)
         mapView.register(MKMarkerAnnotationView.self, forAnnotationViewWithReuseIdentifier: "AnnotationIdentifier")
         fetchPublicSpots()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+           super.viewWillAppear(animated)
+           tabBarController?.tabBar.isHidden = false
+           NotificationCenter.default.addObserver(self, selector: #selector(fetchSpots), name: Notification.Name("showSpots"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(fetchMySpot), name: Notification.Name("showMySpot"), object: nil)
     }
     
     private func displayAllOffices(_ marker: Marker) {
         let latitude = marker.coordinate.latitude
         let longitude = marker.coordinate.longitude
-        let identifier = marker.identifier
-        let imageURL = marker.imageURL
-        let name = marker.name
-        let summary = marker.description
-        let creationDate = marker.creationDate
-        let creatorName = marker.creatorName
-        let imageId = marker.imageID
-        let publicSpot = marker.publicSpot
-        let ownerId = marker.ownerId
         let annotation = CustomAnnotation(coordinate: CLLocationCoordinate2D(latitude: latitude, longitude: longitude))
-        annotation.creationDate = creationDate
-        annotation.creatorName = creatorName
-        annotation.imageID = imageId
-        annotation.ownerId = ownerId
-        annotation.publicSpot = publicSpot
+        annotation.creationDate = marker.creationDate
+        annotation.creatorName = marker.creatorName
+        annotation.imageID = marker.imageID
+        annotation.ownerId = marker.ownerId
+        annotation.publicSpot = marker.publicSpot
        
-        annotation.uid = identifier
-        annotation.imageURL = imageURL
-        annotation.subtitle = summary
-        annotation.title = name
+        annotation.uid = marker.identifier
+        annotation.imageURL = marker.imageURL
+        annotation.subtitle = marker.description
+        annotation.title = marker.name
         mapView.addAnnotation(annotation)
     }
     
@@ -67,11 +87,76 @@ class MapKitViewController: UIViewController {
         }
     }
     
+    private func fetchPrivateSpots() {
+        let firestoreService = FirestoreService<Marker>()
+        firestoreService.fetchCollection(endpoint: .spot) { [weak self] result in
+            switch result {
+            case .success(let markers):
+                for marker in markers {
+                    self?.displayAllOffices(marker)
+                }
+            case .failure(let error):
+                print(error.localizedDescription)
+                self?.presentAlert(with: "Erreur serveur")
+            }
+        }
+    }
+    
     @objc private func didTapSpot(annotation: CustomAnnotation) {
         let secondViewController = self.storyboard?.instantiateViewController(withIdentifier: "SpotDetailsVC") as! SpotDetailsViewController
         secondViewController.annotation = annotation
         self.navigationController?.pushViewController(secondViewController, animated: true)
     }
+    
+    @objc func longTap(sender: UIGestureRecognizer){
+        if sender.state == .began {
+            let locationInView = sender.location(in: mapView)
+            let locationOnMap = mapView.convert(locationInView, toCoordinateFrom: mapView)
+            let location = CLLocation(latitude: locationOnMap.latitude, longitude: locationOnMap.longitude)
+            let secondViewController = self.storyboard?.instantiateViewController(withIdentifier: "SpotCreationVC") as! SpotCreationViewController
+            secondViewController.newLocation = location
+            self.navigationController?.pushViewController(secondViewController, animated: true)
+        }
+    }
+    
+    @objc func fetchSpots (notification: NSNotification){
+        removeAllAnnotations()
+        fetchPublicSpots()
+    }
+    
+    @objc func fetchMySpot (notification: NSNotification){
+           removeAllAnnotations()
+           fetchPrivateSpots()
+       }
+    
+    private func removeAllAnnotations() {
+           for annotation in self.mapView.annotations {
+               self.mapView.removeAnnotation(annotation)
+           }
+       }
+    
+    fileprivate func setUpNavigationController() {
+        navigationController?.navigationBar.barTintColor = UIColor.white.withAlphaComponent(0.9)
+        
+    }
+    
+    fileprivate func setUpTapBarController() {
+     
+        tabBarController?.tabBar.barTintColor = UIColor.white.withAlphaComponent(0.9)
+        
+    }
+    
+    fileprivate func setupNavigationBar() {
+        let logoContainer = UIView(frame: CGRect(x: 0, y: 0, width: 270, height: 30))
+        let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 270, height: 30))
+        imageView.contentMode = .scaleAspectFit
+        let image = UIImage(named: "Spoteoshadow")
+        imageView.image = image
+        logoContainer.addSubview(imageView)
+        navigationItem.titleView = logoContainer
+    }
+    
+    
 }
 
 @available(iOS 13.0, *)
@@ -101,49 +186,104 @@ extension MapKitViewController: MKMapViewDelegate {
         // after we manage to create or dequeue the av, configure it
         if let annotation = annotation as? CustomAnnotation {
             if let annotationView = annotationView, annotation.isKind(of: CustomAnnotation.self) {
-                annotationView.canShowCallout = true
-                annotationView.rightCalloutAccessoryView = UIButton(type: .detailDisclosure)
-                annotationView.frame = CGRect(x: 0, y: 0, width: 50, height: 50)
-                
-                let customView = annotationView.subviews.first as! MyAnnotationView
-                let url = URL(string: annotation.imageURL!)
-                customView.imageView.kf.setImage(with: url)
-                customView.imageView.clipsToBounds = true
-                customView.layer.cornerRadius = 5
-                customView.backgroundColor = .white
-                customView.frame = annotationView.frame
-                customView.clipsToBounds = true
-                customView.layer.borderColor = Colors.blueBalloon.cgColor
-                customView.layer.borderWidth = 2
-               
-                
+                setupAnnotationView(annotationView: annotationView, annotation: annotation)
             }
+        }
+        
+        if myAnnotation == annotation as? CustomAnnotation {
+            if let annotationView = annotationView, annotation.isKind(of: CustomAnnotation.self) {
+                setupAddressAnnotation(annotationView: annotationView, annotation: myAnnotation)
+            }
+        
         }
         return annotationView
     }
 }
+    
+    
+    private func setupAnnotationView(annotationView: MKAnnotationView, annotation: CustomAnnotation) {
+        annotationView.canShowCallout = true
+        annotationView.rightCalloutAccessoryView = UIButton(type: .detailDisclosure)
+        annotationView.frame = CGRect(x: 0, y: 0, width: 50, height: 50)
+        
+        let customView = annotationView.subviews.first as! MyAnnotationView
+        guard let imageUrl = annotation.imageURL else {return}
+        let url = URL(string: imageUrl)
+        customView.imageView.kf.setImage(with: url)
+        customView.imageView.clipsToBounds = true
+        customView.layer.cornerRadius = 5
+        customView.backgroundColor = .white
+        customView.frame = annotationView.frame
+        customView.clipsToBounds = true
+        customView.layer.borderColor = Colors.blueBalloon.cgColor
+        customView.layer.borderWidth = 2
+    }
+    
+    private func setupAddressAnnotation(annotationView: MKAnnotationView, annotation: CustomAnnotation) {
+        annotationView.canShowCallout = true
+        annotationView.rightCalloutAccessoryView = UIButton(type: .detailDisclosure)
+        annotationView.frame = CGRect(x: 0, y: 0, width: 50, height: 50)
+        
+        let customView = annotationView.subviews.first as! MyAnnotationView
+        customView.imageView = nil
+//        customView.imageView.clipsToBounds = true
+        customView.layer.cornerRadius = 5
+        customView.backgroundColor = .white
+        customView.frame = annotationView.frame
+        customView.clipsToBounds = true
+        customView.layer.borderColor = Colors.coolYellow.cgColor
+        customView.layer.borderWidth = 2
+    }
+    
     func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
         guard let annotation = view.annotation as? CustomAnnotation else { return }
-        didTapSpot(annotation: annotation)
-//        guard let identifier = annotation.uid else {return}
-//        guard let name = annotation.title else {return}
-//        guard let description = annotation.subtitle else {return}
-//        guard let imageURL = annotation.imageURL else {return}
-//        guard let ownerId = annotation.ownerId else {return}
-//        guard let publicSpot = annotation.publicSpot else {return}
-//        guard let creatorName = annotation.creatorName else {return}
-//        guard let creationDate = annotation.creationDate else {return}
-//        guard let imageID = annotation.imageID else {return}
-//
-//        let latitude = Double(annotation.coordinate.latitude)
-//        let longitude = Double(annotation.coordinate.longitude)
-//
-//
-//        let marker = Marker(identifier: identifier, name: name, description: description, coordinate: GeoPoint(latitude: latitude, longitude: longitude), imageURL: imageURL, ownerId: ownerId, publicSpot: publicSpot, creatorName: creatorName, creationDate: creationDate, imageID: imageID)
-//
-//        let secondViewController = self.storyboard?.instantiateViewController(withIdentifier: "SpotDetailsVC") as! SpotDetailsViewController
-//        secondViewController.annotation = marker
-//        print("did tap disclosure")
-//        self.navigationController?.pushViewController(secondViewController, animated: true)
+        if annotation != myAnnotation {
+            didTapSpot(annotation: annotation)
+        } else {
+            let secondViewController = self.storyboard?.instantiateViewController(withIdentifier: "SpotCreationVC") as! SpotCreationViewController
+            let latitude = annotation.coordinate.latitude
+            let longitude = annotation.coordinate.longitude
+            let location = CLLocation(latitude: latitude, longitude: longitude)
+            secondViewController.newLocation = location
+            self.navigationController?.pushViewController(secondViewController, animated: true)
+        }
     }
+}
+
+protocol HandleMapSearch {
+    func passCoordinate(placemark: MKPlacemark)
+}
+
+@available(iOS 13.0, *)
+extension MapKitViewController: HandleMapSearch {
+    func passCoordinate(placemark: MKPlacemark) {
+        selectedPin = placemark
+//        let latitude = placemark.coordinate.latitude
+//        let longitude = placemark.coordinate.longitude
+        
+        let annotation = CustomAnnotation(coordinate: placemark.coordinate)
+        
+        myAnnotation = annotation
+        print(myAnnotation.coordinate as Any)
+//        annotation.coordinate = placemark.coordinate
+
+        annotation.title = "Je créé mon Spot"
+        mapView.addAnnotation(annotation)
+
+
+        let span = MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05)
+        let region = MKCoordinateRegion(center: placemark.coordinate, span: span)
+
+        mapView.setRegion(region, animated: true)
+        
+ 
+//        let secondViewController = self.storyboard?.instantiateViewController(withIdentifier: "SpotCreationVC") as! SpotCreationViewController
+//        let latitude = placemark.coordinate.latitude
+//        let longitude = placemark.coordinate.longitude
+//        let location = CLLocation(latitude: latitude, longitude: longitude)
+//        secondViewController.newLocation = location
+//        self.navigationController?.pushViewController(secondViewController, animated: true)
+        
+    }
+
 }

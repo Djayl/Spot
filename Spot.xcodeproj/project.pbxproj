@@ -37,6 +37,7 @@
 		F0548EC923B974760083E354 /* CopyableLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0548EC823B974760083E354 /* CopyableLabel.swift */; };
 		F055FB5F239FCC3B0005EEE5 /* CreateProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F055FB5E239FCC3B0005EEE5 /* CreateProfileViewController.swift */; };
 		F05751F8236A20230051F777 /* AuthenticationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F05751F7236A20230051F777 /* AuthenticationService.swift */; };
+		F058B73E23FC2F680028DF26 /* LocationSearchTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = F058B73D23FC2F680028DF26 /* LocationSearchTable.swift */; };
 		F05A0FD923F80A27004C148E /* MapKitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F05A0FD823F80A27004C148E /* MapKitViewController.swift */; };
 		F05A0FDB23F80BEE004C148E /* CustomAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = F05A0FDA23F80BEE004C148E /* CustomAnnotation.swift */; };
 		F05A0FDD23F80E91004C148E /* MyAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F05A0FDC23F80E91004C148E /* MyAnnotationView.swift */; };
@@ -119,6 +120,7 @@
 		F0548EC823B974760083E354 /* CopyableLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CopyableLabel.swift; sourceTree = "<group>"; };
 		F055FB5E239FCC3B0005EEE5 /* CreateProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateProfileViewController.swift; sourceTree = "<group>"; };
 		F05751F7236A20230051F777 /* AuthenticationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationService.swift; sourceTree = "<group>"; };
+		F058B73D23FC2F680028DF26 /* LocationSearchTable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationSearchTable.swift; sourceTree = "<group>"; };
 		F05A0FD823F80A27004C148E /* MapKitViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapKitViewController.swift; sourceTree = "<group>"; };
 		F05A0FDA23F80BEE004C148E /* CustomAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAnnotation.swift; sourceTree = "<group>"; };
 		F05A0FDC23F80E91004C148E /* MyAnnotationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyAnnotationView.swift; sourceTree = "<group>"; };
@@ -202,6 +204,7 @@
 				F0F9D6AF23D337620014E060 /* SpotDetailsViewController.swift */,
 				F0F9D6B123D349EF0014E060 /* SpotCreationViewController.swift */,
 				F05A0FD823F80A27004C148E /* MapKitViewController.swift */,
+				F058B73D23FC2F680028DF26 /* LocationSearchTable.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -584,6 +587,7 @@
 				F0D52809232786770023B226 /* AppDelegate.swift in Sources */,
 				F04EBAA0238445EA009B0074 /* UITextField.swift in Sources */,
 				F0CE143B236C42E60025446B /* FavoriteViewController.swift in Sources */,
+				F058B73E23FC2F680028DF26 /* LocationSearchTable.swift in Sources */,
 				F0695A1D2372D5CB00F399B7 /* FirestoreService.swift in Sources */,
 				F04E3CFA235DB2F70048D18A /* DetailsViewController.swift in Sources */,
 				F0695A232372E0D200F399B7 /* Marker.swift in Sources */,

@@ -50,6 +50,7 @@ class SpotDetailsViewController: UIViewController {
         super.viewDidLoad()
 //        fetchProfilInformation()
         setupImageView()
+        getLocation()
         reverseGeocodeCoordinate(spot.position)
         spotCoordinate.isUserInteractionEnabled = true
         textViewDidChange(spotDescriptionTextView)
@@ -395,6 +396,39 @@ class SpotDetailsViewController: UIViewController {
             self.spotCoordinate.text = lines.joined(separator: "\n")
         }
     }
+    
+    private func getLocation() {
+         
+          let geoCoder = CLGeocoder()
+        guard let coordinate = annotation?.coordinate else {return}
+        let coor = CLLocation(latitude: coordinate.latitude, longitude: coordinate.longitude)
+          geoCoder.reverseGeocodeLocation(coor) { [weak self] (placemarks, error) in
+              guard let self = self else { return }
+              if let _ = error {
+                  print("geocoder not dispo")
+                  return
+              }
+              guard let placemark = placemarks?.first else {
+                  return
+              }
+//              let lon = String(format: "%.04f", (placemark.location?.coordinate.longitude ?? 0.0))
+//              let lat = String(format: "%.04f", (placemark.location?.coordinate.latitude ?? 0.0))
+              let country = placemark.country
+              let locality = placemark.locality
+
+//              self.spotCoordinate.text = "\(lat) \(lon)"
+              let streetNumber = placemark.subThoroughfare
+              let streetName = placemark.thoroughfare 
+
+              DispatchQueue.main.async {
+                let address = [streetNumber, streetName, locality, country].compactMap { $0 }
+                .joined(separator: " ")
+                self.spotCoordinate.text = address
+//                  self.spotCoordinate.text = "\(streetNumber) \(streetName) \(locality) \(country)"
+                    
+              } // dispatch
+          }// geocoder
+      }
     
     
     private func setFavoriteInFirestore(identifier: String, spot: Marker) {
