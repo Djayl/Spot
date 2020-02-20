@@ -11,34 +11,46 @@ import MapKit
 import CoreLocation
 import Kingfisher
 import FirebaseFirestore
+import ProgressHUD
 
 @available(iOS 13.0, *)
 class MapKitViewController: UIViewController, UISearchBarDelegate {
 
     
     @IBOutlet weak var mapView: MKMapView!
-    var resultSearchController:UISearchController? = nil
+    @IBOutlet weak var searchBarView: UIView!
+    
+    @IBOutlet weak var chooseMapTypeButton: UIButton!
+    @IBOutlet weak var refreshView: UIView!
+    @IBOutlet weak var chooseView: UIView!
+    @IBOutlet weak var chooseMapTypeView: UIView!
+    
+    
+    var resultSearchController: UISearchController? = nil
     var selectedPin: MKPlacemark? = nil
     var myAnnotation = CustomAnnotation(coordinate: CLLocationCoordinate2D(latitude: 0.00, longitude: 0.00))
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        checkIfUserLoggedIn()
+        setupViews()
+        setupNavigationBar()
         setUpTapBarController()
         setUpNavigationController()
         let locationSearchTable = storyboard!.instantiateViewController(withIdentifier: "LocationSearchTable") as! LocationSearchTable
         resultSearchController = UISearchController(searchResultsController: locationSearchTable)
         resultSearchController?.searchResultsUpdater = locationSearchTable
-        
+
         let searchBar = resultSearchController!.searchBar
-        searchBar.set(textColor: .black)
-        searchBar.sizeToFit()
-        searchBar.placeholder = "Rechercher un lieu"
-        navigationItem.titleView = resultSearchController?.searchBar
+        searchBar.set(textColor: .systemBlue)
+//        searchBar.sizeToFit()
+        searchBar.placeholder = "Créer un Spot avec une adresse"
+        searchBarView.addSubview(searchBar)
+        
         locationSearchTable.mapView = mapView
         locationSearchTable.handleMapSearchDelegate = self
         resultSearchController?.hidesNavigationBarDuringPresentation = false
-//        resultSearchController?.dimsBackgroundDuringPresentation = true
+        resultSearchController?.obscuresBackgroundDuringPresentation = true
         definesPresentationContext = true
     
         mapView.delegate = self
@@ -50,10 +62,100 @@ class MapKitViewController: UIViewController, UISearchBarDelegate {
     
     override func viewWillAppear(_ animated: Bool) {
            super.viewWillAppear(animated)
-           tabBarController?.tabBar.isHidden = false
+       
+            tabBarController?.tabBar.isHidden = false
            NotificationCenter.default.addObserver(self, selector: #selector(fetchSpots), name: Notification.Name("showSpots"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(fetchMySpot), name: Notification.Name("showMySpot"), object: nil)
     }
+    
+    @IBAction func didTapMapType(_ sender: Any) {
+        chooseMapType(controller: MapKitViewController())
+    }
+    
+    @IBAction func didTapRefresh(_ sender: Any) {
+        ProgressHUD.showSuccess(NSLocalizedString("Spots publics à jour", comment: ""))
+        self.mapView.removeAnnotations(mapView.annotations)
+        fetchPublicSpots()
+    }
+    
+    @IBAction func didTapChooseData(_ sender: Any) {
+        chooseData(controller: MapKitViewController())
+    }
+    
+    @IBAction func goToProfile() {
+           let secondViewController = self.storyboard?.instantiateViewController(withIdentifier: "profileVC") as! ProfileViewController
+           self.navigationController?.pushViewController(secondViewController, animated: true)
+           
+       }
+
+       @IBAction func goToExplanation(_ sender: Any) {
+           let secondViewController = self.storyboard?.instantiateViewController(withIdentifier: "ExplanationVC") as! ExplanationViewController
+           self.navigationController?.pushViewController(secondViewController, animated: true)
+       }
+    
+    private func checkIfUserLoggedIn() {
+           DispatchQueue.main.async {
+               if AuthService.getCurrentUser() == nil {
+                   let vc = self.storyboard?.instantiateViewController(withIdentifier: "loginVC") as! LoginViewController
+                   let nc = UINavigationController(rootViewController: vc)
+                   nc.modalPresentationStyle = .fullScreen
+                   self.present(nc, animated: true, completion: nil)
+               }
+           }
+       }
+    
+    fileprivate func setupViews() {
+        refreshView.layer.cornerRadius = 10
+        chooseView.layer.cornerRadius = 10
+        chooseMapTypeView.layer.cornerRadius = 10
+    }
+    
+    func chooseMapType(controller: UIViewController) {
+        let alert = UIAlertController(title: "Modifier le type de carte", message: "Sélectionnez une option", preferredStyle: .actionSheet)
+        
+        alert.addColorInTitleAndMessage(color: UIColor.systemBlue, titleFontSize: 20, messageFontSize: 15)
+        alert.addAction(UIAlertAction(title: "Basique", style: .default, handler: { (_) in
+            self.mapView.mapType = .standard
+        }))
+        alert.addAction(UIAlertAction(title: "Satellite", style: .default, handler: { (_) in
+            self.mapView.mapType = .satellite
+        }))
+        alert.addAction(UIAlertAction(title: "Hybride", style: .default, handler: { (_) in
+            self.mapView.mapType = .hybrid
+        }))
+        alert.addAction(UIAlertAction(title: "Annuler", style: .cancel, handler: { (_) in
+            print("User click Dismiss button")
+        }))
+        self.present(alert, animated: true, completion: {
+        })
+    }
+    
+    func chooseData(controller: UIViewController) {
+            let alert = UIAlertController(title: "Choisissez ce que vous voulez voir", message: "Sélectionnez une option", preferredStyle: .actionSheet)
+            alert.addColorInTitleAndMessage(color: UIColor.systemBlue, titleFontSize: 20, messageFontSize: 15)
+            alert.addAction(UIAlertAction(title: "Les spots publics", style: .default, handler: { (_) in
+                self.mapView.removeAnnotations(self.mapView.annotations)
+                ProgressHUD.showSuccess(NSLocalizedString("Spots publics à jour", comment: ""))
+                self.fetchPublicSpots()
+                //            self.listenToPublicSpots()
+            }))
+            alert.addAction(UIAlertAction(title: "Ma collection privée", style: .default, handler: { (_) in
+                self.mapView.removeAnnotations(self.mapView.annotations)
+                ProgressHUD.showSuccess(NSLocalizedString("Spots privés à jour", comment: ""))
+                self.fetchPrivateSpots()
+    //                        self.listenToPrivateSpots()
+            }))
+            alert.addAction(UIAlertAction(title: "Mes favoris", style: .default, handler: { (_) in
+                self.mapView.removeAnnotations(self.mapView.annotations)
+                ProgressHUD.showSuccess(NSLocalizedString("Spots favoris à jour", comment: ""))
+                self.fetchFavoriteSpots()
+            }))
+            alert.addAction(UIAlertAction(title: "Annuler", style: .cancel, handler: { (_) in
+                print("User click Dismiss button")
+            }))
+            self.present(alert, animated: true, completion: {
+            })
+        }
     
     private func displayAllOffices(_ marker: Marker) {
         let latitude = marker.coordinate.latitude
@@ -90,6 +192,21 @@ class MapKitViewController: UIViewController, UISearchBarDelegate {
     private func fetchPrivateSpots() {
         let firestoreService = FirestoreService<Marker>()
         firestoreService.fetchCollection(endpoint: .spot) { [weak self] result in
+            switch result {
+            case .success(let markers):
+                for marker in markers {
+                    self?.displayAllOffices(marker)
+                }
+            case .failure(let error):
+                print(error.localizedDescription)
+                self?.presentAlert(with: "Erreur serveur")
+            }
+        }
+    }
+    
+    private func fetchFavoriteSpots() {
+        let firestoreService = FirestoreService<Marker>()
+        firestoreService.fetchCollection(endpoint: .favoriteCollection) { [weak self] result in
             switch result {
             case .success(let markers):
                 for marker in markers {
@@ -190,11 +307,12 @@ extension MapKitViewController: MKMapViewDelegate {
             }
         }
         
-        if myAnnotation == annotation as? CustomAnnotation {
+        if let annotation = annotation as? CustomAnnotation {
+            if annotation == myAnnotation {
             if let annotationView = annotationView, annotation.isKind(of: CustomAnnotation.self) {
                 setupAddressAnnotation(annotationView: annotationView, annotation: myAnnotation)
             }
-        
+            }
         }
         return annotationView
     }
@@ -207,9 +325,17 @@ extension MapKitViewController: MKMapViewDelegate {
         annotationView.frame = CGRect(x: 0, y: 0, width: 50, height: 50)
         
         let customView = annotationView.subviews.first as! MyAnnotationView
+        
+//        KingfisherManager.shared.retrieveImage(with: url, options: nil) { result in
+//        let image = try? result.get().image
+//        if let image = image {
+//            }
+//        }
         guard let imageUrl = annotation.imageURL else {return}
         let url = URL(string: imageUrl)
-        customView.imageView.kf.setImage(with: url)
+        DispatchQueue.main.async {
+            customView.imageView.kf.setImage(with: url)
+        }
         customView.imageView.clipsToBounds = true
         customView.layer.cornerRadius = 5
         customView.backgroundColor = .white
@@ -225,8 +351,7 @@ extension MapKitViewController: MKMapViewDelegate {
         annotationView.frame = CGRect(x: 0, y: 0, width: 50, height: 50)
         
         let customView = annotationView.subviews.first as! MyAnnotationView
-        customView.imageView = nil
-//        customView.imageView.clipsToBounds = true
+        customView.imageView.image = UIImage(named: "Spot")
         customView.layer.cornerRadius = 5
         customView.backgroundColor = .white
         customView.frame = annotationView.frame
@@ -258,18 +383,15 @@ protocol HandleMapSearch {
 extension MapKitViewController: HandleMapSearch {
     func passCoordinate(placemark: MKPlacemark) {
         selectedPin = placemark
-//        let latitude = placemark.coordinate.latitude
-//        let longitude = placemark.coordinate.longitude
-        
+
+        mapView.removeAnnotations(mapView.annotations)
         let annotation = CustomAnnotation(coordinate: placemark.coordinate)
         
         myAnnotation = annotation
         print(myAnnotation.coordinate as Any)
-//        annotation.coordinate = placemark.coordinate
 
         annotation.title = "Je créé mon Spot"
         mapView.addAnnotation(annotation)
-
 
         let span = MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05)
         let region = MKCoordinateRegion(center: placemark.coordinate, span: span)

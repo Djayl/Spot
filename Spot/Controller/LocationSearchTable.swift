@@ -14,6 +14,14 @@ class LocationSearchTable : UITableViewController {
     var mapView: MKMapView? = nil
     var handleMapSearchDelegate: HandleMapSearch? = nil
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        tableView.layoutMargins = UIEdgeInsets.zero
+        tableView.separatorInset = UIEdgeInsets.zero
+        tableView.tableFooterView = UIView()
+    }
+   
+    
     func parseAddress(selectedItem:MKPlacemark) -> String {
         // put a space between "4" and "Melrose Place"
         let firstSpace = (selectedItem.subThoroughfare != nil && selectedItem.thoroughfare != nil) ? " " : ""
@@ -53,6 +61,7 @@ extension LocationSearchTable : UISearchResultsUpdating {
                 return
             }
             self.matchingItems = response.mapItems
+            
             self.tableView.reloadData()
         }
     }
@@ -71,6 +80,7 @@ extension LocationSearchTable {
         cell.textLabel?.text = selectedItem.name
         let address = "\(selectedItem.thoroughfare ?? ""), \(selectedItem.locality ?? ""), \(selectedItem.subLocality ?? ""), \(selectedItem.administrativeArea ?? ""), \(selectedItem.postalCode ?? ""), \(selectedItem.country ?? "")"
         cell.detailTextLabel?.text = address
+        cell.layoutMargins = UIEdgeInsets.zero
         return cell
     }
     
@@ -79,6 +89,11 @@ extension LocationSearchTable {
         handleMapSearchDelegate?.passCoordinate(placemark: selectedItem)
         
         dismiss(animated: true, completion: nil)
+    }
+    
+      override func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+
+        tableView.contentInset = UIEdgeInsets(top: 65, left: 0, bottom: 0, right: 0)
     }
 }
 //    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
