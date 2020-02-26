@@ -67,7 +67,7 @@ class MapKitViewController: UIViewController, UISearchBarDelegate {
            NotificationCenter.default.addObserver(self, selector: #selector(fetchSpots), name: Notification.Name("showSpots"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(fetchMySpot), name: Notification.Name("showMySpot"), object: nil)
     }
-    
+
     @IBAction func didTapMapType(_ sender: Any) {
         chooseMapType(controller: MapKitViewController())
     }
@@ -325,12 +325,7 @@ extension MapKitViewController: MKMapViewDelegate {
         annotationView.frame = CGRect(x: 0, y: 0, width: 50, height: 50)
         
         let customView = annotationView.subviews.first as! MyAnnotationView
-        
-//        KingfisherManager.shared.retrieveImage(with: url, options: nil) { result in
-//        let image = try? result.get().image
-//        if let image = image {
-//            }
-//        }
+
         guard let imageUrl = annotation.imageURL else {return}
         let url = URL(string: imageUrl)
         DispatchQueue.main.async {

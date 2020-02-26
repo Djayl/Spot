@@ -1739,6 +1739,21 @@ Tx7DuSBzZSB0cm91dmUgbGUgU3BvdD8gA
             </objects>
             <point key="canvasLocation" x="4650" y="1467.2535211267607"/>
         </scene>
+        <!--Chat View Controller-->
+        <scene sceneID="zWO-rD-vGk">
+            <objects>
+                <viewController storyboardIdentifier="ChatVC" id="fmB-99-sqL" customClass="ChatViewController" customModule="Spoteo" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="9wb-ek-rGf">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <viewLayoutGuide key="safeArea" id="rqQ-fH-PWN"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="KrN-fF-Gy3" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="5066" y="-409"/>
+        </scene>
     </scenes>
     <resources>
         <image name="Favoris" width="21" height="21"/>
