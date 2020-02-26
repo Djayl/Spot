@@ -36,5 +36,15 @@ final public class AuthService {
     func resetPassword(email: String, completion: @escaping AuthDataResultCallback) {
         Auth.auth().sendPasswordReset(withEmail: email)
     }
+    
+    func resetMyPassword(email: String, onSucess: @escaping () -> Void, onError: @escaping (_ errorMessage: String) -> Void ) {
+        Auth.auth().sendPasswordReset(withEmail: email) { (error) in
+            if error == nil {
+                onSucess()
+            } else {
+                onError(error!.localizedDescription)
+            }
+        }
+    }
   
 }

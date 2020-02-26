@@ -10,9 +10,14 @@ import UIKit
 import MapKit
 
 class LocationSearchTable : UITableViewController {
+    
+    // MARK: - Properties
+    
     var matchingItems:[MKMapItem] = []
     var mapView: MKMapView? = nil
     var handleMapSearchDelegate: HandleMapSearch? = nil
+    
+    // MARK: - View Life Cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -20,8 +25,9 @@ class LocationSearchTable : UITableViewController {
         tableView.separatorInset = UIEdgeInsets.zero
         tableView.tableFooterView = UIView()
     }
-   
     
+    // MARK: - Methods
+   
     func parseAddress(selectedItem:MKPlacemark) -> String {
         // put a space between "4" and "Melrose Place"
         let firstSpace = (selectedItem.subThoroughfare != nil && selectedItem.thoroughfare != nil) ? " " : ""
@@ -47,6 +53,8 @@ class LocationSearchTable : UITableViewController {
     }
 }
 
+// MARK: - UISearchResultUpdating Extension
+
 extension LocationSearchTable : UISearchResultsUpdating {
     
     func updateSearchResults(for searchController: UISearchController) {
@@ -67,6 +75,8 @@ extension LocationSearchTable : UISearchResultsUpdating {
     }
     
 }
+
+// MARK: - LocationSearchTable Extension
 
 extension LocationSearchTable {
     
@@ -96,13 +106,6 @@ extension LocationSearchTable {
         tableView.contentInset = UIEdgeInsets(top: 65, left: 0, bottom: 0, right: 0)
     }
 }
-//    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-//        let cell = tableView.dequeueReusableCell(withIdentifier: "cell")!
-//            let selectedItem = matchingItems[indexPath.row].placemark
-//            cell.textLabel?.text = selectedItem.name
-//            let address = "\(selectedItem.thoroughfare ?? ""), \(selectedItem.locality ?? ""), \(selectedItem.subLocality ?? ""), \(selectedItem.administrativeArea ?? ""), \(selectedItem.postalCode ?? ""), \(selectedItem.country ?? "")"
-//    cell.detailTextLabel?.text = address
-//            return cell
-//        }
+
 
 
