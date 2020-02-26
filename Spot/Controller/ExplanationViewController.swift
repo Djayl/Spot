@@ -36,7 +36,7 @@ class ExplanationViewController: UIViewController {
     
     private func handleFirstLabel() {
         textLabel.font = UIFont(name: "Quicksand-Regular", size: 17)
-        textLabel.text = "Pour créer un Spot, il suffit d'un appui long sur la carte à l'endroit souhaité. \nUne nouvelle page de création apparaitra dans laquelle vous pourrez:\n - Choisir votre image \n - Nommer votre Spot \n - Décrire votre Spot "
+        textLabel.text = "Pour créer un Spot, il suffit d'un appui long sur la carte à l'endroit souhaité ou d'entrer une adresse dans la barre de recherche. \nUne nouvelle page de création apparaitra dans laquelle vous pourrez:\n - Choisir votre image \n - Nommer votre Spot \n - Décrire votre Spot "
     }
     
     private func handleSecondLabel() {

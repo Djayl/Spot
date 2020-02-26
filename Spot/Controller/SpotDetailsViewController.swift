@@ -65,6 +65,7 @@ class SpotDetailsViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        fetchProfilInformation()
         let backButton = UIBarButtonItem(title: "Retour", style: .done, target: self, action: #selector(goBack))
         self.navigationItem.leftBarButtonItem = backButton
 //        getSpotDetails()
@@ -76,8 +77,8 @@ class SpotDetailsViewController: UIViewController {
         getImage()
         listenToFavoriteSpot()
         setDeleteButton()
-        fetchProfilInformation()
-//        fetchSpotInformation()
+        
+        
         handleSwitch()
     }
     
@@ -268,9 +269,12 @@ class SpotDetailsViewController: UIViewController {
         firestoreService.fetchDocument(endpoint: .currentUser) { [weak self] result in
             switch result {
             case .success(let profil):
-                self?.setProfilData(profil)
-                self?.setDeleteButton()
-                self?.handleUpdateButton()
+                
+                DispatchQueue.main.async {
+                    self?.setProfilData(profil)
+                    self?.setDeleteButton()
+                    self?.handleUpdateButton()
+                }
             case .failure(let error):
                 print(error.localizedDescription)
                 self?.presentAlert(with: "Erreur réseau")
