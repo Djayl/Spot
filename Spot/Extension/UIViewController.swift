@@ -62,6 +62,16 @@ extension UIViewController {
         self.present(alert, animated: true, completion: nil)
     }
     
+    func showAlert(title: String, message: String) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertController.Style.alert)
+        
+        alert.addAction(UIAlertAction(title: "OK",
+                                      style: UIAlertAction.Style.default,
+                                      handler: {(_: UIAlertAction!) in
+        }))
+        self.present(alert, animated: true, completion: nil)
+    }
+    
     @objc func showKeyboard() {
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardShowing), name: UIApplication.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardHiding), name: UIApplication.keyboardWillHideNotification, object: nil)

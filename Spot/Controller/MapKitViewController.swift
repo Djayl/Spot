@@ -24,15 +24,22 @@ class MapKitViewController: UIViewController, UISearchBarDelegate {
     @IBOutlet weak var refreshView: UIView!
     @IBOutlet weak var chooseView: UIView!
     @IBOutlet weak var chooseMapTypeView: UIView!
+    @IBOutlet weak var localizationView: UIView!
     
     
     var resultSearchController: UISearchController? = nil
     var selectedPin: MKPlacemark? = nil
-    var myAnnotation = CustomAnnotation(coordinate: CLLocationCoordinate2D(latitude: 0.00, longitude: 0.00))
+    private var myAnnotation = CustomAnnotation(coordinate: CLLocationCoordinate2D(latitude: 0.00, longitude: 0.00))
+    private let locationManager = CLLocationManager()
+    private var userPosition: CLLocation?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         checkIfUserLoggedIn()
+        locationManager.delegate = self
+        locationManager.requestAlwaysAuthorization()
+        locationManager.startUpdatingLocation()
+        mapView.showsUserLocation = true
         setupViews()
         setupNavigationBar()
         setUpTapBarController()
@@ -93,6 +100,18 @@ class MapKitViewController: UIViewController, UISearchBarDelegate {
            self.navigationController?.pushViewController(secondViewController, animated: true)
        }
     
+    @IBAction func didTapLocalization(_ sender: Any) {
+        if CLLocationManager.authorizationStatus() == .notDetermined || CLLocationManager.authorizationStatus() == .denied {
+            showAlert(title: "", message: "Pour obtenir votre position, merci d'activer la géolocalisation.")
+            
+        }
+        if userPosition != nil {
+            setupMap(coordonnees: userPosition!.coordinate, myLat: 1, myLong:
+                1)
+        }
+        
+    }
+    
     private func checkIfUserLoggedIn() {
            DispatchQueue.main.async {
                if AuthService.getCurrentUser() == nil {
@@ -104,10 +123,17 @@ class MapKitViewController: UIViewController, UISearchBarDelegate {
            }
        }
     
+    private func setupMap(coordonnees: CLLocationCoordinate2D, myLat: Double, myLong: Double) {
+        let span = MKCoordinateSpan(latitudeDelta: myLat , longitudeDelta: myLong)
+        let region = MKCoordinateRegion(center: coordonnees, span: span)
+        mapView.setRegion(region, animated: true)
+    }
+    
     fileprivate func setupViews() {
         refreshView.layer.cornerRadius = 10
         chooseView.layer.cornerRadius = 10
         chooseMapTypeView.layer.cornerRadius = 10
+        localizationView.layer.cornerRadius = 10
     }
     
     func chooseMapType(controller: UIViewController) {
@@ -275,6 +301,22 @@ class MapKitViewController: UIViewController, UISearchBarDelegate {
     
     
 }
+
+// MARK: - Location Manager Delegate
+
+@available(iOS 13.0, *)
+extension MapKitViewController: CLLocationManagerDelegate {
+    
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        if locations.count > 0 {
+            if let maPosition = locations.last {
+                userPosition = maPosition
+            }
+        }
+    }
+}
+
+// MARK: - Mapview Delegate
 
 @available(iOS 13.0, *)
 extension MapKitViewController: MKMapViewDelegate {

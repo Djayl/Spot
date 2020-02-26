@@ -42,7 +42,7 @@ class SpotDetailsViewController: UIViewController {
     var favoriteSpots = [Spot]()
     private var userName = ""
     private var ownerId = ""
-    weak var delegate: AddSpotDelegate?
+//    weak var delegate: AddSpotDelegate?
     
     // MARK: - View Life Cycle
     

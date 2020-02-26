@@ -31,8 +31,8 @@ final class SpotCreationViewController: UIViewController, UITextFieldDelegate, U
     
     var location: CLLocationCoordinate2D!
     var newLocation: CLLocation!
-    private var controller: MapViewController?
-    weak var delegate: AddSpotDelegate!
+//    private var controller: MapViewController?
+//    weak var delegate: AddSpotDelegate!
     let customMarkerWidth: Int = 50
     let customMarkerHeight: Int = 70
     var myImage: UIImage?

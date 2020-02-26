@@ -740,6 +740,26 @@ Tx7DuSBzZSB0cm91dmUgbGUgU3BvdD8gA
                                     <constraint firstAttribute="width" constant="40" id="gUH-xL-uuP"/>
                                 </constraints>
                             </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="z9X-TO-rjn">
+                                <rect key="frame" x="272" y="449" width="40" height="40"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZlL-cI-WJX">
+                                        <rect key="frame" x="9.5" y="9" width="21" height="22"/>
+                                        <state key="normal" image="place (1)"/>
+                                        <connections>
+                                            <action selector="didTapLocalization:" destination="fPD-zY-D2V" eventType="touchUpInside" id="e0W-d3-fuW"/>
+                                            <action selector="mapType:" destination="kPo-xd-047" eventType="touchUpInside" id="TQT-xV-68x"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstItem="ZlL-cI-WJX" firstAttribute="centerY" secondItem="z9X-TO-rjn" secondAttribute="centerY" id="2kA-a6-Do4"/>
+                                    <constraint firstItem="ZlL-cI-WJX" firstAttribute="centerX" secondItem="z9X-TO-rjn" secondAttribute="centerX" id="4v9-G0-cRY"/>
+                                    <constraint firstAttribute="width" constant="40" id="BLt-7v-IGH"/>
+                                    <constraint firstAttribute="height" constant="40" id="ci2-G1-63I"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
@@ -755,9 +775,11 @@ Tx7DuSBzZSB0cm91dmUgbGUgU3BvdD8gA
                             <constraint firstItem="vu9-Sq-Yvx" firstAttribute="bottom" secondItem="PRB-WA-kgq" secondAttribute="bottom" id="SAy-0a-15h"/>
                             <constraint firstItem="vu9-Sq-Yvx" firstAttribute="top" secondItem="PRB-WA-kgq" secondAttribute="top" id="TXQ-1i-rJ4"/>
                             <constraint firstItem="gjG-xb-fDD" firstAttribute="top" secondItem="jlP-q6-e0W" secondAttribute="bottom" constant="20" id="WpT-Ib-EWp"/>
+                            <constraint firstItem="PRB-WA-kgq" firstAttribute="bottom" secondItem="z9X-TO-rjn" secondAttribute="bottom" constant="30" id="hLb-dC-Hux"/>
                             <constraint firstItem="gjG-xb-fDD" firstAttribute="top" secondItem="jlP-q6-e0W" secondAttribute="bottom" constant="20" id="nn6-8C-BD3"/>
                             <constraint firstItem="PRB-WA-kgq" firstAttribute="trailing" secondItem="3UB-K7-8V1" secondAttribute="trailing" constant="8" id="wYq-Jm-2TK"/>
                             <constraint firstItem="gjG-xb-fDD" firstAttribute="leading" secondItem="PRB-WA-kgq" secondAttribute="leading" constant="8" id="wf1-eY-rXG"/>
+                            <constraint firstItem="PRB-WA-kgq" firstAttribute="trailing" secondItem="z9X-TO-rjn" secondAttribute="trailing" constant="8" id="yTQ-5l-PQb"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="PRB-WA-kgq"/>
                     </view>
@@ -777,6 +799,7 @@ Tx7DuSBzZSB0cm91dmUgbGUgU3BvdD8gA
                         <outlet property="chooseMapTypeButton" destination="auS-1b-vdJ" id="5DP-WZ-Ja4"/>
                         <outlet property="chooseMapTypeView" destination="3UB-K7-8V1" id="hj0-fy-UYu"/>
                         <outlet property="chooseView" destination="gjG-xb-fDD" id="wmq-Z4-CWk"/>
+                        <outlet property="localizationView" destination="z9X-TO-rjn" id="I6n-Y3-oa4"/>
                         <outlet property="mapView" destination="vu9-Sq-Yvx" id="3cb-8C-AiS"/>
                         <outlet property="refreshView" destination="jlP-q6-e0W" id="ddc-a7-orG"/>
                         <outlet property="searchBarView" destination="bLK-QG-wet" id="Zyw-7o-ieF"/>
@@ -1767,6 +1790,7 @@ Tx7DuSBzZSB0cm91dmUgbGUgU3BvdD8gA
         <image name="photo profil" width="164.5" height="197"/>
         <image name="photo spot" width="164.5" height="197"/>
         <image name="photo-camera (1)" width="170.5" height="170.5"/>
+        <image name="place (1)" width="21" height="21"/>
         <image name="profile-pic " width="170.5" height="170.5"/>
         <image name="refresh-1" width="21" height="21"/>
         <image name="track" width="85" height="85"/>
