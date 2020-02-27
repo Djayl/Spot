@@ -9,7 +9,6 @@
 import UIKit
 import FirebaseFirestore
 import Kingfisher
-import GoogleMaps
 import MapKit
 import ProgressHUD
 
@@ -36,10 +35,10 @@ class SpotDetailsViewController: UIViewController {
     
     // MARK: - Properties
     
-    var spot = Spot()
+//    var spot = Spot()
     var annotation : CustomAnnotation?
     var newImageView = UIImageView()
-    var favoriteSpots = [Spot]()
+//    var favoriteSpots = [Spot]()
     private var userName = ""
     private var ownerId = ""
 //    weak var delegate: AddSpotDelegate?
@@ -51,7 +50,7 @@ class SpotDetailsViewController: UIViewController {
 //        fetchProfilInformation()
         setupImageView()
         getLocation()
-        reverseGeocodeCoordinate(spot.position)
+//        reverseGeocodeCoordinate(spot.position)
         spotCoordinate.isUserInteractionEnabled = true
         textViewDidChange(spotDescriptionTextView)
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(imageTapped(_:)))
@@ -77,8 +76,6 @@ class SpotDetailsViewController: UIViewController {
         getImage()
         listenToFavoriteSpot()
         setDeleteButton()
-        
-        
         handleSwitch()
     }
     
@@ -356,17 +353,17 @@ class SpotDetailsViewController: UIViewController {
         }
     }
     
-    private func getSpotDetails() {
-        guard let name = spot.title else {return}
-        spotTitle.numberOfLines = 0
-        spotTitle.text = name.capitalized.toNoSmartQuotes()
-        guard let description = spot.snippet, !description.isEmpty else {return}
-        spotDescriptionTextView.text = description
-        guard let date  = (spot.userData as? CustomData)?.creationDate else {return}
-        spotDate.text = "Spot créé le \(date.asString(style: .long))"
-        guard let creatorName = (spot.userData as? CustomData)?.creatorName else {return}
-        pictureTakerName.text = creatorName
-    }
+//    private func getSpotDetails() {
+//        guard let name = spot.title else {return}
+//        spotTitle.numberOfLines = 0
+//        spotTitle.text = name.capitalized.toNoSmartQuotes()
+//        guard let description = spot.snippet, !description.isEmpty else {return}
+//        spotDescriptionTextView.text = description
+//        guard let date  = (spot.userData as? CustomData)?.creationDate else {return}
+//        spotDate.text = "Spot créé le \(date.asString(style: .long))"
+//        guard let creatorName = (spot.userData as? CustomData)?.creatorName else {return}
+//        pictureTakerName.text = creatorName
+//    }
     
     private func getAnnotationDetails() {
         guard let name = annotation?.title else {return}
@@ -391,15 +388,15 @@ class SpotDetailsViewController: UIViewController {
         }
     }
     
-    private func reverseGeocodeCoordinate(_ coordinate: CLLocationCoordinate2D) {
-        let geocoder = GMSGeocoder()
-        geocoder.reverseGeocodeCoordinate(coordinate) { response, error in
-            guard let address = response?.firstResult(), let lines = address.lines else {
-                return
-            }
-            self.spotCoordinate.text = lines.joined(separator: "\n")
-        }
-    }
+//    private func reverseGeocodeCoordinate(_ coordinate: CLLocationCoordinate2D) {
+//        let geocoder = GMSGeocoder()
+//        geocoder.reverseGeocodeCoordinate(coordinate) { response, error in
+//            guard let address = response?.firstResult(), let lines = address.lines else {
+//                return
+//            }
+//            self.spotCoordinate.text = lines.joined(separator: "\n")
+//        }
+//    }
     
     private func getLocation() {
          
@@ -499,7 +496,7 @@ class SpotDetailsViewController: UIViewController {
         }
     }
     
-    private func removeImageFromFirebase(spot: Spot) {
+    private func removeImageFromFirebase() {
         let firebaseStorageManager = FirebaseStorageManager()
         guard let imageID = annotation?.imageID else {return}
         firebaseStorageManager.deleteImageData(serverFileName: imageID)
@@ -511,7 +508,7 @@ class SpotDetailsViewController: UIViewController {
         deleteSpotFromPrivate(identifier: uid)
         deleteSpotFromPublic(identifier: uid)
         deleteSpotFromFavorite(identifier: uid)
-        removeImageFromFirebase(spot: spot)
+        removeImageFromFirebase()
     }
     
     private func createFavorite() {
@@ -558,17 +555,17 @@ class SpotDetailsViewController: UIViewController {
         }
     }
     
-    private func displaySpot(_ marker: Marker) {
-        let name = marker.name
-        let mCustomData = CustomData(creationDate: marker.creationDate, uid: marker.identifier, ownerId: marker.ownerId, publicSpot: marker.publicSpot, creatorName: marker.creatorName, imageID: marker.imageID)
-        let spot = Spot()
-        spot.position = CLLocationCoordinate2D(latitude: marker.coordinate.latitude, longitude: marker.coordinate.longitude)
-        spot.title = name
-        spot.snippet = marker.description
-        spot.userData = mCustomData
-        spot.imageURL = marker.imageURL
-        favoriteSpots.append(spot)
-    }
+//    private func displaySpot(_ marker: Marker) {
+//        let name = marker.name
+//        let mCustomData = CustomData(creationDate: marker.creationDate, uid: marker.identifier, ownerId: marker.ownerId, publicSpot: marker.publicSpot, creatorName: marker.creatorName, imageID: marker.imageID)
+//        let spot = Spot()
+//        spot.position = CLLocationCoordinate2D(latitude: marker.coordinate.latitude, longitude: marker.coordinate.longitude)
+//        spot.title = name
+//        spot.snippet = marker.description
+//        spot.userData = mCustomData
+//        spot.imageURL = marker.imageURL
+//        favoriteSpots.append(spot)
+//    }
     
     private func listenToFavoriteSpot() {
         guard let uid = annotation?.uid else {return}

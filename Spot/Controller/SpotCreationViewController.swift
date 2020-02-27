@@ -7,10 +7,10 @@
 //
 
 import UIKit
-import GoogleMaps
 import FirebaseFirestore
 import Kingfisher
 import ProgressHUD
+import MapKit
 
 
 
@@ -36,7 +36,7 @@ final class SpotCreationViewController: UIViewController, UITextFieldDelegate, U
     let customMarkerWidth: Int = 50
     let customMarkerHeight: Int = 70
     var myImage: UIImage?
-    var spots = [Spot]()
+//    var spots = [Spot]()
     var userName = ""
     var imageURL: String?
     private var ownerId = ""

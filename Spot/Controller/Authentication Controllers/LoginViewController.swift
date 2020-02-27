@@ -47,7 +47,7 @@ final class LoginViewController: UIViewController {
         let authService = AuthService()
         authService.resetMyPassword(email: email, onSucess: {
             self.view.endEditing(true)
-            ProgressHUD.showSuccess("Un mail vient de vous être transmis. Merci de vérifier votre bote mail et suivre les indications.")
+            ProgressHUD.showSuccess("Un mail vient de vous être transmis. Merci de vérifier votre boite mail et suivre les indications.")
         }) { (errorMessage) in
             ProgressHUD.showError(errorMessage)
         }

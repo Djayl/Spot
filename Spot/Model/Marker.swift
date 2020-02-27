@@ -8,7 +8,7 @@
 
 import Foundation
 import FirebaseFirestore
-import GoogleMaps
+
 
 struct Marker: Equatable {
     let identifier: String

@@ -8,7 +8,8 @@
 
 import UIKit
 import Kingfisher
-import GoogleMaps
+import MapKit
+
 
 @available(iOS 13.0, *)
 class SpotCreatorProfileViewController: UIViewController {

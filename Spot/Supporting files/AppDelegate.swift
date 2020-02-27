@@ -7,11 +7,9 @@
 //
 
 import UIKit
-import GoogleMaps
-import GooglePlaces
 import Firebase
 
-let googleApiKey = "AIzaSyAr9KfQyhGZKpzXAHhd0_PHzzXQR4br6yA"
+//let googleApiKey = "AIzaSyAr9KfQyhGZKpzXAHhd0_PHzzXQR4br6yA"
 
 @available(iOS 13.0, *)
 @UIApplicationMain
@@ -21,8 +19,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        GMSServices.provideAPIKey(googleApiKey)
-        GMSPlacesClient.provideAPIKey(googleApiKey)
+//        GMSServices.provideAPIKey(googleApiKey)
+//        GMSPlacesClient.provideAPIKey(googleApiKey)
         FirebaseApp.configure()
         
         let storyboard = UIStoryboard(name: "Main", bundle: nil)

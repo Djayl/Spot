@@ -11,8 +11,6 @@ target 'Spot' do
     pod 'Kingfisher', '~> 5.0'
     pod 'Firebase/Storage'
     pod 'Firebase/Database' 
-    pod 'GoogleMaps'
-    pod 'GooglePlaces'
     pod 'ProgressHUD'
     pod 'Protobuf', :inhibit_warnings => true
   

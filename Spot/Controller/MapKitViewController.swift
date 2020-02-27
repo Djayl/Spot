@@ -38,6 +38,8 @@ class MapKitViewController: UIViewController, UISearchBarDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.view.backgroundColor = .white
         checkIfUserLoggedIn()
         locationManager.delegate = self
         locationManager.requestAlwaysAuthorization()
@@ -92,8 +94,7 @@ class MapKitViewController: UIViewController, UISearchBarDelegate {
     
     @IBAction func didTapLocalization(_ sender: Any) {
         if CLLocationManager.authorizationStatus() == .notDetermined || CLLocationManager.authorizationStatus() == .denied {
-            showAlert(title: "", message: "Pour obtenir votre position, merci d'activer la géolocalisation.")
-            
+            ProgressHUD.showError("Pour obtenir votre position, merci d'activer la géolocalisation.")            
         }
         if userPosition != nil {
             setupMap(coordonnees: userPosition!.coordinate)
@@ -217,7 +218,7 @@ class MapKitViewController: UIViewController, UISearchBarDelegate {
         annotation.uid = marker.identifier
         annotation.imageURL = marker.imageURL
         annotation.subtitle = marker.description
-        annotation.title = marker.name
+        annotation.title = marker.name.uppercased()
         mapView.addAnnotation(annotation)
     }
     

@@ -7,9 +7,9 @@
 //
 
 import UIKit
-import GoogleMaps
 import Kingfisher
 import ProgressHUD
+import MapKit
 
 
 @available(iOS 13.0, *)

@@ -7,8 +7,8 @@
 //
 
 import UIKit
-import GoogleMaps
 import Kingfisher
+import MapKit
 
 @available(iOS 13.0, *)
 class ProfileViewController: UIViewController {

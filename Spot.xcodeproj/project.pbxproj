@@ -387,7 +387,6 @@
 				F0D52802232786770023B226 /* Frameworks */,
 				F0D52803232786770023B226 /* Resources */,
 				4B30884F496A7918E9A0FD40 /* [CP] Embed Pods Frameworks */,
-				B230F61F6386533D0273B6F9 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -525,23 +524,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Spot/Pods-Spot-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		B230F61F6386533D0273B6F9 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Spot/Pods-Spot-resources-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Copy Pods Resources";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Spot/Pods-Spot-resources-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Spot/Pods-Spot-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -814,7 +796,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.14;
+				MARKETING_VERSION = 2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = fr.djilalisakkar.Spot;
 				PRODUCT_NAME = Spoteo;
 				SWIFT_VERSION = 5.0;
@@ -835,7 +817,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.14;
+				MARKETING_VERSION = 2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = fr.djilalisakkar.Spot;
 				PRODUCT_NAME = Spoteo;
 				SWIFT_VERSION = 5.0;
